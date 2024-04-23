@@ -1,21 +1,34 @@
 <script setup>
 import ArrowDownIcon from '@/Icons/ArrowDownIcon.vue';
-import DropDownUpTransition from '@/Transitions/DropDownUpTransition.vue';
 import ExpandDownUpTransition from '@/Transitions/ExpandDownUpTransition.vue';
-import { onMounted, ref } from 'vue';
+import { ref, getCurrentInstance, onBeforeMount } from 'vue';
 
 defineProps({
     id: String,
 })
 
+const component = getCurrentInstance();
+
 const show = ref(false)
+
+const handleShow = () => {
+    show.value = !show.value
+    show.value === true ? localStorage.setItem(component.vnode.key, true) : localStorage.removeItem(component.vnode.key)
+
+}
+
+onBeforeMount(() => {
+    if (localStorage.getItem(component.vnode.key)) {
+        show.value = true
+    }
+})
 
 </script>
 
 <template>
     <li>
         <button type="button"
-            @click="show = !show"
+            @click="handleShow"
             class="flex items-center p-2 w-full text-base font-medium text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
 
             >

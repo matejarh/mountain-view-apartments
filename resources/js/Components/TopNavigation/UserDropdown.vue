@@ -22,17 +22,16 @@ const logout = () => {
         </div>
         <ul class="py-1 text-gray-700 dark:text-gray-300">
             <DropdownItem :href="route('profile.show')">
-                My profile
+                {{ __("My Profile") }}
             </DropdownItem>
             <DropdownItem :href="route('profile.show')">
-                Account
-                settings
+                {{__("Account settings")}}
             </DropdownItem>
 
         </ul>
 
         <ul class="py-1 text-gray-700 dark:text-gray-300" aria-labelledby="dropdown">
-            <li>
+            <!-- <li>
                 <a href="#"
                     class="flex items-center py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"><svg
                         class="mr-2 w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20"
@@ -73,13 +72,13 @@ const logout = () => {
                             clip-rule="evenodd"></path>
                     </svg>
                 </a>
-            </li>
+            </li> -->
         </ul>
         <ul class="py-1 text-gray-700 dark:text-gray-300 overflow-hidden mb-1">
 
             <DropdownItem as="button" @clicked="logout">
 
-                Sign out
+                {{__("Sign out")}}
             </DropdownItem>
         </ul>
     </NavDropdown>

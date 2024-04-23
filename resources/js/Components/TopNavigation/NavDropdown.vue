@@ -53,7 +53,7 @@ onUnmounted(() => document.removeEventListener('keydown', closeOnEscape));
 <template>
     <div class="relative">
         <button type="button" @click="show=!show"
-            class="flex mx-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+            class="flex mx-3 text-sm dark:bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
             >
             <slot name="trigger" />
 

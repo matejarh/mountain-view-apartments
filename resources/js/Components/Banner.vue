@@ -20,12 +20,12 @@ watchEffect(async () => {
             enter-to-class="opacity-100 translate-y-0 " leave-active-class="ease-in duration-200"
             leave-from-class="opacity-100 translate-y-0 " leave-to-class="opacity-0 -translate-y-4  ">
             <div v-if="show && message" class="fixed top-0 left-0 right-0  z-50"
-                :class="{ 'bg-green-500': style == 'success', 'bg-red-700': style == 'danger' }">
+                :class="{ 'bg-amazon-500': style == 'success', 'bg-bittersweet-700': style == 'danger' }">
                 <div class="max-w-screen-xl mx-auto py-2 px-3 sm:px-6 lg:px-8">
                     <div class="flex items-center justify-between flex-wrap">
                         <div class="w-0 flex-1 flex items-center min-w-0">
                             <span class="flex p-2 rounded-lg"
-                                :class="{ 'bg-green-600': style == 'success', 'bg-red-600': style == 'danger' }">
+                                :class="{ 'bg-amazon-600': style == 'success', 'bg-bittersweet-600': style == 'danger' }">
                                 <svg v-if="style == 'success'" class="h-5 w-5 text-white"
                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke-width="1.5" stroke="currentColor">
@@ -49,7 +49,7 @@ watchEffect(async () => {
                         <div class="shrink-0 sm:ms-3">
                             <button type="button"
                                 class="-me-1 flex p-2 rounded-md focus:outline-none sm:-me-2 transition"
-                                :class="{ 'hover:bg-green-600 focus:bg-green-600': style == 'success', 'hover:bg-red-600 focus:bg-red-600': style == 'danger' }"
+                                :class="{ 'hover:bg-amazon-600 focus:bg-amazon-600': style == 'success', 'hover:bg-bittersweet-600 focus:bg-bittersweet-600': style == 'danger' }"
                                 aria-label="Dismiss" @click.prevent="show = false">
                                 <svg class="h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none"
                                     viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">

@@ -22,9 +22,9 @@ const classes = computed(() => {
 <template>
     <aside
         :class="classes"
-        class="fixed top-0 left-0 z-20 w-64 h-screen pt-24 sm:pt-14 transition-transform bg-white border-r border-gray-200 md:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
+        class="fixed top-0 left-0 z-20 w-64 h-screen pt-24 sm:pt-32 transition-transform bg-white border-r border-gray-200 md:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
         aria-label="Sidenav" id="sidebar-navigation">
-        <div class="overflow-y-auto py-5 px-3 h-full bg-white dark:bg-gray-800">
+        <div class="overflow-y-auto py-5 pl-3 h-full bg-white dark:bg-gray-800">
             <SearchForm />
             <ul class="space-y-2">
                 <NavLink :href="route('dashboard')" @click="$emit('hide')">
@@ -38,7 +38,7 @@ const classes = computed(() => {
                     Overview
                 </NavLink>
 
-                <NavDropdown id="pages-dropdown">
+                <NavDropdown key="pages-dropdown">
                     <template #icon>
                         <svg aria-hidden="true"
                             class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
@@ -49,13 +49,13 @@ const classes = computed(() => {
                         </svg>
                     </template>
                     <template #title>Pages</template>
-                    <DropdownItem :href="route('dashboard')"  @click="$emit('hide')">Settings</DropdownItem>
-                    <DropdownItem :href="route('dashboard')"  @click="$emit('hide')">Kanban</DropdownItem>
-                    <DropdownItem :href="route('dashboard')"  @click="$emit('hide')">Calendar</DropdownItem>
+                    <DropdownItem :href="'/dashboard'"  @click="$emit('hide')">Settings</DropdownItem>
+                    <DropdownItem :href="'/dashboard/1'"  @click="$emit('hide')">Kanban</DropdownItem>
+                    <DropdownItem :href="'/dashboard/2'"  @click="$emit('hide')">Calendar</DropdownItem>
 
                 </NavDropdown>
 
-                <NavDropdown id="sales-dropdown">
+                <NavDropdown key="sales-dropdown">
                     <template #icon>
                         <svg aria-hidden="true"
                             class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
@@ -122,7 +122,7 @@ const classes = computed(() => {
             </BottomItem>
 
             <Tooltip text="Settings page">
-                <BottomItem :href="'/'">
+                <BottomItem :href="'/settings'">
                     <svg aria-hidden="true" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
                         xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd"

@@ -1,14 +1,19 @@
 <script setup>
-import { Head } from '@inertiajs/vue3';
-import { computed, ref } from 'vue';
+import { Head, usePage } from '@inertiajs/vue3';
+import { computed, onMounted, ref } from 'vue';
 import SideNavigation from './_partials/SideNavigation.vue';
 import TopNavigation from './_partials/TopNavigation.vue';
 import ScrollToTop from '@/Components/ScrollToTop.vue';
 import Banner from '@/Components/Banner.vue';
+import { useTranslationsStore } from '@/stores/translations';
 
 defineProps({
     title: String,
 });
+
+const page = usePage()
+
+const store = useTranslationsStore()
 
 
 const scrollPosition = ref(0)
@@ -25,6 +30,9 @@ const headerClasses = computed(() => {
 
 const showSidebar = ref(false)
 
+onMounted(() => {
+    store.updateTranslations(page.props.translations)
+})
 </script>
 
 <template>
@@ -33,7 +41,7 @@ const showSidebar = ref(false)
 
         <Banner />
 
-        <div id="page" class="relative antialiased bg-gray-50 dark:bg-gray-900 w-screen overflow-hidden">
+        <div id="page" class="relative antialiased bg-gradient-to-br from-white to-gray-100 dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-950 w-screen overflow-hidden">
             <TopNavigation @toggle-sidebar="showSidebar = !showSidebar" />
 
             <SideNavigation :show="showSidebar" @hide="showSidebar = false" />

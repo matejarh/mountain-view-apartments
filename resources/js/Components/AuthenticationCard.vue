@@ -1,3 +1,16 @@
+<script setup>
+import { useTranslationsStore } from '@/stores/translations';
+import { usePage } from '@inertiajs/vue3';
+import { onMounted, ref } from 'vue';
+
+const page = usePage()
+
+const store = useTranslationsStore()
+
+onMounted(() => {
+    store.updateTranslations(page.props.translations)
+})
+</script>
 <template>
     <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
         <div>
