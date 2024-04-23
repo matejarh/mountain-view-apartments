@@ -62,4 +62,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    protected function defaultProfilePhotoUrl()
+    {
+        return "https://api.dicebear.com/8.x/rings/svg?seed=" . urlencode($this->name) . ""; // icons | pixel-art | ident ...  check https://www.dicebear.com/styles/
+    }
 }
