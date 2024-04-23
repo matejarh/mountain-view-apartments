@@ -22,9 +22,9 @@ const classes = computed(() => {
 <template>
     <aside
         :class="classes"
-        class="fixed top-0 left-0 z-20 w-64 h-screen pt-24 sm:pt-32 transition-transform bg-white border-r border-gray-200 md:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
+        class="fixed top-0 left-0 z-20 w-64 h-screen pt-24 sm:pt-14 transition-transform bg-white border-r border-gray-200 md:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
         aria-label="Sidenav" id="sidebar-navigation">
-        <div class="overflow-y-auto py-5 pl-3 h-full bg-white dark:bg-gray-800">
+        <div class="overflow-y-auto py-5 px-3 md:pr-0 h-full bg-white dark:bg-gray-800">
             <SearchForm />
             <ul class="space-y-2">
                 <NavLink :href="route('dashboard')" @click="$emit('hide')">
@@ -35,7 +35,7 @@ const classes = computed(() => {
                             <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
                         </svg>
                     </template>
-                    Overview
+                    {{__("Overview")}}
                 </NavLink>
 
                 <NavDropdown key="pages-dropdown">
