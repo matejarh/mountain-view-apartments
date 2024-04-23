@@ -16,6 +16,16 @@ const page = usePage()
 
 const store = useTranslationsStore()
 
+const languages = ref([
+    { name: 'English (US)', code: 'us', flag_url: new URL('@/assets/flags/1x1/us.svg', import.meta.url) },
+    { name: 'Slovensko', code: 'si', flag_url: new URL('@/assets/flags/1x1/si.svg', import.meta.url) },
+    { name: 'Čeština', code: 'cs', flag_url: new URL('@/assets/flags/1x1/cz.svg', import.meta.url) },
+    { name: 'Deutsch', code: 'de', flag_url: new URL('@/assets/flags/1x1/de.svg', import.meta.url) },
+    { name: 'Italiano', code: 'it', flag_url: new URL('@/assets/flags/1x1/it.svg', import.meta.url) },
+    { name: 'Magyar', code: 'hu', flag_url: new URL('@/assets/flags/1x1/hu.svg', import.meta.url) },
+    { name: 'Français', code: 'fr', flag_url: new URL('@/assets/flags/1x1/fr.svg', import.meta.url) },
+])
+
 const form = useForm({ language: '' })
 
 const switchLanguage = (lang) => {
