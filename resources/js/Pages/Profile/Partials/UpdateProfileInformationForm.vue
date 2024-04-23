@@ -78,11 +78,12 @@ const clearPhotoFileInput = () => {
 <template>
     <FormSection @submitted="updateProfileInformation">
         <template #title>
-            Profile Information
+            {{__("Profile Information")}}
         </template>
 
         <template #description>
-            Update your account's profile information and email address.
+            {{__("Update your account's profile information and email address.")}}
+
         </template>
 
         <template #form>
@@ -97,7 +98,7 @@ const clearPhotoFileInput = () => {
                     @change="updatePhotoPreview"
                 >
 
-                <InputLabel for="photo" value="Photo" />
+                <InputLabel for="photo" :value="__('Photo')" />
 
                 <!-- Current Profile Photo -->
                 <div v-show="! photoPreview" class="mt-2">
@@ -113,16 +114,17 @@ const clearPhotoFileInput = () => {
                 </div>
 
                 <SecondaryButton class="mt-2 me-2" type="button" @click.prevent="selectNewPhoto">
-                    Select A New Photo
+                    {{__("Select A New Photo")}}
                 </SecondaryButton>
 
                 <SecondaryButton
-                    v-if="user.profile_photo_path"
-                    type="button"
-                    class="mt-2"
-                    @click.prevent="deletePhoto"
+                v-if="user.profile_photo_path"
+                type="button"
+                class="mt-2"
+                @click.prevent="deletePhoto"
                 >
-                    Remove Photo
+                {{__("Remove Photo")}}
+
                 </SecondaryButton>
 
                 <InputError :message="form.errors.photo" class="mt-2" />

@@ -1,5 +1,5 @@
 <script setup>
-import AppLayout from '@/Layouts/AppLayout.vue';
+import FullLayout from '@/Layouts/FullLayout.vue';
 import DeleteUserForm from '@/Pages/Profile/Partials/DeleteUserForm.vue';
 import LogoutOtherBrowserSessionsForm from '@/Pages/Profile/Partials/LogoutOtherBrowserSessionsForm.vue';
 import SectionBorder from '@/Components/SectionBorder.vue';
@@ -14,10 +14,10 @@ defineProps({
 </script>
 
 <template>
-    <AppLayout title="Profile">
+    <FullLayout :title="__('Profile')">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Profile
+
             </h2>
         </template>
 
@@ -53,5 +53,5 @@ defineProps({
                 </template>
             </div>
         </div>
-    </AppLayout>
+    </FullLayout>
 </template>
