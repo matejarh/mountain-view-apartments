@@ -93,6 +93,7 @@
     "of": "od",
     "Once a team is deleted, all of its resources and data will be permanently deleted. Before deleting this team, please download any data or information regarding this team that you wish to retain.": "Ko je skupina izbrisana, so odstranjeni tudi podatki skupine. Pred brisanjem skupine prenesite vse podatke skupine, ki jih želite ohraniti.",
     "Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.": "Ko je račun izbrisan, so odstranjeni tudi vsi podatki računa. Pred brisanjem prenesite vse podatke računa, ki jih želite ohraniti.",
+    "Overview": "Pregled",
     "Page Expired": "Stran je potekla",
     "Pagination Navigation": "Navigacija po straneh",
     "Password": "Geslo",
@@ -178,6 +179,8 @@
     "Two Factor Authentication": "Dvofazna prijava",
     "Two factor authentication is now enabled. Scan the following QR code using your phone's authenticator application or enter the setup key.": "Dvofaktorska avtentikacija je zdaj omogočena. Skenirajte naslednjo kodo QR z aplikacijo za preverjanje pristnosti v telefonu ali vnesite nastavitveni ključ.",
     "Unauthorized": "Nepooblaščeno",
+    "Under Maintenance": "V vzdrževanju",
+    "Our administrators are performing scheduled maintenance": "Naši skrbniki izvajajo načrtovano vzdrževanje",
     "Unknown": "Neznano",
     "Update Password": "Posodobitev gesla",
     "Update your account's profile information and email address.": "Posodobitev podatkov profila in elektronskega naslova.",
@@ -196,5 +199,9 @@
     "You may delete any of your existing tokens if they are no longer needed.": "Žetone, ki niso več potrebni, lahko izbrišete.",
     "You may not delete your personal team.": "Svoje osebne skupine ni mogoče izbrisati.",
     "You may not leave a team that you created.": "Lastne ustvarjene skupine ni mogoče zapustiti.",
-    "Your email address is unverified.": "Vaš e-poštni naslov ni preverjen."
+    "Your email address is unverified.": "Vaš e-poštni naslov ni preverjen.",
+    "Something's missing": "Nekaj manjka",
+    "Sorry, we can't find that page. You'll find lots to explore on the home page.": "Žal te strani ne najdemo. Na domači strani boste našli veliko za raziskovanje."
+
+
 }
