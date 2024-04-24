@@ -15,9 +15,6 @@ class LanguageController extends Controller
 
         session(['language' => $language]);
 
-        //cookie('language',$language);
-        //dd(cookie('language'));
-
         return redirect()->back()->withCookie(cookie()->forever('language', $language));
     }
 }
