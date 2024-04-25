@@ -2,17 +2,19 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Traits\RecordsActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
+use Laravel\Jetstream\Agent;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use Stevebauman\Location\Facades\Location;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens;
     use HasFactory;
@@ -20,6 +22,7 @@ class User extends Authenticatable
     use Notifiable;
     use TwoFactorAuthenticatable;
     use RecordsActivity;
+
 
     /**
      * The attributes that are mass assignable.
@@ -56,6 +59,7 @@ class User extends Authenticatable
      */
     protected $appends = [
         'profile_photo_url',
+        'last_seen_diff_for_humans',
     ];
 
     /**
@@ -67,12 +71,13 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
+            'last_seen' => 'datetime',
             'password' => 'hashed',
             'is_admin' => 'boolean',
         ];
     }
 
-    protected static function boot()
+    protected static function boot(): void
     {
         parent::boot();
 
@@ -85,26 +90,41 @@ class User extends Authenticatable
 
     }
 
-    protected static function deleteItems() {
+    protected static function deleteItems(): array
+    {
         return ['activities',];
     }
 
-    protected function defaultProfilePhotoUrl()
+    protected function defaultProfilePhotoUrl(): string
     {
         return "https://api.dicebear.com/8.x/rings/svg?seed=" . urlencode($this->name) . ""; // icons | pixel-art | ident ...  check https://www.dicebear.com/styles/
     }
 
-    public function logins()
+    public function logins(): HasMany
     {
         return $this->hasMany(Login::class);
     }
 
-    public function activities()
+    public function activities(): HasMany
     {
         return $this->hasMany(Activity::class)->latest();
     }
 
-    public function scopeFilter($query, array $filters)
+    public function lastSeenDiffForHumans(): string
+    {
+        if ($this->logins()->latest()->first()->location) {
+
+            return __('Last login') . ' ' . $this->logins()->latest()->first()->created_at->diffForHumans() . '<br>'. $this->logins()->latest()->first()->location->cityName.' '. $this->logins()->latest()->first()->location->countryName;
+        }
+        return __('Last login') . ' ' . $this->logins()->latest()->first()->created_at->diffForHumans();
+    }
+
+    public function getLastSeenDiffForHumansAttribute(): string
+    {
+        return $this->lastSeenDiffForHumans();
+    }
+
+    public function scopeFilter($query, array $filters): void
     {
         $query->when($filters['search'] ?? null, function ($query, $search) {
             $query->where(function ($query) use ($search) {
@@ -123,12 +143,34 @@ class User extends Authenticatable
         });
     }
 
-    public function recordLogin($ip)
+    /**
+     * Create a new agent instance from the given session.
+     *
+     * @param  mixed  $session
+     * @return \Laravel\Jetstream\Agent
+     */
+    protected function createAgent($session)
     {
+        return tap(new Agent(), fn($agent) => $agent->setUserAgent($session));
+    }
+
+    public function recordLogin($ip): void
+    {
+        $agent = $this->createAgent(request()->header('user-agent'));
+        //$ip = "84.52.175.124";
         $login = Login::forceCreate([
             'user_id' => $this->id,
             'ip' => $ip,
-            'location' => Location::get($ip),
+            'agent' => [
+                'is_desktop' => $agent->isDesktop(),
+                'is_tablet' => $agent->isTablet(),
+                'is_mobile' => $agent->isMobile(),
+                'platform' => $agent->platform(),
+                'browser' => $agent->browser(),
+            ],
+            'location' => cache()->rememberForever('location-' . $ip, function () use ($ip) {
+                return Location::get($ip);
+            }),
         ]);
     }
 }
