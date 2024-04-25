@@ -15,6 +15,16 @@ class Activity extends Model
 
     protected $with = ['subject'];
 
+    protected $casts = [
+        'agent' => 'array',
+        'location' => 'object',
+        'created_at' => 'datetime',
+    ];
+
+    protected $appends = [
+        'created_at_diff_for_humans',
+    ];
+
     public function broadcastOn($event)
     {
         // return [new EncryptedPrivateChannel('App.Models.Wallet.'.$this->id)];
@@ -35,15 +45,29 @@ class Activity extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public static function feed(User $user, $take = 50)
+    public function createdAtDiffForHumans() : string {
+        return $this->created_at->diffForHumans();
+    }
+
+    public function getCreatedAtDiffForHumansAttribute() : string {
+        $locale = request()->cookie('language') ?: app()->getLocale();
+        if ($locale === 'us') $locale = 'en';
+        return $this->created_at->locale($locale)->toTimeString();
+    }
+
+    public static function feed(User $user, $take = 50, $skip = 0)
     {
+        $locale = request()->cookie('language') ?: app()->getLocale();
+        if ($locale === 'us') $locale = 'en';
+        // \Log::debug($locale);
         return static::where('user_id', $user->id)
             ->latest()
             ->with('subject')
             ->take($take)
+            ->skip($skip)
             ->get()
-            ->groupBy(function ($activity) {
-                return $activity->created_at->format('d. m. Y');
+            ->groupBy(function ($activity) use ($locale) {
+                return $activity->created_at->locale($locale)->isoFormat('L');
             });
     }
 }
