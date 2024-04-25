@@ -1,5 +1,5 @@
-@extends('errors::minimal')
+@extends('errors::tailwind')
 
-@section('title', __('Server Error'))
+@section('title', __('Internal Server Error'))
 @section('code', '500')
-@section('message', __('Server Error'))
+@section('message', __('We are already working to solve the problem.'))
