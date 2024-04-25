@@ -19,7 +19,8 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id')->index();
             $table->unsignedBigInteger('subject_id');
             $table->string('subject_type', 50);
-            //$table->unsignedBigInteger('transaction_id')->nullable();
+            $table->json('agent');
+            $table->json('location');
             $table->timestamps();
 
             $table->foreign('user_id')
