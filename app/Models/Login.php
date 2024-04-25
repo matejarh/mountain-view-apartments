@@ -12,6 +12,7 @@ class Login extends Model
 
     protected $casts = [
         'location' => 'object',
+        'agent' => 'array',
     ];
 
     public function owner()
