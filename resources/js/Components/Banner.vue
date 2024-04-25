@@ -6,19 +6,21 @@ const page = usePage();
 const show = ref(true);
 const style = ref('success');
 const message = ref('');
-
+let timeout
 watchEffect(async () => {
     style.value = page.props.jetstream.flash?.bannerStyle || 'success';
     message.value = page.props.jetstream.flash?.banner || '';
     show.value = true;
+
+    timeout = setTimeout(() => { show.value = false; }, 5000);
 });
 </script>
 
 <template>
     <div>
-        <Transition enter-active-class="ease-out duration-300" enter-from-class="opacity-0 -translate-y-4  "
+        <Transition enter-active-class="ease-out duration-300" enter-from-class="opacity-0 -translate-y-6  "
             enter-to-class="opacity-100 translate-y-0 " leave-active-class="ease-in duration-200"
-            leave-from-class="opacity-100 translate-y-0 " leave-to-class="opacity-0 -translate-y-4  ">
+            leave-from-class="opacity-100 translate-y-0 " leave-to-class="opacity-0 -translate-y-6  ">
             <div v-if="show && message" class="fixed top-0 left-0 right-0  z-50"
                 :class="{ 'bg-amazon-500': style == 'success', 'bg-bittersweet-700': style == 'danger' }">
                 <div class="max-w-screen-xl mx-auto py-2 px-3 sm:px-6 lg:px-8">

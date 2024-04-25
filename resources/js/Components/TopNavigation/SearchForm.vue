@@ -3,7 +3,7 @@
 </script>
 
 <template>
-    <form action="#" method="GET" class="hidden md:block md:pl-2">
+    <form action="#" method="GET" class="hidden lg:block lg:pl-2">
         <label for="topbar-search" class="sr-only">{{__("Search")}}</label>
         <div class="relative md:w-64 lg:w-96">
             <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">

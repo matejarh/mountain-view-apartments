@@ -34,23 +34,24 @@ const submit = () => {
             <AuthenticationCardLogo />
         </template>
 
-        <div class="mb-4 text-sm text-gray-600">
+        <template #title>
+            {{ __('Confirm password') }}
+        </template>
+
+        <div class="font-light text-gray-500 dark:text-gray-400">
             {{ __("This is a secure area of the application. Please confirm your password before continuing.") }}
         </div>
 
         <form @submit.prevent="submit">
             <div>
-                <InputLabel for="password" :value="__('Password')" />
+                <InputLabel :has-error="form.errors.password" for="password" :value="__('Password')" />
                 <TextInput id="password" ref="passwordInput" v-model="form.password" type="password"
-                    class="mt-1 block w-full" required autocomplete="current-password" autofocus />
-                <InputError class="mt-2" :message="form.errors.password" />
+                    class="mt-1 block w-full" required autocomplete="current-password" autofocus :has-error="form.errors.password" />
+                <InputError :message="form.errors.password" />
             </div>
 
-            <div class="flex justify-end mt-4">
-                <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    {{__('Confirm')}}
-                </PrimaryButton>
-            </div>
+
+            <button :class="{ 'opacity-25': form.processing }" :disabled="form.processing" type="submit" class="w-full  mt-4 text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-600 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">{{__('Confirm')}}</button>
         </form>
     </AuthenticationCard>
 </template>

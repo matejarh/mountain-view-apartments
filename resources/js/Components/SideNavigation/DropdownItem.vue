@@ -15,7 +15,7 @@ onBeforeMount(() => {
 <template>
     <li>
         <Link :href="href"
-        :class="{'bg-gray-100 dark:bg-gray-700': $page.url.startsWith(props.href)}"
-            class="flex items-center p-2 pl-11 w-full text-base font-medium text-gray-900 rounded-l-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"><slot /></Link>
+        :class="{'bg-primary-600 hover:bg-primary-500 text-white dark:bg-gray-700': $page.url.startsWith(props.href)}"
+            class="flex items-center p-2 pl-11 w-full text-base font-medium text-gray-900 rounded-l-lg transition-color duration-75 group  hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"><slot /></Link>
     </li>
 </template>

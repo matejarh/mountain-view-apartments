@@ -17,9 +17,9 @@ defineEmits(['clicked'])
 <template>
     <li>
         <inertia-link v-if="as === 'link'" :href="href"
-            class="block py-2 px-4 text-sm hover:bg-primary-100 dark:hover:bg-primary-600 dark:text-primary-400 dark:hover:text-white"><slot /></inertia-link>
+            class="block py-2 transition-colors px-4 text-sm hover:bg-primary-600 dark:hover:bg-primary-700 hover:text-white dark:text-gray-50 dark:hover:text-white"><slot /></inertia-link>
 
-            <button :type="type" @click="$emit('clicked')" class="block w-full py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-400 dark:hover:text-white" v-if="as === 'button' || as === 'submit'" >
+            <button :type="type" @click="$emit('clicked')" class="block animate-colors w-full py-2 px-4 text-sm hover:bg-primary-600 hover:text-white dark:hover:bg-primary-700 dark:text-gray-50 dark:hover:text-white" v-if="as === 'button' || as === 'submit'" >
                 <slot />
             </button>
     </li>

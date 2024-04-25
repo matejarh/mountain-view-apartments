@@ -5,7 +5,7 @@ import { useForm, usePage } from '@inertiajs/vue3';
 import { useTranslationsStore } from '@/stores/translations'
 import { onMounted, ref } from 'vue';
 
-defineProps({ language: String })
+defineProps({ language: String, direction: {type:String, default: 'up'} })
 
 const page = usePage()
 
@@ -49,7 +49,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <BottomDropdown>
+    <BottomDropdown :direction="direction">
         <template #trigger>
             <img :src="selectedLanguage.flag_url" class="h-5 w-5 rounded-full mt-0.5" >
         </template>

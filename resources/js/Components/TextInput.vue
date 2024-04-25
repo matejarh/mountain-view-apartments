@@ -1,8 +1,12 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
-defineProps({
+const props = defineProps({
     modelValue: String,
+    hasError: {
+        default: false,
+        type: Boolean,
+    }
 });
 
 defineEmits(['update:modelValue']);
@@ -16,13 +20,23 @@ onMounted(() => {
 });
 
 defineExpose({ focus: () => input.value.focus() });
+
+const classes = computed(() => {
+    return [
+        props.hasError
+        ? 'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500'
+        : 'bg-gray-50 border border-gray-300 text-gray-900 focus:ring-primary-600 focus:border-primary-600 dark:focus:bg-gray-600 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-700 dark:focus:border-primary-700'
+    ]
+})
 </script>
 
 <template>
-    <input
-        ref="input"
-        class="border-gray-300 focus:border-primary-600 focus:ring-primary-600 rounded-md shadow-sm"
-        :value="modelValue"
-        @input="$emit('update:modelValue', $event.target.value)"
+
+    <input :value="modelValue"
+            ref="input"
+            @input="$emit('update:modelValue', $event.target.value)"
+            class="sm:text-sm rounded-lg focus:r block w-full p-2.5"
+            :class="classes"
     >
+
 </template>

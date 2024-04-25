@@ -15,19 +15,19 @@ const props = defineProps({
 defineEmits(['hide'])
 
 const classes = computed(() => {
-    return props.show ? '-translate-x-full' : '-translate-x-0'
+    return !props.show ? '-translate-x-full' : '-translate-x-0'
 })
 </script>
 
 <template>
     <aside
         :class="classes"
-        class="fixed top-0 left-0 z-20 w-64 h-screen pt-24 sm:pt-14 transition-transform bg-white border-r border-gray-200 md:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
+        class="fixed top-0 left-0 z-20 w-64 h-screen pt-24 sm:pt-14 transition-transform bg-white border-r border-gray-200 lg:translate-x-0 dark:bg-gray-900 dark:border-gray-700"
         aria-label="Sidenav" id="sidebar-navigation">
-        <div class="overflow-y-auto py-5 px-3 md:pr-0 h-full bg-white dark:bg-gray-800">
+        <div class="overflow-y-auto py-5 px-3 md:pr-0 h-full bg-white dark:bg-gray-900">
             <SearchForm />
             <ul class="space-y-2">
-                <NavLink :href="route('dashboard')" @click="$emit('hide')">
+                <NavLink :href="route('admin.dashboard.show')" @click="$emit('hide')">
                     <template #icon>
                         <svg aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg">

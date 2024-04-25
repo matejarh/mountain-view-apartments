@@ -24,16 +24,20 @@ const submit = () => {
 </script>
 
 <template>
-    <Head title="Register" />
+    <Head :title="__('Register')" />
 
     <AuthenticationCard>
         <template #logo>
             <AuthenticationCardLogo />
         </template>
 
-        <form @submit.prevent="submit">
+        <template #title>
+            {{ __('Register new account') }}
+        </template>
+
+        <form @submit.prevent="submit" class="space-y-4 md:space-y-6">
             <div>
-                <InputLabel for="name" value="Name" />
+                <InputLabel :has-error="!!form.errors.name" for="name" :value="__('Name')" />
                 <TextInput
                     id="name"
                     v-model="form.name"
@@ -42,12 +46,13 @@ const submit = () => {
                     required
                     autofocus
                     autocomplete="name"
+                    :has-error="!!form.errors.name"
                 />
-                <InputError class="mt-2" :message="form.errors.name" />
+                <InputError :message="form.errors.name" />
             </div>
 
-            <div class="mt-4">
-                <InputLabel for="email" value="Email" />
+            <div>
+                <InputLabel :has-error="!!form.errors.email" for="email" :value="__('Email')" />
                 <TextInput
                     id="email"
                     v-model="form.email"
@@ -55,12 +60,13 @@ const submit = () => {
                     class="mt-1 block w-full"
                     required
                     autocomplete="username"
+                    :has-error="!!form.errors.email"
                 />
-                <InputError class="mt-2" :message="form.errors.email" />
+                <InputError :message="form.errors.email" />
             </div>
 
-            <div class="mt-4">
-                <InputLabel for="password" value="Password" />
+            <div>
+                <InputLabel :has-error="!!form.errors.password" for="password" :value="__('Password')" />
                 <TextInput
                     id="password"
                     v-model="form.password"
@@ -68,12 +74,13 @@ const submit = () => {
                     class="mt-1 block w-full"
                     required
                     autocomplete="new-password"
+                    :has-error="!!form.errors.password"
                 />
-                <InputError class="mt-2" :message="form.errors.password" />
+                <InputError :message="form.errors.password" />
             </div>
 
-            <div class="mt-4">
-                <InputLabel for="password_confirmation" value="Confirm Password" />
+            <div>
+                <InputLabel :has-error="!!form.errors.password_confirmation" for="password_confirmation" :value="__('Confirm Password')" />
                 <TextInput
                     id="password_confirmation"
                     v-model="form.password_confirmation"
@@ -81,11 +88,29 @@ const submit = () => {
                     class="mt-1 block w-full"
                     required
                     autocomplete="new-password"
+                    :has-error="!!form.errors.password_confirmation"
                 />
-                <InputError class="mt-2" :message="form.errors.password_confirmation" />
+                <InputError :message="form.errors.password_confirmation" />
             </div>
 
-            <div v-if="$page.props.jetstream.hasTermsAndPrivacyPolicyFeature" class="mt-4">
+            <div class="flex items-start" v-if="$page.props.jetstream.hasTermsAndPrivacyPolicyFeature">
+                <div class="flex items-center h-5">
+                    <Checkbox id="terms" v-model:checked="form.terms" name="terms" required />
+                </div>
+                <div class="ml-3 text-sm">
+                    <label for="terms" class="font-light text-gray-500 dark:text-gray-300">{{__('I accept the')}} <a class="font-medium text-primary-600 hover:underline dark:text-primary-500" href="#">{{__('Terms and Conditions')}}</a></label>
+                </div>
+                <InputError :message="form.errors.terms" />
+            </div>
+            <button type="submit"
+            :class="{ 'opacity-25': form.processing }" :disabled="form.processing"
+            class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">{{__('Create an account')}}</button>
+            <p class="text-sm font-light text-gray-500 dark:text-gray-400">
+                {{__('Already have an account?')}} <inertia-link :href="route('login')" class="font-medium text-primary-600 hover:underline dark:text-primary-500">{{__('Login here')}}</inertia-link>
+            </p>
+
+
+            <!-- <div v-if="$page.props.jetstream.hasTermsAndPrivacyPolicyFeature" class="mt-4">
                 <InputLabel for="terms">
                     <div class="flex items-center">
                         <Checkbox id="terms" v-model:checked="form.terms" name="terms" required />
@@ -103,10 +128,12 @@ const submit = () => {
                     Already registered?
                 </Link>
 
-                <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Register
-                </PrimaryButton>
-            </div>
+                <button type="submit"
+                :class="{ 'opacity-25': form.processing }" :disabled="form.processing"
+                class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                {{ __('Log in') }}</button>
+
+            </div> -->
         </form>
     </AuthenticationCard>
 </template>

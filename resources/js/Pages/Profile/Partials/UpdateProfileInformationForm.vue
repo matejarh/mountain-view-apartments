@@ -1,6 +1,6 @@
 <script setup>
-import { ref } from 'vue';
-import { Link, router, useForm } from '@inertiajs/vue3';
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
+import { Link, router, useForm, usePage } from '@inertiajs/vue3';
 import ActionMessage from '@/Components/ActionMessage.vue';
 import FormSection from '@/Components/FormSection.vue';
 import InputError from '@/Components/InputError.vue';
@@ -8,14 +8,23 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
+import moment from 'moment/min/moment-with-locales'
 
 const props = defineProps({
     user: Object,
 });
 
+const page = usePage()
+
 const form = useForm({
     _method: 'PUT',
     name: props.user.name,
+    email: props.user.email,
+    first_name: props.user.first_name,
+    last_name: props.user.last_name,
+    phone: props.user.phone,
+    address: props.user.address,
+    country: props.user.country,
     email: props.user.email,
     photo: null,
 });
@@ -23,6 +32,23 @@ const form = useForm({
 const verificationLinkSent = ref(null);
 const photoPreview = ref(null);
 const photoInput = ref(null);
+
+const lastSeenActive=ref(null)
+
+let interval
+onMounted(() => {
+    interval = setInterval(() => {
+        //moment().locale('sl')
+        // router.reload({ only: ['user'] })
+        lastSeenActive.value = props.user.last_seen_diff_for_humans
+
+    }, 1000);
+
+})
+
+onBeforeUnmount(() => {
+    clearInterval(interval)
+})
 
 const updateProfileInformation = () => {
     if (photoInput.value) {
@@ -78,7 +104,15 @@ const clearPhotoFileInput = () => {
 <template>
     <FormSection @submitted="updateProfileInformation">
         <template #title>
-            {{__("Profile Information")}}
+            <span class="flex justify-between items-center w-full">
+                <span>
+                    {{__("Profile Information")}}
+
+                </span>
+                <span class="text-sm text-right" v-html="lastSeenActive">
+
+                </span>
+            </span>
         </template>
 
         <template #description>
@@ -132,7 +166,8 @@ const clearPhotoFileInput = () => {
 
             <!-- Name -->
             <div class="col-span-6 sm:col-span-4">
-                <InputLabel for="name" value="Name" />
+                <InputLabel
+                :has-error="!!form.errors.name" for="name" :value="__('Name')" />
                 <TextInput
                     id="name"
                     v-model="form.name"
@@ -140,13 +175,15 @@ const clearPhotoFileInput = () => {
                     class="mt-1 block w-full"
                     required
                     autocomplete="name"
+                    :has-error="!!form.errors.name"
                 />
                 <InputError :message="form.errors.name" class="mt-2" />
             </div>
 
             <!-- Email -->
             <div class="col-span-6 sm:col-span-4">
-                <InputLabel for="email" value="Email" />
+                <InputLabel
+                :has-error="!!form.errors.email" for="email" :value="__('Email')" />
                 <TextInput
                     id="email"
                     v-model="form.email"
@@ -154,12 +191,13 @@ const clearPhotoFileInput = () => {
                     class="mt-1 block w-full"
                     required
                     autocomplete="username"
+                    :has-error="!!form.errors.email"
                 />
                 <InputError :message="form.errors.email" class="mt-2" />
 
                 <div v-if="$page.props.jetstream.hasEmailVerification && user.email_verified_at === null">
                     <p class="text-sm mt-2">
-                        Your email address is unverified.
+                        {{__('Your email address is unverified.')}}
 
                         <Link
                             :href="route('verification.send')"
@@ -168,12 +206,12 @@ const clearPhotoFileInput = () => {
                             class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                             @click.prevent="sendEmailVerification"
                         >
-                            Click here to re-send the verification email.
+                            {{__('Click here to re-send the verification email.')}}
                         </Link>
                     </p>
 
                     <div v-show="verificationLinkSent" class="mt-2 font-medium text-sm text-green-600">
-                        A new verification link has been sent to your email address.
+                        {{__('A new verification link has been sent to your email address.')}}
                     </div>
                 </div>
             </div>
@@ -181,11 +219,11 @@ const clearPhotoFileInput = () => {
 
         <template #actions>
             <ActionMessage :on="form.recentlySuccessful" class="me-3">
-                Saved.
+                {{__('Saved.')}}
             </ActionMessage>
 
             <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                Save
+                {{__('Save')}}
             </PrimaryButton>
         </template>
     </FormSection>

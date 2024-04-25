@@ -27,7 +27,7 @@ const submit = () => {
 </script>
 
 <template>
-    <Head title="Reset Password" />
+    <Head :title="__('Reset Password')" />
 
     <AuthenticationCard>
         <template #logo>
@@ -36,7 +36,8 @@ const submit = () => {
 
         <form @submit.prevent="submit">
             <div>
-                <InputLabel for="email" value="Email" />
+                <InputLabel
+                :has-error="form.errors.email" for="email" :value="__('Email')" />
                 <TextInput
                     id="email"
                     v-model="form.email"
@@ -45,12 +46,14 @@ const submit = () => {
                     required
                     autofocus
                     autocomplete="username"
+                    :has-error="form.errors.email"
                 />
                 <InputError class="mt-2" :message="form.errors.email" />
             </div>
 
             <div class="mt-4">
-                <InputLabel for="password" value="Password" />
+                <InputLabel
+                :has-error="form.errors.password" for="password" :value="__('Password')" />
                 <TextInput
                     id="password"
                     v-model="form.password"
@@ -58,12 +61,14 @@ const submit = () => {
                     class="mt-1 block w-full"
                     required
                     autocomplete="new-password"
+                    :has-error="form.errors.password"
                 />
                 <InputError class="mt-2" :message="form.errors.password" />
             </div>
 
             <div class="mt-4">
-                <InputLabel for="password_confirmation" value="Confirm Password" />
+                <InputLabel
+                :has-error="form.errors.password_confirmation" for="password_confirmation" :value="__('Confirm Password')" />
                 <TextInput
                     id="password_confirmation"
                     v-model="form.password_confirmation"
@@ -71,13 +76,14 @@ const submit = () => {
                     class="mt-1 block w-full"
                     required
                     autocomplete="new-password"
+                    :has-error="form.errors.password_confirmation"
                 />
                 <InputError class="mt-2" :message="form.errors.password_confirmation" />
             </div>
 
             <div class="flex items-center justify-end mt-4">
                 <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Reset Password
+                    {{__('Reset Password')}}
                 </PrimaryButton>
             </div>
         </form>

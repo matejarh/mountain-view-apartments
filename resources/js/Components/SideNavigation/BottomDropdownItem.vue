@@ -12,7 +12,7 @@ defineEmits(['click'])
 <template>
     <li v-if="as === 'link'">
         <inertia-link :href="href"
-            class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:text-white dark:text-gray-300 dark:hover:bg-gray-600"
+            class="block py-2 px-4 text-sm text-left transition-colors text-gray-700 hover:bg-gray-100 dark:hover:text-white dark:text-gray-300 dark:hover:bg-gray-600"
             role="menuitem">
             <div class="inline-flex items-center">
                 <slot name="icon" v-if="$slots.icon" />
@@ -22,7 +22,7 @@ defineEmits(['click'])
     </li>
     <li v-if="as === 'button'">
         <button @click="$emit('click')"
-            class="block w-full py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:text-white dark:text-gray-300 dark:hover:bg-gray-600"
+            class="block w-full py-2 px-4 text-sm text-left transition-colors text-gray-700 hover:bg-gray-100 dark:hover:text-white dark:text-gray-300 dark:hover:bg-gray-600"
             role="menuitem">
             <div class="inline-flex items-center">
                 <slot name="icon" v-if="$slots.icon" />

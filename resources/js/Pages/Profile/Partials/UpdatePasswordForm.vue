@@ -40,16 +40,16 @@ const updatePassword = () => {
 <template>
     <FormSection @submitted="updatePassword">
         <template #title>
-            Update Password
+            {{__('Update Password')}}
         </template>
 
         <template #description>
-            Ensure your account is using a long, random password to stay secure.
+            {{__('Ensure your account is using a long, random password to stay secure.')}}
         </template>
 
         <template #form>
             <div class="col-span-6 sm:col-span-4">
-                <InputLabel for="current_password" value="Current Password" />
+                <InputLabel :has-error="!!form.errors.current_password" for="current_password" :value="__('Current Password')" />
                 <TextInput
                     id="current_password"
                     ref="currentPasswordInput"
@@ -57,12 +57,13 @@ const updatePassword = () => {
                     type="password"
                     class="mt-1 block w-full"
                     autocomplete="current-password"
+                    :has-error="!!form.errors.current_password"
                 />
                 <InputError :message="form.errors.current_password" class="mt-2" />
             </div>
 
             <div class="col-span-6 sm:col-span-4">
-                <InputLabel for="password" value="New Password" />
+                <InputLabel :has-error="!!form.errors.password" for="password" :value="__('New Password')" />
                 <TextInput
                     id="password"
                     ref="passwordInput"
@@ -70,18 +71,20 @@ const updatePassword = () => {
                     type="password"
                     class="mt-1 block w-full"
                     autocomplete="new-password"
+                    :has-error="!!form.errors.password"
                 />
                 <InputError :message="form.errors.password" class="mt-2" />
             </div>
 
             <div class="col-span-6 sm:col-span-4">
-                <InputLabel for="password_confirmation" value="Confirm Password" />
+                <InputLabel :has-error="!!form.errors.password_confirmation" for="password_confirmation" :value="__('Confirm Password')" />
                 <TextInput
                     id="password_confirmation"
                     v-model="form.password_confirmation"
                     type="password"
                     class="mt-1 block w-full"
                     autocomplete="new-password"
+                    :has-error="!!form.errors.password_confirmation"
                 />
                 <InputError :message="form.errors.password_confirmation" class="mt-2" />
             </div>
@@ -89,11 +92,11 @@ const updatePassword = () => {
 
         <template #actions>
             <ActionMessage :on="form.recentlySuccessful" class="me-3">
-                Saved.
+                {{__('Saved.')}}
             </ActionMessage>
 
             <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                Save
+                {{__('Save')}}
             </PrimaryButton>
         </template>
     </FormSection>

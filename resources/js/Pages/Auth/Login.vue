@@ -8,6 +8,7 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 
+
 defineProps({
     canResetPassword: Boolean,
     status: String,
@@ -37,43 +38,58 @@ const submit = () => {
         <template #logo>
             <AuthenticationCardLogo />
         </template>
+        <template #title>
+            {{ __('Sign in to your account') }}
+        </template>
 
-        <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
+        <div v-if="status" class="mb-4 font-medium text-sm text-amazon-600">
             {{ status }}
         </div>
 
-        <form @submit.prevent="submit">
+        <form class="space-y-4 md:space-y-6" @submit.prevent="submit">
             <div>
-                <InputLabel for="email" :value="__('Email')" />
-                <TextInput id="email" v-model="form.email" type="email" class="mt-1 block w-full" required autofocus
-                    autocomplete="email" />
+                <InputLabel for="email" :has-error="!!form.errors.email">{{ __('Your email') }}</InputLabel>
+
+                <TextInput type="email" name="email" id="email" v-model="form.email"
+                    :has-error="!!form.errors.email"
+                    class=""
+                    :placeholder="__('name@company.com')" required autofocus />
                 <InputError class="mt-2" :message="form.errors.email" />
             </div>
 
-            <div class="mt-4">
-                <InputLabel for="password" :value="__('Password')" />
-                <TextInput id="password" v-model="form.password" type="password" class="mt-1 block w-full" required
-                    autocomplete="current-password" />
-                <InputError class="mt-2" :message="form.errors.password" />
+
+            <div>
+                <InputLabel for="password" >{{ __('Password') }}</InputLabel>
+                <TextInput type="password" name="password" id="password" v-model="form.password" placeholder="••••••••"
+                    class=""
+                    required />
             </div>
 
-            <div class="block mt-4">
-                <label class="flex items-center">
-                    <Checkbox v-model:checked="form.remember" name="remember" />
-                    <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-                </label>
+            <div class="flex items-center justify-between">
+                <div class="flex items-start">
+                    <div class="flex items-center h-5">
+                        <Checkbox v-model:checked="form.remember" name="remember" id="remember" />
+
+                    </div>
+                    <div class="ml-3 text-sm">
+                        <label for="remember" class="text-gray-500 dark:text-gray-300">{{ __('Remember me') }}</label>
+                    </div>
+                </div>
+
+                <inertia-link v-if="canResetPassword" :href="route('password.request')"
+                    class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">{{ __('Forgot your password?') }}</inertia-link>
             </div>
 
-            <div class="flex items-center justify-end mt-4">
-                <Link v-if="canResetPassword" :href="route('password.request')"
-                    class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-600">
-                {{ __('Forgot your password?') }}
-                </Link>
+            <button type="submit"
+                :class="{ 'opacity-25': form.processing }" :disabled="form.processing"
+                class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                {{ __('Log in') }}</button>
 
-                <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    {{ __('Log in') }}
-                </PrimaryButton>
-            </div>
+            <p v-if="$page.props.canRegister" class="text-sm font-light text-gray-500 dark:text-gray-400">
+                {{ __('Don’t have an account yet?') }} <inertia-link :href="route('register')"
+                    class="font-medium text-primary-600 hover:underline dark:text-primary-500">{{ __('Sign up')}}</inertia-link>
+            </p>
         </form>
     </AuthenticationCard>
+
 </template>

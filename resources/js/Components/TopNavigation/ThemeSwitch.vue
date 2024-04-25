@@ -32,8 +32,10 @@ const toggle = () => {
 onMounted(() => {
     if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
         isDark.value = true
+        document.documentElement.classList.add('dark');
     } else {
         isDark.value = false
+        document.documentElement.classList.remove('dark');
     }
 })
 </script>
