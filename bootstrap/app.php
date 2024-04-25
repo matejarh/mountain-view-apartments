@@ -23,7 +23,7 @@ return Application::configure(basePath: dirname(__DIR__))
             \App\Http\Middleware\LanguageMiddleware::class,
             \App\Http\Middleware\XssSanitizationMiddleware::class,
         ]);
-
+        $middleware->throttleWithRedis();
 
         //
         $middleware->alias([
