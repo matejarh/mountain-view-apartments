@@ -21,5 +21,7 @@ class RecordUserLogin
     public function handle(object $event): void
     {
         $event->user->recordLogin(request()->ip());
+        // $event->user->last_seen = now()->timestamp;
+        // $event->user->save();
     }
 }
