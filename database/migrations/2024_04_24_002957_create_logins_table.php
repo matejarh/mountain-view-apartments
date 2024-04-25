@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id')->index();
             $table->string('ip', 50)->nullable();
             $table->json('location');
+            $table->json('agent');
             $table->timestamps();
 
             $table->foreign('user_id')
