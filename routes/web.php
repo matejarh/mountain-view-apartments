@@ -23,6 +23,7 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/dashboard', function () {
+        if (auth()->user()->is_admin) return redirect(route('admin.dashboard.show'));
         return Inertia::render('Dashboard');
     })->name('dashboard');
     Route::get('/user/activities', [ActivitiesController::class, 'index'])->name('activities');
