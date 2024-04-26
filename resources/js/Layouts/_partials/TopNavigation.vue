@@ -22,8 +22,9 @@ defineEmits(['toggleSidebar'])
                 <ApplicationLogo />
                 <SearchForm />
             </div>
-            <div class="flex items-center lg:order-2">
-                <ToggleSearchButton />
+            <div class="flex justify-end items-center lg:order-2">
+                <ToggleSearchButton @show-sidebar="$emit('toggleSidebar')" />
+                <NotificationsDropdown />
 <!--                 <NotificationsDropdown />
                 <AppsDropdown /> -->
                 <ThemeSwitch />

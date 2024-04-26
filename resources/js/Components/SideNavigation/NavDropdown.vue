@@ -1,11 +1,15 @@
 <script setup>
 import ArrowDownIcon from '@/Icons/ArrowDownIcon.vue';
 import ExpandDownUpTransition from '@/Transitions/ExpandDownUpTransition.vue';
+import { usePage } from '@inertiajs/vue3';
 import { ref, getCurrentInstance, onBeforeMount } from 'vue';
 
-defineProps({
+const props = defineProps({
     id: String,
+    href: String
 })
+
+const page = usePage()
 
 const component = getCurrentInstance();
 
@@ -18,9 +22,10 @@ const handleShow = () => {
 }
 
 onBeforeMount(() => {
-    if (localStorage.getItem(component.vnode.key)) {
+    if (localStorage.getItem(component.vnode.key) || page.url.startsWith(props.href)) {
         show.value = true
     }
+
 })
 
 </script>
@@ -29,10 +34,12 @@ onBeforeMount(() => {
     <li>
         <button type="button"
             @click="handleShow"
-            class="flex items-center p-2 w-full text-base font-medium text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+            :class="{'bg-primary-600 hover:bg-primary-500 text-white dark:bg-primary-800 dark:hover:bg-primary-900' : $page.url.startsWith(href)}"
+            class="flex items-center p-2 w-full text-base font-medium text-gray-900 rounded-l-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
 
             >
             <div v-if="$slots.icon"
+            :class="{'text-white group-hover:text-white dark:text-white dark:group-hover:text-white' : $page.url.startsWith(href)}"
                 class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white">
 
                 <slot name="icon" />

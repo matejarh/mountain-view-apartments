@@ -22,6 +22,7 @@ return Application::configure(basePath: dirname(__DIR__))
             \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
             \App\Http\Middleware\LanguageMiddleware::class,
             \App\Http\Middleware\XssSanitizationMiddleware::class,
+            'throttle:global',
         ]);
         $middleware->throttleWithRedis();
 

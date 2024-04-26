@@ -60,6 +60,7 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $appends = [
         'profile_photo_url',
         'last_seen_diff_for_humans',
+        'has_sessions',
     ];
 
     /**
@@ -112,11 +113,16 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function lastSeenDiffForHumans(): string
     {
-        if ($this->logins()->latest()->first()->location) {
+        if ($this->logins->count() > 0) {
 
-            return __('Last login') . ' ' . $this->logins()->latest()->first()->created_at->diffForHumans() . '<br>'. $this->logins()->latest()->first()->location->cityName.' '. $this->logins()->latest()->first()->location->countryName;
+            if ($this->logins()->latest()->first()->location) {
+
+                return __('Last login') . ' ' . $this->logins()->latest()->first()->created_at->diffForHumans() . '<br>' . $this->logins()->latest()->first()->location->cityName . ' ' . $this->logins()->latest()->first()->location->countryName;
+            }
+            return __('Last login') . ' ' . $this->logins()->latest()->first()->created_at->diffForHumans();
         }
-        return __('Last login') . ' ' . $this->logins()->latest()->first()->created_at->diffForHumans();
+
+        return $this->created_at->diffForHumans();
     }
 
     public function getLastSeenDiffForHumansAttribute(): string
@@ -124,23 +130,36 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->lastSeenDiffForHumans();
     }
 
+    public function hasSessions(): bool {
+        if(\DB::table('sessions')->where('user_id', $this->id)->count() > 0)
+        {
+            return true;
+        }
+        return false;
+    }
+    public function getHasSessionsAttribute(): bool
+    {
+        return $this->hasSessions();
+    }
+
     public function scopeFilter($query, array $filters): void
     {
         $query->when($filters['search'] ?? null, function ($query, $search) {
             $query->where(function ($query) use ($search) {
                 $query->where('first_name', 'like', '%' . $search . '%')
+                    ->orWhere('name', 'like', '%' . $search . '%')
                     ->orWhere('last_name', 'like', '%' . $search . '%')
                     ->orWhere('phone', 'like', '%' . $search . '%')
-                    ->orWhere('country_code', $search)
+                    ->orWhere('country','like', '%' . $search . '%')
                     ->orWhere('email', 'like', '%' . $search . '%');
             });
-        })->when($filters['role'] ?? null, function ($query, $role) {
+        })/* ->when($filters['role'] ?? null, function ($query, $role) {
             $query->whereHas('roles', function ($q) use ($role) {
                 $q->where('roles.name', 'like', '%' . $role . '%' ?: '*');
             });
         })->when($filters['status'] ?? null, function ($query, $status) {
             $query->where('status', $status);
-        });
+        }) */;
     }
 
     /**

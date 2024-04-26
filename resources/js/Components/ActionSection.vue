@@ -15,10 +15,10 @@ import SectionTitle from './SectionTitle.vue';
 
         <div class="mt-5 md:mt-0 md:col-span-2 max-w-screen-xl">
             <div class="space-y-4 px-4 py-5 sm:p-6 bg-white dark:bg-gray-900 text-gray-950 dark:text-gray-50 shadow sm:rounded-lg">
-                <h1 class="text-2xl font-bold">
+                <h1 class="text-2xl font-bold" v-if="$slots.title">
                     <slot name="title" />
                 </h1>
-                <p>
+                <p v-if="$slots.description">
                     <slot name="description" />
                 </p>
                 <slot name="content" />

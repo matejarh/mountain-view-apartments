@@ -24,7 +24,7 @@ const handleScroll = (e) => {
 
 const headerClasses = computed(() => {
     return [
-        scrollPosition.value > 100 ? 'text-lg' : 'text-xl'
+        scrollPosition.value > 100 ? 'text-md px-4 py-1' : 'text-xl px-4 py-2 md:py-4'
     ]
 })
 
@@ -42,7 +42,7 @@ onMounted(() => {
         <Banner />
 
         <div id="page" class="relative antialiased bg-gradient-to-br from-white to-gray-100 dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-950 w-screen overflow-hidden">
-            <div v-show="showSidebar" class="fixed inset-0 z-40 w-screen h-screen" @click="showSidebar = false" />
+            <div v-show="showSidebar" class="fixed inset-0 z-10 w-screen h-screen" @click="showSidebar = false" />
 
             <TopNavigation @toggle-sidebar="showSidebar = !showSidebar" />
 
@@ -51,12 +51,12 @@ onMounted(() => {
                 class="lg:ml-64 h-screen pt-24 sm:pt-16 overflow-y-auto scrollbar scroll-smooth hover:scrollbar-thumb-gray-500 active:scrollbar-thumb-gray-400 scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-700 scrollbar-track-transparent">
 
                 <div class="page-header bg-primary-600 text-white dark:bg-primary-800 sticky top-0" v-if="$slots.header">
-                    <h2 class="font-semibold p-4 text-gray-50 dark:text-gray-200 leading-tight transition-all ease-in-out duration-300" :class="headerClasses">
+                    <h2 class="font-semibold  text-gray-50 dark:text-gray-200 leading-tight transition-all ease-in-out duration-300" :class="headerClasses">
                         <slot name="header" />
 
                     </h2>
                 </div>
-                <div class="p-4">
+                <div class="p-1 sm:p-2 md:p-4">
                     <slot />
 
                 </div>

@@ -1,9 +1,10 @@
 <script setup>
-
+defineEmits(['show-sidebar'])
 </script>
 
 <template>
-    <button type="button" data-drawer-toggle="sidebar-navigation" aria-controls="sidebar-navigation"
+    <button type="button"
+        @click="$emit('show-sidebar')"
         class="p-2 mr-1 text-gray-500 rounded-lg md:hidden hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600">
         <span class="sr-only">Toggle search</span>
         <svg aria-hidden="true" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"

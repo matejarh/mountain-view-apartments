@@ -10,6 +10,8 @@ use Inertia\Response;
 class DashboardController extends Controller
 {
     public function show(Request $request ) : Response {
+        // session()->flash('flash.banner', __('Welcome!'));
+        // session()->flash('flash.bannerStyle', 'success');
         return Inertia::render('Admin/Dashboard');
     }
 }
