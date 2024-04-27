@@ -226,5 +226,18 @@
     "Back to Homepage": "Nazaj na prvo stran",
     "no location": "ni lokacije",
     "Users": "Uporabniki",
-    "All Users": "Vsi uporabniki"
+    "All Users": "Vsi uporabniki",
+    "Users List": "Seznam uporabnikov",
+    "Search for users": "Poišči uporabnike",
+    "Address": "Naslov",
+    "Country": "Država",
+    "Phone": "Telefon",
+    "Status": "Status",
+    "Action": "Akcije",
+    "Inactive": "Neaktiven",
+    "Active": "Aktivem",
+    "Edit User": "Uredi uporabnika",
+    "Edit": "Uredi",
+    "Recently active": "Nedavno aktiven",
+    "Sort By": "Razvrsti"
 }

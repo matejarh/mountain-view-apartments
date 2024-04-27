@@ -223,5 +223,18 @@
     "Back to Homepage": "Back to Homepage",
     "no location": "no location",
     "Users": "Users",
-    "All Users": "All Users"
+    "All Users": "All Users",
+    "Users List": "Users List",
+    "Search for users": "Search for users",
+    "Address": "Address",
+    "Country": "Country",
+    "Phone": "Phone",
+    "Status": "Status",
+    "Action": "Action",
+    "Inactive": "Inactive",
+    "Active": "Active",
+    "Edit User": "Edit User",
+    "Edit": "Edit",
+    "Recently active": "Recently active",
+    "Sort By": "Sort By"
 }
