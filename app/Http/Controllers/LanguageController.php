@@ -13,7 +13,7 @@ class LanguageController extends Controller
 
         $language = $request->input('language');
 
-        session(['language' => $language]);
+        session(['language' => $language, 'locale' => $language]);
 
         return redirect()->back()->withCookie(cookie()->forever('language', $language));
     }
