@@ -16,12 +16,15 @@ class UsersController extends Controller
 
         if ($request->user()->cannot('viewAny', User::class)) abort(403);
 
-        $users = User::orderBy('name')->filter($request->only(['search']))->paginate(10)->onEachSide(2);
+        $sortBy = $request->has('sortBy') ? trim($request->sortBy) : 'name';
+        $sortDirection = $request->has('sortDirection') ? trim($request->sortDirection) : 'asc';
+
+        $users = User::orderBy($sortBy, $sortDirection)->filter($request->only(['search']))->paginate(10)->onEachSide(2);
 
         return Inertia::render('Admin/Users', [
             'users' => $users,
-            'filters' => $request->only(['search']),
-            'links' => $users->links('vendor.pagination.tailwind-table', [
+            'filters' => $request->only(['search', 'sortBy', 'sortDirection']),
+            'links' => $users->withQueryString()->links('vendor.pagination.tailwind-table', [
                 'onEachSide' => 2,
             ])->toHtml(),
 
