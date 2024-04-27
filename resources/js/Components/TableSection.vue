@@ -1,4 +1,6 @@
 <script setup>
+import Paginator from './Paginator.vue';
+
 defineProps({
 /*     links: {
         default: null,
@@ -23,6 +25,7 @@ defineProps({
                 <slot />
             </tbody>
         </table>
-        <div class="" v-html="$page.props.links" ></div>
+        <!-- <div class="" v-html="$page.props.links" v-if="$page.props.links" ></div> -->
+        <Paginator :paginator="$page.props.users" />
     </div>
 </template>

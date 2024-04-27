@@ -3,10 +3,19 @@ import ActionSection from '@/Components/ActionSection.vue'
 import TableSection from '@/Components/TableSection.vue'
 import UserTableRow from './UserTableRow.vue'
 import UserTableHeader from './UserTableHeader.vue';
+import ArrowDownIcon from '@/Icons/ArrowDownIcon.vue';
+import { usePage } from '@inertiajs/vue3';
+import { ref } from 'vue';
+import UserEditDialog from './UserEditDialog.vue';
 
+const showUserEditDialog = ref(false)
+const editingUser = ref({})
 const handleEditUser = (user) => {
     console.log(user)
+    editingUser.value = user
+    showUserEditDialog.value = true
 }
+
 </script>
 
 <template>
@@ -29,11 +38,30 @@ const handleEditUser = (user) => {
                                 <label for="checkbox-all" class="sr-only">{{__('checkbox')}}</label>
                             </div>
                         </th>
-                        <th scope="col" class="px-6 py-3">
-                            {{__('Name')}}
+                        <th scope="col" class="px-6 py-3 flex space-x-2">
+                            <div class="flex items-center cursor-pointer" @click="">
+                                {{__('Name')}}
+                                <ArrowDownIcon v-if="$page.props.filters.sortBy === 'name'"
+                                :class="{'rotate-180' : $page.props.filters.sortBy === 'name' && $page.props.filters.sortDirection === 'desc'}"
+                                class="w-4 h-4" />
+
+                            </div>
+                            <span>/</span>
+                            <div class="flex items-center">
+                                {{__('Email')}}
+                                <ArrowDownIcon v-if="$page.props.filters.sortBy === 'email'"
+                                :class="{'rotate-180' : $page.props.filters.sortBy === 'email' && $page.props.filters.sortDirection === 'desc'}"
+                                class="w-4 h-4" />
+
+                            </div>
                         </th>
                         <th scope="col" class="px-6 py-3">
+                            <div class="flex items-center">
                             {{__('Phone')}}
+                            <ArrowDownIcon v-if="$page.props.filters.sortBy === 'phone'"
+                                                :class="{'rotate-180' : $page.props.filters.sortBy === 'phone' && $page.props.filters.sortDirection === 'desc'}"
+                                                class="w-4 h-4" />
+                            </div>
                         </th>
                         <th scope="col" class="px-6 py-3">
                             {{__('Address')}}
@@ -52,7 +80,7 @@ const handleEditUser = (user) => {
         </TableSection>
 
     </template>
-
 </ActionSection>
 
+<UserEditDialog :show="showUserEditDialog" @close="showUserEditDialog = false" :user="editingUser" />
 </template>

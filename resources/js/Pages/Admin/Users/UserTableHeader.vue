@@ -38,7 +38,7 @@ const showActions = ref(false)
             class="inline-flex items-center text-gray-500 hover:text-white focus:text-white bg-white border border-gray-300 focus:outline-none focus:bg-primary-600 hover:bg-primary-600 focus:none focus:ring-primary-600 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
             type="button">
             <span class="sr-only">{{ __('Action button') }}</span>
-            {{ __('Action') }}
+            {{__('Sort By')}}
             <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                 viewBox="0 0 10 6">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -53,22 +53,32 @@ const showActions = ref(false)
                 <li>
                     <button type="button"
                         @click="form.sortBy = 'name', form.sortDirection = 'asc', showActions=false"
-                        class="text-left block w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{__('Sort By')}} {{__('Name')}} A-Z</button>
+                        class="text-left block w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white whitespace-nowrap">{{__('Name')}} A-Z</button>
                 </li>
                 <li>
                     <button type="button"
                         @click="form.sortBy = 'name', form.sortDirection = 'desc', showActions=false"
-                        class="text-left block w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{__('Sort By')}} {{__('Name')}} Z-A</button>
+                        class="text-left block w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white whitespace-nowrap">{{__('Name')}} Z-A</button>
+                </li>
+                <li>
+                    <button type="button"
+                        @click="form.sortBy = 'email', form.sortDirection = 'asc', showActions=false"
+                        class="text-left block w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white whitespace-nowrap">{{__('Email')}} A-Z</button>
+                </li>
+                <li>
+                    <button type="button"
+                        @click="form.sortBy = 'email', form.sortDirection = 'desc', showActions=false"
+                        class="text-left block w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white whitespace-nowrap">{{__('Email')}} Z-A</button>
                 </li>
                 <li>
                     <button type="button"
                         @click="form.sortBy = 'phone', form.sortDirection = 'asc', showActions=false"
-                        class="text-left block w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{__('Sort By')}} {{__('Phone')}} A-Z</button>
+                        class="text-left block w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white whitespace-nowrap">{{__('Phone')}} A-Z</button>
                 </li>
                 <li>
                     <button type="button"
                         @click="form.sortBy = 'phone', form.sortDirection = 'desc', showActions=false"
-                        class="text-left block w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{__('Sort By')}} {{__('Phone')}} Z-A</button>
+                        class="text-left block w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white whitespace-nowrap">{{__('Phone')}} Z-A</button>
                 </li>
 
             </ul>

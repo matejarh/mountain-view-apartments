@@ -19,14 +19,14 @@ class UsersController extends Controller
         $sortBy = $request->has('sortBy') ? trim($request->sortBy) : 'name';
         $sortDirection = $request->has('sortDirection') ? trim($request->sortDirection) : 'asc';
 
-        $users = User::orderBy($sortBy, $sortDirection)->filter($request->only(['search']))->paginate(10)->onEachSide(2);
+        $users = User::orderBy($sortBy, $sortDirection)->filter($request->only(['search']))->paginate(10)->onEachSide(2)->withQueryString();
 
         return Inertia::render('Admin/Users', [
             'users' => $users,
             'filters' => $request->only(['search', 'sortBy', 'sortDirection']),
-            'links' => $users->withQueryString()->links('vendor.pagination.tailwind-table', [
+            /* 'links' => $users->withQueryString()->links('vendor.pagination.tailwind-table', [
                 'onEachSide' => 2,
-            ])->toHtml(),
+            ])->toHtml(), */
 
         ]);
     }
