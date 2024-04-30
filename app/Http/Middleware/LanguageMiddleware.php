@@ -16,7 +16,7 @@ class LanguageMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $language = $request->cookie('language') ?: app()->getLocale();
+        $language = $request->cookie('language') ?: app()->currentLocale();
         // \Log::info("Cookie set to: " . $request->cookie('language'));
 
         app()->setLocale($language);
