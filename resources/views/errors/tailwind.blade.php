@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="utf-8">
@@ -13,7 +13,7 @@
 
 <body class="antialiased">
     <div class="relative flex items-top justify-center min-h-screen w-screen bg-gray-100 dark:bg-gray-950 sm:items-center sm:pt-0 bg-cover bg-blend-multiply "
-    style="background-image: url({{ Vite::asset('resources/images/errors/Bled.jpg') }})">
+    style="background-image: url({{ Vite::asset('resources/images/errors/background.jpg') }})">
         <section class="bg-gray-50 dark:bg-gray-900 rounded-lg shadow-lg bg-opacity-60 dark:bg-opacity-60 backdrop-blur-lg">
             <div class="py-8 px-4 mx-auto max-w-screen-md text-center lg:py-16 lg:px-12">
                 @yield('icon')
@@ -37,6 +37,9 @@
                 document.documentElement.classList.remove('dark');
 
             }
+
+/*             let lang= localStorage.getItem('language') || navigator.language.split('-')[0]
+            document.documentElement.setAttribute('lang', lang) */
         })
     </script>
 </body>
