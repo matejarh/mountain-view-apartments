@@ -1,10 +1,9 @@
 <script setup>
 import ArrowUpIcon from '@/Icons/ArrowUpIcon.vue';
 import Tooltip from './Tooltip.vue';
+import { useScrollStore } from '@/stores/scroll';
 
-const props = defineProps({
-    scrollTop: Number,
-})
+const scroll = useScrollStore()
 
 const scrollToTop = () => {
     document.getElementById('main').scrollTo(0, 0);
@@ -17,7 +16,7 @@ const scrollToTop = () => {
             enter-to-class="opacity-100 translate-y-0 sm:scale-100" leave-active-class="ease-in duration-200"
             leave-from-class="opacity-100 translate-y-0 sm:scale-100"
             leave-to-class="opacity-0 translate-y-16 sm:scale-95">
-            <div class="absolute bottom-2 right-6" v-show="scrollTop > 200">
+            <div class="absolute bottom-2 right-6" v-show="scroll.scrollPosition > 200">
 
                 <Tooltip :text="__('Scroll To Top')">
 
