@@ -35,7 +35,7 @@ class AppServiceProvider extends ServiceProvider
         );
 
         RateLimiter::for('global', function (Request $request) {
-            $throttleKey = \Str::transliterate(\Str::lower($request->input(Fortify::username())).'|'.$request->ip());
+            $throttleKey = str(str($request->input(Fortify::username()))->lower().'|'.$request->ip())->transliterate();
 
             return Limit::perMinute(1000)->by($throttleKey);
             /* return Limit::perMinute(1000)->response(function (Request $request, array $headers) {
@@ -46,5 +46,6 @@ class AppServiceProvider extends ServiceProvider
         RateLimiter::for('admins', function (Request $request) {
             return Limit::perMinute(120)->by($request->session()->get('login.id'));
         });
+
     }
 }

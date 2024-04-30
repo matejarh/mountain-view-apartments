@@ -57,7 +57,7 @@ trait RecordsActivity
 
     public function getActivityType($event)
     {
-        $type = \Str::lower((new \ReflectionClass($this))->getShortName());
+        $type = str((new \ReflectionClass($this))->getShortName())->lower();
         return $event . '_' . $type;
     }
 
