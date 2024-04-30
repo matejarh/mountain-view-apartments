@@ -98,7 +98,7 @@ const submit = () => {
                     <Checkbox id="terms" v-model:checked="form.terms" name="terms" required />
                 </div>
                 <div class="ml-3 text-sm">
-                    <label for="terms" class="font-light text-gray-500 dark:text-gray-300">{{__('I accept the')}} <a class="font-medium text-primary-600 hover:underline dark:text-primary-500" href="#">{{__('Terms and Conditions')}}</a></label>
+                    <label for="terms" class="font-light text-gray-500 dark:text-gray-300">{{__('I accept the')}} <inertia-link class="font-medium text-primary-600 hover:underline dark:text-primary-500" :href="route('terms.show')">{{__('Terms and Conditions')}}</inertia-link></label>
                 </div>
                 <InputError :message="form.errors.terms" />
             </div>
