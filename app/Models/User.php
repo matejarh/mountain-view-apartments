@@ -93,7 +93,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     protected static function deleteItems(): array
     {
-        return ['activities',];
+        return ['activities', 'logins'];
     }
 
     protected function defaultProfilePhotoUrl(): string
@@ -113,7 +113,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function lastSeenDiffForHumans(): string
     {
-        if ($this->logins->count() > 0) {
+/*         if ($this->logins->count() > 0) {
             $latestLogin = $this->logins->sortByDesc('created_at')->first();
 
             if ($latestLogin->location) {
@@ -121,6 +121,9 @@ class User extends Authenticatable implements MustVerifyEmail
             }
 
             return __('Last login') . ' ' . $latestLogin->created_at->diffForHumans();
+        } */
+        if ($this->last_seen) {
+            return $this->last_seem->diffForHumans();
         }
 
         return $this->created_at->diffForHumans();
