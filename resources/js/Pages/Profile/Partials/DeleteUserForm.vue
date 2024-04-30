@@ -7,6 +7,7 @@ import DialogModal from '@/Components/DialogModal.vue';
 import InputError from '@/Components/InputError.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
+import SpinnerIcon from '@/Icons/SpinnerIcon.vue';
 
 const confirmingUserDeletion = ref(false);
 const passwordInput = ref(null);
@@ -82,7 +83,11 @@ const closeModal = () => {
 
                     <DangerButton class="ms-3" :class="{ 'opacity-25': form.processing }" :disabled="form.processing"
                         @click="deleteUser">
-                        {{ __('Delete Account') }}
+                        <div class="flex items-center">
+                            <SpinnerIcon v-show="form.processing" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white dark:text-white" />
+                            {{ form.processing ? __('Deleting')+'...' : form.recentlySuccessful ? __('Account Deleted') : __('Delete Account') }}
+
+                        </div>
                     </DangerButton>
                 </template>
             </DialogModal>
