@@ -2,10 +2,9 @@
 import Paginator from './Paginator.vue';
 
 defineProps({
-/*     links: {
+    paginator: {
         default: null,
-        type: null|String,
-    } */
+    }
 })
 </script>
 
@@ -26,6 +25,6 @@ defineProps({
             </tbody>
         </table>
         <!-- <div class="" v-html="$page.props.links" v-if="$page.props.links" ></div> -->
-        <Paginator :paginator="$page.props.users" />
+        <Paginator :paginator="paginator" v-if="paginator" />
     </div>
 </template>
