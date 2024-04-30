@@ -53,7 +53,8 @@ const countryFlag = computed(() => {
             {{ user.phone }}
         </td>
         <td class="px-6 py-4">
-            <div class="" v-html="user.address ? user.address.replace('\\n', '<br>').replace('\\n', ' ') : ''"></div>
+            <!-- <div class="" v-html="user.address ? user.address.replace('\\n', '<br>').replace('\\n', ' ') : ''"></div> -->
+            <div class="whitespace-pre" v-html="user.address"></div>
 
         </td>
         <td class="px-6 py-4">
