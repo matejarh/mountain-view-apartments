@@ -10,8 +10,8 @@ import UserEditDialog from './UserEditDialog.vue';
 
 const showUserEditDialog = ref(false)
 const editingUser = ref({})
+
 const handleEditUser = (user) => {
-    console.log(user)
     editingUser.value = user
     showUserEditDialog.value = true
 }
@@ -25,7 +25,7 @@ const handleEditUser = (user) => {
         {{ __("Users List") }}
     </template>
     <template #content>
-        <TableSection :links="$page.props.links">
+        <TableSection :paginator="$page.props.users">
             <template #header>
                 <UserTableHeader />
             </template>
@@ -77,6 +77,7 @@ const handleEditUser = (user) => {
                         </th>
             </template>
             <UserTableRow v-for="user in $page.props.users.data" :key="user.id" :user="user" @edit-user="handleEditUser" />
+
         </TableSection>
 
     </template>
