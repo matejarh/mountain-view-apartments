@@ -17,6 +17,9 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            backgroundImage: {
+                'image-bled': "url('/resources/images/errors/background.jpg')",
+            },
             colors: {
                 'primary': {
                     '50': '#eafeff',
