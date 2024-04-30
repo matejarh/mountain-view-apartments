@@ -1,11 +1,12 @@
 <script setup>
 import { Head, usePage } from '@inertiajs/vue3';
-import { computed, onMounted, ref } from 'vue';
+import { computed, onBeforeMount, ref } from 'vue';
 import SideNavigation from './_partials/SideNavigation.vue';
 import TopNavigation from './_partials/TopNavigation.vue';
 import ScrollToTop from '@/Components/ScrollToTop.vue';
 import Banner from '@/Components/Banner.vue';
 import { useTranslationsStore } from '@/stores/translations';
+import { useScrollStore } from '@/stores/scroll';
 
 defineProps({
     title: String,
@@ -13,25 +14,27 @@ defineProps({
 
 const page = usePage()
 
-const store = useTranslationsStore()
+const translations = useTranslationsStore()
 
+const scroll = useScrollStore()
 
 const scrollPosition = ref(0)
 
 const handleScroll = (e) => {
     scrollPosition.value = e.target.scrollTop
+    scroll.updateScrollPosition(e.target.scrollTop)
 }
 
 const headerClasses = computed(() => {
     return [
-        scrollPosition.value > 100 ? 'text-md px-4 py-1' : 'text-xl px-4 py-2 md:py-4'
+        scroll.scrollPosition > 100 ? 'text-md px-4 py-1' : 'text-xl px-4 py-2 md:py-4'
     ]
 })
 
 const showSidebar = ref(false)
 
-onMounted(() => {
-    store.updateTranslations(page.props.translations)
+onBeforeMount(() => {
+    translations.updateTranslations(page.props.translations)
 })
 </script>
 
@@ -56,13 +59,13 @@ onMounted(() => {
 
                     </h2>
                 </div>
-                <div class="p-1 sm:p-2 md:p-4">
+                <div class="p-1 sm:p-2 md:p-4 mb-16">
                     <slot />
 
                 </div>
             </main>
 
-            <ScrollToTop :scrollTop="scrollPosition" />
+            <ScrollToTop />
         </div>
     </div>
 </template>
