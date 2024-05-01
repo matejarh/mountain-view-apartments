@@ -18,8 +18,6 @@ class UpdateImage implements UpdatesImages
      */
     public function update(Image $image, array $input): void
     {
-        \Log::debug('action', $input);
-
         $attributeNames = array(
             'name' => __('Name'),
             'description' => __('Description'),

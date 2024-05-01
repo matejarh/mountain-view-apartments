@@ -33,7 +33,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('galeries_images', function (Blueprint $table) {
+        Schema::create('galleries_images', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Gallery::class, 'gallery_id')->constrained()->onDelete('cascade');
             $table->foreignIdFor(Image::class, 'image_id')->constrained()->onDelete('cascade');
@@ -50,7 +50,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('galeries_images');
+        Schema::dropIfExists('galleries_images');
         Schema::dropIfExists('galleries');
         Schema::dropIfExists('images');
     }

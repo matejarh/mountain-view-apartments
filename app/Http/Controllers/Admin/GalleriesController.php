@@ -2,14 +2,23 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Contracts\AttachesGalleriesToImages;
+use App\Contracts\AttachesImagesToGalleries;
 use App\Contracts\CreatesNewGalleries;
+use App\Contracts\DeletesGalleries;
+use App\Contracts\DetachesGalleriesFromImages;
+use App\Contracts\DetachesImagesFromGalleries;
+use App\Contracts\GalleryAttacheResponse;
 use App\Contracts\GalleryCreateResponse;
+use App\Contracts\GalleryDeleteResponse;
+use App\Contracts\GalleryDetacheResponse;
 use App\Contracts\GalleryUpdateResponse;
 use App\Contracts\UpdatesGalleries;
 use App\Http\Controllers\Controller;
 use App\Http\Responses\GalleryCreatedResponse;
 use App\Http\Responses\GalleryUpdatedResponse;
 use App\Models\Gallery;
+use App\Models\Image;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -65,5 +74,62 @@ class GalleriesController extends Controller
         $updater->update($gallery, $request->all());
 
         return app(GalleryUpdateResponse::class);
+    }
+
+
+    /**
+     * Destroyes given gallery.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Models\Gallery $gallery
+     * @param  \App\Contracts\DeletesGalleries $destroyer
+     * @return \App\Contracts\GalleryDeleteResponse
+     */
+    public function destroy(Request $request, Gallery $gallery, DeletesGalleries $destroyer): GalleryDeleteResponse
+    {
+        if ($request->user()->cannot('update', $gallery))
+            abort(403);
+
+        $destroyer->destroy($gallery);
+
+        return app(GalleryDeleteResponse::class);
+    }
+
+    /**
+     * Attaches given gallery to given image.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Gallery  $gallery
+     * @param  \App\Models\Image  $image
+     * @param  \App\Contracts\AttachesImagesToGalleries  $attacher
+     * @return \App\Contracts\ImageAttacheResponse
+     */
+    public function attach(Request $request, Gallery $gallery, Image $image, AttachesImagesToGalleries $attacher): GalleryAttacheResponse
+    {
+        if ($request->user()->cannot('update', $gallery))
+            abort(403);
+
+        $attacher->attach($image, $gallery);
+
+        return app(GalleryAttacheResponse::class);
+    }
+
+    /**
+     * Detaches given gallery grom given image.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Gallery  $gallery
+     * @param  \App\Models\Image  $image
+     * @param  \App\Contracts\DetachesImagesFromGalleries  $attacher
+     * @return \App\Contracts\GalleryDetacheResponse
+     */
+    public function detach(Request $request, Gallery $gallery, Image $image, DetachesImagesFromGalleries $attacher): GalleryDetacheResponse
+    {
+        if ($request->user()->cannot('update', $gallery))
+            abort(403);
+
+        $attacher->detach($image, $gallery);
+
+        return app(GalleryDetacheResponse::class);
     }
 }

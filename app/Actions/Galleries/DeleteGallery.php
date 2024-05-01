@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Actions\Gallerys;
+namespace App\Actions\Galleries;
 
 use App\Contracts\DeletesGalleries;
 use App\Models\Gallery;

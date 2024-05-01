@@ -32,6 +32,6 @@ class Image extends Model
      * Get galleries list this image belons to
      */
     public function galleries(): BelongsToMany {
-        return $this->belongsToMany(Gallery::class, 'galeries_images', 'image_id', 'gallery_id');
+        return $this->belongsToMany(Gallery::class, 'galleries_images', 'image_id', 'gallery_id');
     }
 }

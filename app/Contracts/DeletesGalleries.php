@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Contracts;
+use App\Models\Gallery;
 
 interface DeletesGalleries
 {

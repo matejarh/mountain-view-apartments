@@ -188,6 +188,8 @@ class GalleriesTest extends TestCase
 
     public function test_admin_can_attach_images_to_gallery(): void
     {
+        $this->withoutExceptionHandling();
+
         $admin = User::factory(['is_admin' => true])->create();
 
         $image = Image::factory(['user_id' => $admin->id])->create();
@@ -205,19 +207,72 @@ class GalleriesTest extends TestCase
             'description' => fake()->sentence(),
         ])->create();
 
-        $image->galleries()->attach($gallery);
+        $response = $this->actingAs($admin)->put(route('admin.images.attach', ['image' => $image, 'gallery' => $gallery]));
+
+        //$image->galleries()->attach($gallery);
+
+        $this->assertCount(1, $gallery->fresh()->images);
+        $response = $this->actingAs($admin)->put(route('admin.images.attach', ['image' => $image1, 'gallery' => $gallery]));
+        $this->assertCount(2, $gallery->fresh()->images);
+
+        $response = $this->actingAs($admin)->put(route('admin.images.detach', ['image' => $image, 'gallery' => $gallery]));
 
         $this->assertCount(1, $gallery->fresh()->images);
 
-        $gallery->images()->attach($image1);
-
+        $response = $this->actingAs($admin)->put(route('admin.galleries.attach', ['image' => $image, 'gallery' => $gallery]));
         $this->assertCount(2, $gallery->fresh()->images);
-        $this->assertCount(1, $image->fresh()->galleries);
+        $response = $this->actingAs($admin)->put(route('admin.galleries.detach', ['image' => $image, 'gallery' => $gallery]));
+        $this->assertCount(1, $gallery->fresh()->images);
+        $response = $this->actingAs($admin)->put(route('admin.galleries.detach', ['image' => $image1, 'gallery' => $gallery]));
+        $this->assertCount(0, $gallery->fresh()->images);
+    }
 
-        $image->galleries()->attach($gallery1);
+    public function test_admin_can_delete_images(): void
+    {
+        $admin = User::factory(['is_admin' => true])->create();
 
-        $this->assertCount(1, $gallery1->fresh()->images);
-        $this->assertCount(2, $image->fresh()->galleries);
+        $image = Image::factory(['user_id' => $admin->id])->create();
+
+        $gallery = Gallery::factory([
+            'name' => 'Test Gallery',
+            'slug' => 'test-gallery',
+            'description' => fake()->sentence(),
+        ])->create();
+
+        $image->galleries()->attach($gallery);
+
+        $response = $this->actingAs($admin)->delete(route('admin.images.destroy', $image));
+
+        $response->assertStatus(302);
+
+        $response->assertSessionHasNoErrors();
+
+        $this->assertDatabaseEmpty('galleries_images');
+        $this->assertDatabaseEmpty('images');
+    }
+
+    public function test_admin_can_delete_galleries(): void
+    {
+        $admin = User::factory(['is_admin' => true])->create();
+
+        $image = Image::factory(['user_id' => $admin->id])->create();
+
+        $gallery = Gallery::factory([
+            'name' => 'Test Gallery',
+            'slug' => 'test-gallery',
+            'description' => fake()->sentence(),
+        ])->create();
+
+        $image->galleries()->attach($gallery);
+
+        $response = $this->actingAs($admin)->delete(route('admin.galleries.destroy', $gallery));
+
+        $response->assertStatus(302);
+
+        $response->assertSessionHasNoErrors();
+
+        $this->assertDatabaseEmpty('galleries_images');
+        $this->assertDatabaseEmpty('galleries');
     }
 
 }

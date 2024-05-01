@@ -1,9 +1,13 @@
 <?php
 namespace App\Http;
+use App\Contracts\AttachesGalleriesToImages;
+use App\Contracts\AttachesImagesToGalleries;
 use App\Contracts\CreatesNewGalleries;
 use App\Contracts\CreatesNewImages;
 use App\Contracts\DeletesGalleries;
 use App\Contracts\DeletesImages;
+use App\Contracts\DetachesGalleriesFromImages;
+use App\Contracts\DetachesImagesFromGalleries;
 use App\Contracts\UpdatesGalleries;
 use App\Contracts\UpdatesImages;
 
@@ -73,5 +77,49 @@ class Fortify
     public static function destroyImagesUsing(string $callback)
     {
         app()->singleton(DeletesImages::class, $callback);
+    }
+
+    /**
+     * Register a class / callback that should be used to attach given image to given gallery.
+     *
+     * @param  string  $callback
+     * @return void
+     */
+    public static function attachImagesToGalleriesUsing(string $callback)
+    {
+        app()->singleton(AttachesImagesToGalleries::class, $callback);
+    }
+
+    /**
+     * Register a class / callback that should be used to attach given gallery to given image.
+     *
+     * @param  string  $callback
+     * @return void
+     */
+    public static function attachGalleriesToImagesUsing(string $callback)
+    {
+        app()->singleton(AttachesGalleriesToImages::class, $callback);
+    }
+
+    /**
+     * Register a class / callback that should be used to detach given image from given gallery.
+     *
+     * @param  string  $callback
+     * @return void
+     */
+    public static function detachImagesFromGalleriesUsing(string $callback)
+    {
+        app()->singleton(DetachesImagesFromGalleries::class, $callback);
+    }
+
+    /**
+     * Register a class / callback that should be used to detach given gallery from given image.
+     *
+     * @param  string  $callback
+     * @return void
+     */
+    public static function detachGalleriesFromImagesUsing(string $callback)
+    {
+        app()->singleton(DetachesGalleriesFromImages::class, $callback);
     }
 }

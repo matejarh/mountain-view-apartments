@@ -36,6 +36,8 @@ Route::group(['middleware' => config('jetstream.middleware', ['web'])], function
             Route::get('{gallery}', [GalleriesController::class, 'show'])->name('show');
             Route::put('{gallery}', [GalleriesController::class, 'update'])->name('update');
             Route::delete('{gallery}', [GalleriesController::class, 'destroy'])->name('destroy');
+            Route::put('attach/{gallery}/{image}', [GalleriesController::class, 'attach'])->name('attach');
+            Route::put('detach/{gallery}/{image}', [GalleriesController::class, 'detach'])->name('detach');
         });
 
         Route::name('images.')->prefix('images')->namespace('images')->group(function() {
@@ -44,6 +46,8 @@ Route::group(['middleware' => config('jetstream.middleware', ['web'])], function
             Route::get('{image}', [ImagesController::class, 'show'])->name('show');
             Route::put('{image}', [ImagesController::class, 'update'])->name('update');
             Route::delete('{image}', [ImagesController::class, 'destroy'])->name('destroy');
+            Route::put('attach/{image}/{gallery}', [ImagesController::class, 'attach'])->name('attach');
+            Route::put('detach/{image}/{gallery}', [ImagesController::class, 'detach'])->name('detach');
         });
     });
 
