@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,8 +17,18 @@ class PropertyFactory extends Factory
      */
     public function definition(): array
     {
+        $types = [
+            'Two Bedroom Apartment',
+            'One Bedroom Apartment',
+        ];
+
         return [
-            //
+            'owner_id' => User::factory()->create()->id,
+            'type' => fake()->randomElement($types),
+            'slug' => str(fake()->sentence())->slug(),
+            'title' => fake()->sentence(),
+            'description' => fake()->paragraph(),
+            'keywords' => fake()->words(5, true),
         ];
     }
 }

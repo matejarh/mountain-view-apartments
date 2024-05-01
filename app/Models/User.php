@@ -93,7 +93,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     protected static function deleteItems(): array
     {
-        return ['activities', 'logins'];
+        return ['activities', 'logins', 'galleries', 'images'];
     }
 
     protected function defaultProfilePhotoUrl(): string
@@ -109,6 +109,16 @@ class User extends Authenticatable implements MustVerifyEmail
     public function activities(): HasMany
     {
         return $this->hasMany(Activity::class)->latest();
+    }
+
+    public function galleries(): HasMany
+    {
+        return $this->hasMany(Gallery::class)->latest();
+    }
+
+    public function images(): HasMany
+    {
+        return $this->hasMany(Image::class)->latest();
     }
 
     public function lastSeenDiffForHumans(): string

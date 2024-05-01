@@ -6,11 +6,24 @@ use App\Actions\Fortify\CreateNewUser;
 use App\Actions\Fortify\ResetUserPassword;
 use App\Actions\Fortify\UpdateUserPassword;
 use App\Actions\Fortify\UpdateUserProfileInformation;
+use App\Actions\Galleries\CreateNewGallery;
+use App\Actions\Galleries\UpdateGallery;
+use App\Actions\Images\CreateNewImage;
+use App\Actions\Images\UpdateImage;
+use App\Contracts\GalleryCreateResponse as GalleryCreateResponseContract;
+use App\Contracts\GalleryUpdateResponse as GalleryUpdateResponseContract;
+use App\Contracts\ImageCreateResponse as ImageCreateResponseContract;
+use App\Contracts\ImageUpdateResponse as ImageUpdateResponseContract;
+use App\Http\Responses\GalleryCreatedResponse;
+use App\Http\Responses\GalleryUpdatedResponse;
+use App\Http\Responses\ImageCreatedResponse;
+use App\Http\Responses\ImageUpdatedResponse;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Fortify\Fortify;
+use App\Http\Fortify as AppFortify;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -19,7 +32,20 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->registerResponseBindings();
+    }
+
+    /**
+     * Register the response bindings.
+     *
+     * @return void
+     */
+    protected function registerResponseBindings()
+    {
+        $this->app->singleton(GalleryCreateResponseContract::class, GalleryCreatedResponse::class);
+        $this->app->singleton(GalleryUpdateResponseContract::class, GalleryUpdatedResponse::class);
+        $this->app->singleton(ImageCreateResponseContract::class, ImageCreatedResponse::class);
+        $this->app->singleton(ImageUpdateResponseContract::class, ImageUpdatedResponse::class);
     }
 
     /**
@@ -27,6 +53,10 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        AppFortify::createGalleriesUsing(CreateNewGallery::class);
+        AppFortify::updateGalleriesUsing(UpdateGallery::class);
+        AppFortify::createImagesUsing(CreateNewImage::class);
+        AppFortify::updateImagesUsing(UpdateImage::class);
         Fortify::createUsersUsing(CreateNewUser::class);
         Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
