@@ -44,6 +44,7 @@ class GalleriesTest extends TestCase
 
     public function test_admin_can_create_new_gallery(): void
     {
+        // $this->withoutExceptionHandling();
         $admin = User::factory(['is_admin' => true])->create();
 
         $gallery = [
@@ -51,7 +52,7 @@ class GalleriesTest extends TestCase
             'description' => fake()->sentence(),
         ];
 
-        $response = $this->actingAs($admin)->post('/admin/galleries/store', $gallery);
+        $response = $this->actingAs($admin)->post(route('admin.galleries.store'), $gallery);
 
         $response->assertStatus(302);
 
@@ -121,7 +122,7 @@ class GalleriesTest extends TestCase
             'description' => fake()->sentence(),
         ];
 
-        $response = $this->actingAs($admin)->put("/admin/galleries/$gallery->slug/update", $updatedgallery);
+        $response = $this->actingAs($admin)->put("/admin/galleries/$gallery->slug", $updatedgallery);
 
         $response->assertStatus(302);
 

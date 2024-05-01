@@ -8,15 +8,21 @@ use App\Actions\Fortify\UpdateUserPassword;
 use App\Actions\Fortify\UpdateUserProfileInformation;
 use App\Actions\Galleries\CreateNewGallery;
 use App\Actions\Galleries\UpdateGallery;
+use App\Actions\Gallerys\DeleteGallery;
 use App\Actions\Images\CreateNewImage;
+use App\Actions\Images\DeleteImage;
 use App\Actions\Images\UpdateImage;
 use App\Contracts\GalleryCreateResponse as GalleryCreateResponseContract;
+use App\Contracts\GalleryDeleteResponse as GalleryDeleteResponseContract;
 use App\Contracts\GalleryUpdateResponse as GalleryUpdateResponseContract;
 use App\Contracts\ImageCreateResponse as ImageCreateResponseContract;
+use App\Contracts\ImageDeleteResponse as ImageDeleteResponseContract;
 use App\Contracts\ImageUpdateResponse as ImageUpdateResponseContract;
 use App\Http\Responses\GalleryCreatedResponse;
+use App\Http\Responses\GalleryDeletedResponse;
 use App\Http\Responses\GalleryUpdatedResponse;
 use App\Http\Responses\ImageCreatedResponse;
+use App\Http\Responses\ImageDeletedResponse;
 use App\Http\Responses\ImageUpdatedResponse;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
@@ -44,7 +50,10 @@ class FortifyServiceProvider extends ServiceProvider
     {
         $this->app->singleton(GalleryCreateResponseContract::class, GalleryCreatedResponse::class);
         $this->app->singleton(GalleryUpdateResponseContract::class, GalleryUpdatedResponse::class);
+        $this->app->singleton(GalleryDeleteResponseContract::class, GalleryDeletedResponse::class);
+
         $this->app->singleton(ImageCreateResponseContract::class, ImageCreatedResponse::class);
+        $this->app->singleton(ImageDeleteResponseContract::class, ImageDeletedResponse::class);
         $this->app->singleton(ImageUpdateResponseContract::class, ImageUpdatedResponse::class);
     }
 
@@ -55,8 +64,12 @@ class FortifyServiceProvider extends ServiceProvider
     {
         AppFortify::createGalleriesUsing(CreateNewGallery::class);
         AppFortify::updateGalleriesUsing(UpdateGallery::class);
+        AppFortify::destroyGalleriesUsing(DeleteGallery::class);
+
         AppFortify::createImagesUsing(CreateNewImage::class);
         AppFortify::updateImagesUsing(UpdateImage::class);
+        AppFortify::destroyImagesUsing(DeleteImage::class);
+
         Fortify::createUsersUsing(CreateNewUser::class);
         Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);

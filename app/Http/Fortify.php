@@ -2,6 +2,8 @@
 namespace App\Http;
 use App\Contracts\CreatesNewGalleries;
 use App\Contracts\CreatesNewImages;
+use App\Contracts\DeletesGalleries;
+use App\Contracts\DeletesImages;
 use App\Contracts\UpdatesGalleries;
 use App\Contracts\UpdatesImages;
 
@@ -30,6 +32,17 @@ class Fortify
     }
 
     /**
+     * Register a class / callback that should be used to destroyes given gallery.
+     *
+     * @param  string  $callback
+     * @return void
+     */
+    public static function destroyGalleriesUsing(string $callback)
+    {
+        app()->singleton(DeletesGalleries::class, $callback);
+    }
+
+    /**
      * Register a class / callback that should be used to create new images.
      *
      * @param  string  $callback
@@ -41,7 +54,7 @@ class Fortify
     }
 
     /**
-     * Register a class / callback that should be used to update new images.
+     * Register a class / callback that should be used to update given image.
      *
      * @param  string  $callback
      * @return void
@@ -49,5 +62,16 @@ class Fortify
     public static function updateImagesUsing(string $callback)
     {
         app()->singleton(UpdatesImages::class, $callback);
+    }
+
+    /**
+     * Register a class / callback that should be used to destroy given image.
+     *
+     * @param  string  $callback
+     * @return void
+     */
+    public static function destroyImagesUsing(string $callback)
+    {
+        app()->singleton(DeletesImages::class, $callback);
     }
 }
