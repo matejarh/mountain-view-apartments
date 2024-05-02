@@ -1,92 +1,40 @@
 <script setup>
 import ActionSection from '@/Components/ActionSection.vue'
-import TableSection from '@/Components/TableSection.vue'
+import Tooltip from '@/Components/Tooltip.vue'
 import FullLayout from '@/Layouts/FullLayout.vue';
-import ArrowDownIcon from '@/Icons/ArrowDownIcon.vue';
-import ActivityTableHeader from './ActivityTableHeader.vue';
-import ActivityTableRow from './ActivityTableRow.vue';
+import GalleryCard from './_partials/GalleryCard.vue';
+import CreateGalleryDialog from './_partials/CreateGalleryDialog.vue';
+import { ref } from 'vue';
+import CirclePlusIcon from '@/Icons/CirclePlusIcon.vue';
 
+const showCreateDialog = ref(false)
+const galleryProxy = ref(null)
 
+const handleEdit = (gallery) => {
+    galleryProxy.value = gallery
+    showCreateDialog.value = true
+}
 </script>
 
 <template>
     <FullLayout :title="__('Galleries')">
-        <ActionSection>
-            <template #title>
-                {{ __("Galleries") }}
-            </template>
-            <template #content>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-5 gap-4 lg:gap-4">
+            <TransitionGroup enter-active-class="animate__animated animate__bounceInDown" leave-active-class="animate__animated animate__bounceOutUp">
 
-<!--                 <TableSection :paginator="$page.props.activities">
-                    <template #header>
-                        <ActivityTableHeader />
-                    </template>
+                <GalleryCard  v-for="gallery, key in $page.props.galleries.data" :key="key" :gallery="gallery" @edit="handleEdit"/>
+            </TransitionGroup>
+        </div>
 
-                    <template #tablehead>
-                        <th scope="col" class="p-4">
-                            <div class="flex items-center">
-                                <input id="checkbox-all" type="checkbox"
-                                    class="w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 rounded focus:ring-primary-600 dark:focus:ring-primary-700 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="checkbox-all" class="sr-only">{{ __('checkbox') }}</label>
-                            </div>
-                        </th>
-                        <th scope="col" class="px-6 py-3 ">
-                            <div class="flex items-center cursor-pointer" @click="">
-                                <div class="flex space-x-2">
-                                    <div class="">
 
-                                        {{ __('Date') }}
-                                    </div>
-                                    <span> / </span>
-                                    <div class="">
+        <div class=" fixed top-28 sm:top-20 right-4 md:top-20  md:right-4 z-30">
 
-                                        {{ __('Time') }}
-                                    </div>
-                                </div>
-                                <ArrowDownIcon v-if="$page.props.filters.sortBy === 'created_at'"
-                                    :class="{ 'rotate-180': $page.props.filters.sortBy === 'created_at' && $page.props.filters.sortDirection === 'desc' }"
-                                    class="w-4 h-4" />
+            <Tooltip :text="__('Add New Gallery')" location="bottom">
 
-                            </div>
-                        </th>
-                        <th scope="col" class="px-6 py-3 flex space-x-2">
-                            <div class="flex items-center cursor-pointer" @click="">
-                                {{ __('Name') }}
-                                <ArrowDownIcon v-if="$page.props.filters.sortBy === 'owner.name'"
-                                    :class="{ 'rotate-180': $page.props.filters.sortBy === 'owner.name' && $page.props.filters.sortDirection === 'desc' }"
-                                    class="w-4 h-4" />
-
-                            </div>
-                            <span>/</span>
-                            <div class="flex items-center">
-                                {{ __('Email') }}
-                                <ArrowDownIcon v-if="$page.props.filters.sortBy === 'owner.email'"
-                                    :class="{ 'rotate-180': $page.props.filters.sortBy === 'owner.email' && $page.props.filters.sortDirection === 'desc' }"
-                                    class="w-4 h-4" />
-
-                            </div>
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            <div class="flex items-center">
-                                {{ __('Type') }}
-                                <ArrowDownIcon v-if="$page.props.filters.sortBy === 'type'"
-                                    :class="{ 'rotate-180': $page.props.filters.sortBy === 'type' && $page.props.filters.sortDirection === 'desc' }"
-                                    class="w-4 h-4" />
-                            </div>
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            {{ __('Device') }}
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            {{ __('Location') }}
-                        </th>
-                    </template>
-                    <ActivityTableRow v-for="activity in $page.props.activities.data" :key="activity.id"
-                        :activity="activity" />
-
-                </TableSection> -->
-            </template>
-        </ActionSection>
-
+                <button @click="galleryProxy = null, showCreateDialog = true" class=" drop-shadow-lg rounded-full bg-transparent ">
+                <CirclePlusIcon class="w-16 h-16 text-amazon-400 hover:scale-105 hover:rotate-180 active:scale-95 transition " />
+                </button>
+            </Tooltip>
+        </div>
+        <CreateGalleryDialog @close="showCreateDialog = false" :show="showCreateDialog" :gallery="galleryProxy" />
     </FullLayout>
 </template>
