@@ -69,32 +69,10 @@ const populateForm = () => {
     form.description = props.gallery.description
 }
 
-const updatePhotoPreview = () => {
-    const photo = photoInput.value.files[0];
-
-    if (!photo) return;
-
-    const reader = new FileReader();
-
-    reader.onload = (e) => {
-        photoPreview.value = e.target.result;
-    };
-
-    reader.readAsDataURL(photo);
-};
-
-
-
-const handleDropped = (f) => {
-    console.log(f)
-    /* f.each((file) => {
-        files.value.push(file)
-    }) */
-}
 </script>
 
 <template>
-    <DialogModal max-width="4xl" :show="show" @close="form.reset(), $emit('close')">
+    <DialogModal max-width="2xl" :show="show" @close="form.reset(), $emit('close')">
         <template #title>{{ gallery ? __('Edit Gallery') : __('Create Gallery') }}</template>
 
         <template #content>
@@ -116,7 +94,7 @@ const handleDropped = (f) => {
 
             </div>
 
-            <ImagesList :gallery="gallery" />
+            <ImagesList v-if="gallery" :gallery="gallery" />
         </template>
 
         <template #footer>
