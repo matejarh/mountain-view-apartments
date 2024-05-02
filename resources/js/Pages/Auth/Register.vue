@@ -7,6 +7,7 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
+import SpinnerIcon from '@/Icons/SpinnerIcon.vue';
 
 const form = useForm({
     name: '',
@@ -102,9 +103,17 @@ const submit = () => {
                 </div>
                 <InputError :message="form.errors.terms" />
             </div>
-            <button type="submit"
-            :class="{ 'opacity-25': form.processing }" :disabled="form.processing"
-            class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">{{__('Create an account')}}</button>
+
+            <PrimaryButton class="w-full text-center" type="submit" :class="{ 'opacity-25': form.processing || form.recentlySuccessful || !form.isDirty }"
+                :disabled="form.processing || form.recentlySuccessful">
+                <div class="flex items-center justify-center w-full">
+                    <SpinnerIcon v-show="form.processing"
+                        class="animate-spin -ml-1 mr-3 h-5 w-5 text-white dark:text-white" />
+                    {{ form.processing ? __('Creating account') + '...' : form.recentlySuccessful ? __('Account created') : __('Create an account') }}
+
+                </div>
+            </PrimaryButton>
+
             <p class="text-sm font-light text-gray-500 dark:text-gray-400">
                 {{__('Already have an account?')}} <inertia-link :href="route('login')" class="font-medium text-primary-600 hover:underline dark:text-primary-500">{{__('Login here')}}</inertia-link>
             </p>
