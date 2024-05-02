@@ -11,7 +11,7 @@ trait HasPhoto
     /**
      * Update the Images photo.
      *
-     * @param  \Illuminate\Http\UploadedFile  $photo
+     * @param  \Illuminate\Http\UploadedFile $photo
      * @param  string  $storagePath
      * @return void
      */
@@ -21,7 +21,7 @@ trait HasPhoto
             $photo = $this->optimizePhoto($photo);
             $this->forceFill([
                 'image_path' => $photo->storePublicly(
-                    $storagePath,
+                    $storagePath . '/' . str(auth()->user()->name())->slug(),
                     ['disk' => $this->photoDisk()]
                 ),
             ])->save();
