@@ -60,13 +60,15 @@ const maxWidthClass = computed(() => {
         'lg': 'sm:max-w-lg',
         'xl': 'sm:max-w-xl',
         '2xl': 'sm:max-w-2xl',
+        '3xl': 'md:max-w-3xl',
+        '4xl': 'md:max-w-4xl',
     }[props.maxWidth];
 });
 </script>
 
 <template>
     <dialog class="z-50 m-0 min-h-full min-w-full overflow-y-auto bg-transparent backdrop:bg-transparent backdrop-blur-sm" ref="dialog">
-        <div class="fixed inset-0 flex flex-col justify-center items-center overflow-y-auto px-4 py-6 sm:px-0 z-50" scroll-region>
+        <div class="fixed inset-0 flex flex-col justify-center items-center overflow-y-auto px-0 py-6 sm:px-4 z-50" scroll-region>
             <transition
                 enter-active-class="ease-out duration-300"
                 enter-from-class="opacity-0"
@@ -88,7 +90,7 @@ const maxWidthClass = computed(() => {
                 leave-from-class="opacity-100 translate-y-0 sm:scale-100"
                 leave-to-class="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-                <div v-show="show" class="mb-6 bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full sm:mx-auto sm:my-auto" :class="maxWidthClass">
+                <div v-show="show" class="md:mb-6 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 rounded-lg overflow-y-auto shadow-xl transform transition-all w-full sm:w-full sm:mx-4 " :class="maxWidthClass">
                     <slot v-if="showSlot"/>
                 </div>
             </transition>
