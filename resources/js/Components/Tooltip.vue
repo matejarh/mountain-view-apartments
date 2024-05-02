@@ -11,10 +11,10 @@ const props = defineProps({
 
 const aligmentClasses = computed(() => {
     return {
-        'top': '-top-12 left-1/2 -translate-x-1/2',
-        'bottom': '-bottom-12 left-1/2 -translate-x-1/2',
-        'left': 'right-[120%] -top-2',
-        'right': '-right-12',
+        'top': '-top-12 left-1/2 -translate-x-1/2 bg-gradient-to-t from-black  to-gray-950',
+        'bottom': '-bottom-12 left-1/2 -translate-x-1/2 bg-gradient-to-b from-black  to-gray-950',
+        'left': 'right-[120%] -top-2 bg-gradient-to-t from-black  to-gray-950',
+        'right': '-right-12 bg-gradient-to-t from-black  to-gray-950',
     }[props.location];
 })
 const arrowAligmentClasses = computed(() => {
@@ -34,7 +34,7 @@ const show = ref(false)
             <ApearDisapearFadeTransition>
                 <div v-show="show"
                     :class="aligmentClasses"
-                    class="inline-block absolute whitespace-nowrap  transform z-50 py-2 px-3 text-sm font-medium text-white bg-gradient-to-t from-black  to-gray-950 rounded-lg shadow-sm transition-opacity duration-300"
+                    class="inline-block absolute whitespace-nowrap  transform z-50 py-2 px-3 text-sm font-medium text-white  rounded-lg shadow-sm transition-opacity duration-300"
                     >
                     <div class="z-10">
                         {{ text }}
