@@ -35,7 +35,8 @@ class Gallery extends Model
     /**
      * Get the owner of the gallery.
      */
-    public function owner() : BelongsTo {
+    public function owner(): BelongsTo
+    {
         return $this->belongsTo(User::class);
     }
 
@@ -45,5 +46,18 @@ class Gallery extends Model
     public function images(): BelongsToMany
     {
         return $this->belongsToMany(Image::class, 'galleries_images', 'gallery_id', 'image_id');
+    }
+
+    public function scopeFilter($query, array $filters): void
+    {
+        $query->when($filters['search'] ?? null, function ($query, $search) {
+
+            $query->where('name', 'like', '%' . $search . '%')
+                ->orWhere('description', 'like', '%' . $search . '%')
+                ->whereHas('images', function ($q) use ($search) {
+                    $q->where('name', 'like', '%' . $search . '%')
+                        ->orWhere('description', 'like', '%' . $search . '%');
+                });
+        });
     }
 }
