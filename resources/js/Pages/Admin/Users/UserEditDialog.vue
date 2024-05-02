@@ -6,6 +6,7 @@ import { useForm } from '@inertiajs/vue3';
 import { getCodeList } from 'country-list';
 import InputLabel from '@/Components/InputLabel.vue';
 import TextInput from '@/Components/TextInput.vue';
+import TextArea from '@/Components/TextArea.vue';
 import InputError from '@/Components/InputError.vue';
 import SpinnerIcon from '@/Icons/SpinnerIcon.vue';
 const props = defineProps({
@@ -99,8 +100,8 @@ onMounted(() => {
                 </div>
 
                 <div class="col-span-2 sm:col-span-1">
-                    <label for="category"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('Country') }}</label>
+                    <InputLabel :has-error="!!form.errors.category" for="category" :value="__('Country')" />
+
                     <select id="category" v-model="form.country"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-700 dark:focus:border-primary-700">
                         <option disabled>- {{__('select country')}} -</option>
@@ -110,12 +111,12 @@ onMounted(() => {
                     </select>
                 </div>
                 <div class="col-span-2">
-                    <label for="address"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('Address') }}</label>
-                    <textarea id="address" rows="4"
+                    <InputLabel :has-error="!!form.errors.address" for="address" :value="__('Address')" />
+                    <TextArea v-model="form.address" :placeholder="__('Enter your address')" />
+                    <!-- <textarea id="address" rows="4"
                         v-model="form.address"
                         class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-600 focus:border-primary-600 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-700 dark:focus:border-primary-700"
-                        :placeholder="__('Enter your address')"></textarea>
+                        :placeholder="__('Enter your address')"></textarea> -->
                 </div>
             </div>
         </template>
