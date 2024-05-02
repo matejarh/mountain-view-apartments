@@ -86,8 +86,6 @@ class ImagesController extends Controller
      */
     public function attach(Request $request, Image $image, Gallery $gallery, AttachesGalleriesToImages $attacher): ImageAttacheResponse
     {
-        \Log::debug('controller', [$gallery->toArray(), $image->toArray()]);
-
         if ($request->user()->cannot('update', $image))
             abort(403);
 
