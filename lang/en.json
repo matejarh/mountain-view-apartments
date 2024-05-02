@@ -37,6 +37,8 @@
     "Create a new team to collaborate with others on projects.": "Create a new team to collaborate with others on projects.",
     "Create Account": "Create Account",
     "Create an account": "Create an account",
+    "Creating account": "Creating account",
+    "Account created": "Account created",
     "Create API Token": "Create API Token",
     "Create New Team": "Create New Team",
     "Create Team": "Create Team",
@@ -82,6 +84,8 @@
     "Leave Team": "Leave Team",
     "Location": "Location",
     "Log in": "Log in",
+    "Logging in": "Logging in",
+    "Logged in": "Logged in",
     "Log Out": "Log Out",
     "Log Out Other Browser Sessions": "Log Out Other Browser Sessions",
     "Login": "Login",
@@ -261,5 +265,11 @@
     "Current password is required.": "Current password is required.",
     "New password is required.": "New password is required.",
     "Spam is not allowed!": "Spam is not allowed!",
-    "Step off the keyboard!": "Step off the keyboard!"
+    "Step off the keyboard!": "Step off the keyboard!",
+    "Edit Gallery": "Edit Gallery",
+    "Create Gallery": "Create Gallery",
+    "Enter name": "Enter name",
+    "Enter description": "Enter description",
+    "Click to upload": "Click to upload",
+    "or drag and drop": "or drag and drop"
 }

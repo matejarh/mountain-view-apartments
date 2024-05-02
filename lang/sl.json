@@ -37,6 +37,8 @@
     "Create a new team to collaborate with others on projects.": "Ustvari skupino za sodelovanje projektih.",
     "Create Account": "Ustvari Račun",
     "Create an account": "Ustvari račun",
+    "Creating account": "Ustvarjam račun",
+    "Account created": "Račun ustvarjen",
     "Create API Token": "Ustvari API žeton",
     "Create New Team": "Ustvari Novo skupino",
     "Create Team": "Ustvari skupino",
@@ -82,6 +84,8 @@
     "Leave Team": "Zapisti skupino",
     "Location": "Lokacija",
     "Log in": "Prijavi se",
+    "Logging in": "Prijavljam",
+    "Logged in": "Prijavljen",
     "Log Out": "Odjava",
     "Log Out Other Browser Sessions": "Odjavi iz drugih naprav in brskalnikov",
     "Login": "Prijava",
@@ -263,5 +267,11 @@
     "Current password is required.": "Trenutno geslo je obvezno.",
     "New password is required.": "Novo geslo je obvezno.",
     "Spam is not allowed!": "Spam ni dovoljen!",
-    "Step off the keyboard!": "Stopi s tipkovnice!"
+    "Step off the keyboard!": "Stopi s tipkovnice!",
+    "Edit Gallery": "Urejanje galerije",
+    "Create Gallery": "Ustvarjanje galerije",
+    "Enter name": "Vnesi ime",
+    "Enter description": "Vnesi opis",
+    "Click to upload": "Klikni za nalaganje",
+    "or drag and drop": "ali povleci in spusti"
 }
