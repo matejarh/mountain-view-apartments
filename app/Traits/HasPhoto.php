@@ -4,6 +4,7 @@ namespace App\Traits;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image as ImageFacade;
 
 trait HasPhoto
 {
@@ -17,6 +18,7 @@ trait HasPhoto
     public function updatePhoto(UploadedFile $photo, $storagePath = 'galleries-photos')
     {
         tap($this->image_path, function ($previous) use ($photo, $storagePath) {
+            $photo = $this->optimizePhoto($photo);
             $this->forceFill([
                 'image_path' => $photo->storePublicly(
                     $storagePath,
@@ -29,6 +31,20 @@ trait HasPhoto
             }
         });
     }
+
+    /**
+     * Optimize photo using Intervention\Image
+     *
+     * @param UploadedFile $photo
+     * @return  $output
+     */
+    protected function optimizePhoto($photo)
+    {
+        $output = $photo;  // TODO
+
+        return $output;
+    }
+
 
     /**
      * Delete the image photo.
