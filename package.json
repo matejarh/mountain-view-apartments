@@ -20,10 +20,12 @@
         "vue": "^3.3.13"
     },
     "dependencies": {
+        "animate.css": "^4.1.1",
         "country-flag-icons": "^1.5.11",
         "country-list": "^2.3.0",
         "lodash": "^4.17.21",
         "pinia": "^2.1.7",
-        "tailwind-scrollbar": "^3.1.0"
+        "tailwind-scrollbar": "^3.1.0",
+        "vue3-carousel": "^0.3.3"
     }
 }
