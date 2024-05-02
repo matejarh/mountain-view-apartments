@@ -65,8 +65,8 @@ const classes = computed(() => {
                         </svg>
                     </template>
                     <template #title>{{__('Galeries')}}</template>
-                    <DropdownItem :href="'/admin/galeries'" @click="$emit('hide')">Edit</DropdownItem>
-                    <DropdownItem :href="'/admin/galeries/create'" @click="$emit('hide')">Create</DropdownItem>
+                    <DropdownItem :href="'/admin/galleries/index'" @click="$emit('hide')">{{ __(' Galleries') }}</DropdownItem>
+                    <!-- <DropdownItem :href="'/admin/galeries/create'" @click="$emit('hide')">Create</DropdownItem> -->
 
                 </NavDropdown>
                 <NavDropdown key="users-dropdown" href="/admin/users">
