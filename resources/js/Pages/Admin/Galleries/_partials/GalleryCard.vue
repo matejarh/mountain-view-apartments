@@ -1,7 +1,7 @@
 <script setup>
 import Carousel from '@/Components/Carousel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
-
+import { router } from '@inertiajs/vue3'
 import { getCurrentInstance, onMounted, ref, watch } from 'vue';
 
 const props = defineProps({
@@ -13,9 +13,6 @@ const emit = defineEmits(['edit'])
 const instance = getCurrentInstance()
 
 const show = ref(false)
-
-
-//const imagePlaceholderURL = new URL('/resources/images/placeholders/image-placeholder.svg', import.meta.url)
 
 onMounted(() => {
     setTimeout(() => {
@@ -33,13 +30,6 @@ onMounted(() => {
         <div class="flex flex-col justify-between pb-4 h-full space-y-4">
 
             <Carousel :items="gallery.images" class="min-h-56" />
-            <!-- <div class="flex overflow-x-scroll scrollbar-thin" v-if="gallery.images.length > 0">
-                <img v-for="image, key in gallery.images" :key="key" class=""
-                :src="image.image_path" alt="" />
-            </div> -->
-            <!-- <img v-if="gallery.images.length > 0" class="rounded-t-lg"
-                :src="gallery.images[instance.vnode.key - 1].image_path" alt="" /> -->
-            <!-- <img v-else class="rounded-t-lg text-gray-600" :src="imagePlaceholderURL" alt="" /> -->
 
             <div class="p-4 h-full max-h-44 overflow-y-auto scrollbar-none" >
 
@@ -47,9 +37,9 @@ onMounted(() => {
 
                 <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 ">{{ gallery.description }}</p>
             </div>
-            <PrimaryButton type="button" @click="$emit('edit', gallery)" class="mx-4">
-                <div class="flex items-center">
 
+            <PrimaryButton type="button" @click="router.visit(route('admin.galleries.show', gallery))" class="mx-4">
+                <div class="flex items-center">
                     {{__('Edit Gallery')}}
                     <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                         fill="none" viewBox="0 0 14 10">
