@@ -43,6 +43,23 @@ class GalleriesController extends Controller
     }
 
     /**
+     * Renders and returns given gallery page
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Gallery  $gallery
+     * @return \Inertia\Response
+     */
+    public function show(Request $request, Gallery $gallery): Response
+    {
+        if (auth()->user()->cannot('update', $gallery))
+            abort(403);
+
+        return Inertia::render('Admin/Galleries/Show', [
+            'gallery' => $gallery->with('images')->first(),
+        ]);
+    }
+
+    /**
      * Creates new gallery with given information.
      *
      * @param  \Illuminate\Http\Request  $request
