@@ -37,7 +37,8 @@ class GalleriesController extends Controller
             abort(403);
 
         return Inertia::render('Admin/Galleries/Index', [
-            'galleries' => Gallery::latest()->get(),
+            'galleries' => Gallery::with('images')->filter($request->only(['search']))->latest()->paginate(24, ['*'], __('page'))->onEachSide(2)->withQueryString(),
+            'filters' => $request->only(['search']),
         ]);
     }
 
@@ -98,10 +99,10 @@ class GalleriesController extends Controller
     /**
      * Attaches given gallery to given image.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Gallery  $gallery
-     * @param  \App\Models\Image  $image
-     * @param  \App\Contracts\AttachesImagesToGalleries  $attacher
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Models\Gallery $gallery
+     * @param  \App\Models\Image $image
+     * @param  \App\Contracts\AttachesImagesToGalleries $attacher
      * @return \App\Contracts\ImageAttacheResponse
      */
     public function attach(Request $request, Gallery $gallery, Image $image, AttachesImagesToGalleries $attacher): GalleryAttacheResponse
@@ -117,10 +118,10 @@ class GalleriesController extends Controller
     /**
      * Detaches given gallery grom given image.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Gallery  $gallery
-     * @param  \App\Models\Image  $image
-     * @param  \App\Contracts\DetachesImagesFromGalleries  $attacher
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Models\Gallery $gallery
+     * @param  \App\Models\Image $image
+     * @param  \App\Contracts\DetachesImagesFromGalleries $attacher
      * @return \App\Contracts\GalleryDetacheResponse
      */
     public function detach(Request $request, Gallery $gallery, Image $image, DetachesImagesFromGalleries $attacher): GalleryDetacheResponse
