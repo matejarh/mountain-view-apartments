@@ -143,6 +143,7 @@
     line-height: 0;
     margin: 10px 0 0;
     padding: 0;
+    transform: translateY(-36px);
   }
 
   .carousel__pagination-button {
