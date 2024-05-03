@@ -269,9 +269,17 @@
     "Spam is not allowed!": "Spam ni dovoljen!",
     "Step off the keyboard!": "Stopi s tipkovnice!",
     "Edit Gallery": "Urejanje galerije",
+    "Add New Gallery": "Dodaj novo galerijo",
     "Create Gallery": "Ustvarjanje galerije",
     "Enter name": "Vnesi ime",
     "Enter description": "Vnesi opis",
     "Click to upload": "Klikni za nalaganje",
-    "or drag and drop": "ali povleci in spusti"
+    "or drag and drop": "ali povleci in spusti",
+    "No%20images": "Ni%20slik",
+    "No images yet!": "Nobene slike še!",
+    "Click here to add some": "Kliknite sem, da dodate kakšno",
+    "This will remove image from this gallery.": "S tem boste odstranili sliko iz galerije.",
+    "Image will not be deleted.": "Slika ne bo pobrisana.",
+    "No, cancel": "Ne, prekliči",
+    "Yes, I'm sure": "Da, sem prepričan"
 }

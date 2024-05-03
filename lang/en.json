@@ -267,9 +267,17 @@
     "Spam is not allowed!": "Spam is not allowed!",
     "Step off the keyboard!": "Step off the keyboard!",
     "Edit Gallery": "Edit Gallery",
+    "Add New Gallery": "Add New Gallery",
     "Create Gallery": "Create Gallery",
     "Enter name": "Enter name",
     "Enter description": "Enter description",
     "Click to upload": "Click to upload",
-    "or drag and drop": "or drag and drop"
+    "or drag and drop": "or drag and drop",
+    "No%20images": "No%20images",
+    "No images yet!": "No images yet!",
+    "Click here to add some": "Click here to add some",
+    "This will remove image from this gallery.": "This will remove image from this gallery.",
+    "Image will not be deleted.": "Image will not be deleted.",
+    "No, cancel": "No, cancel",
+    "Yes, I'm sure": "Yes, I'm sure"
 }
