@@ -176,7 +176,7 @@ class GalleriesTest extends TestCase
             'description' => fake()->sentence(),
         ];
 
-        $response = $this->actingAs($admin)->put(route('admin.images.update', $image), $updatedimage);
+        $response = $this->actingAs($admin)->post(route('admin.images.update', $image), $updatedimage);
 
         $response->assertStatus(302);
 
@@ -273,6 +273,36 @@ class GalleriesTest extends TestCase
 
         $this->assertDatabaseEmpty('galleries_images');
         $this->assertDatabaseEmpty('galleries');
+    }
+
+    public function test_admin_can_upload_image(): void {
+        Storage::fake('public');
+
+        $admin = User::factory(['is_admin' => true])->create();
+
+        $photo = new UploadedFile(resource_path('images/test/150730321.jpg'), '150730321.jpg', null, null, true);
+
+        $image = [
+            'name' => "test image",
+            'description' => "test description",
+            'photo' => $photo,
+        ];
+
+        $response = $this->actingAs($admin)->post(route('admin.images.store'), $image);
+
+        $response->assertStatus(302);
+
+        $image=Image::where('name', 'test image')->first();
+
+        $updatedimage = [
+            'name' => "test image",
+            'description' => "test description",
+            'photo' => $photo,
+        ];
+
+        $response = $this->actingAs($admin)->post(route('admin.images.update', $image), $updatedimage);
+
+        $response->assertStatus(302);
     }
 
 }
