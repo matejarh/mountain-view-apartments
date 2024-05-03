@@ -17,7 +17,7 @@ const show = ref(false)
 onMounted(() => {
     setTimeout(() => {
         show.value = true
-    }, instance.vnode.key * 300);
+    }, (instance.vnode.key + 1) * 300);
 })
 </script>
 
@@ -26,12 +26,14 @@ onMounted(() => {
     <!-- <Transition enter-active-class="animate__animated animate__bounceInDown" leave-active-class=""> -->
 
     <div class="max-w-sm bg-white border border-gray-200 overflow-hidden rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700  transition duration-150 ease-out"
-        v-show="show">
+        v-if="show">
         <div class="flex flex-col justify-between pb-4 h-full space-y-4">
 
-            <Carousel :items="gallery.images" class="min-h-56" />
+            <Carousel v-if="gallery.images.length > 0" :items="gallery.images" class="min-h-52 md:min-h-56" />
 
-            <div class="p-4 h-full max-h-44 overflow-y-auto scrollbar-none" >
+            <img v-else :src="'https://via.placeholder.com/640x480.png/6d6d6d?text='+__('No%20images')" class="rounded-t-lg h-52 md:h-56" />
+
+            <div class="px-4 h-full max-h-44 overflow-y-auto scrollbar-none" >
 
                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ gallery.name }}</h5>
 
