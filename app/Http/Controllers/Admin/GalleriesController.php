@@ -51,11 +51,11 @@ class GalleriesController extends Controller
      */
     public function show(Request $request, Gallery $gallery): Response
     {
-        if (auth()->user()->cannot('update', $gallery))
+        if (auth()->user()->cannot('view', $gallery))
             abort(403);
 
         return Inertia::render('Admin/Galleries/Show', [
-            'gallery' => $gallery->with('images')->first(),
+            'gallery' => Gallery::with('images')->find($gallery->id),
         ]);
     }
 
