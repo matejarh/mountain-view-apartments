@@ -18,5 +18,7 @@ class DetachFromGallery implements DetachesGalleriesFromImages
     public function detach(Gallery $gallery, Image $image ): void
     {
         $image->galleries()->detach($gallery);
+
+        session()->flash('flash.banner', __('Gallery has been detached from the image.'));
     }
 }

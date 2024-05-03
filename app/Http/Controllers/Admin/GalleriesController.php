@@ -39,6 +39,10 @@ class GalleriesController extends Controller
         return Inertia::render('Admin/Galleries/Index', [
             'galleries' => Gallery::with('images')->filter($request->only(['search']))->latest()->paginate(24, ['*'], __('page'))->onEachSide(2)->withQueryString(),
             'filters' => $request->only(['search']),
+            'can' => [
+                'view_gallery' => auth()->user()->can('viewAny', Gallery::class),
+            ],
+
         ]);
     }
 
@@ -56,6 +60,10 @@ class GalleriesController extends Controller
 
         return Inertia::render('Admin/Galleries/Show', [
             'gallery' => Gallery::with('images')->find($gallery->id),
+            'can' => [
+                'view_gallery' => auth()->user()->can('view', $gallery),
+                'delete_images' => auth()->user()->can('delete', Image::class),
+            ],
         ]);
     }
 

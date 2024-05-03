@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch, watchEffect } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import DialogModal from '@/Components/DialogModal.vue'
 
@@ -7,15 +7,23 @@ import SpinnerIcon from '@/Icons/SpinnerIcon.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import ImageCard from './ImageCard.vue';
 import GridSection from '@/Components/GridSection.vue';
+import ImageIcon from '@/Icons/ImageIcon.vue';
+import DropZone from '@/Components/DropZone.vue';
+import Tooltip from '@/Components/Tooltip.vue';
+import EditIcon from '@/Icons/EditIcon.vue';
+import ArrowUpRightIcon from '@/Icons/ArrowUpRightIcon.vue';
 
 const props = defineProps({
     show: Boolean,
     gallery: Object,
 })
 
-const emit = defineEmits(['close'])
+const emit = defineEmits(['close', 'showUploadPhotoDialog', 'showEditDialog'])
 
 const images = ref([])
+const total_count = ref(0)
+
+const busy = ref(false)
 
 const form = useForm({})
 
@@ -28,10 +36,17 @@ const attach = (image) => {
     }
 }
 
+watchEffect(() => {
+    if (props.show === true) fetch()
+})
+
 const fetch = () => {
-    axios.get(route('admin.images.fetch', props.gallery ))
+    busy.value = true
+    axios.get(route('admin.images.fetch', props.gallery))
         .then(response => {
-            images.value = response.data
+            images.value = response.data.images
+            total_count.value = response.data.total_count
+            busy.value = false
         })
 }
 
@@ -41,33 +56,36 @@ onMounted(() => {
 </script>
 
 <template>
-    <DialogModal max-width="4xl" :show="show" @close="form.reset(), $emit('close')">
+    <DialogModal max-width="screen" :show="show" @close="form.reset(), $emit('close')">
         <template #title>{{ __('Attach Images To Gallery') }}</template>
 
         <template #content>
-            <GridSection>
+            <div class="" v-if="busy">
+                <SpinnerIcon class="w-6 h-6 animate-spin" />
+            </div>
+            <div class="" v-else>
+                <GridSection v-if="images.length > 0">
+                    <ImageCard :image="image" v-for="image, key in images" :key="key" :has-gallery="false" />
+                    <div>
+                        <div class="w-full text-center cursor-pointer animate-pulse"
+                            @click="$emit('showUploadPhotoDialog')">
+                            <ImageIcon class="text-gray-300 dark:text-gray-400 w-32 h-32 mx-auto" />
 
-                <figure v-for="image, key in images" :key="image.id"
-                    class="relative shadow-lg  transition-all duration-300 cursor-pointer filter hover:grayscale-0">
-                    <a href="#">
-                        <img class="rounded-lg" :src="image.photo_url" :alt="image.name">
-                    </a>
-                    <figcaption
-                        class="absolute flex rounded-t-lg justify-between px-4 py-1 text-md text-gray-700 dark:text-gray-300 top-0 bg-gray-50 dark:bg-gray-800  w-full bg-opacity-85 backdrop-blur-lg">
+                            <p class="text-gray-300 dark:text-gray-400 text-sm">{{ __('Click here to upload some') }}</p>
+                        </div>
+                    </div>
+                </GridSection>
+                <div v-else class="">
+                    <div class="w-full text-center cursor-pointer animate-pulse" @click="$emit('showUploadPhotoDialog')">
+                        <ImageIcon class="text-gray-300 dark:text-gray-400 w-32 h-32 mx-auto" />
 
+                        <p class="text-gray-300 dark:text-gray-400 font-semibold ">{{ total_count > 0 ? __('All uploaded images are attached to gallery!') : __('No images uploaded yet!') }}</p>
+                        <p class="text-gray-300 dark:text-gray-400 text-sm">{{ __('Click here to upload some') }}</p>
+                    </div>
+                </div>
 
-                    </figcaption>
-                    <figcaption
-                        class="absolute px-4 py-1 text-lg rounded-b-lg text-white bottom-0 bg-gray-50 dark:bg-gray-800  w-full bg-opacity-85 backdrop-blur-lg">
-                        <h3 class="text-gray-700 dark:text-gray-300">{{ image.name }}</h3>
-                        <p class="text-gray-700 dark:text-gray-300 text-sm">{{ image.description }}</p>
-                    </figcaption>
-                </figure>
-            </GridSection>
-
+            </div>
 
         </template>
-
-
     </DialogModal>
 </template>

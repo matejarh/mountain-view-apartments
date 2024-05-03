@@ -41,5 +41,7 @@ class CreateNewImage implements CreatesNewImages
         if (isset($input['photo'])) {
             $image->updatePhoto($input['photo']);
         }
+
+        session()->flash('flash.banner', __('Image has been uploaded and saved.'));
     }
 }

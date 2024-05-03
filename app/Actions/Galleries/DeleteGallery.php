@@ -15,5 +15,8 @@ class DeleteGallery implements DeletesGalleries
     public function destroy(Gallery $gallery): void
     {
         $gallery->delete();
+
+        session()->flash('flash.banner', __('Gallery has been deleted.'));
+        session()->flash('flash.bannerStyle', 'danger');
     }
 }

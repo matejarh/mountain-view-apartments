@@ -13,7 +13,7 @@ const aligmentClasses = computed(() => {
     return {
         'top': '-top-12 left-1/2 -translate-x-1/2 bg-gradient-to-t from-black  to-gray-950',
         'bottom': '-bottom-12 left-1/2 -translate-x-1/2 bg-gradient-to-b from-black  to-gray-950',
-        'left': 'right-[120%] -top-2 bg-gradient-to-t from-black  to-gray-950',
+        'left': 'right-[120%] top-1/2 -translate-y-1/2   bg-gradient-to-t from-black  to-gray-950',
         'right': '-right-12 bg-gradient-to-t from-black  to-gray-950',
     }[props.location];
 })

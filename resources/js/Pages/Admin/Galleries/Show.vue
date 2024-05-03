@@ -8,7 +8,9 @@ import CirclePlusIcon from '@/Icons/CirclePlusIcon.vue';
 import ImageIcon from '@/Icons/ImageIcon.vue';
 import { ref } from 'vue';
 import AttachImagesDialog from './_partials/AttachImagesDialog.vue';
+import UploadPhotoDialog from './_partials/UploadPhotoDialog.vue';
 
+const showUploadPhotoDialog = ref(false)
 const showImagesDialog = ref(false)
 </script>
 
@@ -24,7 +26,7 @@ const showImagesDialog = ref(false)
             <template #content>
                 <GridSection v-if="$page.props.gallery.images.length > 0">
 
-                    <ImageCard v-for="image, key in $page.props.gallery.images" :key="image.id" :image="image" />
+                    <ImageCard v-for="image, key in $page.props.gallery.images" :key="key" :image="image" :has-gallery="true" />
                 </GridSection>
 
                 <div v-else class="">
@@ -40,7 +42,7 @@ const showImagesDialog = ref(false)
 
         </ActionSection>
         <div class=" fixed top-28 sm:top-20 right-4 md:top-20  md:right-4 z-30">
-            <Tooltip :text="__('Add New Gallery')" location="bottom">
+            <Tooltip :text="__('Upload And Attach Images')" location="left">
                 <button @click="showImagesDialog = true"
                     class=" drop-shadow-lg rounded-full bg-transparent ">
                     <CirclePlusIcon
@@ -48,6 +50,12 @@ const showImagesDialog = ref(false)
                 </button>
             </Tooltip>
         </div>
-        <AttachImagesDialog :show="showImagesDialog" @close="showImagesDialog = false" :gallery="$page.props.gallery" />
+        <AttachImagesDialog :show="showImagesDialog"
+                            :gallery="$page.props.gallery"
+                            @close="showImagesDialog = false"
+                            @show-upload-photo-dialog="showUploadPhotoDialog = true" />
+
+        <UploadPhotoDialog :show="showUploadPhotoDialog" @close="showUploadPhotoDialog = false" />
+
     </FullLayout>
 </template>

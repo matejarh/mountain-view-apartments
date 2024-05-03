@@ -19,5 +19,7 @@ class AttachToGallery implements AttachesGalleriesToImages
     public function attach(Gallery $gallery, Image $image ): void
     {
         $image->galleries()->attach($gallery);
+
+        session()->flash('flash.banner', __('Gallery has been attached to the image.'));
     }
 }

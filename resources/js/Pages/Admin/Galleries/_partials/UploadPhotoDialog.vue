@@ -3,13 +3,13 @@ import { onMounted, ref, watch, watchEffect } from 'vue';
 import DialogModal from '@/Components/DialogModal.vue'
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import { useForm } from '@inertiajs/vue3';
-import { getCodeList } from 'country-list';
 import InputLabel from '@/Components/InputLabel.vue';
 import TextInput from '@/Components/TextInput.vue';
 import TextArea from '@/Components/TextArea.vue';
 import InputError from '@/Components/InputError.vue';
 import DropZone from '@/Components/DropZone.vue';
 import SpinnerIcon from '@/Icons/SpinnerIcon.vue';
+import UploadingPhotoSlot from './UploadingPhotoSlot.vue';
 
 const props = defineProps({
     show: Boolean,
@@ -21,8 +21,8 @@ const props = defineProps({
 const emit = defineEmits(['close'])
 
 const form = useForm({
-    name: props.gallery?.name,
-    description: props.gallery?.description,
+    name: '',
+    description: '',
     photos: null,
 })
 
@@ -35,99 +35,79 @@ const create = () => {
     }
 }
 
-const update = () => {
-    if (form.isDirty) {
-        form.put(route('admin.galleries.update', props.gallery), {
-            preserveScroll: true,
-            onSuccess: () => emit('close'),
-        })
-    }
-}
 
-const handleSubmit = () => {
-    props.gallery ? update() : create()
-}
-
-const photoPreview = ref(null);
+const photoPreview = ref([]);
 const photoInput = ref(null);
 
-watchEffect(() => {
-    if (props.gallery !== null) {
-        populateForm()
-    }
-    if (!props.show) {
-        setTimeout(() => {
-            form.clearErrors()
-            form.reset()
-        }, 200);
-    }
+watch(photoInput, () => {
+    updatePhotoPreview(photoInput.value)
 })
 
-const populateForm = () => {
-    form.name = props.gallery.name
-    form.description = props.gallery.description
-}
+const updatePhotoPreview = (files) => {
+    for (let index = 0; index < files.length; index++) {
 
-const updatePhotoPreview = () => {
-    const photo = photoInput.value.files[0];
+        const photo = files[index];
 
-    if (!photo) return;
+        if (!photo) return;
 
-    const reader = new FileReader();
+        const reader = new FileReader();
 
-    reader.onload = (e) => {
-        photoPreview.value = e.target.result;
-    };
+        reader.onload = (e) => {
+            photoPreview.value.push({
+                preview: e.target.result,
+                file: photo
+            });
+        };
 
-    reader.readAsDataURL(photo);
+        reader.readAsDataURL(photo);
+    }
 };
 
+const removeFromPhotoPreview = (value) => {
 
+    /*     photoPreview.value = photoPreview.value.filter(function(item, key) {
+            return key !== value
+        }) */
+    const index = photoPreview.value.indexOf(value);
+    if (index > -1) {
+        photoPreview.value.splice(index, 1);
+    }
 
-const handleDropped = (f) => {
-    console.log(f)
-    /* f.each((file) => {
-        files.value.push(file)
-    }) */
+    if (photoPreview.value.length === 0) {
+        setTimeout(() => {
+
+            emit('close')
+        }, 2000);
+    }
 }
+
+
 </script>
 
 <template>
-    <DialogModal :show="show" @close="form.reset(), $emit('close')">
-        <template #title>{{ gallery ? __('Edit Gallery') : __('Create Gallery') }}</template>
+    <DialogModal max-width="4xl" :show="show" @close="form.reset(), $emit('close')">
+        <template #title>{{ __('Upload Photos') }}</template>
 
         <template #content>
-            <div class="grid gap-4 grid-cols-2">
-
-                <div class="col-span-2">
-                    <TextInput id="name" v-model="form.name" type="text" class="mt-1 block w-full" required
-                        autocomplete="name" :has-error="!!form.errors.name" :placeholder="__('Enter name') + '...'" />
-                    <InputError :message="form.errors.name" class="mt-2" />
-
-                </div>
-                <div class="col-span-2">
-                    <TextArea id="description" v-model="form.description" type="text" class="mt-1 block w-full" required
-                        autocomplete="description" :has-error="!!form.errors.description"
-                        :placeholder="__('Enter description') + '...'" />
-                    <InputError :message="form.errors.description" class="mt-2" />
-
-                </div>
-
+            <div v-show="photoPreview" class="flex flex-col space-y-4 mb-4">
+                <TransitionGroup enter-active-class="animate__animated animate__zoomIn"
+                    leave-active-class="animate__animated animate__hinge ">
+                    <UploadingPhotoSlot v-for="photo in photoPreview" :key="photo.preview"
+                        :photo="photo" @remove="removeFromPhotoPreview" />
+                </TransitionGroup>
             </div>
-            <div v-show="photoPreview" class="mt-2">
-                <span class="block rounded-full w-20 h-20 bg-cover bg-no-repeat bg-center"
-                    :style="'background-image: url(\'' + photoPreview + '\');'" />
-            </div>
+
             <progress v-if="form.progress" :value="form.progress.percentage" max="100">
                 {{ form.progress.percentage }}%
             </progress>
+
             <DropZone v-model="photoInput" />
         </template>
 
         <template #footer>
             <PrimaryButton type="button"
                 :class="{ 'opacity-25': form.processing || form.recentlySuccessful || !form.isDirty }"
-                :disabled="form.processing || form.recentlySuccessful" @click="handleSubmit">
+                :disabled="form.processing || form.recentlySuccessful" @click="create">
                 <div class="flex items-center">
                     <SpinnerIcon v-show="form.processing"
                         class="animate-spin -ml-1 mr-3 h-5 w-5 text-white dark:text-white" />

@@ -34,5 +34,7 @@ class UpdateGallery implements UpdatesGalleries
             'name' => $input['name'],
             'description' => $input['description'],
         ])->save();
+
+        session()->flash('flash.banner', __('Gallery has been updated.'));
     }
 }

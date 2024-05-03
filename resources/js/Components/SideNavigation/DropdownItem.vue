@@ -1,9 +1,9 @@
 <script setup>
-import { Link, usePage } from '@inertiajs/vue3';
-import { computed } from 'vue';
+import { Link } from '@inertiajs/vue3';
+
 
 const props = defineProps({
-    href:String,
+    href: String,
 })
 
 //$page.url.startsWith(href)

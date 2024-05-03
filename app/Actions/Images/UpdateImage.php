@@ -41,5 +41,7 @@ class UpdateImage implements UpdatesImages
             'name' => $input['name'],
             'description' => $input['description'],
         ])->save();
+
+        session()->flash('flash.banner', __('Image has been updated.'));
     }
 }

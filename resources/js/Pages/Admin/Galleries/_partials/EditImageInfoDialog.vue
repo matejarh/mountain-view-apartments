@@ -34,7 +34,6 @@ const update = () => {
         if (photoInput.value) {
             form.photo = photoInput.value.files[0];
         }
-        console.log(form)
         form.post(route('admin.images.update', props.image), {
             preserveScroll: true,
             errorBag: 'updateImageInformation',
@@ -102,10 +101,11 @@ const clearPhotoFileInput = () => {
                 <img :src="photoPreview" @dblclick="selectNewPhoto" :alt="image.slug" class="w-full h-auto rounded-lg mb-4" />
             </div>
             <InputError :message="form.errors.photo" class="mt-2" />
+
             <progress v-if="form.progress" :value="form.progress.percentage" max="100">
                 {{ form.progress.percentage }}%
             </progress>
-            {{ form }}
+
             <div class="grid gap-4 grid-cols-2">
                 <input id="photo" ref="photoInput" type="file" class="hidden" @change="updatePhotoPreview">
                 <div class="col-span-2">

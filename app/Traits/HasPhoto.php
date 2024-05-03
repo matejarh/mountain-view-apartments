@@ -30,6 +30,12 @@ trait HasPhoto
         $imageName = hash('sha256', now()->timestamp . '-' . $photo->getClientOriginalName()) . '.' . $photo->getClientOriginalExtension();
         $image = ImageFacade::read($photo);
 
+        $this->handleImage($path, $image, $imageName, $destinationPath);
+        $this->handleThumb($thumbpath, $image, $imageName, $destinationPathThumbnail);
+
+    }
+
+    private function handleImage($path, $image, $imageName, $destinationPath) : void {
         tap($this->image_path, function ($previous) use ($path, $image, $imageName, $destinationPath) {
 
             // Main Image Upload on Folder Code
@@ -43,10 +49,17 @@ trait HasPhoto
                 Storage::disk($this->photoDisk())->delete($previous);
             }
         });
+    }
 
+    private function handleThumb($thumbpath, $image, $imageName, $destinationPathThumbnail) : void {
         tap($this->thumb_path, function ($previous) use ($thumbpath, $image, $imageName, $destinationPathThumbnail) {
             // Generate Thumbnail Image Upload on Folder Code
-            $image->scale(480, null);
+            if ($image->width() > $image->height()) {
+                $image->scaleDown(null, 360);
+
+            } elseif ($image->width() < $image->height()) {
+                $image->scaleDown(480, null);
+            }
             $image->crop(480, 360);
 
             $image->save($destinationPathThumbnail . $imageName);

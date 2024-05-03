@@ -123,6 +123,9 @@ class ImagesController extends Controller
      */
     public function fetch(Request $request, Gallery $gallery) : JsonResponse {
         $images = Image::all()->intersect(Image::whereNotIn('id', $gallery->images->pluck('id')->toArray())->get());
-        return response()->json($images);
+        return response()->json([
+            'images' => $images,
+            'total_count' => \DB::table('images')->count(),
+        ]);
     }
 }

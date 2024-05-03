@@ -52,9 +52,9 @@ const classes = computed(() => {
                     <DropdownItem :href="'/admin/pages/1'" @click="$emit('hide')">Create</DropdownItem>
 
                 </NavDropdown>
-                <NavDropdown key="galeries-dropdown">
+                <NavDropdown key="galleries-dropdown" href="/admin/galleries">
                     <template #icon>
-                        <svg class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" aria-hidden="true"
+                        <svg  aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
                             viewBox="0 0 24 24">
                             <path fill-rule="evenodd" d="M13 10a1 1 0 0 1 1-1h.01a1 1 0 1 1 0 2H14a1 1 0 0 1-1-1Z"
@@ -64,8 +64,8 @@ const classes = computed(() => {
                                 clip-rule="evenodd" />
                         </svg>
                     </template>
-                    <template #title>{{__('Galeries')}}</template>
-                    <DropdownItem :href="'/admin/galleries/index'" @click="$emit('hide')">{{ __(' Galleries') }}</DropdownItem>
+                    <template #title>{{__('Galleries')}}</template>
+                    <DropdownItem :href="'/admin/galleries/index'" @click="$emit('hide')">{{__('Galleries')}}</DropdownItem>
                     <!-- <DropdownItem :href="'/admin/galeries/create'" @click="$emit('hide')">Create</DropdownItem> -->
 
                 </NavDropdown>

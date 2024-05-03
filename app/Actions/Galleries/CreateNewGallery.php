@@ -35,5 +35,7 @@ class CreateNewGallery implements CreatesNewGalleries
             'slug' => str($input['name'])->slug(),
             'description' => isset($input['description']) ? $input['description'] : null,
         ]);
+
+        session()->flash('flash.banner', __('Gallery has been created.'));
     }
 }
