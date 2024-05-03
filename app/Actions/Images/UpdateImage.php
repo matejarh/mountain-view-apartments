@@ -18,6 +18,8 @@ class UpdateImage implements UpdatesImages
      */
     public function update(Image $image, array $input): void
     {
+        \Log::debug('update-image', $input);
+
         $attributeNames = array(
             'name' => __('Name'),
             'description' => __('Description'),
@@ -29,7 +31,7 @@ class UpdateImage implements UpdatesImages
             'photo' => ['nullable', 'mimes:jpg,jpeg,png,svg', 'max:2048'],
         ]);
 
-        $validator->setAttributeNames($attributeNames)->validate();
+        $validator->setAttributeNames($attributeNames)->validateWithBag('updateImageInformation');
 
         if (isset($input['photo'])) {
             $image->updatePhoto($input['photo']);
