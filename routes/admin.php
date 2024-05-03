@@ -44,10 +44,11 @@ Route::group(['middleware' => config('jetstream.middleware', ['web'])], function
             Route::get('index', [ImagesController::class, 'index'])->name('index');
             Route::post('store', [ImagesController::class, 'store'])->name('store');
             Route::get('{image}', [ImagesController::class, 'show'])->name('show');
-            Route::put('{image}', [ImagesController::class, 'update'])->name('update');
+            Route::post('{image}', [ImagesController::class, 'update'])->name('update');
             Route::delete('{image}', [ImagesController::class, 'destroy'])->name('destroy');
             Route::put('attach/{image}/{gallery}', [ImagesController::class, 'attach'])->name('attach');
             Route::put('detach/{image}/{gallery}', [ImagesController::class, 'detach'])->name('detach');
+            Route::get('{gallery}/fetch', [ImagesController::class, 'fetch'])->name('fetch');
         });
     });
 

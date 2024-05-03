@@ -17,6 +17,7 @@ use App\Contracts\UpdatesImages;
 use App\Http\Controllers\Controller;
 use App\Models\Gallery;
 use App\Models\Image;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class ImagesController extends Controller
@@ -111,5 +112,17 @@ class ImagesController extends Controller
         $attacher->detach($gallery, $image);
 
         return app(ImageDetacheResponse::class);
+    }
+
+    /**
+     * Fetches list of images not attached to given gallery
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Gallery  $gallery
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function fetch(Request $request, Gallery $gallery) : JsonResponse {
+        $images = Image::all()->intersect(Image::whereNotIn('id', $gallery->images->pluck('id')->toArray())->get());
+        return response()->json($images);
     }
 }
