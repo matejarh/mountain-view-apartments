@@ -18,6 +18,7 @@ class Image extends Model
      */
     protected $appends = [
         'photo_url',
+        'thumb_url',
     ];
 
     /**

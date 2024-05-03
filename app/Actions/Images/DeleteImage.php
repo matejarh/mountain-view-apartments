@@ -18,6 +18,7 @@ class DeleteImage implements DeletesImages
     public function destroy(Image $image): void
     {
         $image->deletePhoto();
+        $image->deleteThumb();
         $image->delete();
     }
 }

@@ -1,10 +1,11 @@
 <?php
 
 namespace App\Traits;
+
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Intervention\Image\Facades\Image as ImageFacade;
+use Intervention\Image\Laravel\Facades\Image as ImageFacade;
 
 trait HasPhoto
 {
@@ -17,13 +18,41 @@ trait HasPhoto
      */
     public function updatePhoto(UploadedFile $photo, $storagePath = 'galleries-photos')
     {
-        tap($this->image_path, function ($previous) use ($photo, $storagePath) {
-            $photo = $this->optimizePhoto($photo);
+        $disk = Storage::disk('public')->path('/');
+        $path = $storagePath . '/' . str(auth()->user()->name)->slug() . '/';
+        $thumbpath = $storagePath . '/' . str(auth()->user()->name)->slug() . '/thumbs/';
+        $destinationPath = $disk . $path;
+        $destinationPathThumbnail = $disk . $thumbpath;
+
+        if (!file_exists($destinationPath)) mkdir($destinationPath, 755, true);
+        if (!file_exists($destinationPathThumbnail)) mkdir($destinationPathThumbnail, 755, true);
+
+        $imageName = hash('sha256', now()->timestamp . '-' . $photo->getClientOriginalName()) . '.' . $photo->getClientOriginalExtension();
+        $image = ImageFacade::read($photo);
+
+        tap($this->image_path, function ($previous) use ($path, $image, $imageName, $destinationPath) {
+
+            // Main Image Upload on Folder Code
+            $image->save($destinationPath . $imageName);
+
             $this->forceFill([
-                'image_path' => $photo->storePublicly(
-                    $storagePath . '/' . str(auth()->user()->name())->slug(),
-                    ['disk' => $this->photoDisk()]
-                ),
+                'image_path' => $path . $imageName,
+            ])->save();
+
+            if ($previous) {
+                Storage::disk($this->photoDisk())->delete($previous);
+            }
+        });
+
+        tap($this->thumb_path, function ($previous) use ($thumbpath, $image, $imageName, $destinationPathThumbnail) {
+            // Generate Thumbnail Image Upload on Folder Code
+            $image->scale(480, null);
+            $image->crop(480, 360);
+
+            $image->save($destinationPathThumbnail . $imageName);
+
+            $this->forceFill([
+                'thumb_path' => $thumbpath . $imageName,
             ])->save();
 
             if ($previous) {
@@ -31,20 +60,6 @@ trait HasPhoto
             }
         });
     }
-
-    /**
-     * Optimize photo using Intervention\Image
-     *
-     * @param UploadedFile $photo
-     * @return  $output
-     */
-    protected function optimizePhoto($photo)
-    {
-        $output = $photo;  // TODO
-
-        return $output;
-    }
-
 
     /**
      * Delete the image photo.
@@ -65,6 +80,24 @@ trait HasPhoto
     }
 
     /**
+     * Delete the image thumbnail.
+     *
+     * @return void
+     */
+    public function deleteThumb()
+    {
+        if (is_null($this->thumb_path)) {
+            return;
+        }
+
+        Storage::disk($this->photoDisk())->delete($this->thumb_path);
+
+        $this->forceFill([
+            'thumb_path' => null,
+        ])->save();
+    }
+
+    /**
      * Get the URL to the image photo.
      *
      * @return \Illuminate\Database\Eloquent\Casts\Attribute
@@ -74,6 +107,20 @@ trait HasPhoto
         return Attribute::get(function (): string {
             return $this->image_path
                 ? Storage::disk($this->photoDisk())->url($this->image_path)
+                : $this->defaultPhotoUrl();
+        });
+    }
+
+    /**
+     * Get the URL to the image thumb.
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    public function thumbUrl(): Attribute
+    {
+        return Attribute::get(function (): string {
+            return $this->thumb_path
+                ? Storage::disk($this->photoDisk())->url($this->thumb_path)
                 : $this->defaultPhotoUrl();
         });
     }

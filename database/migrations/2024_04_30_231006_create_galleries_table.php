@@ -30,6 +30,7 @@ return new class extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->string('image_path', 2048)->nullable();
+            $table->string('thumb_path', 2048)->nullable();
             $table->timestamps();
         });
 
