@@ -18,17 +18,18 @@ class UpdateImage implements UpdatesImages
      */
     public function update(Image $image, array $input): void
     {
-        \Log::debug('update-image', $input);
-
         $attributeNames = array(
             'name' => __('Name'),
             'description' => __('Description'),
+            'photo' => __('Image'),
         );
 
         $validator = Validator::make($input, [
             'name' => ['required', 'string', 'max:255', new SpamFree],
             'description' => ['nullable', 'string', new SpamFree],
-            'photo' => ['nullable', 'mimes:jpg,jpeg,png,svg', 'max:2048'],
+            'photo' => ['nullable', 'mimes:jpg,jpeg,png,svg', 'max:4096', 'dimensions:min_width=1024,min_height=576'],
+        ],[
+            'photo.dimensions' => __('Image dimensions must be at least 1280x720(HD)px'),
         ]);
 
         $validator->setAttributeNames($attributeNames)->validateWithBag('updateImageInformation');
