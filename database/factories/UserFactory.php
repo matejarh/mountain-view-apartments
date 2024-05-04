@@ -32,7 +32,7 @@ class UserFactory extends Factory
             'last_name' => fake('sl_SI')->lastName(),
             'phone' => fake('sl_SI')->phoneNumber(),
             'address' => fake('sl_SI')->address(),
-            'country' => fake()->countryCode(),
+            'country' => str(fake()->countryCode())->lower(),
             'email' => fake('sl_SI')->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),

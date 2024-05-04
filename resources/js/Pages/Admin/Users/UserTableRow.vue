@@ -4,18 +4,21 @@ import Tooltip from '@/Components/Tooltip.vue';
 import UserEditIcon from '@/Icons/UserEditIcon.vue';
 import { hasFlag } from 'country-flag-icons';
 import { getCode, getName } from 'country-list';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
+import UserEditDialog from './UserEditDialog.vue';
 
 const props = defineProps({
     user: Object,
 })
 
+const showUserEditDialog = ref(false)
+
 defineEmits(['edit-user'])
 
 const countryFlag = computed(() => {
-    if (hasFlag(props.user.country) === true) {
+    if (hasFlag(props.user.country.toUpperCase()) === true) {
 
-        return new URL(`/resources/images/flags/4x3/${props.user.country.toLowerCase()}.svg`, import.meta.url)
+        return new URL(`/resources/images/flags/4x3/${props.user.country}.svg`, import.meta.url)
     }
 
     return '#'
@@ -78,11 +81,12 @@ const countryFlag = computed(() => {
         </td>
         <td class="px-6 py-4">
             <Tooltip :text="__('Edit') + ' ' + user.name" location="left">
-                <button @click="$emit('edit-user', user)" type="button"
+                <button @click="showUserEditDialog = true" type="button"
                     class="font-medium text-primary-600 dark:text-primary-700 hover:-translate-y-1 hover:drop-shadow transform ease-out duration-150">
                     <UserEditIcon class="w-6 h-6" />
                 </button>
             </Tooltip>
         </td>
     </TableRow>
+    <UserEditDialog :show="showUserEditDialog" @close="showUserEditDialog = false" :user="user" />
 </template>

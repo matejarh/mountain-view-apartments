@@ -41,7 +41,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
         $validator->setAttributeNames($attributeNames)->validateWithBag('updateProfileInformation');
 
         if (isset($input['country'])) {
-            $input['country']=str($input['country'])->upper();
+            $input['country']=str($input['country'])->lower();
         }
 
         if (isset($input['photo'])) {
