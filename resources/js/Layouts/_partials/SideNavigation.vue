@@ -1,12 +1,14 @@
 <script setup>
 import SearchForm from '@/Components/SideNavigation/SearchForm.vue';
 import { computed, onMounted } from 'vue';
-import NavLink from '../../Components/SideNavigation/NavLink.vue';
-import NavDropdown from '../../Components/SideNavigation/NavDropdown.vue';
-import DropdownItem from '../../Components/SideNavigation/DropdownItem.vue';
+import NavLink from '@/Components/SideNavigation/NavLink.vue';
+import NavDropdown from '@/Components/SideNavigation/NavDropdown.vue';
+import DropdownItem from '@/Components/SideNavigation/DropdownItem.vue';
 import Tooltip from '@/Components/Tooltip.vue';
 import BottomItem from '@/Components/SideNavigation/BottomItem.vue';
 import LangSwitch from '@/Components/SideNavigation/LangSwitch.vue';
+import ImageIcon from '@/Icons/ImageIcon.vue';
+import UsersIcon from '@/Icons/UsersIcon.vue';
 
 const props = defineProps({
     show: Boolean,
@@ -24,7 +26,7 @@ const classes = computed(() => {
         class="fixed top-0 left-0 z-20 w-64 h-screen pt-24 sm:pt-14 transition-transform bg-white border-r border-gray-200 lg:translate-x-0 dark:bg-gray-900 dark:border-gray-700"
         aria-label="Sidenav" id="sidebar-navigation">
         <div class="overflow-y-auto py-5 px-3 md:pr-0 h-full bg-white dark:bg-gray-900">
-            <SearchForm />
+            <!-- <SearchForm /> -->
             <ul class="space-y-2">
                 <NavLink href="/admin/dashboard" @click="$emit('hide')">
                     <template #icon>
@@ -54,35 +56,21 @@ const classes = computed(() => {
                 </NavDropdown>
                 <NavDropdown key="galleries-dropdown" href="/admin/galleries">
                     <template #icon>
-                        <svg  aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                            viewBox="0 0 24 24">
-                            <path fill-rule="evenodd" d="M13 10a1 1 0 0 1 1-1h.01a1 1 0 1 1 0 2H14a1 1 0 0 1-1-1Z"
-                                clip-rule="evenodd" />
-                            <path fill-rule="evenodd"
-                                d="M2 6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12c0 .556-.227 1.06-.593 1.422A.999.999 0 0 1 20.5 20H4a2.002 2.002 0 0 1-2-2V6Zm6.892 12 3.833-5.356-3.99-4.322a1 1 0 0 0-1.549.097L4 12.879V6h16v9.95l-3.257-3.619a1 1 0 0 0-1.557.088L11.2 18H8.892Z"
-                                clip-rule="evenodd" />
-                        </svg>
+                        <ImageIcon />
                     </template>
                     <template #title>{{__('Galleries')}}</template>
-                    <DropdownItem :href="'/admin/galleries/index'" @click="$emit('hide')">{{__('Galleries')}}</DropdownItem>
+                    <DropdownItem :href="'/admin/galleries'" @click="$emit('hide')">{{__('Galleries')}}</DropdownItem>
+                    <DropdownItem :href="'/admin/images'" @click="$emit('hide')">{{__('Images')}}</DropdownItem>
                     <!-- <DropdownItem :href="'/admin/galeries/create'" @click="$emit('hide')">Create</DropdownItem> -->
 
                 </NavDropdown>
                 <NavDropdown key="users-dropdown" href="/admin/users">
                     <template #icon>
-                        <svg class="" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                            fill="currentColor" viewBox="0 0 24 24">
-                            <path fill-rule="evenodd"
-                                d="M12 6a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Zm-1.5 8a4 4 0 0 0-4 4 2 2 0 0 0 2 2h7a2 2 0 0 0 2-2 4 4 0 0 0-4-4h-3Zm6.82-3.096a5.51 5.51 0 0 0-2.797-6.293 3.5 3.5 0 1 1 2.796 6.292ZM19.5 18h.5a2 2 0 0 0 2-2 4 4 0 0 0-4-4h-1.1a5.503 5.503 0 0 1-.471.762A5.998 5.998 0 0 1 19.5 18ZM4 7.5a3.5 3.5 0 0 1 5.477-2.889 5.5 5.5 0 0 0-2.796 6.293A3.501 3.501 0 0 1 4 7.5ZM7.1 12H6a4 4 0 0 0-4 4 2 2 0 0 0 2 2h.5a5.998 5.998 0 0 1 3.071-5.238A5.505 5.505 0 0 1 7.1 12Z"
-                                clip-rule="evenodd" />
-                        </svg>
-
-
+                        <UsersIcon />
                     </template>
                     <template #title>{{ __("Users") }}</template>
-                    <DropdownItem href="/admin/users/index" @click="$emit('hide')">{{ __('All Users') }}</DropdownItem>
-                    <DropdownItem href="/admin/users/activity-log/index" @click="$emit('hide')">{{ __('Activity Log') }}</DropdownItem>
+                    <DropdownItem href="/admin/users" @click="$emit('hide')">{{ __('All Users') }}</DropdownItem>
+                    <DropdownItem href="/admin/users/activity-log" @click="$emit('hide')">{{ __('Activity Log') }}</DropdownItem>
 
 
 

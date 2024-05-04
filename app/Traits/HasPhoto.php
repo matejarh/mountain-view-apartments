@@ -16,7 +16,7 @@ trait HasPhoto
      * @param  string  $storagePath
      * @return void
      */
-    public function updatePhoto(UploadedFile $photo, $storagePath = 'galleries-photos')
+    public function updatePhoto(UploadedFile $photo, $storagePath = 'galleries-photos'): void
     {
         $disk = Storage::disk('public')->path('/');
         $path = $storagePath . '/' . str(auth()->user()->name)->slug() . '/';
@@ -35,7 +35,16 @@ trait HasPhoto
 
     }
 
-    private function handleImage($path, $image, $imageName, $destinationPath) : void {
+    /**
+     * Creates and saves main image
+     *
+     * @param string $path
+     * @param \Intervention\Image\Image $image
+     * @param string $imageName
+     * @param string $destinationPath
+     * @return void
+     */
+    private function handleImage(string $path, \Intervention\Image\Image $image, string $imageName, string $destinationPath) : void {
         tap($this->image_path, function ($previous) use ($path, $image, $imageName, $destinationPath) {
 
             // Main Image Upload on Folder Code
@@ -51,16 +60,27 @@ trait HasPhoto
         });
     }
 
-    private function handleThumb($thumbpath, $image, $imageName, $destinationPathThumbnail) : void {
+    /**
+     * Creates and saves main image
+     *
+     * @param string $thumbpath
+     * @param \Intervention\Image\Image $image
+     * @param string $imageName
+     * @param string $destinationPathThumbnail
+     * @return void
+     */
+    private function handleThumb(string $thumbpath, \Intervention\Image\Image $image, string $imageName, string $destinationPathThumbnail) : void {
         tap($this->thumb_path, function ($previous) use ($thumbpath, $image, $imageName, $destinationPathThumbnail) {
+
             // Generate Thumbnail Image Upload on Folder Code
             if ($image->width() > $image->height()) {
-                $image->scaleDown(null, 360);
-
+                $image->scale(null, 366);
             } elseif ($image->width() < $image->height()) {
-                $image->scaleDown(480, null);
+                $image->scale(512, null);
             }
-            $image->crop(480, 360);
+
+            $image->cover(512, 366, 'center');
+            // $image->crop(512, 288, 0, 0, 'transparent', 'center'); 512 = 1.4   x = 1
 
             $image->save($destinationPathThumbnail . $imageName);
 

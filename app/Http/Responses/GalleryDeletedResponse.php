@@ -17,6 +17,6 @@ class GalleryDeletedResponse implements GalleryDeleteResponseContract
     {
         return $request->wantsJson()
             ? new JsonResponse('', 201)
-            : back()->with('status', 'gallery-destroyed');
+            : redirect(route('admin.galleries.index'))->with('status', 'gallery-destroyed');
     }
 }

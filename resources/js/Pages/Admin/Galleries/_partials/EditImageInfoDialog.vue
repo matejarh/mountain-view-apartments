@@ -9,6 +9,7 @@ import TextArea from '@/Components/TextArea.vue';
 import InputError from '@/Components/InputError.vue';
 import Tooltip from '@/Components/Tooltip.vue';
 import SpinnerIcon from '@/Icons/SpinnerIcon.vue';
+import ProgressBar from '@/Components/ProgressBar.vue';
 
 
 const props = defineProps({
@@ -87,7 +88,7 @@ const clearPhotoFileInput = () => {
 </script>
 
 <template>
-    <DialogModal max-width="2xl" :show="show" @close="form.reset(), $emit('close')">
+    <DialogModal max-width="screen" :show="show" @close="form.reset(), $emit('close')">
         <template #title>{{ image ? __('Edit Image') : __('Create Image') }}</template>
 
         <template #content>
@@ -102,9 +103,7 @@ const clearPhotoFileInput = () => {
             </div>
             <InputError :message="form.errors.photo" class="mt-2" />
 
-            <progress v-if="form.progress" :value="form.progress.percentage" max="100">
-                {{ form.progress.percentage }}%
-            </progress>
+            <ProgressBar v-if="form.progress" :progress="form.progress.percentage" />
 
             <div class="grid gap-4 grid-cols-2">
                 <input id="photo" ref="photoInput" type="file" class="hidden" @change="updatePhotoPreview">

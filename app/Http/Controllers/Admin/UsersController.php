@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Filters\UserFilters;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -13,15 +14,24 @@ use Laravel\Fortify\Fortify;
 
 class UsersController extends Controller
 {
-    public function index(Request $request): Response
+
+    /**
+     * Get filtered ordered paginated users collection
+     * and renders Inertia response
+     *
+     * @param \Illuminate\Http\Request
+     * @param \App\Filters\UserFilters
+     * @return \Inertia\Response
+     */
+    public function index(Request $request, UserFilters $filters): Response
     {
         if ($request->user()->cannot('viewAny', User::class))
             abort(403);
 
-        $sortBy = $request->has('sortBy') ? trim($request->sortBy) : 'name';
-        $sortDirection = $request->has('sortDirection') ? trim($request->sortDirection) : 'asc';
+        $sortBy = $request->has('sortBy') ? trim($request->sortBy) : 'created_at';
+        $sortDirection = $request->has('sortDirection') ? trim($request->sortDirection) : 'desc';
 
-        $users = User::orderBy($sortBy, $sortDirection)->filter($request->only(['search']))->paginate(12, ['*'], __('page'))->onEachSide(2)->withQueryString();
+        $users = User::orderBy($sortBy, $sortDirection)->filter($filters)->paginate(12, ['*'], __('page'))->onEachSide(2)->withQueryString();
 
         return Inertia::render('Admin/Users', [
             'users' => $users,

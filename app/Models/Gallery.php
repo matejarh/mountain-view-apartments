@@ -67,7 +67,7 @@ class Gallery extends Model
      */
     public function images(): BelongsToMany
     {
-        return $this->belongsToMany(Image::class, 'galleries_images', 'gallery_id', 'image_id');
+        return $this->belongsToMany(Image::class, 'galleries_images', 'gallery_id', 'image_id')->latest();
     }
 
     public function can(): array

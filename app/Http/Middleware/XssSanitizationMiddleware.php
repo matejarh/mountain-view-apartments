@@ -19,6 +19,7 @@ class XssSanitizationMiddleware
 
         array_walk_recursive($input, function (&$input) {
             $input = strip_tags($input);
+            $input = trim($input);
         });
 
         $request->merge($input);

@@ -22,16 +22,16 @@ Route::group(['middleware' => config('jetstream.middleware', ['web'])], function
 
         Route::name('users.')->prefix('users')->namespace('users')->group(function() {
 
-            Route::get('index', [UsersController::class, 'index'])->name('index');
+            Route::get('/', [UsersController::class, 'index'])->name('index');
 
             Route::put('{user}', [UsersController::class, 'update'])->name('update');
 
-            Route::get('activity-log/index', [ActivitiesLogController::class, 'index'])->name('activities.index');
-            Route::get('activity-log/index/{skip}/{take}', [ActivitiesLogController::class, 'feed'])->name('activities.index.feed');
+            Route::get('activity-log', [ActivitiesLogController::class, 'index'])->name('activities.index');
+            Route::get('activity-log/{skip}/{take}', [ActivitiesLogController::class, 'feed'])->name('activities.index.feed');
         });
 
         Route::name('galleries.')->prefix('galleries')->namespace('galleries')->group(function() {
-            Route::get('index', [GalleriesController::class, 'index'])->name('index');
+            Route::get('/', [GalleriesController::class, 'index'])->name('index');
             Route::post('store', [GalleriesController::class, 'store'])->name('store');
             Route::get('{gallery}', [GalleriesController::class, 'show'])->name('show');
             Route::put('{gallery}', [GalleriesController::class, 'update'])->name('update');
@@ -41,7 +41,7 @@ Route::group(['middleware' => config('jetstream.middleware', ['web'])], function
         });
 
         Route::name('images.')->prefix('images')->namespace('images')->group(function() {
-            Route::get('index', [ImagesController::class, 'index'])->name('index');
+            Route::get('/', [ImagesController::class, 'index'])->name('index');
             Route::post('store', [ImagesController::class, 'store'])->name('store');
             Route::get('{image}', [ImagesController::class, 'show'])->name('show');
             Route::post('{image}', [ImagesController::class, 'update'])->name('update');

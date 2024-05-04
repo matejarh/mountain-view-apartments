@@ -20,10 +20,10 @@ defineEmits(['toggleSidebar'])
             <div class="flex justify-start items-center">
                 <ToggleSidebarButton @toggle="$emit('toggleSidebar')" />
                 <ApplicationLogo />
-                <SearchForm />
+                <!-- <SearchForm /> -->
             </div>
             <div class="flex justify-end items-center lg:order-2">
-                <ToggleSearchButton @show-sidebar="$emit('toggleSidebar')" />
+                <!-- <ToggleSearchButton @show-sidebar="$emit('toggleSidebar')" /> -->
                 <NotificationsDropdown />
 <!--                 <NotificationsDropdown />
                 <AppsDropdown /> -->

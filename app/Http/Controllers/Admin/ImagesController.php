@@ -14,14 +14,40 @@ use App\Contracts\ImageDeleteResponse;
 use App\Contracts\ImageDetacheResponse;
 use App\Contracts\ImageUpdateResponse;
 use App\Contracts\UpdatesImages;
+use App\Filters\ImageFilters;
 use App\Http\Controllers\Controller;
 use App\Models\Gallery;
 use App\Models\Image;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class ImagesController extends Controller
 {
+    /**
+     * Get filtered ordered paginated images collection
+     * and renders Inertia response
+     *
+     * @param \Illuminate\Http\Request
+     * @param \App\Filters\UserFilters
+     * @return \Inertia\Response
+     */
+    public function index(Request $request, ImageFilters $filters): Response
+    {
+        if (auth()->user()->cannot('viewAny', Image::class))
+            abort(403);
+
+        return Inertia::render('Admin/Images/Index', [
+            'images' => Image::with('galleries')->filter($filters)->latest()->paginate(24, ['*'], __('page'))->onEachSide(2)->withQueryString(),
+            'filters' => $request->only(['search']),
+            'can' => [
+                'view_images' => auth()->user()->can('viewAny', Image::class),
+            ],
+
+        ]);
+    }
+
     /**
      * Creates new image with given information.
      *

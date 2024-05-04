@@ -25,7 +25,7 @@ defineProps({
                 <h1 class="text-2xl font-bold" v-if="$slots.title">
                     <slot name="title" />
                 </h1>
-                <p v-if="$slots.description" class="text-gray-700 dark:text-gray-300">
+                <p v-if="$slots.description" class="text-gray-500 dark:text-gray-300 bg-gray-50 dark:bg-gray-700 leading-tight p-2 rounded-lg whitespace-pre">
                     <slot name="description" />
                 </p>
                 <slot name="content" />

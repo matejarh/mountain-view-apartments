@@ -86,8 +86,6 @@ onUnmounted(() => {
 
 <template>
     <div>
-
-
         <div class="flex items-center justify-center w-full" :data-active="active" @dragenter.prevent="setActive"
             @dragover.prevent="setActive" @dragleave.prevent="setInactive" @drop.prevent="handleDrop">
             <label for="dropzone-file" :class="{ 'animate-pulse': active }"
@@ -102,19 +100,18 @@ onUnmounted(() => {
                     <div class="text-center" v-if="!active">
                         <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">
                                 {{ __('Click to upload') }}</span> {{ __('or drag and drop') }}</p>
-                        <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MIN 1280x720px, MAX. 4096kB)</p>
                     </div>
                     <div class="text-center" v-else>
                         <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">
                             {{__('Drop here')}}
                         </span></p>
-                        <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MIN 1280x720px, MAX. 4096kB)</p>
                     </div>
                 </div>
                 <input id="dropzone-file" ref="photoInput" type="file" multiple accept="image/*" class="hidden"
                     @input="handleSelect" />
             </label>
         </div>
-
     </div>
 </template>

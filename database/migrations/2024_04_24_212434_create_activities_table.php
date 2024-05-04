@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,18 +16,13 @@ return new class extends Migration
     {
         Schema::create('activities', function (Blueprint $table) {
             $table->id();
-            $table->string('type');
-            $table->unsignedBigInteger('user_id')->index();
-            $table->unsignedBigInteger('subject_id');
+            $table->string('type')->index();
+            $table->foreignIdFor(User::class, 'user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('subject_id');
             $table->string('subject_type', 50);
             $table->json('agent');
             $table->json('location');
             $table->timestamps();
-
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('cascade');
         });
     }
 

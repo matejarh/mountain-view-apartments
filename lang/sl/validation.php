@@ -34,7 +34,7 @@ return [
     'different'            => ':Attribute in :other mora biti drugačen.',
     'digits'               => ':Attribute mora imeti :digits cifer.',
     'digits_between'       => ':Attribute mora biti med :min in :max ciframi.',
-    'dimensions'           => ':Attribute ima napačne dimenzije slike.',
+    'dimensions'           => ':Attribute ima napačne dimenzije.',
     'distinct'             => ':Attribute je duplikat.',
     'doesnt_end_with'      => ':Attribute se ne sme končati z enim od naslednjih: :values.',
     'doesnt_start_with'    => ':Attribute se ne sme začeti z enim od naslednjih: :values.',

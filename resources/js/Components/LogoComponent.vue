@@ -34,11 +34,11 @@ defineProps({
             class="dark:text-gray-50 text-gray-950  drop-shadow transition-all duration-300 ease-out animate-pulse"
             :class="scrollPosition > 100 ? 'w-24 h-24' : 'w-32 h-32'" />
         <template v-else>
-            <div class="flex">
+            <div class="flex items-center">
                 <HribiLogoIcon
                     class="dark:text-gray-50 text-gray-950 transform translate-x-4 transition-all duration-300 ease-out animate-pulse"
                     :class="scrollPosition > 100 ? 'w-24 h-10' : 'w-28 h-28'" />
-                <NapisiLogoIcon class="dark:text-gray-50 text-gray-950   transition-all duration-300 ease-out"
+                <NapisiLogoIcon class="dark:text-gray-50 text-gray-950   transition-all duration-300 ease-out translate-y-1"
                     :class="scrollPosition > 100 ? 'w-32 h-10' : 'w-28 h-28'" />
 
             </div>

@@ -10,6 +10,8 @@ class Property extends Pivot
 {
     use HasFactory;
 
+    protected $table = 'properties';
+
     public function owner() : BelongsTo {
         return $this->belongsTo(User::class, 'owner_id');
     }

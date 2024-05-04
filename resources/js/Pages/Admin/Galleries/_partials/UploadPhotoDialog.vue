@@ -1,12 +1,7 @@
 <script setup>
-import { onMounted, ref, watch, watchEffect } from 'vue';
+import { ref, watch } from 'vue';
 import DialogModal from '@/Components/DialogModal.vue'
 import PrimaryButton from '@/Components/PrimaryButton.vue';
-import { useForm } from '@inertiajs/vue3';
-import InputLabel from '@/Components/InputLabel.vue';
-import TextInput from '@/Components/TextInput.vue';
-import TextArea from '@/Components/TextArea.vue';
-import InputError from '@/Components/InputError.vue';
 import DropZone from '@/Components/DropZone.vue';
 import SpinnerIcon from '@/Icons/SpinnerIcon.vue';
 import UploadingPhotoSlot from './UploadingPhotoSlot.vue';
@@ -19,22 +14,6 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['close'])
-
-const form = useForm({
-    name: '',
-    description: '',
-    photos: null,
-})
-
-const create = () => {
-    if (form.isDirty) {
-        form.post(route('admin.galleries.store'), {
-            preserveScroll: true,
-            onSuccess: () => emit('close'),
-        })
-    }
-}
-
 
 const photoPreview = ref([]);
 const photoInput = ref(null);
@@ -49,10 +28,13 @@ const updatePhotoPreview = (files) => {
         const photo = files[index];
 
         if (!photo) return;
+        if (photoPreview.value.length > 10) return;
 
         const reader = new FileReader();
 
         reader.onload = (e) => {
+            if (fileExists(e.target.result)) return
+
             photoPreview.value.push({
                 preview: e.target.result,
                 file: photo
@@ -63,58 +45,84 @@ const updatePhotoPreview = (files) => {
     }
 };
 
-const removeFromPhotoPreview = (value) => {
+const fileExists = (otherPhotoPreview) => {
+    return photoPreview.value.some(({ preview }) => preview === otherPhotoPreview)
+}
 
+const saved = ref(false)
+const removeFromPhotoPreview = (value) => {
+    saved.value = value.saved
     /*     photoPreview.value = photoPreview.value.filter(function(item, key) {
             return key !== value
         }) */
-    const index = photoPreview.value.indexOf(value);
+    const index = photoPreview.value.indexOf(value.photo);
     if (index > -1) {
         photoPreview.value.splice(index, 1);
     }
-
-    if (photoPreview.value.length === 0) {
-        setTimeout(() => {
-
-            emit('close')
-        }, 2000);
+    if (saved.value === true && photoPreview.value.length === 0) {
+        emit('close')
     }
+
+    saved.value = false
+
+    /*     if (photoPreview.value.length === 0) {
+            setTimeout(() => {
+
+                emit('close')
+            }, 2000);
+        } */
 }
 
 
 </script>
 
 <template>
-    <DialogModal max-width="4xl" :show="show" @close="form.reset(), $emit('close')">
-        <template #title>{{ __('Upload Photos') }}</template>
+    <DialogModal max-width="4xl" :show="show" @close="$emit('close')">
+        <template #title>{{ __('Upload Images') }}</template>
 
         <template #content>
-            <div v-show="photoPreview" class="flex flex-col space-y-4 mb-4">
-                <TransitionGroup enter-active-class="animate__animated animate__zoomIn"
-                    leave-active-class="animate__animated animate__hinge ">
-                    <UploadingPhotoSlot v-for="photo in photoPreview" :key="photo.preview"
-                        :photo="photo" @remove="removeFromPhotoPreview" />
-                </TransitionGroup>
-            </div>
 
-            <progress v-if="form.progress" :value="form.progress.percentage" max="100">
-                {{ form.progress.percentage }}%
-            </progress>
+            <TransitionGroup v-show="photoPreview" name="list" tag="ul" class="relative flex flex-col space-y-4 mb-4">
+                <UploadingPhotoSlot v-for="photo in photoPreview" :key="photo.preview" :photo="photo"
+                    @remove="removeFromPhotoPreview" />
+            </TransitionGroup>
+
 
             <DropZone v-model="photoInput" />
         </template>
 
         <template #footer>
-            <PrimaryButton type="button"
+            <!--             <PrimaryButton type="button"
                 :class="{ 'opacity-25': form.processing || form.recentlySuccessful || !form.isDirty }"
-                :disabled="form.processing || form.recentlySuccessful" @click="create">
+                :disabled="form.processing || form.recentlySuccessful" @click="createAll">
                 <div class="flex items-center">
                     <SpinnerIcon v-show="form.processing"
                         class="animate-spin -ml-1 mr-3 h-5 w-5 text-white dark:text-white" />
-                    {{ form.processing ? __('Saving') + '...' : form.recentlySuccessful ? __('Saved') : __('Save') }}
+                    {{ form.processing ? __('Uploading') + '...' : form.recentlySuccessful ? __('Uploaded') : __('Upload All') }}
 
                 </div>
-            </PrimaryButton>
+            </PrimaryButton> -->
         </template>
     </DialogModal>
 </template>
+
+<style scoped>
+.list-move,
+/* apply transition to moving elements */
+.list-enter-active,
+.list-leave-active {
+    transition: all 0.5s ease;
+}
+
+.list-enter-from,
+.list-leave-to {
+    opacity: 0;
+    transform: translateX(30px);
+}
+
+/* ensure leaving items are taken out of layout flow so that moving
+   animations can be calculated correctly. */
+.list-leave-active {
+    position: absolute;
+}
+</style>

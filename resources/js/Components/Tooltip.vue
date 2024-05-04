@@ -34,9 +34,9 @@ const show = ref(false)
             <ApearDisapearFadeTransition>
                 <div v-show="show"
                     :class="aligmentClasses"
-                    class="inline-block absolute whitespace-nowrap  transform z-50 py-2 px-3 text-sm font-medium text-white  rounded-lg shadow-sm transition-opacity duration-300"
+                    class="inline-block absolute whitespace-nowrap  transform z-[10000] py-2 px-3 text-sm font-medium text-white  rounded-lg shadow-sm transition-opacity duration-300"
                     >
-                    <div class="z-10">
+                    <div class="z-[10001]">
                         {{ text }}
 
                     </div>

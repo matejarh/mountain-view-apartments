@@ -19,7 +19,7 @@ class GalleryFilters extends Filters
         return $this->builder->when($query ?? null, function ($query, $search) {
             $query->where('name', 'like', '%' . $search . '%')
                 ->orWhere('description', 'like', '%' . $search . '%')
-                ->whereHas('images', function ($q) use ($search) {
+                ->orWhereHas('images', function ($q) use ($search) {
                     $q->where('name', 'like', '%' . $search . '%')
                         ->orWhere('description', 'like', '%' . $search . '%');
                 });

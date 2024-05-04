@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Filters\ActivityFilters;
 use App\Http\Controllers\Controller;
 use App\Models\Activity;
 use Illuminate\Http\JsonResponse;
@@ -11,10 +12,17 @@ use Inertia\Response;
 
 class ActivitiesLogController extends Controller
 {
-    public function index(Request $request  ) : Response {
-        // abort(500);
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Filters\ActivityFilters $filters
+     * @return \Inertia\Response
+     */
+    public function index(Request $request, ActivityFilters $filters ) : Response {
+
+        if (auth()->user()->cannot('viewAny', Activity::class)) abort(403);
+
         return Inertia::render('Admin/Activity/Index', [
-            'activities' => Activity::adminFeed($request),
+            'activities' => Activity::adminFeed($request, $filters),
             'filters' => $request->only(['search', 'sortBy', 'sortDirection']),
 
         ]);

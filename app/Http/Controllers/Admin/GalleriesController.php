@@ -61,6 +61,8 @@ class GalleriesController extends Controller
 
         return Inertia::render('Admin/Galleries/Show', [
             'gallery' => Gallery::with('images')->find($gallery->id),
+            'images_not_in_gallery' => Image::all()->intersect(Image::whereNotIn('id', $gallery->images->pluck('id')->toArray())->get()),
+            'total_images_count' => \DB::table('images')->count(),
             'can' => [
                 'view_gallery' => auth()->user()->can('view', $gallery),
                 'delete_images' => auth()->user()->can('delete', Image::class),

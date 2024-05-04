@@ -1,17 +1,10 @@
 <script setup>
-import { onMounted, ref, watch, watchEffect } from 'vue';
-import { useForm } from '@inertiajs/vue3';
+import { onMounted, onUpdated, ref, watch, watchEffect } from 'vue';
 import DialogModal from '@/Components/DialogModal.vue'
-
 import SpinnerIcon from '@/Icons/SpinnerIcon.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
 import ImageCard from './ImageCard.vue';
-import GridSection from '@/Components/GridSection.vue';
 import ImageIcon from '@/Icons/ImageIcon.vue';
-import DropZone from '@/Components/DropZone.vue';
-import Tooltip from '@/Components/Tooltip.vue';
-import EditIcon from '@/Icons/EditIcon.vue';
-import ArrowUpRightIcon from '@/Icons/ArrowUpRightIcon.vue';
+
 
 const props = defineProps({
     show: Boolean,
@@ -25,19 +18,11 @@ const total_count = ref(0)
 
 const busy = ref(false)
 
-const form = useForm({})
+watch(props,() => {
+    if (props.show === true) {
 
-const attach = (image) => {
-    if (form.isDirty) {
-        form.post(route('admin.galleries.attach', { image: image, gallery: props.gallery }), {
-            preserveScroll: true,
-            onSuccess: () => emit('close'),
-        })
+        // fetch()
     }
-}
-
-watchEffect(() => {
-    if (props.show === true) fetch()
 })
 
 const fetch = () => {
@@ -50,42 +35,71 @@ const fetch = () => {
         })
 }
 
-onMounted(() => {
-    fetch()
-})
+
+
 </script>
 
 <template>
-    <DialogModal max-width="screen" :show="show" @close="form.reset(), $emit('close')">
+    <DialogModal max-width="screen" :show="show" @close="$emit('close')">
         <template #title>{{ __('Attach Images To Gallery') }}</template>
 
         <template #content>
-            <div class="" v-if="busy">
-                <SpinnerIcon class="w-6 h-6 animate-spin" />
-            </div>
-            <div class="" v-else>
-                <GridSection v-if="images.length > 0">
-                    <ImageCard :image="image" v-for="image, key in images" :key="key" :has-gallery="false" />
-                    <div>
-                        <div class="w-full text-center cursor-pointer animate-pulse"
-                            @click="$emit('showUploadPhotoDialog')">
+            <Transition
+                enter-active-class="animate__animated animate__fadeIn"
+                leave-active-class="animate__animated animate__fadeOut absolute"
+                >
+
+                <div class="p-6 w-full" v-if="busy">
+                    <SpinnerIcon class="w-6 h-6 animate-spin mx-auto" />
+                </div>
+                <div class="" v-else>
+                        {{  }}
+                        <TransitionGroup v-if="$page.props.images_not_in_gallery.length > 0" name="list" tag="ul"
+                            class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 4xl:grid-cols-6 gap-4 md:gap-4 lg:gap-6 2xl:gap-8">
+                            <ImageCard :image="image" v-for="image, key in $page.props.images_not_in_gallery" :key="image.id" :has-gallery="false"/>
+                            <div key="empty">
+                                <div class="w-full text-center cursor-pointer "
+                                    @click="$emit('showUploadPhotoDialog')">
+                                    <ImageIcon class="text-gray-300 dark:text-gray-400 w-32 h-32 mx-auto" />
+
+                                    <p class="text-gray-300 dark:text-gray-400 text-sm">{{ __('Click here to upload some') }}</p>
+                                </div>
+                            </div>
+                        </TransitionGroup>
+
+                    <div v-else class="">
+                        <div class="w-full text-center cursor-pointer " @click="$emit('showUploadPhotoDialog')">
                             <ImageIcon class="text-gray-300 dark:text-gray-400 w-32 h-32 mx-auto" />
 
+                            <p class="text-gray-300 dark:text-gray-400 font-semibold ">{{ $page.props.total_images_count > 0 ? __('All uploaded images are attached to gallery!') : __('No images uploaded yet!') }}</p>
                             <p class="text-gray-300 dark:text-gray-400 text-sm">{{ __('Click here to upload some') }}</p>
                         </div>
                     </div>
-                </GridSection>
-                <div v-else class="">
-                    <div class="w-full text-center cursor-pointer animate-pulse" @click="$emit('showUploadPhotoDialog')">
-                        <ImageIcon class="text-gray-300 dark:text-gray-400 w-32 h-32 mx-auto" />
 
-                        <p class="text-gray-300 dark:text-gray-400 font-semibold ">{{ total_count > 0 ? __('All uploaded images are attached to gallery!') : __('No images uploaded yet!') }}</p>
-                        <p class="text-gray-300 dark:text-gray-400 text-sm">{{ __('Click here to upload some') }}</p>
-                    </div>
                 </div>
-
-            </div>
+            </Transition>
 
         </template>
     </DialogModal>
 </template>
+
+<style scoped>
+.list-move,
+/* apply transition to moving elements */
+.list-enter-active,
+.list-leave-active {
+    transition: all 0.5s ease;
+}
+
+.list-enter-from,
+.list-leave-to {
+    opacity: 0;
+    transform: translateY(50px);
+}
+
+/* ensure leaving items are taken out of layout flow so that moving
+   animations can be calculated correctly. */
+.list-leave-active {
+    position: absolute;
+}
+</style>
