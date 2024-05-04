@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Filters\UserFilters;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Traits\RecordsActivity;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -93,7 +95,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     protected static function deleteItems(): array
     {
-        return ['activities', 'logins', 'galleries', 'images'];
+        return ['activities', 'logins', 'galleries', 'images', 'properties'];
     }
 
     protected function defaultProfilePhotoUrl(): string
@@ -121,17 +123,13 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Image::class)->latest();
     }
 
+    public function properties(): HasMany
+    {
+        return $this->hasMany(Property::class)->latest();
+    }
+
     public function lastSeenDiffForHumans(): string
     {
-/*         if ($this->logins->count() > 0) {
-            $latestLogin = $this->logins->sortByDesc('created_at')->first();
-
-            if ($latestLogin->location) {
-                return __('Last login') . ' ' . $latestLogin->created_at->diffForHumans() . '<br>' . $latestLogin->location->cityName . ' ' . $latestLogin->location->countryName;
-            }
-
-            return __('Last login') . ' ' . $latestLogin->created_at->diffForHumans();
-        } */
         if ($this->last_seen) {
             return $this->last_seem->diffForHumans();
         }
@@ -154,9 +152,15 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasSessions();
     }
 
-    public function scopeFilter($query, array $filters): void
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param \App\Filters\UserFilters $filters
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeFilter(Builder $query, UserFilters $filters): Builder
     {
-        $query->when($filters['search'] ?? null, function ($query, $search) {
+        return $filters->apply($query);
+        /* $query->when($filters['search'] ?? null, function ($query, $search) {
             $query->where(function ($query) use ($search) {
                 $query->where('first_name', 'like', '%' . $search . '%')
                     ->orWhere('name', 'like', '%' . $search . '%')
@@ -165,7 +169,7 @@ class User extends Authenticatable implements MustVerifyEmail
                     ->orWhere('country', 'like', '%' . $search . '%')
                     ->orWhere('email', 'like', '%' . $search . '%');
             });
-        })/* ->when($filters['role'] ?? null, function ($query, $role) {
+        }) *//* ->when($filters['role'] ?? null, function ($query, $role) {
         $query->whereHas('roles', function ($q) use ($role) {
             $q->where('roles.name', 'like', '%' . $role . '%' ?: '*');
         });

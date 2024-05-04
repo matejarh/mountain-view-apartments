@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Filters\GalleryFilters;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -13,6 +15,15 @@ class Gallery extends Model
 
 
     /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array<int, string>
+     */
+    protected $appends = [
+        'can'
+    ];
+
+    /**
      * Get the attributes that should be cast.
      *
      * @return array<string, string>
@@ -22,6 +33,17 @@ class Gallery extends Model
         return [
 
         ];
+    }
+
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        static::deleting(function ($gallery) {
+            foreach ($gallery->images as $image) {
+                $gallery->images()->detach($image);
+            }
+        });
     }
 
     /**
@@ -48,9 +70,30 @@ class Gallery extends Model
         return $this->belongsToMany(Image::class, 'galleries_images', 'gallery_id', 'image_id');
     }
 
-    public function scopeFilter($query, array $filters): void
+    public function can(): array
     {
-        $query->when($filters['search'] ?? null, function ($query, $search) {
+        return [
+            'delete-gallery' => auth()->user()->can('delete', $this),
+            'update-gallery' => auth()->user()->can('update', $this)
+        ];
+    }
+
+    public function getCanAttribute(): array
+    {
+        return $this->can();
+    }
+
+    /**
+     * Filters given query by given filters
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param \App\Filters\GalleryFilters $filters
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeFilter($query, GalleryFilters $filters): Builder
+    {
+        return $filters->apply($query);
+        /* $query->when($filters['search'] ?? null, function ($query, $search) {
 
             $query->where('name', 'like', '%' . $search . '%')
                 ->orWhere('description', 'like', '%' . $search . '%')
@@ -58,6 +101,6 @@ class Gallery extends Model
                     $q->where('name', 'like', '%' . $search . '%')
                         ->orWhere('description', 'like', '%' . $search . '%');
                 });
-        });
+        }); */
     }
 }

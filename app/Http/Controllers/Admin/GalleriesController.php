@@ -14,6 +14,7 @@ use App\Contracts\GalleryDeleteResponse;
 use App\Contracts\GalleryDetacheResponse;
 use App\Contracts\GalleryUpdateResponse;
 use App\Contracts\UpdatesGalleries;
+use App\Filters\GalleryFilters;
 use App\Http\Controllers\Controller;
 use App\Http\Responses\GalleryCreatedResponse;
 use App\Http\Responses\GalleryUpdatedResponse;
@@ -31,13 +32,13 @@ class GalleriesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Inertia\Response
      */
-    public function index(Request $request): Response
+    public function index(Request $request, GalleryFilters $filters): Response
     {
         if (auth()->user()->cannot('viewAny', Gallery::class))
             abort(403);
 
         return Inertia::render('Admin/Galleries/Index', [
-            'galleries' => Gallery::with('images')->filter($request->only(['search']))->latest()->paginate(24, ['*'], __('page'))->onEachSide(2)->withQueryString(),
+            'galleries' => Gallery::with('images')->filter($filters)->latest()->paginate(24, ['*'], __('page'))->onEachSide(2)->withQueryString(),
             'filters' => $request->only(['search']),
             'can' => [
                 'view_gallery' => auth()->user()->can('viewAny', Gallery::class),
