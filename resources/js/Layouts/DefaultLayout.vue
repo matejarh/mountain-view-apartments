@@ -88,7 +88,7 @@ onMounted(() => {
                     <div class="" v-show="helpers.show">
 
                         <main @scroll="handleScroll" id="main"
-                            class="flex flex-col justify-between h-screen z-0  overflow-y-auto scrollbar-none scroll-smooth hover:scrollbar-thumb-gray-500 active:scrollbar-thumb-gray-400 scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-700 scrollbar-track-transparent">
+                            class="flex flex-col justify-between h-screen z-0  overflow-y-auto scrollbar-thin scroll-smooth hover:scrollbar-thumb-gray-500 active:scrollbar-thumb-gray-400 scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-700 scrollbar-track-transparent">
                             <div class="p-0 flex-grow flex flex-col justify-center">
                                 <slot />
                             </div>
