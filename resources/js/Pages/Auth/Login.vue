@@ -33,7 +33,9 @@ const submit = () => {
 
 <template>
 
-    <Head :title="__('Log In')" />
+    <Head :title="__('Log In')" >
+        <meta name="robots" content="noindex,nofollow">
+    </Head>
 
     <AuthenticationCard>
         <template #logo>

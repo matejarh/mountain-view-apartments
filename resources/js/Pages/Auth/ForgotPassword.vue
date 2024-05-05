@@ -23,7 +23,9 @@ const submit = () => {
 
 <template>
 
-    <Head :title="__('Forgot Password')" />
+    <Head :title="__('Forgot Password')" >
+        <meta name="robots" content="noindex,nofollow">
+    </Head>
 
     <AuthenticationCard>
         <template #logo>

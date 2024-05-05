@@ -27,7 +27,9 @@ const submit = () => {
 </script>
 
 <template>
-    <Head :title="__('Reset Password')" />
+    <Head :title="__('Reset Password')" >
+        <meta name="robots" content="noindex,nofollow">
+    </Head>
 
     <AuthenticationCard>
         <template #logo>

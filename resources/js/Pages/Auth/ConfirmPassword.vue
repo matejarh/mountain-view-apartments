@@ -27,7 +27,9 @@ const submit = () => {
 
 <template>
 
-    <Head :title="__('Secure Area')" />
+    <Head :title="__('Secure Area')">
+        <meta name="robots" content="noindex,nofollow">
+    </Head>
 
     <AuthenticationCard>
         <template #logo>

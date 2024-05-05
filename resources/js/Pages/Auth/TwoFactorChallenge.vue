@@ -38,7 +38,9 @@ const submit = () => {
 </script>
 
 <template>
-    <Head :title="__('Two-factor Confirmation')" />
+    <Head :title="__('Two-factor Confirmation')" >
+        <meta name="robots" content="noindex,nofollow">
+    </Head>
 
     <AuthenticationCard>
         <template #logo>
