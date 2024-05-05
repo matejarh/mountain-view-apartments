@@ -69,7 +69,7 @@ const classes = computed(() => {
                         <UsersIcon />
                     </template>
                     <template #title>{{ __("Users") }}</template>
-                    <DropdownItem href="/admin/users" @click="$emit('hide')">{{ __('All Users') }}</DropdownItem>
+                    <DropdownItem href="/admin/users/all" @click="$emit('hide')">{{ __('All Users') }}</DropdownItem>
                     <DropdownItem href="/admin/users/activity-log" @click="$emit('hide')">{{ __('Activity Log') }}</DropdownItem>
 
 

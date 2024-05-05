@@ -5,6 +5,7 @@ import FullLayout from '@/Layouts/FullLayout.vue';
 import ArrowDownIcon from '@/Icons/ArrowDownIcon.vue';
 import ActivityTableHeader from './ActivityTableHeader.vue';
 import ActivityTableRow from './ActivityTableRow.vue';
+import FiltersSection from '@/Components/FiltersSection.vue';
 
 
 </script>
@@ -19,7 +20,8 @@ import ActivityTableRow from './ActivityTableRow.vue';
 
                 <TableSection :paginator="$page.props.activities">
                     <template #header>
-                        <ActivityTableHeader />
+                        <!-- <ActivityTableHeader /> -->
+                        <FiltersSection id="activities-filters" route="admin.users.activities.index" placeholder="Search for activities" />
                     </template>
 
                     <template #tablehead>

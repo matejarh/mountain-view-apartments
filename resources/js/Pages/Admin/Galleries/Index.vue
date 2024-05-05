@@ -26,7 +26,7 @@ const handleEdit = (gallery) => {
             </template>
 
             <template #content>
-                <FiltersSection id="galleries-filters" route="admin.galleries.index" placeholder="Search for galleries" />
+                <FiltersSection v-show="$page.props.galleries.data.length > 0" id="galleries-filters" route="admin.galleries.index" placeholder="Search for galleries" />
 
                 <div class="relative" v-if="$page.props.galleries.data.length > 0">
                     <TransitionGroup name="list" tag="ul"

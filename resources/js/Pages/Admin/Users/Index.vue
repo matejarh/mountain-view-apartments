@@ -7,6 +7,7 @@ import ArrowDownIcon from '@/Icons/ArrowDownIcon.vue';
 import { usePage } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import UserEditDialog from './UserEditDialog.vue';
+import FiltersSection from '@/Components/FiltersSection.vue';
 
 const showUserEditDialog = ref(false)
 const editingUser = ref({})
@@ -27,7 +28,8 @@ const handleEditUser = (user) => {
     <template #content>
         <TableSection :paginator="$page.props.users">
             <template #header>
-                <UserTableHeader />
+                <!-- <UserTableHeader /> -->
+                <FiltersSection id="users-filters" route="admin.users.index" placeholder="Search for users" />
             </template>
 
             <template #tablehead>
@@ -83,5 +85,5 @@ const handleEditUser = (user) => {
     </template>
 </ActionSection>
 
-<UserEditDialog :show="showUserEditDialog" @close="showUserEditDialog = false" :user="editingUser" />
+<!-- <UserEditDialog :show="showUserEditDialog" @close="showUserEditDialog = false" :user="editingUser" /> -->
 </template>

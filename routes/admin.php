@@ -22,9 +22,9 @@ Route::group(['middleware' => config('jetstream.middleware', ['web'])], function
 
         Route::name('users.')->prefix('users')->namespace('users')->group(function() {
 
-            Route::get('/', [UsersController::class, 'index'])->name('index');
+            Route::get('/all', [UsersController::class, 'index'])->name('index');
 
-            Route::put('{user}', [UsersController::class, 'update'])->name('update');
+            Route::put('/all/{user}', [UsersController::class, 'update'])->name('update');
 
             Route::get('activity-log', [ActivitiesLogController::class, 'index'])->name('activities.index');
             Route::get('activity-log/{skip}/{take}', [ActivitiesLogController::class, 'feed'])->name('activities.index.feed');

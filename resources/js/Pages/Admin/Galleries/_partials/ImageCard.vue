@@ -119,7 +119,7 @@ const showEditDialog = ref(false)
 
 
 
-        <ConfirmationModal :show="showDetachConfirm" @close="showDetachConfirm = false" @confirmed="detach"
+        <ConfirmationModal :is-danger="true" :show="showDetachConfirm" @close="showDetachConfirm = false" @confirmed="detach"
             :form="detachForm" :busy-text="__('Detaching from gallery')" :recently-successful-text="__('Detached')">
             <template #icon>
                 <ArrowUpRightIcon class=" text-gray-400 dark:text-gray-500 w-11 h-11 mb-3.5 mx-auto" />
@@ -130,7 +130,7 @@ const showEditDialog = ref(false)
             </template>
         </ConfirmationModal>
 
-        <ConfirmationModal :show="showAttachConfirm" @close="showAttachConfirm = false" @confirmed="attach"
+        <ConfirmationModal :is-danger="false" :show="showAttachConfirm" @close="showAttachConfirm = false" @confirmed="attach"
             :form="attachForm" :busy-text="__('Attaching to gallery')" :recently-successful-text="__('Attached')">
             <template #icon>
                 <ArrowUpRightIcon class=" text-gray-400 dark:text-gray-500 w-11 h-11 mb-3.5 mx-auto" />
@@ -141,7 +141,7 @@ const showEditDialog = ref(false)
             </template>
         </ConfirmationModal>
 
-        <ConfirmationModal :show="showDestroyConfirm" @close="showDestroyConfirm = false" @confirmed="destroy"
+        <ConfirmationModal :is-danger="true" :show="showDestroyConfirm" @close="showDestroyConfirm = false" @confirmed="destroy"
             :form="destroyForm" :busy-text="__('Deleting Image')" :recently-successful-text="__('Image Deleted')">
             <template #icon>
                 <TrashBinIcon class=" text-gray-400 dark:text-gray-500 w-11 h-11 mb-3.5 mx-auto" />

@@ -17,18 +17,18 @@ const props = defineProps({
 const emit = defineEmits(['close'])
 
 const form = useForm({
-    name: '',
-    email: '',
-    first_name: '',
-    last_name: '',
-    address: '',
-    phone: '',
-    country: '',
+    name: props.user?.name,
+    email: props.user?.email,
+    first_name: props.user?.first_name,
+    last_name: props.user?.last_name,
+    address: props.user?.address,
+    phone: props.user?.phone,
+    country: props.user?.country,
 })
 
 watchEffect(() => {
     if (props.show) {
-        populateForm()
+       // populateForm()
     }
 })
 
@@ -78,30 +78,29 @@ onMounted(() => {
                     <InputError :message="form.errors.email" class="mt-2" />
                 </div>
                 <div class="col-span-2 sm:col-span-1">
-                    <InputLabel :has-error="!!form.errors.phone" for="phone" :value="__('Phone')" />
-                    <TextInput id="phone" v-model="form.phone" type="text" class="mt-1 block w-full" required
-                        autocomplete="phone" :has-error="!!form.errors.phone" />
-                    <InputError :message="form.errors.phone" class="mt-2" />
-
-                </div>
-                <div class="col-span-2 sm:col-span-1">
                     <InputLabel :has-error="!!form.errors.first_name" for="first_name" :value="__('First Name')" />
                     <TextInput id="first_name" v-model="form.first_name" type="text" class="mt-1 block w-full" required
-                        autocomplete="first_name" :has-error="!!form.errors.first_name" />
+                    autocomplete="first_name" :has-error="!!form.errors.first_name" />
                     <InputError :message="form.errors.first_name" class="mt-2" />
 
                 </div>
                 <div class="col-span-2 sm:col-span-1">
                     <InputLabel :has-error="!!form.errors.last_name" for="last_name" :value="__('Last Name')" />
                     <TextInput id="last_name" v-model="form.last_name" type="text" class="mt-1 block w-full" required
-                        autocomplete="last_name" :has-error="!!form.errors.last_name" />
+                    autocomplete="last_name" :has-error="!!form.errors.last_name" />
                     <InputError :message="form.errors.last_name" class="mt-2" />
+
+                </div>
+                <div class="col-span-2 sm:col-span-1">
+                    <InputLabel :has-error="!!form.errors.phone" for="phone" :value="__('Phone')" />
+                    <TextInput id="phone" v-model="form.phone" type="text" class="mt-1 block w-full" required
+                        autocomplete="phone" :has-error="!!form.errors.phone" />
+                    <InputError :message="form.errors.phone" class="mt-2" />
 
                 </div>
 
                 <div class="col-span-2 sm:col-span-1">
                     <InputLabel :has-error="!!form.errors.category" for="category" :value="__('Country')" />
-
                     <select id="category" v-model="form.country"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-700 dark:focus:border-primary-700">
                         <option disabled>- {{__('select country')}} -</option>
@@ -122,7 +121,7 @@ onMounted(() => {
         </template>
 
         <template #footer>
-            <PrimaryButton type="submit" :class="{ 'opacity-25': form.processing || form.recentlySuccessful }" :disabled="form.processing || form.recentlySuccessful"
+            <PrimaryButton type="submit" :class="{ 'opacity-25': form.processing || form.recentlySuccessful || !form.isDirty }" :disabled="form.processing || form.recentlySuccessful || !form.isDirty"
                 @click="update">
                 <div class="flex items-center">
                     <SpinnerIcon v-show="form.processing" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white dark:text-white" />
