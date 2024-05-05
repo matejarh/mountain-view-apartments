@@ -18,7 +18,7 @@ const appNameSplit = computed(() => {
 </script>
 
 <template>
-    <Link :href="route('dashboard')" class="flex items-center justify-between mr-4">
+    <Link :href="route('dashboard.show')" class="flex items-center justify-between mr-4">
         <LogoComponent :scroll-position="150" :show-title="false" :is-administration="true"  />
 
     </Link>

@@ -95,7 +95,7 @@ const classes = computed(() => {
 
             </ul>
             <ul class="pt-5 mt-5 space-y-2 border-t border-gray-200 dark:border-gray-700">
-                <NavLink :href="route('dashboard')">
+                <NavLink :href="route('dashboard.show')">
                     <template #icon>
                         <svg aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg">
@@ -107,7 +107,7 @@ const classes = computed(() => {
                     </template>
                     Docs
                 </NavLink>
-                <NavLink :href="route('dashboard')">
+                <NavLink :href="route('dashboard.show')">
                     <template #icon>
                         <svg aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg">
@@ -118,7 +118,7 @@ const classes = computed(() => {
                     </template>
                     Components
                 </NavLink>
-                <NavLink :href="route('dashboard')">
+                <NavLink :href="route('dashboard.show')">
                     <template #icon>
                         <svg aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg">

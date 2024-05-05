@@ -6,6 +6,7 @@ use App\Filters\ImageFilters;
 use App\Traits\HasPhoto;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Database\Eloquent\Builder;
@@ -50,6 +51,14 @@ class Image extends Model
     public function galleries(): BelongsToMany
     {
         return $this->belongsToMany(Gallery::class, 'galleries_images', 'image_id', 'gallery_id')->latest();
+    }
+
+    /**
+     * Get user that owns image
+     *      */
+    public function owner(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function can(): array

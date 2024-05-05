@@ -28,7 +28,7 @@ class GalleriesTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $response = $this->actingAs($user)->get('/admin/galleries/index');
+        $response = $this->actingAs($user)->get(route('admin.galleries.index'));
 
         $response->assertStatus(403);
     }
@@ -37,7 +37,7 @@ class GalleriesTest extends TestCase
     {
         $admin = User::factory(['is_admin' => true])->create();
 
-        $response = $this->actingAs($admin)->get('/admin/galleries/index');
+        $response = $this->actingAs($admin)->get(route('admin.galleries.index'));
 
         $response->assertStatus(200);
     }
@@ -139,7 +139,7 @@ class GalleriesTest extends TestCase
         $admin = User::factory(['is_admin' => true])->create();
 
         $image = [
-            'photo' => UploadedFile::fake()->image('image.jpg'),
+            'photo' => UploadedFile::fake()->image('image.jpg',1280,720),
             'name' => "Test Image",
             'description' => fake()->sentence(),
         ];
@@ -171,7 +171,7 @@ class GalleriesTest extends TestCase
         $image = Image::factory(['user_id' => $admin->id])->create();
 
         $updatedimage = [
-            'photo' => UploadedFile::fake()->image('image.jpg'),
+            'photo' => UploadedFile::fake()->image('image.jpg',1280,720),
             'name' => "Test updated Image",
             'description' => fake()->sentence(),
         ];
