@@ -27,6 +27,7 @@ const form = useForm({
 })
 
 const create = () => {
+    form.clearErrors()
     form.photo = props.photo.file
 
     if (form.isDirty) {

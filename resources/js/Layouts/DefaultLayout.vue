@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, onBeforeMount, computed } from 'vue';
+import { ref, onMounted, onBeforeMount, computed, onBeforeUnmount } from 'vue';
 import { Head, usePage } from '@inertiajs/vue3';
 import TopNavigation from './_partials/_default/TopNavigation.vue'
 import ScrollToTop from '@/Components/_default/ScrollToTop.vue'
@@ -24,14 +24,20 @@ const container = ref(null)
 
 const helpers = useHelperStore()
 
+const page = usePage()
+
 const showMain = ref(false)
 const showNav = ref(false)
 const showFooter = ref(false)
 
 const defaultBackgroundImage = new URL('/resources/images/backgrounds/winter-sunrise.jpg', import.meta.url)
 
-const backgroundImage = computed(() => {
-    return defaultBackgroundImage
+const backgroundImageUrl = computed(() => {
+    let setting =  page.props.settings.filter((setting) => {
+        return setting.slug === 'site-backgrounds'
+    })
+
+    return setting.length > 0 ? setting[0].attributes[page.props.current_season].photo_url : defaultBackgroundImage
 })
 
 const handleScroll = (e) => {
@@ -73,23 +79,26 @@ onMounted(() => {
             <meta name="robots" content="noindex,nofollow" v-if="noindex">
             <!-- <link rel="icon" type="image/svg+xml" href="/favicon.svg" /> -->
         </Head>
+
         <Transition enter-active-class="animate__animated animate__fadeIn"
             leave-active-class="animate__animated animate__fadeOut">
 
-            <div id="page" ref="container" v-show="showMain" class="relative antialiased text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-900 w-screen min-h-screen overflow-hidden bg-blend-multiply inset-0 bg-no-repeat bg-cover
-                    bg-fixed h-screen" :style="`background-image: url(${backgroundImage});`">
+            <div id="page" ref="container" v-show="showMain" class="transition-all ease-in-out duration-1000 relative antialiased text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-900 w-screen min-h-screen overflow-hidden bg-blend-multiply inset-0 bg-no-repeat bg-cover
+                    bg-fixed h-screen" :style="`background-image: url(${backgroundImageUrl});`">
 
 
                 <TopNavigation :show="showNav" :scroll-position="scrollPosition" class="z-30" />
 
                 <MobileNavigation v-show="showNav" :scroll-position="scrollPosition" />
+
                 <Transition enter-active-class="animate__animated animate__fadeIn"
                     leave-active-class="animate__animated animate__fadeOut">
                     <div class="" v-show="helpers.show">
 
                         <main @scroll="handleScroll" id="main"
-                            class="flex flex-col justify-between h-screen z-0  overflow-y-auto scrollbar-thin scroll-smooth hover:scrollbar-thumb-gray-500 active:scrollbar-thumb-gray-400 scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-700 scrollbar-track-transparent">
+                            class="flex flex-col justify-between h-screen z-0  overflow-y-auto scrollbar-none scroll-smooth hover:scrollbar-thumb-gray-500 active:scrollbar-thumb-gray-400 scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-700 scrollbar-track-transparent">
                             <div class="p-0 flex-grow flex flex-col justify-center">
+                                {{ page.props.current_season }}
                                 <slot />
                             </div>
                             <Transition enter-active-class="animate__animated animate__slideInUp"

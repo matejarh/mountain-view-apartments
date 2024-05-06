@@ -72,10 +72,13 @@ class Gallery extends Model
 
     public function can(): array
     {
-        return [
-            'delete-gallery' => auth()->user()->can('delete', $this),
-            'update-gallery' => auth()->user()->can('update', $this)
-        ];
+        if (auth()->check()) {
+            return [
+                'delete-gallery' => auth()->user()->can('delete', $this),
+                'update-gallery' => auth()->user()->can('update', $this)
+            ];
+        }
+        return [];
     }
 
     public function getCanAttribute(): array

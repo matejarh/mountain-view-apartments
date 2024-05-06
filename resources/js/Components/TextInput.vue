@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, ref, watch } from 'vue';
+import { computed, onMounted, ref, watch, watchEffect } from 'vue';
 
 const props = defineProps({
     modelValue: String,
@@ -14,14 +14,18 @@ defineEmits(['update:modelValue']);
 const input = ref(null);
 const shake = ref(false)
 
-watch(props, () => {
+watchEffect(() => {
     if (props.hasError === true) {
-        shake.value = true
-        setTimeout(() => {
-            shake.value = false
-        }, 1500);
+        initiateShake()
     }
 })
+
+const initiateShake = () => {
+    shake.value = true
+    setTimeout(() => {
+        shake.value = false
+    }, 1500);
+}
 
 onMounted(() => {
     if (input.value.hasAttribute('autofocus')) {

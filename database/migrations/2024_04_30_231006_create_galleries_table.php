@@ -36,8 +36,8 @@ return new class extends Migration
 
         Schema::create('galleries_images', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Gallery::class, 'gallery_id')->constrained()->onDelete('cascade');
-            $table->foreignIdFor(Image::class, 'image_id')->constrained()->onDelete('cascade');
+            $table->foreignIdFor(Gallery::class, 'gallery_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignIdFor(Image::class, 'image_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
 
             $table->unique(['gallery_id', 'image_id']);

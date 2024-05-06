@@ -19,6 +19,7 @@ const form = useForm({
 });
 
 const updatePassword = () => {
+    form.clearErrors()
     form.put(route('user-password.update'), {
         errorBag: 'updatePassword',
         preserveScroll: true,

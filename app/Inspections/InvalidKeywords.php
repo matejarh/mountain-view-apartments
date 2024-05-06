@@ -341,7 +341,7 @@ class InvalidKeywords
         'Potential earnings',
         'Pre-approved',
         'Presently',
-        'Price',
+        'Hot price',
         'Print form signature',
         'Print out and fax',
         'Priority mail',
@@ -462,7 +462,6 @@ class InvalidKeywords
         'Why pay more?',
         // 'Wife',
         'Will not believe your eyes',
-        'Win',
         'Winner',
         'Winning',
         'Won',
@@ -480,7 +479,7 @@ class InvalidKeywords
         foreach ($this->keywords as $keyword) {
 
             if (stripos($body, $keyword) !== false ) {
-                throw new Exception(__("Spam is not allowed!"));
+                throw new Exception(__("Spam is not allowed") . ' ' . $keyword . ' found in ' . $body);
             }
         }
     }

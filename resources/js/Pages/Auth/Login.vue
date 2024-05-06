@@ -22,6 +22,7 @@ const form = useForm({
 });
 
 const submit = () => {
+    form.clearErrors()
     form.transform(data => ({
         ...data,
         remember: form.remember ? 'on' : '',

@@ -63,10 +63,14 @@ class Image extends Model
 
     public function can(): array
     {
-        return [
-            'delete-image' => auth()->user()->can('delete', $this),
-            'update-image' => auth()->user()->can('update', $this)
-        ];
+        if (auth()->check()) {
+
+            return [
+                'delete-image' => auth()?->user()->can('delete', $this),
+                'update-image' => auth()?->user()->can('update', $this)
+            ];
+        }
+        return [];
     }
 
     public function getCanAttribute(): array

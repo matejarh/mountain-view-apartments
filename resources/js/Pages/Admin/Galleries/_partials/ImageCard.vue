@@ -27,6 +27,11 @@ const page = usePage()
 const detachForm = useForm({})
 const attachForm = useForm({})
 const destroyForm = useForm({})
+const show = ref(true)
+const showDetachConfirm = ref(false)
+const showAttachConfirm = ref(false)
+const showDestroyConfirm = ref(false)
+const showEditDialog = ref(false)
 
 const detach = () => {
     detachForm.put(route('admin.galleries.detach', { image: props.image, gallery: page.props.gallery }), {
@@ -59,11 +64,7 @@ const destroy = () => {
     })
 }
 
-const show = ref(true)
-const showDetachConfirm = ref(false)
-const showAttachConfirm = ref(false)
-const showDestroyConfirm = ref(false)
-const showEditDialog = ref(false)
+
 
 </script>
 
@@ -111,16 +112,22 @@ const showEditDialog = ref(false)
                 </div>
             </figcaption>
             <figcaption
-                class="absolute px-2 py-1 text-lg rounded-b-lg text-white bottom-0 bg-white dark:bg-gray-800  w-full bg-opacity-50 dark:bg-opacity-50 backdrop-blur-lg">
-                <h3 class="text-gray-700 dark:text-gray-300">{{ image.name }}</h3>
-                <p class="text-gray-700 dark:text-gray-300 text-sm">{{ image.description }}</p>
+                class="absolute px-2 py-1 text-lg rounded-b-lg text-white bottom-0 bg-white dark:bg-gray-800 max-h-16 overflow-y-auto scrollbar-none  w-full bg-opacity-50 dark:bg-opacity-50 backdrop-blur-lg">
+                <h3 class="text-gray-700 dark:text-gray-300 whitespace-nowrap overflow-hidden">{{ image.name }}</h3>
+                <p class="text-gray-700 dark:text-gray-300 text-sm whitespace-pre-wrap leading-tight">{{ image.description }}</p>
             </figcaption>
         </figure>
 
 
 
-        <ConfirmationModal :is-danger="true" :show="showDetachConfirm" @close="showDetachConfirm = false" @confirmed="detach"
-            :form="detachForm" :busy-text="__('Detaching from gallery')" :recently-successful-text="__('Detached')">
+        <ConfirmationModal  :is-danger="true"
+                            :show="showDetachConfirm"
+                            :form="detachForm"
+                            :busy-text="__('Detaching from gallery')"
+                            :recently-successful-text="__('Detached from gallery')"
+                            @close="showDetachConfirm = false"
+                            @confirmed="detach"
+                            >
             <template #icon>
                 <ArrowUpRightIcon class=" text-gray-400 dark:text-gray-500 w-11 h-11 mb-3.5 mx-auto" />
             </template>
@@ -130,8 +137,14 @@ const showEditDialog = ref(false)
             </template>
         </ConfirmationModal>
 
-        <ConfirmationModal :is-danger="false" :show="showAttachConfirm" @close="showAttachConfirm = false" @confirmed="attach"
-            :form="attachForm" :busy-text="__('Attaching to gallery')" :recently-successful-text="__('Attached')">
+        <ConfirmationModal  :is-danger="false"
+                            :show="showAttachConfirm"
+                            :form="attachForm"
+                            :busy-text="__('Attaching to gallery')"
+                            :recently-successful-text="__('Attached')"
+                            @close="showAttachConfirm = false"
+                            @confirmed="attach"
+                            >
             <template #icon>
                 <ArrowUpRightIcon class=" text-gray-400 dark:text-gray-500 w-11 h-11 mb-3.5 mx-auto" />
             </template>
@@ -141,8 +154,14 @@ const showEditDialog = ref(false)
             </template>
         </ConfirmationModal>
 
-        <ConfirmationModal :is-danger="true" :show="showDestroyConfirm" @close="showDestroyConfirm = false" @confirmed="destroy"
-            :form="destroyForm" :busy-text="__('Deleting Image')" :recently-successful-text="__('Image Deleted')">
+        <ConfirmationModal  :is-danger="true"
+                            :show="showDestroyConfirm"
+                            :form="destroyForm"
+                            :busy-text="__('Deleting Image')"
+                            :recently-successful-text="__('Image Deleted')"
+                            @close="showDestroyConfirm = false"
+                            @confirmed="destroy"
+                            >
             <template #icon>
                 <TrashBinIcon class=" text-gray-400 dark:text-gray-500 w-11 h-11 mb-3.5 mx-auto" />
             </template>

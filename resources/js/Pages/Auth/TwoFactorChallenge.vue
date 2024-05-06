@@ -33,6 +33,7 @@ const toggleRecovery = async () => {
 };
 
 const submit = () => {
+    form.clearErrors()
     form.post(route('two-factor.login'));
 };
 </script>

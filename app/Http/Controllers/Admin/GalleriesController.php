@@ -77,7 +77,7 @@ class GalleriesController extends Controller
      * @param  \App\Contracts\CreatesNewGalleries  $creator
      * @return \App\Contracts\GalleryCreateResponse
      */
-    public function store(Request $request, CreatesNewGalleries $creator): GalleryCreatedResponse
+    public function store(Request $request, CreatesNewGalleries $creator): GalleryCreateResponse
     {
         if ($request->user()->cannot('create', Gallery::class))
             abort(403);
@@ -95,7 +95,7 @@ class GalleriesController extends Controller
      * @param  \App\Contracts\UpdatesGalleries  $updater
      * @return \App\Contracts\GalleryUpdateResponse
      */
-    public function update(Request $request, Gallery $gallery, UpdatesGalleries $updater): GalleryUpdatedResponse
+    public function update(Request $request, Gallery $gallery, UpdatesGalleries $updater): GalleryUpdateResponse
     {
         if ($request->user()->cannot('update', $gallery))
             abort(403);

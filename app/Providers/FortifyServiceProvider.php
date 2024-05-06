@@ -16,6 +16,14 @@ use App\Actions\Images\CreateNewImage;
 use App\Actions\Images\DeleteImage;
 use App\Actions\Images\DetachFromGallery;
 use App\Actions\Images\UpdateImage;
+use App\Actions\Properties\AttachFacility;
+use App\Actions\Properties\CreateNewProperty;
+use App\Actions\Properties\DetachFacility;
+use App\Actions\Properties\UpdateProperty;
+use App\Actions\Settings\CreateNewSetting;
+use App\Actions\Settings\UpdateSetting;
+use App\Contracts\FacilityAttacheResponse as FacilityAttacheResponseContract;
+use App\Contracts\FacilityDetacheResponse as FacilityDetacheResponseContract;
 use App\Contracts\GalleryAttacheResponse as GalleryAttacheResponseContract;
 use App\Contracts\GalleryCreateResponse as GalleryCreateResponseContract;
 use App\Contracts\GalleryDeleteResponse as GalleryDeleteResponseContract;
@@ -26,6 +34,12 @@ use App\Contracts\ImageCreateResponse as ImageCreateResponseContract;
 use App\Contracts\ImageDeleteResponse as ImageDeleteResponseContract;
 use App\Contracts\ImageDetacheResponse as ImageDetacheResponseContract;
 use App\Contracts\ImageUpdateResponse as ImageUpdateResponseContract;
+use App\Contracts\PropertyCreateResponse as PropertyCreateResponseContract;
+use App\Contracts\PropertyUpdateResponse as PropertyUpdateResponseContract;
+use App\Contracts\SettingCreateResponse as SettingCreateResponseContract;
+use App\Contracts\SettingUpdateResponse as SettingUpdateResponseContract;
+use App\Http\Responses\FacilityAttachedResponse;
+use App\Http\Responses\FacilityDetachedResponse;
 use App\Http\Responses\GalleryAttachedResponse;
 use App\Http\Responses\GalleryCreatedResponse;
 use App\Http\Responses\GalleryDeletedResponse;
@@ -36,6 +50,10 @@ use App\Http\Responses\ImageCreatedResponse;
 use App\Http\Responses\ImageDeletedResponse;
 use App\Http\Responses\ImageDetachedResponse;
 use App\Http\Responses\ImageUpdatedResponse;
+use App\Http\Responses\PropertyCreatedResponse;
+use App\Http\Responses\PropertyUpdatedResponse;
+use App\Http\Responses\SettingCreatedResponse;
+use App\Http\Responses\SettingUpdatedResponse;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
@@ -71,6 +89,15 @@ class FortifyServiceProvider extends ServiceProvider
         $this->app->singleton(ImageUpdateResponseContract::class, ImageUpdatedResponse::class);
         $this->app->singleton(ImageAttacheResponseContract::class, ImageAttachedResponse::class);
         $this->app->singleton(ImageDetacheResponseContract::class, ImageDetachedResponse::class);
+
+        $this->app->singleton(SettingCreateResponseContract::class, SettingCreatedResponse::class);
+        $this->app->singleton(SettingUpdateResponseContract::class, SettingUpdatedResponse::class);
+
+        $this->app->singleton(PropertyCreateResponseContract::class, PropertyCreatedResponse::class);
+        $this->app->singleton(PropertyUpdateResponseContract::class, PropertyUpdatedResponse::class);
+
+        $this->app->singleton(FacilityAttacheResponseContract::class, FacilityAttachedResponse::class);
+        $this->app->singleton(FacilityDetacheResponseContract::class, FacilityDetachedResponse::class);
     }
 
     /**
@@ -94,6 +121,14 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
+
+        AppFortify::createSettingsUsing(CreateNewSetting::class);
+        AppFortify::updateSettingsUsing(UpdateSetting::class);
+
+        AppFortify::createPropertiesUsing(CreateNewProperty::class);
+        AppFortify::updatePropertiesUsing(UpdateProperty::class);
+        AppFortify::attachFacilitiesToPropertiesUsing(AttachFacility::class);
+        AppFortify::detachFacilitiesFromPropertiesUsing(DetachFacility::class);
 
         RateLimiter::for('login', function (Request $request) {
             $throttleKey = str(str($request->input(Fortify::username()))->lower().'|'.$request->ip())->transliterate();

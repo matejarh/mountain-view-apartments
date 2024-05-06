@@ -29,7 +29,7 @@ class PropertyPolicy
      */
     public function view(User $user, Property $property): bool
     {
-        //
+        return $user->id === $property->user_id;
     }
 
     /**
@@ -53,7 +53,7 @@ class PropertyPolicy
      */
     public function delete(User $user, Property $property): bool
     {
-        //
+        return $user->id === $property->user_id;
     }
 
     /**

@@ -10,7 +10,6 @@ interface UpdatesGalleries
      *
      * @param  array  $input
      * @param  \App\Models\Gallery  $gallery
-     * @return \App\Models\Gallery
      */
     public function update(Gallery $gallery, array $input);
 }

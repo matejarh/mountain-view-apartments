@@ -1,15 +1,21 @@
 <?php
 namespace App\Http;
+use App\Contracts\AttachesFacilitiesToProperties;
 use App\Contracts\AttachesGalleriesToImages;
 use App\Contracts\AttachesImagesToGalleries;
 use App\Contracts\CreatesNewGalleries;
 use App\Contracts\CreatesNewImages;
+use App\Contracts\CreatesNewProperties;
+use App\Contracts\CreatesNewSettings;
 use App\Contracts\DeletesGalleries;
 use App\Contracts\DeletesImages;
+use App\Contracts\DetachesFacilitiesFromProperties;
 use App\Contracts\DetachesGalleriesFromImages;
 use App\Contracts\DetachesImagesFromGalleries;
 use App\Contracts\UpdatesGalleries;
 use App\Contracts\UpdatesImages;
+use App\Contracts\UpdatesProperties;
+use App\Contracts\UpdatesSettings;
 
 class Fortify
 {
@@ -25,7 +31,7 @@ class Fortify
     }
 
     /**
-     * Register a class / callback that should be used to update new galleries.
+     * Register a class / callback that should be used to update given gallery.
      *
      * @param  string  $callback
      * @return void
@@ -121,5 +127,71 @@ class Fortify
     public static function detachGalleriesFromImagesUsing(string $callback)
     {
         app()->singleton(DetachesGalleriesFromImages::class, $callback);
+    }
+
+    /**
+     * Register a class / callback that should be used to create new settings.
+     *
+     * @param  string  $callback
+     * @return void
+     */
+    public static function createSettingsUsing(string $callback)
+    {
+        app()->singleton(CreatesNewSettings::class, $callback);
+    }
+
+    /**
+     * Register a class / callback that should be used to update given setting.
+     *
+     * @param  string  $callback
+     * @return void
+     */
+    public static function updateSettingsUsing(string $callback)
+    {
+        app()->singleton(UpdatesSettings::class, $callback);
+    }
+
+    /**
+     * Register a class / callback that should be used to create new properties.
+     *
+     * @param  string  $callback
+     * @return void
+     */
+    public static function createPropertiesUsing(string $callback)
+    {
+        app()->singleton(CreatesNewProperties::class, $callback);
+    }
+
+    /**
+     * Register a class / callback that should be used to update given property.
+     *
+     * @param  string  $callback
+     * @return void
+     */
+    public static function updatePropertiesUsing(string $callback)
+    {
+        app()->singleton(UpdatesProperties::class, $callback);
+    }
+
+    /**
+     * Register a class / callback that should be used to attach given facility to given property.
+     *
+     * @param  string  $callback
+     * @return void
+     */
+    public static function attachFacilitiesToPropertiesUsing(string $callback)
+    {
+        app()->singleton(AttachesFacilitiesToProperties::class, $callback);
+    }
+
+    /**
+     * Register a class / callback that should be used to detach given facility from given property.
+     *
+     * @param  string  $callback
+     * @return void
+     */
+    public static function detachFacilitiesFromPropertiesUsing(string $callback)
+    {
+        app()->singleton(DetachesFacilitiesFromProperties::class, $callback);
     }
 }

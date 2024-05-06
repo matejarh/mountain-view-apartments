@@ -15,44 +15,59 @@ class GalleriesTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_galleries_screen_can_not_be_rendered_for_guest(): void
+    public $gallery;
+    public $image;
+
+
+    public function setUp() :void
     {
+        parent::setUp();
 
+        $this->gallery = [
+            'name' => 'Test Gallery',
+            'description' => fake()->sentence(),
+        ];
 
+        $this->image = [
+            'photo' => UploadedFile::fake()->image('image.jpg',1280,720),
+            'name' => "Test Image",
+            'description' => fake()->sentence(),
+        ];
+    }
+
+    public function test_galleries_screen_may_not_be_rendered_for_guest(): void
+    {
         $response = $this->get('/admin/galleries/index');
 
         $response->assertStatus(302);
         $response->assertRedirect('/login');
     }
-    public function test_galleries_screen_can_not_be_rendered_for_user(): void
+    public function test_galleries_screen_may_not_be_rendered_for_user(): void
     {
-        $user = User::factory()->create();
 
-        $response = $this->actingAs($user)->get(route('admin.galleries.index'));
+        $response = $this->actingAs($this->user)->get(route('admin.galleries.index'));
 
         $response->assertStatus(403);
     }
 
-    public function test_galleries_screen_can_be_rendered_for_admin(): void
+    public function test_galleries_screen_may_be_rendered_for_admin(): void
     {
-        $admin = User::factory(['is_admin' => true])->create();
 
-        $response = $this->actingAs($admin)->get(route('admin.galleries.index'));
+        $response = $this->actingAs($this->admin)->get(route('admin.galleries.index'));
 
         $response->assertStatus(200);
     }
 
-    public function test_admin_can_create_new_gallery(): void
+    public function test_admin_may_create_new_gallery(): void
     {
         // $this->withoutExceptionHandling();
-        $admin = User::factory(['is_admin' => true])->create();
 
         $gallery = [
             'name' => 'Test Gallery',
             'description' => fake()->sentence(),
         ];
 
-        $response = $this->actingAs($admin)->post(route('admin.galleries.store'), $gallery);
+        $response = $this->actingAs($this->admin)->post(route('admin.galleries.store'), $gallery);
 
         $response->assertStatus(302);
 
@@ -62,16 +77,15 @@ class GalleriesTest extends TestCase
 
     }
 
-    public function test_admin_can_not_post_spam(): void
+    public function test_admin_may_not_post_spam(): void
     {
-        $admin = User::factory(['is_admin' => true])->create();
 
         $gallery = [
             'name' => 'spam',
             'description' => 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
         ];
 
-        $response = $this->actingAs($admin)->post('/admin/galleries/store', $gallery);
+        $response = $this->actingAs($this->admin)->post(route('admin.galleries.store'), $gallery);
 
         $response->assertStatus(302);
 
@@ -82,34 +96,31 @@ class GalleriesTest extends TestCase
 
     }
 
-    public function test_user_can_not_create_new_gallery(): void
+    public function test_user_may_not_create_new_gallery(): void
     {
-        $user = User::factory()->create();
 
         $gallery = [
             'name' => 'Test Gallery',
             'description' => fake()->sentence(),
         ];
 
-        $response = $this->actingAs($user)->post('/admin/galleries/store', $gallery);
+        $response = $this->actingAs($this->user)->post(route('admin.galleries.store'), $gallery);
 
         $response->assertStatus(403);
     }
 
-    public function test_admin_can_update_gallery(): void
+    public function test_admin_may_update_gallery(): void
     {
-        $admin = User::factory(['is_admin' => true])->create();
-        $user = User::factory(['is_admin' => false])->create();
 
         $gallery = [
             'name' => 'Test Gallery',
             'description' => fake()->sentence(),
         ];
 
-        $response = $this->actingAs($admin)->post('/admin/galleries/store', $gallery);
+        $response = $this->actingAs($this->admin)->post(route('admin.galleries.store'), $gallery);
         $response->assertStatus(302);
 
-        $response = $this->actingAs($user)->post('/admin/galleries/store', $gallery);
+        $response = $this->actingAs($this->user)->post(route('admin.galleries.store'), $gallery);
         $response->assertStatus(403);
 
         $this->assertDatabaseHas('galleries', $gallery);
@@ -122,7 +133,7 @@ class GalleriesTest extends TestCase
             'description' => fake()->sentence(),
         ];
 
-        $response = $this->actingAs($admin)->put("/admin/galleries/$gallery->slug", $updatedgallery);
+        $response = $this->actingAs($this->admin)->put("/admin/galleries/$gallery->slug", $updatedgallery);
 
         $response->assertStatus(302);
 
@@ -132,11 +143,10 @@ class GalleriesTest extends TestCase
         $this->assertEquals($gallery->fresh()->description, $updatedgallery["description"]);
     }
 
-    public function test_admin_can_add_images(): void
+    public function test_admin_may_add_images(): void
     {
         Storage::fake('public');
         // $this->withoutExceptionHandling();
-        $admin = User::factory(['is_admin' => true])->create();
 
         $image = [
             'photo' => UploadedFile::fake()->image('image.jpg',1280,720),
@@ -147,7 +157,7 @@ class GalleriesTest extends TestCase
         // dd($image);
 
 
-        $response = $this->actingAs($admin)->post(route('admin.images.store'), $image);
+        $response = $this->actingAs($this->admin)->post(route('admin.images.store'), $image);
 
         $response->assertStatus(302);
 
@@ -157,18 +167,17 @@ class GalleriesTest extends TestCase
         // $this->assertDatabaseHas(Image::class, $image);
     }
 
-    public function test_admin_can_update_images(): void
+    public function test_admin_may_update_images(): void
     {
         Storage::fake('public');
         // $this->withoutExceptionHandling();
-        $admin = User::factory(['is_admin' => true])->create();
 
 /*         $gallery = Gallery::factory([
             'name' => 'Test Gallery',
             'slug' => 'test-gallery',
             'description' => fake()->sentence(),
         ])->create(); */
-        $image = Image::factory(['user_id' => $admin->id])->create();
+        $image = Image::factory(['user_id' => $this->admin->id])->create();
 
         $updatedimage = [
             'photo' => UploadedFile::fake()->image('image.jpg',1280,720),
@@ -176,7 +185,7 @@ class GalleriesTest extends TestCase
             'description' => fake()->sentence(),
         ];
 
-        $response = $this->actingAs($admin)->post(route('admin.images.update', $image), $updatedimage);
+        $response = $this->actingAs($this->admin)->post(route('admin.images.update', $image), $updatedimage);
 
         $response->assertStatus(302);
 
@@ -186,14 +195,13 @@ class GalleriesTest extends TestCase
         // $this->assertDatabaseHas(Image::class, $image);
     }
 
-    public function test_admin_can_attach_images_to_gallery(): void
+    public function test_admin_may_attach_images_to_gallery(): void
     {
         $this->withoutExceptionHandling();
 
-        $admin = User::factory(['is_admin' => true])->create();
 
-        $image = Image::factory(['user_id' => $admin->id])->create();
-        $image1 = Image::factory(['user_id' => $admin->id])->create();
+        $image = Image::factory(['user_id' => $this->admin->id])->create();
+        $image1 = Image::factory(['user_id' => $this->admin->id])->create();
 
         $gallery = Gallery::factory([
             'name' => 'Test Gallery',
@@ -207,31 +215,30 @@ class GalleriesTest extends TestCase
             'description' => fake()->sentence(),
         ])->create();
 
-        $response = $this->actingAs($admin)->put(route('admin.images.attach', ['image' => $image, 'gallery' => $gallery]));
+        $response = $this->actingAs($this->admin)->put(route('admin.images.attach', ['image' => $image, 'gallery' => $gallery]));
 
         //$image->galleries()->attach($gallery);
 
         $this->assertCount(1, $gallery->fresh()->images);
-        $response = $this->actingAs($admin)->put(route('admin.images.attach', ['image' => $image1, 'gallery' => $gallery]));
+        $response = $this->actingAs($this->admin)->put(route('admin.images.attach', ['image' => $image1, 'gallery' => $gallery]));
         $this->assertCount(2, $gallery->fresh()->images);
 
-        $response = $this->actingAs($admin)->put(route('admin.images.detach', ['image' => $image, 'gallery' => $gallery]));
+        $response = $this->actingAs($this->admin)->put(route('admin.images.detach', ['image' => $image, 'gallery' => $gallery]));
 
         $this->assertCount(1, $gallery->fresh()->images);
 
-        $response = $this->actingAs($admin)->put(route('admin.galleries.attach', ['image' => $image, 'gallery' => $gallery]));
+        $response = $this->actingAs($this->admin)->put(route('admin.galleries.attach', ['image' => $image, 'gallery' => $gallery]));
         $this->assertCount(2, $gallery->fresh()->images);
-        $response = $this->actingAs($admin)->put(route('admin.galleries.detach', ['image' => $image, 'gallery' => $gallery]));
+        $response = $this->actingAs($this->admin)->put(route('admin.galleries.detach', ['image' => $image, 'gallery' => $gallery]));
         $this->assertCount(1, $gallery->fresh()->images);
-        $response = $this->actingAs($admin)->put(route('admin.galleries.detach', ['image' => $image1, 'gallery' => $gallery]));
+        $response = $this->actingAs($this->admin)->put(route('admin.galleries.detach', ['image' => $image1, 'gallery' => $gallery]));
         $this->assertCount(0, $gallery->fresh()->images);
     }
 
-    public function test_admin_can_delete_images(): void
+    public function test_admin_may_delete_images(): void
     {
-        $admin = User::factory(['is_admin' => true])->create();
 
-        $image = Image::factory(['user_id' => $admin->id])->create();
+        $image = Image::factory(['user_id' => $this->admin->id])->create();
 
         $gallery = Gallery::factory([
             'name' => 'Test Gallery',
@@ -241,7 +248,7 @@ class GalleriesTest extends TestCase
 
         $image->galleries()->attach($gallery);
 
-        $response = $this->actingAs($admin)->delete(route('admin.images.destroy', $image));
+        $response = $this->actingAs($this->admin)->delete(route('admin.images.destroy', $image));
 
         $response->assertStatus(302);
 
@@ -251,11 +258,10 @@ class GalleriesTest extends TestCase
         $this->assertDatabaseEmpty('images');
     }
 
-    public function test_admin_can_delete_galleries(): void
+    public function test_admin_may_delete_galleries(): void
     {
-        $admin = User::factory(['is_admin' => true])->create();
 
-        $image = Image::factory(['user_id' => $admin->id])->create();
+        $image = Image::factory(['user_id' => $this->admin->id])->create();
 
         $gallery = Gallery::factory([
             'name' => 'Test Gallery',
@@ -265,7 +271,7 @@ class GalleriesTest extends TestCase
 
         $image->galleries()->attach($gallery);
 
-        $response = $this->actingAs($admin)->delete(route('admin.galleries.destroy', $gallery));
+        $response = $this->actingAs($this->admin)->delete(route('admin.galleries.destroy', $gallery));
 
         $response->assertStatus(302);
 
@@ -275,10 +281,9 @@ class GalleriesTest extends TestCase
         $this->assertDatabaseEmpty('galleries');
     }
 
-    public function test_admin_can_upload_image(): void {
+    public function test_admin_may_upload_image(): void {
         Storage::fake('public');
 
-        $admin = User::factory(['is_admin' => true])->create();
 
         $photo = new UploadedFile(resource_path('images/test/150730321.jpg'), '150730321.jpg', null, null, true);
 
@@ -288,7 +293,7 @@ class GalleriesTest extends TestCase
             'photo' => $photo,
         ];
 
-        $response = $this->actingAs($admin)->post(route('admin.images.store'), $image);
+        $response = $this->actingAs($this->admin)->post(route('admin.images.store'), $image);
 
         $response->assertStatus(302);
 
@@ -300,7 +305,7 @@ class GalleriesTest extends TestCase
             'photo' => $photo,
         ];
 
-        $response = $this->actingAs($admin)->post(route('admin.images.update', $image), $updatedimage);
+        $response = $this->actingAs($this->admin)->post(route('admin.images.update', $image), $updatedimage);
 
         $response->assertStatus(302);
     }

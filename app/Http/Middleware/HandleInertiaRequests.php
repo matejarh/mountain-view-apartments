@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Laravel\Fortify\Features;
@@ -47,6 +48,16 @@ class HandleInertiaRequests extends Middleware
                 );
             },
             'canRegister' => Features::enabled(Features::registration()),
+            'settings' => cache()->rememberForever('settings', function () {
+                return Setting::all();
+            }),
+            'current_season' => $this->getSeason(),
         ]);
+    }
+
+    private function getSeason() : string {
+        return now()->isBetween('21.6.' . now()->year, '23.9.' . now()->year) ? 'summer' :
+                (now()->isBetween('20.3' . now()->year, '21.6.' . now()->year) ? 'spring' :
+                (now()->isBetween('23.9.' . now()->year, '21.12.' . now()->year) ? 'autumn' : 'winter'));
     }
 }

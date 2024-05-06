@@ -12,6 +12,7 @@ const props = defineProps({
 const form = useForm({});
 
 const submit = () => {
+    form.clearErrors()
     form.post(route('verification.send'));
 };
 

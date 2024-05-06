@@ -147,11 +147,29 @@ class ImagesController extends Controller
      * @param  \App\Models\Gallery  $gallery
      * @return \Illuminate\Http\JsonResponse
      */
-    public function fetch(Request $request, Gallery $gallery) : JsonResponse {
+    public function fetch(Request $request, Gallery $gallery) : JsonResponse
+    {
         $images = Image::all()->intersect(Image::whereNotIn('id', $gallery->images->pluck('id')->toArray())->get());
         return response()->json([
             'images' => $images,
             'total_count' => \DB::table('images')->count(),
+        ]);
+    }
+
+    /**
+     * Fetches list of images not in current backgroud
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function fetchBackgrounds(Request $request) : JsonResponse
+    {
+        $path = str(parse_url($request->only('attribute')['attribute'])['path'])->replace('/storage/', '');
+
+        $images = Image::where('image_path', '!=', $path)->paginate(20);
+
+        return response()->json([
+            'images' => $images,
         ]);
     }
 }

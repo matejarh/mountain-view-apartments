@@ -31,6 +31,7 @@ const photoPreview = ref(null);
 const photoInput = ref(null);
 
 const update = () => {
+    form.clearErrors()
     if (form.isDirty) {
         if (photoInput.value) {
             form.photo = photoInput.value.files[0];
