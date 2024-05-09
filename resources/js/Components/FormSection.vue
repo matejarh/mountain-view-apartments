@@ -22,7 +22,7 @@ const hasActions = computed(() => !!useSlots().actions);
 
             <form @submit.prevent="$emit('submitted')">
                 <div class="space-y-4 px-4 py-5 bg-white dark:bg-gray-900 text-gray-950 dark:text-gray-50 sm:p-6 shadow"
-                    :class="hasActions ? 'sm:rounded-tl-md sm:rounded-tr-md' : 'sm:rounded-md'">
+                    :class="hasActions ? 'sm:rounded-tl-lg sm:rounded-tr-lg' : 'sm:rounded-lg'">
                     <h1 class="text-2xl font-bold">
                         <slot name="title" />
                     </h1>

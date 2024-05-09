@@ -5,7 +5,6 @@ namespace App\Traits;
 use App\Models\Activity;
 use Laravel\Jetstream\Agent;
 use Stevebauman\Location\Facades\Location;
-use Str;
 
 trait RecordsActivity
 {
@@ -26,7 +25,7 @@ trait RecordsActivity
 
     protected static function getActivitiesToRecord()
     {
-        return ['created', 'updated'];
+        return ['created', 'updated', 'deleted'];
     }
 
     protected function recordActivity($event)
@@ -34,7 +33,7 @@ trait RecordsActivity
         $agent = $this->createAgent(request()->header('user-agent'));
         $ip=request()->ip();
         //$ip = "84.52.175.124";
-        $this->activity()->create([
+        $this->activity()->forceCreate([
             'user_id' => auth()->id(),
             'type' => $this->getActivityType($event),
             'agent' => [

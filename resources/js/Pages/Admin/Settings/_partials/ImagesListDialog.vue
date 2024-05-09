@@ -79,7 +79,7 @@ const fetch = async () => {
         <template #title>{{ __('Select image') }}</template>
 
         <template #content>
-            <TransitionGroup name="list" tag="ul" class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 ">
+            <TransitionGroup name="list" tag="ul" class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 min-h-[75vh] ">
                 <li v-for="image, key in images.data" :key="image.id"
                     @click.prevent="setAttribute(image)">
                     <button :class="{ 'opacity-25': form.processing || form.recentlySuccessful || isFetching }"

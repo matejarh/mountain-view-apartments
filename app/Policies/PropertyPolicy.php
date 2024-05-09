@@ -13,7 +13,6 @@ class PropertyPolicy
         if ($user->is_admin) {
             return true;
         }
-
         return null;
     }
     /**

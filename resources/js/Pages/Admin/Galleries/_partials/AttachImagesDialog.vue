@@ -18,7 +18,7 @@ const total_count = ref(0)
 
 const busy = ref(false)
 
-watch(props,() => {
+watch(props, () => {
     if (props.show === true) {
 
         // fetch()
@@ -44,35 +44,38 @@ const fetch = () => {
         <template #title>{{ __('Attach Images To Gallery') }}</template>
 
         <template #content>
-            <Transition
-                enter-active-class="animate__animated animate__fadeIn"
-                leave-active-class="animate__animated animate__fadeOut absolute"
-                >
+
+            <Transition enter-active-class="animate__animated animate__fadeIn"
+                leave-active-class="animate__animated animate__fadeOut absolute" class="min-h-[75vh]">
 
                 <div class="p-6 w-full" v-if="busy">
                     <SpinnerIcon class="w-6 h-6 animate-spin mx-auto" />
                 </div>
                 <div class="" v-else>
-                        {{  }}
-                        <TransitionGroup v-if="$page.props.images_not_in_gallery.length > 0" name="list" tag="ul"
-                            class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 4xl:grid-cols-6 gap-4 md:gap-4 lg:gap-6 2xl:gap-8">
-                            <ImageCard :image="image" v-for="image, key in $page.props.images_not_in_gallery" :key="image.id" :has-gallery="false"/>
-                            <div key="empty">
-                                <div class="w-full text-center cursor-pointer "
-                                    @click="$emit('showUploadPhotoDialog')">
-                                    <ImageIcon class="text-gray-300 dark:text-gray-400 w-32 h-32 mx-auto" />
+                    {{ }}
+                    <TransitionGroup v-if="$page.props.images_not_in_gallery.data.length > 0" name="list" tag="ul"
+                        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 4xl:grid-cols-6 gap-4 md:gap-4 lg:gap-6 2xl:gap-8">
+                        <ImageCard :image="image" v-for="image, key in $page.props.images_not_in_gallery.data"
+                            :key="image.id" :has-gallery="false" />
+                        <div key="empty">
+                            <div class="w-full text-center cursor-pointer " @click="$emit('showUploadPhotoDialog')">
+                                <ImageIcon class="text-gray-300 dark:text-gray-400 w-32 h-32 mx-auto" />
 
-                                    <p class="text-gray-300 dark:text-gray-400 text-sm">{{ __('Click here to upload some') }}</p>
-                                </div>
+                                <p class="text-gray-300 dark:text-gray-400 text-sm">{{ __('Click here to upload some')
+                                    }}</p>
                             </div>
-                        </TransitionGroup>
+                        </div>
+                    </TransitionGroup>
 
-                    <div v-else class="">
-                        <div class="w-full text-center cursor-pointer " @click="$emit('showUploadPhotoDialog')">
+                    <div v-else class="h-full flex flex-col justify-center">
+                        <div class="w-full text-center cursor-pointer" @click="$emit('showUploadPhotoDialog')">
                             <ImageIcon class="text-gray-300 dark:text-gray-400 w-32 h-32 mx-auto" />
 
-                            <p class="text-gray-300 dark:text-gray-400 font-semibold ">{{ $page.props.total_images_count > 0 ? __('All uploaded images are attached to gallery!') : __('No images uploaded yet!') }}</p>
-                            <p class="text-gray-300 dark:text-gray-400 text-sm">{{ __('Click here to upload some') }}</p>
+                            <p class="text-gray-300 dark:text-gray-400 font-semibold ">{{ $page.props.total_images_count
+                                > 0 ? __('All uploaded images are attached to gallery!') : __('No images uploaded yet!')
+                                }}</p>
+                            <p class="text-gray-300 dark:text-gray-400 text-sm">{{ __('Click here to upload some') }}
+                            </p>
                         </div>
                     </div>
 

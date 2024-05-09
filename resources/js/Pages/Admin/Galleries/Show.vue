@@ -81,15 +81,9 @@ onUnmounted(() => {
 
 <template>
     <FullLayout :title="__('Gallery')">
-        <ActionSection :fullwidth="true">
+        <ActionSection :fullwidth="true" back="admin.galleries.index">
             <template #title>
                 <div v-if="!editing" class="flex items-center space-x-2">
-                    <inertia-link :href="route('admin.galleries.index')"
-                        class="text-gray-500 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transform hover:scale-105 active:scale-95">
-                        <Tooltip :text="__('Back')">
-                            <CarretLeftIcon class="w-6 h-6  " />
-                        </Tooltip>
-                    </inertia-link>
                     <button @click="editing = true">
                         <Tooltip :text="__('Edit')">
                             <EditIcon

@@ -60,7 +60,10 @@ const removeFromPhotoPreview = (value) => {
         photoPreview.value.splice(index, 1);
     }
     if (saved.value === true && photoPreview.value.length === 0) {
-        emit('close')
+        setTimeout(() => {
+
+            emit('close')
+        }, 500);
     }
 
     saved.value = false
@@ -81,11 +84,13 @@ const removeFromPhotoPreview = (value) => {
         <template #title>{{ __('Upload Images') }}</template>
 
         <template #content>
+            <div class="relative">
 
-            <TransitionGroup v-show="photoPreview" name="list" tag="ul" class="relative flex flex-col space-y-4 mb-4">
-                <UploadingPhotoSlot v-for="photo in photoPreview" :key="photo.preview" :photo="photo"
-                    @remove="removeFromPhotoPreview" />
-            </TransitionGroup>
+                <TransitionGroup v-show="photoPreview" name="list" tag="ul" class="flex flex-col space-y-4 ">
+                    <UploadingPhotoSlot v-for="photo in photoPreview" :key="photo.preview" :photo="photo"
+                        @remove="removeFromPhotoPreview" />
+                </TransitionGroup>
+            </div>
 
 
             <DropZone v-model="photoInput" />

@@ -29,8 +29,10 @@ class GalleriesController extends Controller
     /**
      * Renders and returnes Galleries Index Page.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Inertia\Response
+     * @param \Illuminate\Http\Request $request The HTTP request object.
+     * @param \App\Filters\GalleryFilters $filters The filters instance.
+     * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function index(Request $request, GalleryFilters $filters): Response
     {
@@ -61,7 +63,8 @@ class GalleriesController extends Controller
 
         return Inertia::render('Admin/Galleries/Show', [
             'gallery' => Gallery::with('images')->find($gallery->id),
-            'images_not_in_gallery' => Image::all()->intersect(Image::whereNotIn('id', $gallery->images->pluck('id')->toArray())->get()),
+            'images_not_in_gallery' => Image::all()->intersect(Image::whereNotIn('id', $gallery->images->pluck('id')->toArray())->get())
+                                        ->paginate(20, null,null, __('page'))->onEachSide(2)->withQueryString(),
             'total_images_count' => \DB::table('images')->count(),
             'can' => [
                 'view_gallery' => auth()->user()->can('view', $gallery),

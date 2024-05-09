@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Facility;
+use App\Models\Gallery;
 use App\Models\Property;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -28,9 +29,13 @@ class PropertiesTest extends TestCase
             'description' => "Featuring a garden, Nassfeld and Lake Apartment offers accommodations in Hermagor. This property offers access to a balcony and free private parking. The accommodation provides private check-in and check-out and bicycle parking for guests.",
             'keywords' => "accommodations, Hermagor ",
             'is_entire_apartment' => true,
+            'coordinates' => [
+                'lat' => '46.618689',
+                'lng' => '13.3809776'
+            ],
             'bed_types' => [
-                'bedroom' => ['name' => '1 queen bed', 'icon' => 'QueenBedIcon'],
-                'living_room' => ['name' => '1 sofa bed', 'icon' => 'SofaBedIcon'],
+                ['title' => 'bedroom', 'name'=>'1 queen bed', 'icon' => 'QueenBedIcon'],
+                ['title' => 'living_room', 'name'=>'1 sofa bed', 'icon' => 'SofaBedIcon'],
             ],
             'recomended' => [
                 'for 4 adults',
@@ -59,52 +64,48 @@ class PropertiesTest extends TestCase
 
     public function test_properties_screen_may_not_be_rendered_for_guest(): void
     {
-        $response = $this->get(route('admin.properties.index'));
-
-        $response->assertStatus(302);
-        $response->assertRedirect('/login');
+        $response = $this->get(route('admin.properties.index'))
+            ->assertStatus(302)
+            ->assertRedirect('/login');
     }
     public function test_properties_screen_may_not_be_rendered_for_user(): void
     {
 
-        $response = $this->actingAs($this->user)->get(route('admin.properties.index'));
-
-        $response->assertStatus(403);
+        $response = $this->actingAs($this->user)->get(route('admin.properties.index'))
+            ->assertStatus(403);
     }
 
     public function test_properties_screen_may_be_rendered_for_admin(): void
     {
 
-        $response = $this->actingAs($this->admin)->get(route('admin.properties.index'));
-
-        $response->assertStatus(200);
+        $response = $this->actingAs($this->admin)->get(route('admin.properties.index'))
+            ->assertStatus(200);
     }
 
     public function test_admin_may_create_new_property(): void
     {
         $this->withoutExceptionHandling();
 
-        $response = $this->actingAs($this->admin)->post(route('admin.properties.store'), $this->property);
+        $response = $this->actingAs($this->admin)->post(route('admin.properties.store'), $this->property)
+            ->assertStatus(302);
 
-        $response->assertStatus(302);
         $new_property = Property::where('name', $this->property['name'])->first();
 
         $this->assertEquals($new_property->fresh()->name, $this->property["name"]);
         $this->assertEquals($new_property->fresh()->description, $this->property["description"]);
         $this->assertEquals(1, Property::count());
-        $this->assertEquals($new_property->bed_types->bedroom->name, '1 queen bed');
+        $this->assertEquals($new_property->bed_types[0]['name'], '1 queen bed');
 
     }
 
     public function test_user_or_guest_may_not_create_new_property(): void
     {
-        $response = $this->post(route('admin.properties.store'), $this->property);
-        $response->assertStatus(302);
-        $response->assertRedirect(route('login'));
+        $response = $this->post(route('admin.properties.store'), $this->property)
+            ->assertStatus(302)
+            ->assertRedirect(route('login'));
 
-        $response = $this->actingAs($this->user)->post(route('admin.properties.store'), $this->property);
-
-        $response->assertStatus(403);
+        $response = $this->actingAs($this->user)->post(route('admin.properties.store'), $this->property)
+            ->assertStatus(403);
     }
 
     public function test_user_or_guest_may_not_update_property(): void
@@ -113,13 +114,12 @@ class PropertiesTest extends TestCase
 
         //$property = Property::where('name', $this->property['name'])->first();
         // dd($property);
-        $response = $this->put(route('admin.properties.update', $property), $this->property);
-        $response->assertStatus(302);
-        $response->assertRedirect(route('login'));
+        $response = $this->put(route('admin.properties.update', $property), $this->property)
+            ->assertStatus(302)
+            ->assertRedirect(route('login'));
 
-        $response = $this->actingAs($this->user)->put(route('admin.properties.update', $property), $this->property);
-
-        $response->assertStatus(403);
+        $response = $this->actingAs($this->user)->put(route('admin.properties.update', $property), $this->property)
+            ->assertStatus(403);
     }
 
     public function test_admin_may_update_property(): void
@@ -159,27 +159,63 @@ class PropertiesTest extends TestCase
         $property1 = Property::factory()->create();
         $property2 = Property::factory()->create();
 
-        $this->actingAs($this->admin)->put(route('admin.properties.attach', ['facility' => $facility1, 'property' => $property1]))
+        $this->actingAs($this->admin)->put(route('admin.properties.attach.facility', ['facility' => $facility1, 'property' => $property1]))
             ->assertSessionHas(["status" => "facility-attached"]);
 
         $this->assertDatabaseCount('properties_facilities', 1);
 
-        $this->actingAs($this->admin)->put(route('admin.properties.attach', ['facility' => $facility1, 'property' => $property2]))
+        $this->actingAs($this->admin)->put(route('admin.properties.attach.facility', ['facility' => $facility1, 'property' => $property2]))
             ->assertSessionHas(["status" => "facility-attached"]);
 
         $this->assertDatabaseCount('properties_facilities', 2);
 
-        $this->actingAs($this->admin)->put(route('admin.properties.detach', ['facility' => $facility1, 'property' => $property1]))
+        $this->actingAs($this->admin)->put(route('admin.properties.detach.facility', ['facility' => $facility1, 'property' => $property1]))
             ->assertSessionHas(["status" => "facility-detached"]);
 
         $this->assertDatabaseCount('properties_facilities', 1);
 
-        $this->actingAs($this->admin)->put(route('admin.properties.attach', ['facility' => $facility2, 'property' => $property1]))
+        $this->actingAs($this->admin)->put(route('admin.properties.attach.facility', ['facility' => $facility2, 'property' => $property1]))
             ->assertSessionHas(["status" => "facility-attached"]);
-        $this->actingAs($this->admin)->put(route('admin.properties.attach', ['facility' => $facility1, 'property' => $property1]))
+        $this->actingAs($this->admin)->put(route('admin.properties.attach.facility', ['facility' => $facility1, 'property' => $property1]))
             ->assertSessionHas(["status" => "facility-attached"]);
 
-        $this->assertCount(2, Property::where('name', $property1->name)->first()->facilities);
+        $this->assertCount(2, $property1->fresh()->facilities);
     }
 
+    public function test_galleries_can_be_attached_and_detached_to_properties(): void
+    {
+        $gallery1 = Gallery::factory()->create();
+        $gallery2 = Gallery::factory()->create();
+
+        $property1 = Property::factory()->create();
+
+        $property1->galleries()->attach($gallery1);
+        $this->assertCount(1, $property1->fresh()->galleries);
+
+        $property1->galleries()->attach($gallery2);
+        $this->assertCount(2, $property1->fresh()->galleries);
+
+        $property1->galleries()->detach($gallery1);
+        $this->assertCount(1, $property1->fresh()->galleries);
+
+        $property1->galleries()->detach($gallery2);
+        $this->assertCount(0, $property1->fresh()->galleries);
+    }
+
+    public function test_admin_may_attach_and_detach_galleries( )
+    {
+        $gallery1 = Gallery::factory()->create();
+
+        $property1 = Property::factory()->create();
+
+        $this->actingAs($this->admin)->put(route('admin.properties.attach.gallery', ['gallery' => $gallery1, 'property' => $property1]))
+            ->assertSessionHas(["status" => "gallery-attached"]);
+
+        $this->assertDatabaseCount('properties_galleries', 1);
+
+        $this->actingAs($this->admin)->put(route('admin.properties.detach.gallery', ['gallery' => $gallery1, 'property' => $property1]))
+            ->assertSessionHas(["status" => "gallery-detached"]);
+
+        $this->assertDatabaseCount('properties_galleries', 0);
+    }
 }

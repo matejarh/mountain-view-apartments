@@ -1,6 +1,7 @@
 <script setup>
 import { watchEffect, ref } from 'vue';
 import TopNavigationItem from './TopNavigationItem.vue';
+import { useHelperStore } from '@/stores/helpers';
 
 const props = defineProps({
     show: {
@@ -8,6 +9,8 @@ const props = defineProps({
         default: false
     }
 })
+
+const helpers = useHelperStore()
 
 const showItem1 = ref(false)
 const showItem2 = ref(false)
@@ -49,11 +52,8 @@ watchEffect(async () => {
                 <TopNavigationItem key="reservation" v-show="showItem4" :to="'/reservation'">
                     Reservation
                 </TopNavigationItem>
-                <button class="block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-deep-cerulean-700 dark:text-white md:dark:hover:text-deep-cerulean-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700" 
-                    data-drawer-target="contact-drawer-form" 
-                    data-drawer-show="contact-drawer-form" 
-                    
-                    aria-controls="contact-drawer-form"
+                <button class="block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-deep-cerulean-700 dark:text-white md:dark:hover:text-deep-cerulean-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                    @click="helpers.showContactDrawer"
                     v-show="showItem5"
                     key="contact">
                     Contact Us

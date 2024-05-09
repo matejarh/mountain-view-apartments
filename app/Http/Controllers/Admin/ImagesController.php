@@ -29,9 +29,10 @@ class ImagesController extends Controller
      * Get filtered ordered paginated images collection
      * and renders Inertia response
      *
-     * @param \Illuminate\Http\Request
-     * @param \App\Filters\UserFilters
-     * @return \Inertia\Response
+     * @param \Illuminate\Http\Request $request The HTTP request object.
+     * @param \App\Filters\ImageFilters $filters The filters instance.
+     * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function index(Request $request, ImageFilters $filters): Response
     {
@@ -149,7 +150,8 @@ class ImagesController extends Controller
      */
     public function fetch(Request $request, Gallery $gallery) : JsonResponse
     {
-        $images = Image::all()->intersect(Image::whereNotIn('id', $gallery->images->pluck('id')->toArray())->get());
+        $images = Image::all()->intersect(Image::whereNotIn('id', $gallery->images->pluck('id')->toArray())->get())
+                        ->paginate(20, null,null, __('page'))->onEachSide(2)->withQueryString();
         return response()->json([
             'images' => $images,
             'total_count' => \DB::table('images')->count(),
@@ -166,7 +168,7 @@ class ImagesController extends Controller
     {
         $path = str(parse_url($request->only('attribute')['attribute'])['path'])->replace('/storage/', '');
 
-        $images = Image::where('image_path', '!=', $path)->paginate(20);
+        $images = Image::where('image_path', '!=', $path)->paginate(20)->onEachSide(2)->withQueryString();
 
         return response()->json([
             'images' => $images,

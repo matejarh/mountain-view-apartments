@@ -16,9 +16,14 @@ use App\Actions\Images\CreateNewImage;
 use App\Actions\Images\DeleteImage;
 use App\Actions\Images\DetachFromGallery;
 use App\Actions\Images\UpdateImage;
+use App\Actions\Pages\CreateNewPage;
+use App\Actions\Pages\DeletePage;
+use App\Actions\Pages\UpdatePage;
 use App\Actions\Properties\AttachFacility;
+use App\Actions\Properties\AttachGallery;
 use App\Actions\Properties\CreateNewProperty;
 use App\Actions\Properties\DetachFacility;
+use App\Actions\Properties\DetachGallery;
 use App\Actions\Properties\UpdateProperty;
 use App\Actions\Settings\CreateNewSetting;
 use App\Actions\Settings\UpdateSetting;
@@ -34,6 +39,9 @@ use App\Contracts\ImageCreateResponse as ImageCreateResponseContract;
 use App\Contracts\ImageDeleteResponse as ImageDeleteResponseContract;
 use App\Contracts\ImageDetacheResponse as ImageDetacheResponseContract;
 use App\Contracts\ImageUpdateResponse as ImageUpdateResponseContract;
+use App\Contracts\PageCreateResponse as PageCreateResponseContract;
+use App\Contracts\PageDeleteResponse as PageDeleteResponseContract;
+use App\Contracts\PageUpdateResponse as PageUpdateResponseContract;
 use App\Contracts\PropertyCreateResponse as PropertyCreateResponseContract;
 use App\Contracts\PropertyUpdateResponse as PropertyUpdateResponseContract;
 use App\Contracts\SettingCreateResponse as SettingCreateResponseContract;
@@ -50,6 +58,9 @@ use App\Http\Responses\ImageCreatedResponse;
 use App\Http\Responses\ImageDeletedResponse;
 use App\Http\Responses\ImageDetachedResponse;
 use App\Http\Responses\ImageUpdatedResponse;
+use App\Http\Responses\PageCreatedResponse;
+use App\Http\Responses\PageDeletedResponse;
+use App\Http\Responses\PageUpdatedResponse;
 use App\Http\Responses\PropertyCreatedResponse;
 use App\Http\Responses\PropertyUpdatedResponse;
 use App\Http\Responses\SettingCreatedResponse;
@@ -98,6 +109,10 @@ class FortifyServiceProvider extends ServiceProvider
 
         $this->app->singleton(FacilityAttacheResponseContract::class, FacilityAttachedResponse::class);
         $this->app->singleton(FacilityDetacheResponseContract::class, FacilityDetachedResponse::class);
+
+        $this->app->singleton(PageCreateResponseContract::class, PageCreatedResponse::class);
+        $this->app->singleton(PageUpdateResponseContract::class, PageUpdatedResponse::class);
+        $this->app->singleton(PageDeleteResponseContract::class, PageDeletedResponse::class);
     }
 
     /**
@@ -129,6 +144,12 @@ class FortifyServiceProvider extends ServiceProvider
         AppFortify::updatePropertiesUsing(UpdateProperty::class);
         AppFortify::attachFacilitiesToPropertiesUsing(AttachFacility::class);
         AppFortify::detachFacilitiesFromPropertiesUsing(DetachFacility::class);
+        AppFortify::attachGalleriesToPropertiesUsing(AttachGallery::class);
+        AppFortify::detachGalleriesFromPropertiesUsing(DetachGallery::class);
+
+        AppFortify::createPagesUsing(CreateNewPage::class);
+        AppFortify::updatePagesUsing(UpdatePage::class);
+        AppFortify::destroyPagesUsing(DeletePage::class);
 
         RateLimiter::for('login', function (Request $request) {
             $throttleKey = str(str($request->input(Fortify::username()))->lower().'|'.$request->ip())->transliterate();

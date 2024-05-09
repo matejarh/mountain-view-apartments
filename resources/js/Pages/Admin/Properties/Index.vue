@@ -8,6 +8,7 @@ import { ref } from 'vue';
 import CirclePlusIcon from '@/Icons/CirclePlusIcon.vue';
 import ImageIcon from '@/Icons/ImageIcon.vue';
 import FiltersSection from '@/Components/FiltersSection.vue';
+import Paginator from '@/Components/Paginator.vue';
 
 const showCreateDialog = ref(false)
 const galleryProxy = ref(null)
@@ -26,15 +27,15 @@ const handleEdit = (gallery) => {
             </template>
 
             <template #content>
-                <FiltersSection v-show="$page.props.properties.data.length > 0" id="properties-filters" route="admin.properties.index" placeholder="Search for properties" />
+                <FiltersSection v-show="$page.props.properties.data.length > 0 || $page.props.filters?.search" id="properties-filters" route="admin.properties.index" placeholder="Search for properties" />
 
                 <div class="relative" v-if="$page.props.properties.data.length > 0">
                     <TransitionGroup name="list" tag="ul"
-                        class=" relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 4xl:grid-cols-6 gap-4 md:gap-4 lg:gap-6 2xl:gap-8">
-
-                        <!-- <PropertyCard v-for="gallery, key in $page.props.properties.data" :key="gallery.id" :gallery="gallery"
-                            @edit="handleEdit" /> -->
+                        class=" relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-5 3xl:grid-cols-6 gap-4 md:gap-4 lg:gap-6 2xl:gap-8">
+                        <PropertyCard v-for="property, key in $page.props.properties.data" :key="property.id" :property="property"
+                            @edit="handleEdit" />
                     </TransitionGroup>
+                    <Paginator :paginator="$page.props.properties" />
                 </div>
 
                 <div v-else class="">

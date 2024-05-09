@@ -4,10 +4,12 @@ namespace Database\Seeders;
 
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
+    use WithoutModelEvents;
     /**
      * Seed the application's database.
      */
@@ -24,8 +26,13 @@ class DatabaseSeeder extends Seeder
         ]);
         User::factory(50)->create();
 
-        // $this->call(GalleriesSeeder::class);
-        $this->call(PropertiesSeeder::class);
-        $this->call(SettingsSeeder::class);
+        $this->call([
+            SettingsSeeder::class,
+            GalleriesSeeder::class,
+            FacilitiesSeeder::class,
+            PropertiesSeeder::class,
+            PagesSeeder::class,
+        ]);
+
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Filters\GalleryFilters;
+use App\Traits\RecordsActivity;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Gallery extends Model
 {
-    use HasFactory;
+    use HasFactory, RecordsActivity;
 
 
     /**
@@ -21,6 +22,10 @@ class Gallery extends Model
      */
     protected $appends = [
         'can'
+    ];
+
+    protected $with = [
+        'images',
     ];
 
     /**
@@ -42,6 +47,9 @@ class Gallery extends Model
         static::deleting(function ($gallery) {
             foreach ($gallery->images as $image) {
                 $gallery->images()->detach($image);
+            }
+            foreach ($gallery->properties as $property) {
+                $gallery->properties()->detach($property);
             }
         });
     }
@@ -70,6 +78,14 @@ class Gallery extends Model
         return $this->belongsToMany(Image::class, 'galleries_images', 'gallery_id', 'image_id')->latest();
     }
 
+    /**
+     * Get images for the gallery
+     */
+    public function properties(): BelongsToMany
+    {
+        return $this->belongsToMany(Property::class, 'properties_galleries', 'gallery_id', 'property_id')->latest();
+    }
+
     public function can(): array
     {
         if (auth()->check()) {
@@ -96,14 +112,5 @@ class Gallery extends Model
     public function scopeFilter($query, GalleryFilters $filters): Builder
     {
         return $filters->apply($query);
-        /* $query->when($filters['search'] ?? null, function ($query, $search) {
-
-            $query->where('name', 'like', '%' . $search . '%')
-                ->orWhere('description', 'like', '%' . $search . '%')
-                ->whereHas('images', function ($q) use ($search) {
-                    $q->where('name', 'like', '%' . $search . '%')
-                        ->orWhere('description', 'like', '%' . $search . '%');
-                });
-        }); */
     }
 }

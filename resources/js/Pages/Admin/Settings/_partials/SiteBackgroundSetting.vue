@@ -5,6 +5,8 @@ import CreateSetting from './CreateSetting.vue';
 import { useForm } from '@inertiajs/vue3';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import ImagesListDialog from './ImagesListDialog.vue';
+import CheckCircleIcon from '@/Icons/CheckCircleIcon.vue';
+import LightbulbIcon from '@/Icons/LightbulbIcon.vue';
 
 const props=defineProps({
     settings: Array,
@@ -66,8 +68,15 @@ const handleSelect = (attribute) => {
                 <div v-else class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
 
                     <div class="" v-for="attribute,key in background_settings.attributes">
-                        <h3>Current {{ key }} image</h3>
-                        <div class="" v-if="attribute">
+                        <div class="flex justify-between items-center">
+                            <h3>{{ key }} image</h3>
+                            <div class="relative" v-if="key === $page.props.current_season">
+                                <LightbulbIcon class="absolute animate-ping h-6 w-6 text-yellow-400"  />
+                                <LightbulbIcon class="h-6 w-6 text-yellow-300" />
+
+                            </div>
+                        </div>
+                        <div :class="{'rounded-lg shadow-2xl shadow-amazon-300': key === $page.props.current_season}" class="" v-if="attribute">
                             <img :src="attribute.thumb_url" class="w-full h-auto rounded-lg" />
 
                         </div>

@@ -7,9 +7,8 @@ import InputLabel from '@/Components/InputLabel.vue';
 import TextInput from '@/Components/TextInput.vue';
 import TextArea from '@/Components/TextArea.vue';
 import InputError from '@/Components/InputError.vue';
-import DropZone from '@/Components/DropZone.vue';
 import SpinnerIcon from '@/Icons/SpinnerIcon.vue';
-import ImagesList from './ImagesList.vue';
+
 
 const props = defineProps({
     show: Boolean,
@@ -95,7 +94,7 @@ const populateForm = () => {
 
             </div>
 
-            <ImagesList v-if="gallery" :gallery="gallery" />
+
         </template>
 
         <template #footer>

@@ -65,7 +65,7 @@ class Activity extends Model
         // return [new EncryptedPrivateChannel('App.Models.Wallet.'.$this->id)];
         //return [$this, $this->user];
         return match ($event) {
-            'created' => [new EncryptedPrivateChannel('App.Models.User.' . $this->owner->id)],
+            'created' => [new EncryptedPrivateChannel('App.Models.Activity.')],
             default => [new EncryptedPrivateChannel('App.Models.Activity.' . $this->id)],
         };
     }

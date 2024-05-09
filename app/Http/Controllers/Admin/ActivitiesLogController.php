@@ -13,11 +13,12 @@ use Inertia\Response;
 class ActivitiesLogController extends Controller
 {
     /**
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Filters\ActivityFilters $filters
-     * @return \Inertia\Response
+     * @param \Illuminate\Http\Request $request The HTTP request object.
+     * @param \App\Filters\ActivityFilters $filters The filters instance.
+     * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function index(Request $request, ActivityFilters $filters ) : Response {
+    public function index(Request $request,  $filters ) : Response {
 
         if (auth()->user()->cannot('viewAny', Activity::class)) abort(403);
 

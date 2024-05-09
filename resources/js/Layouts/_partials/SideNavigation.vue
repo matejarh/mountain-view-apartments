@@ -10,6 +10,8 @@ import LangSwitch from '@/Components/SideNavigation/LangSwitch.vue';
 import ImageIcon from '@/Icons/ImageIcon.vue';
 import UsersIcon from '@/Icons/UsersIcon.vue';
 import CogIcon from '@/Icons/CogIcon.vue';
+import MountainCityIcon from '@/Icons/MountainCityIcon.vue';
+import AdjustmentsIcon from '@/Icons/AdjustmentsIcon.vue';
 
 const props = defineProps({
     show: Boolean,
@@ -31,13 +33,16 @@ const classes = computed(() => {
             <ul class="space-y-2">
                 <NavLink href="/admin/dashboard" @click="$emit('hide')">
                     <template #icon>
-                        <svg aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
-                            <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
-                        </svg>
+                        <AdjustmentsIcon class="" />
                     </template>
                     {{ __("Dashboard") }}
+                </NavLink>
+
+                <NavLink href="/admin/properties" @click="$emit('hide')">
+                    <template #icon>
+                        <MountainCityIcon />
+                    </template>
+                    {{ __("Properties") }}
                 </NavLink>
 
                 <NavDropdown key="pages-dropdown">
@@ -95,7 +100,7 @@ const classes = computed(() => {
                 </NavDropdown> -->
 
             </ul>
-            <ul class="pt-5 mt-5 space-y-2 border-t border-gray-200 dark:border-gray-700">
+            <ul class="transition-all pt-5 mt-5 space-y-2 border-t border-gray-200 dark:border-gray-700">
                 <NavLink :href="route('dashboard.show')">
                     <template #icon>
                         <svg aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
@@ -135,12 +140,7 @@ const classes = computed(() => {
         <div
             class="hidden absolute bottom-0 left-0 justify-center p-4 space-x-4 w-full lg:flex bg-gray-50 dark:bg-gray-800 z-20">
             <BottomItem :href="'/'">
-                <svg aria-hidden="true" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="M5 4a1 1 0 00-2 0v7.268a2 2 0 000 3.464V16a1 1 0 102 0v-1.268a2 2 0 000-3.464V4zM11 4a1 1 0 10-2 0v1.268a2 2 0 000 3.464V16a1 1 0 102 0V8.732a2 2 0 000-3.464V4zM16 3a1 1 0 011 1v7.268a2 2 0 010 3.464V16a1 1 0 11-2 0v-1.268a2 2 0 010-3.464V4a1 1 0 011-1z">
-                    </path>
-                </svg>
+                <AdjustmentsIcon class="w-6 h-6" />
             </BottomItem>
 
             <Tooltip :text="__('Settings page')">

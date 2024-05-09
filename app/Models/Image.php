@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Filters\ImageFilters;
 use App\Traits\HasPhoto;
+use App\Traits\RecordsActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -13,7 +14,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 class Image extends Model
 {
-    use HasFactory, HasPhoto;
+    use HasFactory, HasPhoto, RecordsActivity;
 
     /**
      * The accessors to append to the model's array form.
@@ -88,13 +89,6 @@ class Image extends Model
     public function scopeFilter(Builder $query, ImageFilters $filters): Builder
     {
         return $filters->apply($query);
-        /* $query->when($filters['search'] ?? null, function ($query, $search) {
-            $query->where('name', 'like', '%' . $search . '%')
-                ->orWhere('description', 'like', '%' . $search . '%')
-                ->whereHas('galleries', function ($q) use ($search) {
-                    $q->where('name', 'like', '%' . $search . '%')
-                        ->orWhere('description', 'like', '%' . $search . '%');
-                });
-        }); */
+
     }
 }

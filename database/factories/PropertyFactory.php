@@ -31,10 +31,13 @@ class PropertyFactory extends Factory
             'description' => fake('sl_SI')->paragraphs(3, true),
             'keywords' => fake('sl_SI')->words(5, true),
             'is_entire_apartment' => fake()->randomElement([true, false]),
-
+            'coordinates' => [
+                'lat' => 0,
+                'lng' => 0,
+            ],
             'bed_types' => [
-                'bedroom' => ['name' => '1 queen bed', 'icon' => 'QueenBedIcon'],
-                'living_room' => ['name' => '1 sofa bed', 'icon' => 'SofaBedIcon'],
+                ['title' => 'bedroom', 'name'=>'1 queen bed', 'icon' => 'QueenBedIcon'],
+                ['title' => 'living_room', 'name'=>'1 sofa bed', 'icon' => 'SofaBedIcon'],
             ],
             'recomended' => [
 

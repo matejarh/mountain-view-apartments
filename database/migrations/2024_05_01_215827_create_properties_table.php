@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Facility;
+use App\Models\Gallery;
 use App\Models\Property;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
@@ -25,6 +26,7 @@ return new class extends Migration
             $table->text('keywords')->nullable();
             $table->string('size')->nullable();
             $table->boolean('is_entire_apartment')->default(false);
+            $table->json('coordinates')->nullable();
             $table->json('bed_types')->nullable();
             $table->json('recomended')->nullable();
             $table->json('prices')->nullable();
@@ -49,6 +51,14 @@ return new class extends Migration
             $table->unique(['property_id', 'facility_id']);
         });
 
+        Schema::create('properties_galleries', function (Blueprint $table) {
+            $table->foreignIdFor(Property::class, 'property_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignIdFor(Gallery::class, 'gallery_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->timestamps();
+
+            $table->unique(['property_id', 'gallery_id']);
+        });
+
     }
 
     /**
@@ -57,6 +67,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('properties_facilities');
+        Schema::dropIfExists('properties_galleries');
         Schema::dropIfExists('facilities');
         Schema::dropIfExists('properties');
     }

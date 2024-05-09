@@ -25,7 +25,7 @@ const links = computed(() => {
 <template>
 
     <nav role="navigation" v-if="hasPages"
-        class="flex flex-col md:flex-row justify-between items-start md:items-center space-y-3 md:space-y-0 p-4">
+        class="flex flex-col md:flex-row justify-between items-start md:items-center space-y-3 md:space-y-0 py-4">
         <div class="flex justify-between flex-1 md:hidden w-full">
 
             <span v-if="onFirstPage"

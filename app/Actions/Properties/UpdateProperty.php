@@ -29,7 +29,11 @@ class UpdateProperty implements UpdatesProperties
             'facilities' => __('Facilities'),
             'recomended' => __('Recomended'),
             'prices' => __('Prices'),
+            'prices.*.guests' => __('Number of guests'),
+            'prices.*.price' => __('Price'),
             'rules' => __('Rules'),
+            'coordinates.lng' => __('Longitude'),
+            'coordinates.lat' => __('Latitude'),
         );
 
         $validator = Validator::make($input, [
@@ -39,8 +43,12 @@ class UpdateProperty implements UpdatesProperties
             'address' => ['required', 'string', 'max:255', new SpamFree] ,
             'keywords' => ['nullable', 'string', new SpamFree] ,
             'is_entire_apartment' => ['required', 'boolean'],
+            'coordinates' => ['required', 'array', 'min:2', 'max:2'],
+            'coordinates.*' => ['required', 'numeric'],
             'bed_types' => ['required', 'array', 'min:1'],
             'bed_types.*' => ['required', 'array', 'distinct', 'min:1'],
+            'bed_types.*.name' => ['required', 'string', new SpamFree],
+            'bed_types.*.title' => ['required', 'string', new SpamFree],
             'recomended' => ['required', 'array', 'min:1'],
             'recomended.*' => ['required', 'string', 'distinct', new SpamFree],
             'prices' => ['required', 'array', 'min:1'],
@@ -65,6 +73,7 @@ class UpdateProperty implements UpdatesProperties
             'address' => isset($input['address']) ? $input['address'] : null,
             'keywords' => isset($input['keywords']) ? $input['keywords'] : null,
             'is_entire_apartment' => $input['is_entire_apartment'],
+            'coordinates' => isset($input['coordinates']) ? $input['coordinates'] : null,
             'bed_types' => isset($input['bed_types']) ? $input['bed_types'] : null,
             'recomended' => isset($input['recomended']) ? $input['recomended'] : null,
             'prices' => isset($input['prices']) ? $input['prices'] : null,

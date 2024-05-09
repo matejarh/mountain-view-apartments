@@ -41,7 +41,7 @@ const carouselHeight = 'h-56'
                     </h5>
 
                     <p
-                        class="mb-3 font-normal text-gray-700 dark:text-gray-400 bg-gray-50 dark:bg-gray-700 leading-tight whitespace-pre p-2 rounded-lg h-14 overflow-y-auto scrollbar-none ">
+                        class="mb-3 font-normal text-gray-700 dark:text-gray-400 bg-gray-50 dark:bg-gray-700 leading-tight whitespace-pre-wrap p-2 rounded-lg h-14 overflow-y-auto scrollbar-none ">
                         {{ gallery.description }}</p>
                 </div>
 

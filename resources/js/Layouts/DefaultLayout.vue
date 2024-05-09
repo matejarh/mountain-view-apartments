@@ -37,7 +37,7 @@ const backgroundImageUrl = computed(() => {
         return setting.slug === 'site-backgrounds'
     })
 
-    return setting.length > 0 ? setting[0].attributes[page.props.current_season].photo_url : defaultBackgroundImage
+    return setting.length > 0 ? (setting[0].attributes[page.props.current_season] !== '' ? setting[0].attributes[page.props.current_season].photo_url : defaultBackgroundImage) : defaultBackgroundImage
 })
 
 const handleScroll = (e) => {
@@ -83,7 +83,7 @@ onMounted(() => {
         <Transition enter-active-class="animate__animated animate__fadeIn"
             leave-active-class="animate__animated animate__fadeOut">
 
-            <div id="page" ref="container" v-show="showMain" class="transition-all ease-in-out duration-1000 relative antialiased text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-900 w-screen min-h-screen overflow-hidden bg-blend-multiply inset-0 bg-no-repeat bg-cover
+            <div id="page" ref="container" v-if="showMain" class="transition-all ease-in-out duration-1000 relative antialiased text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-900 w-screen min-h-screen overflow-hidden bg-blend-multiply inset-0 bg-no-repeat bg-cover
                     bg-fixed h-screen" :style="`background-image: url(${backgroundImageUrl});`">
 
 
@@ -93,7 +93,7 @@ onMounted(() => {
 
                 <Transition enter-active-class="animate__animated animate__fadeIn"
                     leave-active-class="animate__animated animate__fadeOut">
-                    <div class="" v-show="helpers.show">
+                    <div class="" v-if="helpers.show">
 
                         <main @scroll="handleScroll" id="main"
                             class="flex flex-col justify-between h-screen z-0  overflow-y-auto scrollbar-none scroll-smooth hover:scrollbar-thumb-gray-500 active:scrollbar-thumb-gray-400 scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-700 scrollbar-track-transparent">
@@ -110,7 +110,7 @@ onMounted(() => {
                         <ScrollToTop :scrollTop="scrollPosition" />
                     </div>
                 </Transition>
-                <ContactDrawer />
+                <ContactDrawer @close="helpers.hideContactDrawer" />
             </div>
         </Transition>
 
