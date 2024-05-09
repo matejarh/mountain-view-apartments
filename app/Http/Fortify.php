@@ -2,23 +2,61 @@
 namespace App\Http;
 use App\Contracts\AttachesFacilitiesToProperties;
 use App\Contracts\AttachesGalleriesToImages;
+use App\Contracts\AttachesGalleriesToProperties;
 use App\Contracts\AttachesImagesToGalleries;
 use App\Contracts\CreatesNewGalleries;
 use App\Contracts\CreatesNewImages;
+use App\Contracts\CreatesNewPages;
 use App\Contracts\CreatesNewProperties;
 use App\Contracts\CreatesNewSettings;
 use App\Contracts\DeletesGalleries;
 use App\Contracts\DeletesImages;
+use App\Contracts\DeletesPages;
 use App\Contracts\DetachesFacilitiesFromProperties;
 use App\Contracts\DetachesGalleriesFromImages;
+use App\Contracts\DetachesGalleriesFromProperties;
 use App\Contracts\DetachesImagesFromGalleries;
 use App\Contracts\UpdatesGalleries;
 use App\Contracts\UpdatesImages;
+use App\Contracts\UpdatesPages;
 use App\Contracts\UpdatesProperties;
 use App\Contracts\UpdatesSettings;
 
 class Fortify
 {
+    /**
+     * Register a class / callback that should be used to create new pages.
+     *
+     * @param  string  $callback
+     * @return void
+     */
+    public static function createPagesUsing(string $callback)
+    {
+        app()->singleton(CreatesNewPages::class, $callback);
+    }
+
+    /**
+     * Register a class / callback that should be used to update given page.
+     *
+     * @param  string  $callback
+     * @return void
+     */
+    public static function updatePagesUsing(string $callback)
+    {
+        app()->singleton(UpdatesPages::class, $callback);
+    }
+
+    /**
+     * Register a class / callback that should be used to destroyes given page.
+     *
+     * @param  string  $callback
+     * @return void
+     */
+    public static function destroyPagesUsing(string $callback)
+    {
+        app()->singleton(DeletesPages::class, $callback);
+    }
+
     /**
      * Register a class / callback that should be used to create new galleries.
      *
@@ -193,5 +231,27 @@ class Fortify
     public static function detachFacilitiesFromPropertiesUsing(string $callback)
     {
         app()->singleton(DetachesFacilitiesFromProperties::class, $callback);
+    }
+
+    /**
+     * Register a class / callback that should be used to attach given gallery to given property.
+     *
+     * @param  string  $callback
+     * @return void
+     */
+    public static function attachGalleriesToPropertiesUsing(string $callback)
+    {
+        app()->singleton(AttachesGalleriesToProperties::class, $callback);
+    }
+
+    /**
+     * Register a class / callback that should be used to detach given gallery from given property.
+     *
+     * @param  string  $callback
+     * @return void
+     */
+    public static function detachGalleriesFromPropertiesUsing(string $callback)
+    {
+        app()->singleton(DetachesGalleriesFromProperties::class, $callback);
     }
 }

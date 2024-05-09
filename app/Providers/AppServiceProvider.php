@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\RateLimiter;
 
@@ -35,7 +37,7 @@ class AppServiceProvider extends ServiceProvider
         );
 
         RateLimiter::for('global', function (Request $request) {
-            $throttleKey = str(str($request->input(Fortify::username()))->lower().'|'.$request->ip())->transliterate();
+            $throttleKey = str(str($request->input(Fortify::username()))->lower() . '|' . $request->ip())->transliterate();
 
             return Limit::perMinute(1000)->by($throttleKey);
             /* return Limit::perMinute(1000)->response(function (Request $request, array $headers) {
@@ -45,6 +47,29 @@ class AppServiceProvider extends ServiceProvider
 
         RateLimiter::for('admins', function (Request $request) {
             return Limit::perMinute(120)->by($request->session()->get('login.id'));
+        });
+
+        /**
+         * Paginate a standard Laravel Collection.
+         *
+         * @param int $perPage
+         * @param int $total
+         * @param int $page
+         * @param string $pageName
+         * @return array
+         */
+        Collection::macro('paginate', function ($perPage, $total = null, $page = null, $pageName = 'page') : LengthAwarePaginator {
+            $page = $page ?: LengthAwarePaginator::resolveCurrentPage($pageName);
+            return new LengthAwarePaginator(
+                $this->forPage($page, $perPage),
+                $total ?: $this->count(),
+                $perPage,
+                $page,
+                [
+                    'path' => LengthAwarePaginator::resolveCurrentPath(),
+                    'pageName' => $pageName,
+                ]
+            );
         });
 
     }

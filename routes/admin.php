@@ -3,6 +3,7 @@ use App\Http\Controllers\Admin\ActivitiesLogController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GalleriesController;
 use App\Http\Controllers\Admin\ImagesController;
+use App\Http\Controllers\Admin\PagesController;
 use App\Http\Controllers\Admin\PropertiesController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\UsersController;
@@ -28,12 +29,6 @@ Route::group(['middleware' => config('jetstream.middleware', ['web'])], function
             Route::get('/{setting}', [SettingsController::class, 'show'])->name('show');
             Route::put('/{setting}', [SettingsController::class, 'update'])->name('update');
             Route::delete('/{setting}', [SettingsController::class, 'destroy'])->name('destroy');
-
-
-
-            Route::name('settings.')->prefix('settings')->namespace('settings')->group(function() {
-
-            });
         });
 
         Route::name('properties.')->prefix('properties')->namespace('properties')->group(function() {
@@ -42,8 +37,10 @@ Route::group(['middleware' => config('jetstream.middleware', ['web'])], function
             Route::get('/{property}', [PropertiesController::class, 'show'])->name('show');
             Route::put('/{property}', [PropertiesController::class, 'update'])->name('update');
             Route::delete('/{property}', [PropertiesController::class, 'destroy'])->name('destroy');
-            Route::put('attach/{property}/{facility}', [PropertiesController::class, 'attach'])->name('attach');
-            Route::put('detach/{property}/{facility}', [PropertiesController::class, 'detach'])->name('detach');
+            Route::put('attach-facility/{property}/{facility}', [PropertiesController::class, 'attachFacility'])->name('attach.facility');
+            Route::put('detach-facility/{property}/{facility}', [PropertiesController::class, 'detachFacility'])->name('detach.facility');
+            Route::put('attach-gallery/{property}/{gallery}', [PropertiesController::class, 'attachGallery'])->name('attach.gallery');
+            Route::put('detach-gallery/{property}/{gallery}', [PropertiesController::class, 'detachGallery'])->name('detach.gallery');
         });
 
         Route::name('users.')->prefix('users')->namespace('users')->group(function() {
@@ -78,6 +75,14 @@ Route::group(['middleware' => config('jetstream.middleware', ['web'])], function
             Route::get('{gallery}/fetch', [ImagesController::class, 'fetch'])->name('fetch');
 
             // Route::get('search', ['as' => 'search', 'uses' => 'SearchController@search']);
+        });
+
+        Route::name('pages.')->prefix('pages')->namespace('pages')->group(function() {
+            Route::get('/', [PagesController::class, 'index'])->name('index');
+            Route::post('/', [PagesController::class, 'store'])->name('store');
+            Route::get('{page}', [PagesController::class, 'show'])->name('show');
+            Route::put('{page}', [PagesController::class, 'update'])->name('update');
+            Route::delete('{page}', [PagesController::class, 'destroy'])->name('destroy');
         });
     });
 

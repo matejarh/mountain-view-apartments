@@ -3,6 +3,14 @@ import { defineStore } from 'pinia'
 
 export const useHelperStore = defineStore('helpers', () => {
     const show = ref(false)
+    const contactDrawer = ref(false)
 
-    return { show }
+    const hideContactDrawer = () => {
+        contactDrawer.value = false
+    }
+    const showContactDrawer = () => {
+        contactDrawer.value = true
+    }
+
+    return { show, contactDrawer, showContactDrawer, hideContactDrawer }
 })

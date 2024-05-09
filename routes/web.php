@@ -2,19 +2,12 @@
 
 use App\Http\Controllers\ActivitiesController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\PagesController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
-
+Route::get('/', [PagesController::class, 'home'])->name('home');
 Route::post('/language-switch', [LanguageController::class, 'switch'])->name('switch.language');
 
 Route::middleware([
