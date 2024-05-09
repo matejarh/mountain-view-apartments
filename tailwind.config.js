@@ -10,6 +10,7 @@ export default {
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
         './resources/js/**/*.vue',
+        './node_modules/flowbite/**/*.js',
     ],
     darkMode: 'class',
     theme: {
@@ -89,5 +90,5 @@ export default {
         },
     },
 
-    plugins: [forms, typography, require('tailwind-scrollbar'),],
+    plugins: [forms, typography, require('tailwind-scrollbar'),require('flowbite/plugin'),],
 };
