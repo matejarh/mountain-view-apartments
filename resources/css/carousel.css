@@ -153,9 +153,11 @@
     cursor: pointer;
     padding: var(--vc-pgn-margin);
     background: transparent;
-  }
+    transition: all ease-out 150ms;
+}
 
-  .carousel__pagination-button::after {
+.carousel__pagination-button::after {
+    opacity: 0.5;
     display: block;
     content: '';
     width: var(--vc-pgn-width);
@@ -166,17 +168,21 @@
 
   .carousel__pagination-button--active::after {
     background-color: var(--vc-pgn-active-color);
+    opacity: 0.9;
   }
   .dark.carousel__pagination-button--active::after {
     background-color: var(--vc-pgn-active-dark-color);
+    opacity: 0.9;
   }
 
   @media(hover: hover) {
     .carousel__pagination-button:hover::after {
       background-color: var(--vc-pgn-active-color);
+      opacity: 0.9;
     }
     .dark.carousel__pagination-button:hover::after {
       background-color: var(--vc-pgn-active-dark-color);
+      opacity: 0.9;
     }
   }
 
