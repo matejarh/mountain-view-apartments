@@ -33,10 +33,10 @@ const zoom = ref(14);
             <l-marker :lat-lng="coordinates" class="">
                 <l-popup class="">
                     <div class="content py-2">
-                        <img :src="property.galleries[0].images[0].thumb_url" class="w-24 h-16 float-left pr-2" />
+                        <img v-if="property.galleries.length>0" :src="property.galleries[0].images[0].thumb_url" class="w-24 h-16 float-left pr-2" />
                         <div class="item-body  ">
-                            <h3 class="font-bold text-base leading-tight">{{ property.name }}</h3>
-                            {{ property.description }}
+                            <h3 class="font-bold text-base leading-tight">{{ property.title[$page.props.locale] }}</h3>
+                            {{ property.description[$page.props.locale] }}
                         </div>
                     </div>
                     <!-- <div class="flex">
@@ -61,7 +61,7 @@ const zoom = ref(14);
             ]" color="#41b782" :fill="true" :fillOpacity="0.5" fillColor="#41b782">
                 <l-popup> Hi! I'm a polygon, nice to meet you! </l-popup>
             </l-polygon> -->
-            <l-control class="leaflet-control bg-white dark:bg-gray-700 border-primary-600 rounded-lg p-[1em] text-lg italic" position="bottomleft">{{ property.name }}</l-control>
+            <l-control class="leaflet-control bg-white dark:bg-gray-700 border-primary-600 rounded-lg p-[1em] text-lg italic" position="bottomleft">{{ property.title[$page.props.locale] }}</l-control>
         </l-map>
     </div>
 </template>

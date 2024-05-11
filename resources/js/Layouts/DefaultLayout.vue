@@ -10,6 +10,7 @@ import PageFooter from './_partials/_default/PageFooter.vue';
 import ContactDrawer from './_partials/_default/ContactDrawer.vue';
 
 import { useHelperStore } from '@/stores/helpers'
+import { useScrollStore } from '@/stores/scroll';
 
 defineProps({
     title: String,
@@ -18,22 +19,21 @@ defineProps({
     noindex: { type: Boolean, default: true },
 });
 
-const scrollPosition = ref(0)
-
 const container = ref(null)
 
 const helpers = useHelperStore()
+const scroll = useScrollStore()
 
 const page = usePage()
 
-const showMain = ref(false)
-const showNav = ref(false)
-const showFooter = ref(false)
+const showMain = ref(true)
+const showNav = ref(true)
+const showFooter = ref(true)
 
 const defaultBackgroundImage = new URL('/resources/images/backgrounds/winter-sunrise.jpg', import.meta.url)
 
 const backgroundImageUrl = computed(() => {
-    let setting =  page.props.settings.filter((setting) => {
+    let setting = page.props.settings.filter((setting) => {
         return setting.slug === 'site-backgrounds'
     })
 
@@ -41,31 +41,37 @@ const backgroundImageUrl = computed(() => {
 })
 
 const handleScroll = (e) => {
-    scrollPosition.value = e.target.scrollTop
+    scroll.updateScrollPosition(e.target.scrollTop)
+    scroll.scrollPosition = e.target.scrollTop
     // console.log(e.target.scrollTop)
     const parallaxElements =
         document.querySelectorAll('.bg-parallax');
     parallaxElements.forEach(function (element) {
-        let scrollPosition = e.target.scrollTop;
+        //let scroll.scrollPosition = e.target.scrollTop;
         element.style.transform =
-            'translateY(' + scrollPosition * 0.5 + 'px)';
+            'translateY(' + scroll.scrollPosition * 0.5 + 'px)';
     });
 }
 
-
 onMounted(() => {
-    setTimeout(() => {
-        showMain.value = true
-        setTimeout(() => {
-            showNav.value = true
+    if(!helpers.pageLoaded) {
+        helpers.delay(600)
+            .then(() => {
+                helpers.showMain = true;
+                return helpers.delay(600);
+            })
+            .then(() => {
+                helpers.showNav = true;
+                return helpers.delay(3000);
+            })
+            .then(() => {
+                helpers.showFooter = true;
+                helpers.show = true;
+                helpers.pageLoaded = true;
+                //return delay(3000);
+            });
 
-
-            setTimeout(() => {
-                showFooter.value = true
-                helpers.show = true
-            }, 3000);
-        }, 600);
-    }, 600);
+    }
 })
 
 </script>
@@ -83,13 +89,13 @@ onMounted(() => {
         <Transition enter-active-class="animate__animated animate__fadeIn"
             leave-active-class="animate__animated animate__fadeOut">
 
-            <div id="page" ref="container" v-if="showMain" class="transition-all ease-in-out duration-1000 relative antialiased text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-900 w-screen min-h-screen overflow-hidden bg-blend-multiply inset-0 bg-no-repeat bg-cover
+            <div id="page" ref="container" v-if="helpers.showMain" class="transition-all ease-in-out duration-1000 relative antialiased text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-900 w-screen min-h-screen overflow-hidden bg-blend-multiply inset-0 bg-no-repeat bg-cover
                     bg-fixed h-screen" :style="`background-image: url(${backgroundImageUrl});`">
 
 
-                <TopNavigation :show="showNav" :scroll-position="scrollPosition" class="z-30" />
+                <TopNavigation :show="showNav" :scroll-position="scroll.scrollPosition" class="z-30" />
 
-                <MobileNavigation v-show="showNav" :scroll-position="scrollPosition" />
+                <MobileNavigation v-show="showNav" :scroll-position="scroll.scrollPosition" />
 
                 <Transition enter-active-class="animate__animated animate__fadeIn"
                     leave-active-class="animate__animated animate__fadeOut">
@@ -97,17 +103,16 @@ onMounted(() => {
 
                         <main @scroll="handleScroll" id="main"
                             class="flex flex-col justify-between h-screen z-0  overflow-y-auto scrollbar-none scroll-smooth hover:scrollbar-thumb-gray-500 active:scrollbar-thumb-gray-400 scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-700 scrollbar-track-transparent">
-                            <div class="p-0 flex-grow flex flex-col justify-center">
-                                {{ page.props.current_season }}
+                            <div class="p-0 flex-grow flex flex-col justify-start">
                                 <slot />
                             </div>
                             <Transition enter-active-class="animate__animated animate__slideInUp"
                                 leave-active-class="animate__animated animate__slideOutDown">
 
-                                <PageFooter v-show="showFooter" class=" pt-4 " />
+                                <PageFooter v-show="helpers.showFooter" class=" pt-4 " />
                             </Transition>
                         </main>
-                        <ScrollToTop :scrollTop="scrollPosition" />
+                        <ScrollToTop :scrollTop="scroll.scrollPosition" />
                     </div>
                 </Transition>
                 <ContactDrawer @close="helpers.hideContactDrawer" />

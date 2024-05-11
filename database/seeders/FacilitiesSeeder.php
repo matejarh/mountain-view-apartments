@@ -89,6 +89,8 @@ class FacilitiesSeeder extends Seeder
            "Board games/puzzles",
            "Sofa bed",
            "Hand sanitizer in room",
+           "Fully equiped kitchen",
+           "Free Wi-Fi",
        ];
     }
 }

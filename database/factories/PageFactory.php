@@ -22,21 +22,21 @@ class PageFactory extends Factory
 
         foreach ($languages as $key => $language) {
             //array_push($titles, [$language => fake($language)->sentence]);
-            $titles[$language] = fake($language)->sentence;
+            $titles[$language] = '';
         }
 
         $descriptions = [];
 
         foreach ($languages as $key => $language) {
             //array_push($descriptions, [$language => fake($language)->paragraph()]);
-            $descriptions[$language] = fake($language)->paragraph();
+            $descriptions[$language] = '';
         }
 
         $keywords = [];
 
         foreach ($languages as $key => $language) {
             //array_push($keywords, [$language => str(fake()->words(6, true))->replace(' ', ', ')]);
-            $keywords[$language] = str(fake()->words(6, true))->replace(' ', ', ');
+            $keywords[$language] = '';
         }
         $name = fake()->sentence(3);
 

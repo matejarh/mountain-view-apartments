@@ -12,19 +12,9 @@ const page = usePage()
 
 const store = useTranslationsStore()
 
-const languages = ref([
-    { name: 'English', code: 'en', flag_url: new URL('/resources/images/flags/1x1/gb.svg', import.meta.url) },
-    { name: 'Slovensko', code: 'sl', flag_url: new URL('/resources/images/flags/1x1/si.svg', import.meta.url) },
-    { name: 'Čeština', code: 'cs', flag_url: new URL('/resources/images/flags/1x1/cz.svg', import.meta.url) },
-    { name: 'Deutsch', code: 'de', flag_url: new URL('/resources/images/flags/1x1/de.svg', import.meta.url) },
-    { name: 'Italiano', code: 'it', flag_url: new URL('/resources/images/flags/1x1/it.svg', import.meta.url) },
-    { name: 'Magyar', code: 'hu', flag_url: new URL('/resources/images/flags/1x1/hu.svg', import.meta.url) },
-    { name: 'Français', code: 'fr', flag_url: new URL('/resources/images/flags/1x1/fr.svg', import.meta.url) },
-])
-
 const selectedLanguage = computed(() => {
 
-    return languages.value.filter((language) => {
+    return store.languages.filter((language) => {
         return language.code === page.props.locale
     })[0]
 })
@@ -64,8 +54,7 @@ onBeforeMount(() => {
             <img :src="selectedLanguage?.flag_url" class="h-5 w-5 rounded-full mt-0.5">
         </template>
 
-
-        <BottomDropdownItem v-for="language in languages" :key="language.code" as="button"
+        <BottomDropdownItem v-for="language in store.languages" :key="language.code" as="button"
             @click="switchLanguage(language.code)">
             <template #icon>
                 <img :src="language.flag_url" class="h-3.5 w-3.5 rounded-full mr-2">

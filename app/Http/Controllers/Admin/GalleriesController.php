@@ -21,6 +21,7 @@ use App\Http\Responses\GalleryUpdatedResponse;
 use App\Models\Gallery;
 use App\Models\Image;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -36,8 +37,7 @@ class GalleriesController extends Controller
      */
     public function index(Request $request, GalleryFilters $filters): Response
     {
-        if (auth()->user()->cannot('viewAny', Gallery::class))
-            abort(403);
+        Gate::authorize('viewAny', Gallery::class);
 
         return Inertia::render('Admin/Galleries/Index', [
             'galleries' => Gallery::with('images')->filter($filters)->latest()->paginate(24, ['*'], __('page'))->onEachSide(2)->withQueryString(),
@@ -58,8 +58,7 @@ class GalleriesController extends Controller
      */
     public function show(Request $request, Gallery $gallery): Response
     {
-        if (auth()->user()->cannot('view', $gallery))
-            abort(403);
+        Gate::authorize('view', $gallery);
 
         return Inertia::render('Admin/Galleries/Show', [
             'gallery' => Gallery::with('images')->find($gallery->id),
@@ -82,8 +81,7 @@ class GalleriesController extends Controller
      */
     public function store(Request $request, CreatesNewGalleries $creator): GalleryCreateResponse
     {
-        if ($request->user()->cannot('create', Gallery::class))
-            abort(403);
+        Gate::authorize('create', Gallery::class);
 
         $creator->create($request->all());
 
@@ -100,8 +98,7 @@ class GalleriesController extends Controller
      */
     public function update(Request $request, Gallery $gallery, UpdatesGalleries $updater): GalleryUpdateResponse
     {
-        if ($request->user()->cannot('update', $gallery))
-            abort(403);
+        Gate::authorize('update', $gallery);
 
         $updater->update($gallery, $request->all());
 
@@ -119,8 +116,7 @@ class GalleriesController extends Controller
      */
     public function destroy(Request $request, Gallery $gallery, DeletesGalleries $destroyer): GalleryDeleteResponse
     {
-        if ($request->user()->cannot('update', $gallery))
-            abort(403);
+        Gate::authorize('update', $gallery);
 
         $destroyer->destroy($gallery);
 
@@ -138,8 +134,7 @@ class GalleriesController extends Controller
      */
     public function attach(Request $request, Gallery $gallery, Image $image, AttachesImagesToGalleries $attacher): GalleryAttacheResponse
     {
-        if ($request->user()->cannot('update', $gallery))
-            abort(403);
+        Gate::authorize('update', $gallery);
 
         $attacher->attach($image, $gallery);
 
@@ -157,8 +152,7 @@ class GalleriesController extends Controller
      */
     public function detach(Request $request, Gallery $gallery, Image $image, DetachesImagesFromGalleries $attacher): GalleryDetacheResponse
     {
-        if ($request->user()->cannot('update', $gallery))
-            abort(403);
+        Gate::authorize('update', $gallery);
 
         $attacher->detach($image, $gallery);
 

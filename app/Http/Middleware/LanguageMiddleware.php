@@ -20,6 +20,7 @@ class LanguageMiddleware
         // \Log::info("Cookie set to: " . $request->cookie('language'));
 
         app()->setLocale($language);
+        \Carbon\Carbon::setLocale(config('app.locale'));
         // \Log::info("Locale set to: " . $language . " (Selected language: " . $language . ")");
 
 

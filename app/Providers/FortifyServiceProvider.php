@@ -16,14 +16,16 @@ use App\Actions\Images\CreateNewImage;
 use App\Actions\Images\DeleteImage;
 use App\Actions\Images\DetachFromGallery;
 use App\Actions\Images\UpdateImage;
+use App\Actions\Pages\AttachGallery as AttachPageGallery;
 use App\Actions\Pages\CreateNewPage;
 use App\Actions\Pages\DeletePage;
+use App\Actions\Pages\DetachGallery as DetachPageGallery;
 use App\Actions\Pages\UpdatePage;
 use App\Actions\Properties\AttachFacility;
-use App\Actions\Properties\AttachGallery;
+use App\Actions\Properties\AttachGallery as AttachPropertyGallery;
 use App\Actions\Properties\CreateNewProperty;
 use App\Actions\Properties\DetachFacility;
-use App\Actions\Properties\DetachGallery;
+use App\Actions\Properties\DetachGallery as DetachPropertyGallery;
 use App\Actions\Properties\UpdateProperty;
 use App\Actions\Settings\CreateNewSetting;
 use App\Actions\Settings\UpdateSetting;
@@ -144,12 +146,14 @@ class FortifyServiceProvider extends ServiceProvider
         AppFortify::updatePropertiesUsing(UpdateProperty::class);
         AppFortify::attachFacilitiesToPropertiesUsing(AttachFacility::class);
         AppFortify::detachFacilitiesFromPropertiesUsing(DetachFacility::class);
-        AppFortify::attachGalleriesToPropertiesUsing(AttachGallery::class);
-        AppFortify::detachGalleriesFromPropertiesUsing(DetachGallery::class);
+        AppFortify::attachGalleriesToPropertiesUsing(AttachPropertyGallery::class);
+        AppFortify::detachGalleriesFromPropertiesUsing(DetachPropertyGallery::class);
 
         AppFortify::createPagesUsing(CreateNewPage::class);
         AppFortify::updatePagesUsing(UpdatePage::class);
         AppFortify::destroyPagesUsing(DeletePage::class);
+        AppFortify::attachGalleriesToPagesUsing(AttachPageGallery::class);
+        AppFortify::detachGalleriesFromPagesUsing(DetachPageGallery::class);
 
         RateLimiter::for('login', function (Request $request) {
             $throttleKey = str(str($request->input(Fortify::username()))->lower().'|'.$request->ip())->transliterate();

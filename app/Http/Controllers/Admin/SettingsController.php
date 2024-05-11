@@ -9,13 +9,16 @@ use App\Contracts\UpdatesSettings;
 use App\Http\Controllers\Controller;
 use App\Models\Setting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class SettingsController extends Controller
 {
-    public function index(Request $request) : Response {
-       // dd(Setting::all());
+    public function index(Request $request): Response
+    {
+        Gate::authorize('viewAny', Setting::class);
+
         return Inertia::render('Admin/Settings/Show', [
             'settings' => Setting::all(),
             //'settings' => Inertia::lazy(fn () => Setting::all()),
@@ -32,11 +35,13 @@ class SettingsController extends Controller
      */
     public function store(Request $request, CreatesNewSettings $creator): SettingCreateResponse
     {
-        if ($request->user()->cannot('create', Setting::class))
-            abort(403);
+        // Authorize the user to create a new setting
+        Gate::authorize('create', Setting::class);
 
+        // Create a new setting using the specified creator service
         $creator->create($request->all());
 
+        // Return a response indicating successful creation of the setting
         return app(SettingCreateResponse::class);
     }
 
@@ -50,8 +55,7 @@ class SettingsController extends Controller
      */
     public function update(Request $request, Setting $setting, UpdatesSettings $updater): SettingUpdateResponse
     {
-        if ($request->user()->cannot('update', $setting))
-            abort(403);
+        Gate::authorize('update', $setting);
 
         $updater->update($setting, $request->all());
 

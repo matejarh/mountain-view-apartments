@@ -21,6 +21,6 @@ class ThrottleTest extends TestCase
         } */
 
         $response = $this->get('/');
-        $response->assertStatus(200);
+        $response->assertRedirect('/en');
     }
 }

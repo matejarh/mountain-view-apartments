@@ -25,18 +25,34 @@ class CreateNewPage implements CreatesNewPages
             'keywords' => __('Keywords'),
         );
 
-        $validator = Validator::make($input, [
+        $rules = [
             'name' => ['required', 'string', 'max:255', new SpamFree, 'unique:pages'],
             'description' => ['required', 'array', 'min:1'],
-            'description.*' => ['required', 'string', 'distinct', new SpamFree],
             'title' => ['required', 'array', 'min:1'],
-            'title.*' => ['required', 'string', 'distinct', new SpamFree],
             'keywords' => ['required', 'array', 'min:1'],
-            'keywords.*' => ['required', 'string', 'distinct', new SpamFree],
+        ];
 
-        ]);
+        foreach (config('app.supported_locales') as $key => $value) {
+            if (!isset($input['title'][$value])) {
+                $input['title'][$value] = '';
+            }
+            if (!isset($input['description'][$value])) {
+                $input['description'][$value] = '';
+            }
+            if (!isset($input['keywords'][$value])) {
+                $input['keywords'][$value] = '';
+            }
+            # code...
+            $rules += [
+                'description.' . $value => ['nullable', 'string', 'distinct', new SpamFree],
+                'title.' . $value => ['nullable', 'string', 'distinct', new SpamFree],
+                'keywords.' . $value => ['nullable', 'string', 'distinct', new SpamFree],
+            ];
+        }
 
-        $validator->setAttributeNames($attributeNames)->validate();
+        $validator = Validator::make($input, $rules);
+
+        $validator->setAttributeNames($attributeNames)->validateWithBag('creatingPage');
 
         Page::forceCreate([
             'name' => $input['name'],

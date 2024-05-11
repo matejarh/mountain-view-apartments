@@ -1,8 +1,6 @@
 <script setup>
 import Tooltip from '@/Components/Tooltip.vue';
-import ArrowDownIcon from '@/Icons/ArrowDownIcon.vue';
 import SpinnerIcon from '@/Icons/SpinnerIcon.vue';
-import TrashBinIcon from '@/Icons/TrashBinIcon.vue';
 import XIcon from '@/Icons/XIcon.vue';
 import { useForm } from '@inertiajs/vue3';
 

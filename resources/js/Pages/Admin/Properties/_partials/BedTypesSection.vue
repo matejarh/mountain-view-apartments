@@ -1,7 +1,5 @@
 <script setup>
 import { ref } from 'vue';
-import BedTypeIcon from './BedTypeIcon.vue';
-import EditBedTypeDialog from './EditBedTypeDialog.vue';
 import TextInput from '@/Components/TextInput.vue';
 import TrashBinIcon from '@/Icons/TrashBinIcon.vue';
 import SelectInput from '@/Components/SelectInput.vue';

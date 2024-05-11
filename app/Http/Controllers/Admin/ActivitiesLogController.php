@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Activity;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -18,9 +19,9 @@ class ActivitiesLogController extends Controller
      * @return \Illuminate\Http\Response
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function index(Request $request,  $filters ) : Response {
+    public function index(Request $request, ActivityFilters $filters) : Response {
 
-        if (auth()->user()->cannot('viewAny', Activity::class)) abort(403);
+        Gate::authorize('viewAny', Activity::class);
 
         return Inertia::render('Admin/Activity/Index', [
             'activities' => Activity::adminFeed($request, $filters),

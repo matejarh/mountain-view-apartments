@@ -3,7 +3,6 @@ import { onMounted, ref, watch, watchEffect } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import DialogModal from '@/Components/DialogModal.vue'
 import PrimaryButton from '@/Components/PrimaryButton.vue';
-import InputLabel from '@/Components/InputLabel.vue';
 import TextInput from '@/Components/TextInput.vue';
 import TextArea from '@/Components/TextArea.vue';
 import InputError from '@/Components/InputError.vue';

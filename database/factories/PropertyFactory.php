@@ -22,14 +22,48 @@ class PropertyFactory extends Factory
             'One Bedroom Apartment',
         ];
 
+        $languages = ['sl', 'en', 'de', 'hu', 'it', 'fr', 'cs'];
+
+        $titles = [];
+
+        foreach ($languages as $key => $language) {
+            //array_push($titles, [$language => fake($language)->sentence]);
+            $titles[$language] = fake($language)->sentence;
+        }
+
+        $descriptions = [];
+
+        foreach ($languages as $key => $language) {
+            //array_push($descriptions, [$language => fake($language)->paragraph()]);
+            $descriptions[$language] = fake($language)->paragraph();
+        }
+
+        $keywords = [];
+
+        foreach ($languages as $key => $language) {
+            //array_push($keywords, [$language => str(fake()->words(6, true))->replace(' ', ', ')]);
+            $keywords[$language] = str(fake()->words(6, true))->replace(' ', ', ');
+        }
+
+        $rules = [];
+
+        foreach ($languages as $key => $language) {
+            //array_push($keywords, [$language => str(fake()->words(6, true))->replace(' ', ', ')]);
+            $rules[$language] = [];
+        }
+
+
+        $name = fake()->sentence(3);
+
         return [
             'user_id' => User::factory(),
             'type' => fake()->randomElement($types),
-            'slug' => str(fake('sl_SI')->sentence())->slug(),
-            'name' => fake('sl_SI')->sentence(),
+            'slug' => str($name)->slug(),
+            'name' => $name,
             'address' => fake('sl_SI')->address(),
-            'description' => fake('sl_SI')->paragraphs(3, true),
-            'keywords' => fake('sl_SI')->words(5, true),
+            'title' => $titles,
+            'description' => $descriptions,
+            'keywords' => $keywords,
             'is_entire_apartment' => fake()->randomElement([true, false]),
             'coordinates' => [
                 'lat' => 0,
@@ -45,9 +79,7 @@ class PropertyFactory extends Factory
             'prices' => [
 
             ],
-            'rules' => [
-
-            ],
+            'rules' => $rules,
         ];
     }
 }

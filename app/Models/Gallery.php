@@ -86,6 +86,14 @@ class Gallery extends Model
         return $this->belongsToMany(Property::class, 'properties_galleries', 'gallery_id', 'property_id')->latest();
     }
 
+    /**
+     * Get pages for the gallery
+     */
+    public function pages(): BelongsToMany
+    {
+        return $this->belongsToMany(Page::class, 'pages_galleries', 'gallery_id', 'page_id')->latest();
+    }
+
     public function can(): array
     {
         if (auth()->check()) {

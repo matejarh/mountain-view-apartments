@@ -1,7 +1,6 @@
 <script setup>
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 import { router } from '@inertiajs/vue3'
-import MapCard from './MapCard.vue'
 import Carousel from '@/Components/Carousel.vue';
 import ImageIcon from '@/Icons/ImageIcon.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
@@ -34,11 +33,11 @@ const carouselHeight = 'h-56'
                 <div class="px-4 h-full max-h-44 overflow-y-auto scrollbar-none">
 
                     <h2 class="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white">{{ property.type }}</h2>
-                    <h3 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white whitespace-pre overflow-x-scroll scrollbar-none">{{ property.name }}</h3>
+                    <h3 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white whitespace-pre overflow-x-scroll scrollbar-none">{{ property.title[$page.props.locale] }}</h3>
 
                     <p
                         class="mb-3 font-normal text-gray-700 dark:text-gray-400 bg-gray-50 dark:bg-gray-700 leading-tight whitespace-pre-wrap p-2 rounded-lg h-14 overflow-y-auto scrollbar-none ">
-                        {{ property.description }}</p>
+                        {{ property.description[$page.props.locale] }}</p>
                 </div>
 
                 <PrimaryButton type="button" @click="router.visit(route('admin.properties.show', property))" class="mx-4">

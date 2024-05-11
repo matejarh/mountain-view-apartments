@@ -7,6 +7,17 @@ use Illuminate\Validation\ValidationException;
 
 class InvalidKeywords
 {
+
+    public function detect($body)
+    {
+        foreach ($this->keywords as $keyword) {
+            // \Log::debug('checking for spam', [$body, $keyword]);
+            if (stripos($body, $keyword) !== false ) {
+
+                throw new Exception(__("Spam is not allowed") . ' ' . $keyword . ' found in ' . $body);
+            }
+        }
+    }
     protected $keywords = [
         'yahoo customer support',
         'spam content',
@@ -156,7 +167,7 @@ class InvalidKeywords
         'For just $xxx',
         'For Only',
         'For you',
-        'Form',
+        // 'Form',
         // 'Free',
         'Free access',
         'Free cell phone',
@@ -401,7 +412,7 @@ class InvalidKeywords
         'Stock alert',
         'Stock disclaimer statement',
         'Stock pick',
-        'Stop',
+        //'Stop',
         'Stop snoring',
         'Strong buy',
         'Stuff on sale',
@@ -473,14 +484,4 @@ class InvalidKeywords
         'Your income',
 
     ];
-
-    public function detect($body)
-    {
-        foreach ($this->keywords as $keyword) {
-
-            if (stripos($body, $keyword) !== false ) {
-                throw new Exception(__("Spam is not allowed") . ' ' . $keyword . ' found in ' . $body);
-            }
-        }
-    }
 }

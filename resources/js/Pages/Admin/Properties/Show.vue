@@ -47,7 +47,7 @@ const detach = (gallery) => {
             <template #title>
                 <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
                     <span>
-                        {{ $page.props.property.name }}
+                        {{ $page.props.property.title[$page.props.locale] }}
                     </span>
                     <span class="text-base">
                         {{ $page.props.property.type }}
@@ -57,7 +57,7 @@ const detach = (gallery) => {
             <template #description>
                 <div class="whitespace-pre-wrap">
 
-                    {{ $page.props.property.description }}
+                    {{ $page.props.property.description[$page.props.locale] }}
                 </div>
 
             </template>
@@ -97,7 +97,7 @@ const detach = (gallery) => {
                         </div>
 
 
-                        <PrimaryButton @click="showFacilitiesDialog = true">manage facilities</PrimaryButton>
+                        <PrimaryButton @click="showFacilitiesDialog = true">{{__('manage facilities')}}</PrimaryButton>
                         <div class="grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-4 gap-4 ">
 
                             <div class="w-full text-center mx-auto" v-for="facility, key in facilitiesWithIcons"

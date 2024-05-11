@@ -2,7 +2,7 @@
 import { computed, onMounted, ref, watch, watchEffect } from 'vue';
 
 const props = defineProps({
-    modelValue: String,
+    modelValue: String | Number,
     hasError: {
         default: false,
         type: Boolean,

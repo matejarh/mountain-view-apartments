@@ -12,7 +12,7 @@ const logout = () => {
 <template>
     <NavDropdown align="right">
         <template #trigger>
-            <span class="sr-only">Open user menu</span>
+            <span class="sr-only">{{__('Open user menu')}}</span>
             <img class="w-8 h-8 rounded-full" :src="$page.props.auth.user.profile_photo_url" alt="user photo" />
         </template>
         <div class="py-3 px-4 ">
@@ -24,8 +24,8 @@ const logout = () => {
             <DropdownItem :href="route('profile.show')">
                 {{ __("My Profile") }}
             </DropdownItem>
-            <DropdownItem :href="route('profile.show')">
-                {{__("Account settings")}}
+            <DropdownItem :href="route('admin.dashboard.show')">
+                {{__("Administration")}}
             </DropdownItem>
 
         </ul>

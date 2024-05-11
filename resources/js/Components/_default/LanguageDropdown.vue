@@ -31,6 +31,8 @@ const selectedLanguage = computed(() => {
 const form = useForm({ language: '' })
 
 const switchLanguage = (lang) => {
+    localStorage.setItem('language', lang)
+    return
     form.language = lang
 
     form.post(route('switch.language'), {
@@ -41,7 +43,6 @@ const switchLanguage = (lang) => {
 
             store.updateTranslations(page.props.translations)
 
-            localStorage.setItem('language', page.props.locale)
         }
     })
 }

@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Gallery;
+use App\Models\Page;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -20,6 +22,15 @@ return new class extends Migration
             $table->json('keywords')->nullable();
             $table->timestamps();
         });
+
+        Schema::create('pages_galleries', function (Blueprint $table) {
+            $table->id();
+            $table->foreignIdFor(Gallery::class, 'gallery_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignIdFor(Page::class, 'page_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->timestamps();
+
+            $table->unique(['gallery_id', 'page_id']);
+        });
     }
 
     /**
@@ -27,6 +38,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('pages_galleries');
         Schema::dropIfExists('pages');
     }
 };

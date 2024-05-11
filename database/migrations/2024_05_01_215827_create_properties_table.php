@@ -22,8 +22,9 @@ return new class extends Migration
             $table->string('slug');
             $table->string('name');
             $table->text('address')->nullable();
-            $table->text('description')->nullable();
-            $table->text('keywords')->nullable();
+            $table->json('title')->nullable();
+            $table->json('description')->nullable();
+            $table->json('keywords')->nullable();
             $table->string('size')->nullable();
             $table->boolean('is_entire_apartment')->default(false);
             $table->json('coordinates')->nullable();
@@ -44,6 +45,7 @@ return new class extends Migration
         });
 
         Schema::create('properties_facilities', function (Blueprint $table) {
+            $table->id();
             $table->foreignIdFor(Property::class, 'property_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->foreignIdFor(Facility::class, 'facility_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
@@ -52,6 +54,7 @@ return new class extends Migration
         });
 
         Schema::create('properties_galleries', function (Blueprint $table) {
+            $table->id();
             $table->foreignIdFor(Property::class, 'property_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->foreignIdFor(Gallery::class, 'gallery_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();

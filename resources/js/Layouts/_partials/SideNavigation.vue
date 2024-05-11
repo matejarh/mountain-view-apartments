@@ -12,6 +12,7 @@ import UsersIcon from '@/Icons/UsersIcon.vue';
 import CogIcon from '@/Icons/CogIcon.vue';
 import MountainCityIcon from '@/Icons/MountainCityIcon.vue';
 import AdjustmentsIcon from '@/Icons/AdjustmentsIcon.vue';
+import PagesIcon from '@/Icons/PagesIcon.vue';
 
 const props = defineProps({
     show: Boolean,
@@ -29,7 +30,6 @@ const classes = computed(() => {
         class="fixed top-0 left-0 z-20 w-64 h-screen pt-24 sm:pt-14 transition-transform bg-white border-r border-gray-200 lg:translate-x-0 dark:bg-gray-900 dark:border-gray-700"
         aria-label="Sidenav" id="sidebar-navigation">
         <div class="overflow-y-auto py-5 px-3 md:pr-0 h-full bg-white dark:bg-gray-900">
-            <!-- <SearchForm /> -->
             <ul class="space-y-2">
                 <NavLink href="/admin/dashboard" @click="$emit('hide')">
                     <template #icon>
@@ -45,28 +45,20 @@ const classes = computed(() => {
                     {{ __("Properties") }}
                 </NavLink>
 
-                <NavDropdown key="pages-dropdown">
+                <NavLink href="/admin/pages" @click="$emit('hide')">
                     <template #icon>
-                        <svg aria-hidden="true"
-                            class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
-                            fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                                d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z"
-                                clip-rule="evenodd"></path>
-                        </svg>
+                        <PagesIcon />
                     </template>
-                    <template #title>{{__('Pages')}}</template>
-                    <DropdownItem :href="'/admin/pages'" @click="$emit('hide')">Edit</DropdownItem>
-                    <DropdownItem :href="'/admin/pages/1'" @click="$emit('hide')">Create</DropdownItem>
+                    {{ __("Pages") }}
+                </NavLink>
 
-                </NavDropdown>
                 <NavDropdown key="galleries-dropdown" href="/admin/galleries">
                     <template #icon>
                         <ImageIcon />
                     </template>
-                    <template #title>{{__('Galleries')}}</template>
-                    <DropdownItem :href="'/admin/galleries'" @click="$emit('hide')">{{__('Galleries')}}</DropdownItem>
-                    <DropdownItem :href="'/admin/images'" @click="$emit('hide')">{{__('Images')}}</DropdownItem>
+                    <template #title>{{ __('Galleries') }}</template>
+                    <DropdownItem :href="'/admin/galleries'" @click="$emit('hide')">{{ __('Galleries') }}</DropdownItem>
+                    <DropdownItem :href="'/admin/images'" @click="$emit('hide')">{{ __('Images') }}</DropdownItem>
                     <!-- <DropdownItem :href="'/admin/galeries/create'" @click="$emit('hide')">Create</DropdownItem> -->
 
                 </NavDropdown>
@@ -76,7 +68,8 @@ const classes = computed(() => {
                     </template>
                     <template #title>{{ __("Users") }}</template>
                     <DropdownItem href="/admin/users/all" @click="$emit('hide')">{{ __('All Users') }}</DropdownItem>
-                    <DropdownItem href="/admin/users/activity-log" @click="$emit('hide')">{{ __('Activity Log') }}</DropdownItem>
+                    <DropdownItem href="/admin/users/activity-log" @click="$emit('hide')">{{ __('Activity Log') }}
+                    </DropdownItem>
 
 
 
@@ -145,7 +138,7 @@ const classes = computed(() => {
 
             <Tooltip :text="__('Settings page')">
                 <BottomItem :href="route('admin.settings.index')" active="/admin/settings">
-                    <CogIcon class="w-6 h-6"  />
+                    <CogIcon class="w-6 h-6" />
                 </BottomItem>
             </Tooltip>
 

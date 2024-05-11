@@ -13,7 +13,7 @@ const emit = defineEmits(['edit'])
 
 const show = ref(true)
 
-const carouselHeight = 'h-56'
+const carouselHeight = ref('h-56')
 
 
 </script>

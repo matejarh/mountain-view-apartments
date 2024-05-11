@@ -38,13 +38,15 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request): array
     {
         return array_merge(parent::share($request), [
-            'language' => session('language')?: app()->currentLocale(),
+            'language' => session('language') ?: app()->currentLocale(),
             'locale' => function () {
-                return session('language')?: app()->currentLocale();
+                return session('language') ?: app()->currentLocale();
             },
+            'supported_locales' => config('app.supported_locales'),
+            'date_format_pattern' => $this->getCurrentLocaleDateFormatPattern(),
             'translations' => function () {
                 return translations(
-                    base_path('lang/'. app()->currentLocale() .'.json')
+                    base_path('lang/' . app()->currentLocale() . '.json')
                 );
             },
             'canRegister' => Features::enabled(Features::registration()),
@@ -55,9 +57,24 @@ class HandleInertiaRequests extends Middleware
         ]);
     }
 
-    private function getSeason() : string {
+    private function getSeason(): string
+    {
         return now()->isBetween('21.6.' . now()->year, '23.9.' . now()->year) ? 'summer' :
-                (now()->isBetween('20.3' . now()->year, '21.6.' . now()->year) ? 'spring' :
+            (now()->isBetween('20.3' . now()->year, '21.6.' . now()->year) ? 'spring' :
                 (now()->isBetween('23.9.' . now()->year, '21.12.' . now()->year) ? 'autumn' : 'winter'));
+    }
+
+    private function getCurrentLocaleDateFormatPattern(): string
+    {
+        $formats = [
+            "cs" => "d.M.yyyy",
+            "de" => "dd.MM.yyyy",
+            "en" => "M/d/yyyy",
+            "fr" => "dd/MM/yyyy",
+            "hu" => "yyyy. MM. dd.",
+            "it" => "dd/MM/yyyy",
+            "sl" => "d.M.yyyy",
+        ];
+        return $formats[session('language') ?: app()->currentLocale()];
     }
 }

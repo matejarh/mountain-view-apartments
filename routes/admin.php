@@ -11,7 +11,7 @@ use Laravel\Fortify\RoutePath;
 
 
 
-Route::group(['middleware' => config('jetstream.middleware', ['web'])], function () {
+Route::group(['middleware' => config('jetstream.middleware')], function () {
     $authMiddleware = config('jetstream.guard')
         ? 'auth:' . config('jetstream.guard')
         : 'auth';
@@ -83,6 +83,8 @@ Route::group(['middleware' => config('jetstream.middleware', ['web'])], function
             Route::get('{page}', [PagesController::class, 'show'])->name('show');
             Route::put('{page}', [PagesController::class, 'update'])->name('update');
             Route::delete('{page}', [PagesController::class, 'destroy'])->name('destroy');
+            Route::put('attach-gallery/{page}/{gallery}', [PagesController::class, 'attachGallery'])->name('attach.gallery');
+            Route::put('detach-gallery/{page}/{gallery}', [PagesController::class, 'detachGallery'])->name('detach.gallery');
         });
     });
 

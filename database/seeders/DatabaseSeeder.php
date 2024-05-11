@@ -28,10 +28,10 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             SettingsSeeder::class,
-            GalleriesSeeder::class,
             FacilitiesSeeder::class,
             PropertiesSeeder::class,
             PagesSeeder::class,
+            GalleriesSeeder::class,
         ]);
 
     }

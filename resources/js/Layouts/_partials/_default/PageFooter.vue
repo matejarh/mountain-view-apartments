@@ -10,7 +10,7 @@ import LogoComponent from '@/Components/_default/LogoComponent.vue';
 
 
     <footer class="relative bg-gray-100  dark:bg-gray-950 ">
-        <ShapeBottom class="text-gray-100 dark:text-gray-950 absolute inset-y-full top-0 z-30 left-0 right-0 w-full rotate-180 " />
+        <ShapeBottom class="text-gray-100 dark:text-gray-950 absolute inset-y-full top-0 z-0 left-0 right-0 w-full rotate-180 " />
         <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
             <div class="md:flex md:justify-between">
                 <div class="mb-6 md:mb-0">

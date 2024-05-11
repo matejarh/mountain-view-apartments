@@ -2,6 +2,7 @@
 namespace App\Http;
 use App\Contracts\AttachesFacilitiesToProperties;
 use App\Contracts\AttachesGalleriesToImages;
+use App\Contracts\AttachesGalleriesToPages;
 use App\Contracts\AttachesGalleriesToProperties;
 use App\Contracts\AttachesImagesToGalleries;
 use App\Contracts\CreatesNewGalleries;
@@ -14,6 +15,7 @@ use App\Contracts\DeletesImages;
 use App\Contracts\DeletesPages;
 use App\Contracts\DetachesFacilitiesFromProperties;
 use App\Contracts\DetachesGalleriesFromImages;
+use App\Contracts\DetachesGalleriesFromPages;
 use App\Contracts\DetachesGalleriesFromProperties;
 use App\Contracts\DetachesImagesFromGalleries;
 use App\Contracts\UpdatesGalleries;
@@ -55,6 +57,28 @@ class Fortify
     public static function destroyPagesUsing(string $callback)
     {
         app()->singleton(DeletesPages::class, $callback);
+    }
+
+    /**
+     * Register a class / callback that should be used to attach given gallery to given page.
+     *
+     * @param  string  $callback
+     * @return void
+     */
+    public static function attachGalleriesToPagesUsing(string $callback)
+    {
+        app()->singleton(AttachesGalleriesToPages::class, $callback);
+    }
+
+    /**
+     * Register a class / callback that should be used to detach given gallery from given page.
+     *
+     * @param  string  $callback
+     * @return void
+     */
+    public static function detachGalleriesFromPagesUsing(string $callback)
+    {
+        app()->singleton(DetachesGalleriesFromPages::class, $callback);
     }
 
     /**

@@ -6,6 +6,7 @@ use App\Filters\UserFilters;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use Inertia\Response;
 use Laravel\Fortify\Contracts\UpdatesUserProfileInformation;
@@ -25,8 +26,7 @@ class UsersController extends Controller
      */
     public function index(Request $request, UserFilters $filters): Response
     {
-        if ($request->user()->cannot('viewAny', User::class))
-            abort(403);
+        Gate::authorize('viewAny', User::class);
 
         $sortBy = $request->has('sortBy') ? trim($request->sortBy) : 'created_at';
         $sortDirection = $request->has('sortDirection') ? trim($request->sortDirection) : 'desc';

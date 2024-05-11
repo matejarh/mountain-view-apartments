@@ -72,7 +72,7 @@ const destroy = () => {
     <li v-if="show">
 
         <figure
-            class="min-h-[240px] sm:min-h-[252px] md:min-h-[164px] lg:min-h-[160px] xl:min-h-auto relative shadow-lg active:shadow hover:shadow-xl  transition-all duration-300 cursor-pointer hover:scale-105 active:scale-95 overflow-visible">
+            class="min-h-[240px] sm:min-h-[252px] md:min-h-[164px] lg:min-h-[160px] xl:min-h-auto relative shadow-lg active:shadow hover:shadow-xl  transition-shadow duration-150 cursor-pointer  overflow-visible">
             <div @click="$emit('clicked', image)">
                 <img class="rounded-lg" :src="image.thumb_url" :alt="image.name">
             </div>

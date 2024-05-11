@@ -20,6 +20,7 @@ use App\Models\Facility;
 use App\Models\Gallery;
 use App\Models\Property;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -32,11 +33,11 @@ class PropertiesController extends Controller
      * @param \Illuminate\Http\Request
      * @param \App\Filters\PropertyFilters
      * @return \Inertia\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function index(Request $request, PropertyFilters $filters): Response
     {
-        if ($request->user()->cannot('viewAny', Property::class))
-            abort(403);
+        Gate::authorize('viewAny', Property::class);
 
         return Inertia::render('Admin/Properties/Index', [
             'properties' => Property::with('galleries', 'facilities')->latest()->filter($filters)->paginate(10, ['*'], __('page'))->onEachSide(2)->withQueryString(),
@@ -47,29 +48,42 @@ class PropertiesController extends Controller
         ]);
     }
 
-    /**
-     * Renders and returns given property page
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Property  $property
-     * @return \Inertia\Response
-     */
-    public function show(Request $request, Property $property): Response
-    {
-        if (auth()->user()->cannot('view', $property))
-            abort(403);
+/**
+ * Display the specified property.
+ *
+ * @param  \Illuminate\Http\Request  $request
+ * @param  \App\Models\Property  $property
+ * @return \Illuminate\Http\Response
+ * @throws \Illuminate\Auth\Access\AuthorizationException
+ */
+public function show(Request $request, Property $property): Response
+{
+    // Check if the user has permission to view the property
+    Gate::authorize('view', $property);
 
-        return Inertia::render('Admin/Properties/Show', [
-            'property' => $property->with('galleries', 'facilities')->first(),
-            'facilities_not_in_property' => Facility::all()->intersect(Facility::whereNotIn('id', $property->facilities->pluck('id')->toArray())->get()),
-            'galleries_not_in_property' => Gallery::with('images')->get()->intersect(Gallery::whereNotIn('id', $property->galleries->pluck('id')->toArray())->get()),
-            'can' => [
-                'view_property' => auth()->user()->can('view', $property),
-                'edit_property' => auth()->user()->can('update', $property),
-                'delete_property' => auth()->user()->can('delete', $property),
-            ],
-        ]);
-    }
+    // Render the property details page using Inertia.js
+    return Inertia::render('Admin/Properties/Show', [
+        // Pass the property details along with its galleries and facilities
+        'property' => Property::with('galleries', 'facilities')->find($property->id),
+
+        // Retrieve facilities not currently associated with the property
+        'facilities_not_in_property' => Facility::all()->intersect(
+            Facility::whereNotIn('id', $property->facilities->pluck('id')->toArray())->get()
+        ),
+
+        // Retrieve galleries not currently associated with the property, including their images
+        'galleries_not_in_property' => Gallery::with('images')->get()->intersect(
+            Gallery::whereNotIn('id', $property->galleries->pluck('id')->toArray())->get()
+        ),
+
+        // Determine the user's permissions for this property
+        'can' => [
+            'view_property' => auth()->user()->can('view', $property),
+            'edit_property' => auth()->user()->can('update', $property),
+            'delete_property' => auth()->user()->can('delete', $property),
+        ],
+    ]);
+}
 
     /**
      * Creates new property with given information.

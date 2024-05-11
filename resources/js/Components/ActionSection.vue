@@ -15,7 +15,7 @@ defineProps({
     }
 })
 
-const back = () => {
+const goBack = () => {
     window.history.back()
 }
 </script>
@@ -34,7 +34,7 @@ const back = () => {
         <div class="mt-5 md:mt-0 md:col-span-2 " :class="{'max-w-screen-xl' : !fullwidth}">
             <div class="space-y-4 px-4 py-5 sm:p-6 bg-white dark:bg-gray-900 text-gray-950 dark:text-gray-50 shadow sm:rounded-lg">
                 <div class="flex items-center">
-                    <button v-if="back" @click="back">
+                    <button v-if="back" @click="goBack">
                         <Tooltip :text="__('Back')">
                             <CarretLeftIcon class="w-6 h-6  " />
                         </Tooltip>

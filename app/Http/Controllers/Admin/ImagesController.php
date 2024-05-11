@@ -20,6 +20,7 @@ use App\Models\Gallery;
 use App\Models\Image;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -36,8 +37,7 @@ class ImagesController extends Controller
      */
     public function index(Request $request, ImageFilters $filters): Response
     {
-        if (auth()->user()->cannot('viewAny', Image::class))
-            abort(403);
+        Gate::authorize('viewAny', Image::class);
 
         return Inertia::render('Admin/Images/Index', [
             'images' => Image::with('galleries')->filter($filters)->latest()->paginate(24, ['*'], __('page'))->onEachSide(2)->withQueryString(),
@@ -58,8 +58,7 @@ class ImagesController extends Controller
      */
     public function store(Request $request, CreatesNewImages $creator): ImageCreateResponse
     {
-        if ($request->user()->cannot('create', Image::class))
-            abort(403);
+        Gate::authorize('create', Image::class);
 
         $creator->create($request->all());
 
@@ -77,8 +76,7 @@ class ImagesController extends Controller
      */
     public function update(Request $request, Image $image, UpdatesImages $updater): ImageUpdateResponse
     {
-        if ($request->user()->cannot('update', $image))
-            abort(403);
+        Gate::authorize('update', $image);
 
         $updater->update($image, $request->all());
 
@@ -95,8 +93,7 @@ class ImagesController extends Controller
      */
     public function destroy(Request $request, Image $image, DeletesImages $destroyer): ImageDeleteResponse
     {
-        if ($request->user()->cannot('update', $image))
-            abort(403);
+        Gate::authorize('update', $image);
 
         $destroyer->destroy($image);
 
@@ -114,8 +111,7 @@ class ImagesController extends Controller
      */
     public function attach(Request $request, Image $image, Gallery $gallery, AttachesGalleriesToImages $attacher): ImageAttacheResponse
     {
-        if ($request->user()->cannot('update', $image))
-            abort(403);
+        Gate::authorize('update', $image);
 
         $attacher->attach($gallery, $image);
 
@@ -133,8 +129,7 @@ class ImagesController extends Controller
      */
     public function detach(Request $request, Image $image, Gallery $gallery, DetachesGalleriesFromImages $attacher): ImageDetacheResponse
     {
-        if ($request->user()->cannot('update', $image))
-            abort(403);
+        Gate::authorize('update', $image);
 
         $attacher->detach($gallery, $image);
 

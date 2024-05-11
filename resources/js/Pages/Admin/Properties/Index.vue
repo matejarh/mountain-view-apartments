@@ -3,7 +3,6 @@ import ActionSection from '@/Components/ActionSection.vue'
 import Tooltip from '@/Components/Tooltip.vue'
 import FullLayout from '@/Layouts/FullLayout.vue';
 import PropertyCard from './_partials/PropertyCard.vue';
-import CreatePropertyDialog from './_partials/CreatePropertyDialog.vue';
 import { ref } from 'vue';
 import CirclePlusIcon from '@/Icons/CirclePlusIcon.vue';
 import ImageIcon from '@/Icons/ImageIcon.vue';

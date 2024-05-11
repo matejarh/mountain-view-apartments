@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Gallery;
 use App\Models\Page;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -80,37 +81,57 @@ class PagesTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $page = $this->page;
+        $page = [
+            'name' => 'apage name',
+            'title' => [
+                'en' => 'en title',
+                'sl' => 'sl title',
+            ],
+            'description' => [
+                'sl' => 'sl description',
+                'en' => 'en description',
+            ],
+            'keywords' => [
+                'sl' => 'sl keywords',
+                'en' => 'en keywords',
+            ],
+        ];
 
         $response = $this->actingAs($this->admin)->post(route('admin.pages.store'), $page)
             ->assertStatus(302)
             ->assertSessionHas(["status" => "page-created"]);
 
         $new_page = Page::where('name', $page['name'])->first();
-        // dd($page["description"]);
+        //dd($new_page->fresh()->title);
         $this->assertEquals($new_page->fresh()->name, $page["name"]);
-        $this->assertEquals((array) $new_page->fresh()->description, $page["description"]);
-        $this->assertEquals((array) $new_page->fresh()->title, $page["title"]);
-        $this->assertEquals((array) $new_page->fresh()->keywords, $page["keywords"]);
+        $this->assertCount(collect(config('app.supported_locales'))->count(), collect($new_page->fresh()->keywords));
+        $this->assertCount(collect(config('app.supported_locales'))->count(), collect($new_page->fresh()->description));
+        $this->assertCount(collect(config('app.supported_locales'))->count(), collect($new_page->fresh()->title));
+        $this->assertCount(collect(config('app.supported_locales'))->count(), collect($new_page->fresh()->keywords));
         $this->assertEquals(1, Page::count());
     }
 
     public function test_admin_may_update_page(): void
     {
-        $this->withoutExceptionHandling();
+        // $this->withoutExceptionHandling();
         $page = Page::factory()->create(['name' => 'Test Page Name', 'title' => $this->page['title']]);
 
+        /* $page->name='Changed name'; */
+        /* $page->description=$this->page['description']; */
         $updated = [
             'name' => 'Changed name',
+            'title' => $this->page['title'],
             'description' => $this->page['description'],
+            'keywords' => $this->page['keywords'],
         ];
 
-        $response = $this->actingAs($this->admin)->put(route('admin.pages.update', $page), $updated)
-            ->assertStatus(302)
+        $response = $this->actingAs($this->admin)->put(route('admin.pages.update', $page), $updated);
+        // dd($response->ddSession());
+        $response->assertStatus(302)
             ->assertSessionHas(["status" => "page-updated"]);
 
-        $this->assertEquals($page->fresh()->name, $updated['name']);
-        $this->assertEquals((array) $page->fresh()->description, $updated['description']);
+        $this->assertEquals($page->fresh()->name, 'Changed name');
+        $this->assertEquals((array) $page->fresh()->description, $this->page['description']);
 
     }
 
@@ -125,14 +146,16 @@ class PagesTest extends TestCase
         ];
 
         $response = $this->actingAs($this->admin)->put(route('admin.pages.update', $page), $updated)
-            ->assertStatus(302)
-            ->assertSessionHasErrors(['name']);
+            ->assertStatus(302);
+            //dd($response->getSession());
+            // dd($response->ddSession());
+            $response->assertSessionHasErrorsIn('updatingPage', ['name']);
 
         $updated['description']['en'] = 'spam';
         $response = $this->actingAs($this->admin)->put(route('admin.pages.update', $page), $updated)
             ->assertStatus(302)->assertSessionMissing(["status" => "page-updated"]);
-            //dd($response->dumpSession());
-            //->assertSessionHasErrors(['description.*.*']);
+           // dd($response->ddSession());
+        $response->assertSessionHasErrorsIn('updatingPage', ['description.en']);
         $this->assertNotEquals($page->fresh()->description->en, 'spam');
 
     }
@@ -190,6 +213,43 @@ class PagesTest extends TestCase
             ->assertStatus(403);
 
         $this->assertDatabaseCount(Page::class, 1);
+    }
+
+    public function test_galleries_can_be_attached_and_detached_to_pages(): void
+    {
+        $gallery1 = Gallery::factory()->create();
+        $gallery2 = Gallery::factory()->create();
+
+        $page = Page::factory()->create();
+
+        $page->galleries()->attach($gallery1);
+        $this->assertCount(1, $page->fresh()->galleries);
+
+        $page->galleries()->attach($gallery2);
+        $this->assertCount(2, $page->fresh()->galleries);
+
+        $page->galleries()->detach($gallery1);
+        $this->assertCount(1, $page->fresh()->galleries);
+
+        $page->galleries()->detach($gallery2);
+        $this->assertCount(0, $page->fresh()->galleries);
+    }
+
+    public function test_admin_may_attach_and_detach_galleries( )
+    {
+        $gallery1 = Gallery::factory()->create();
+
+        $page = Page::factory()->create();
+
+        $this->actingAs($this->admin)->put(route('admin.pages.attach.gallery', ['gallery' => $gallery1, 'page' => $page]))
+            ->assertSessionHas(["status" => "gallery-attached"]);
+
+        $this->assertDatabaseCount('pages_galleries', 1);
+
+        $this->actingAs($this->admin)->put(route('admin.pages.detach.gallery', ['gallery' => $gallery1, 'page' => $page]))
+            ->assertSessionHas(["status" => "gallery-detached"]);
+
+        $this->assertDatabaseCount('pages_galleries', 0);
     }
 
 }

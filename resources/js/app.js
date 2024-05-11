@@ -32,13 +32,15 @@ createInertiaApp({
     title: (title) => `${title} - ${appName}`,
     resolve: (name) => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob('./Pages/**/*.vue')),
     setup({ el, App, props, plugin }) {
-        return createApp({ render: () => h(App, props) })
+        let app = createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(ZiggyVue)
             .use(pinia)
             .component('InertiaLink', Link)
             .use(Translator, props.initialPage.props.translations)
+            //.use(Globals, )
             .mount(el);
+        return app
     },
     progress: {
         color: '#0093c4',

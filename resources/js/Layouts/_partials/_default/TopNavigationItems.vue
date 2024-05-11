@@ -19,16 +19,32 @@ const showItem4 = ref(false)
 const showItem5 = ref(false)
 
 watchEffect(async () => {
-    if(props.show) {
-        showItem1.value = true
-        //setTimeout(() => { showItem1.value = true;}, 100);
-        setTimeout(() => { showItem2.value = true;}, 100);
-        setTimeout(() => { showItem3.value = true;}, 200);
-        setTimeout(() => { showItem4.value = true;}, 300);
-        setTimeout(() => { showItem5.value = true;}, 400);
+    if(props.show && !helpers.pageLoaded) {
+        helpers.delay(0)
+            .then(() => {
+                helpers.showNavItems[1] = true
+                return helpers.delay(100)
+            })
+            .then(() => {
+                helpers.showNavItems[2] = true
+                return helpers.delay(100)
+            })
+            .then(() => {
+                helpers.showNavItems[3] = true
+                return helpers.delay(100)
+            })
+            .then(() => {
+                helpers.showNavItems[4] = true
+                return helpers.delay(100)
+            })
+            .then(() => {
+                helpers.showNavItems[5] = true
+                return helpers.delay(100)
+            })
     }
 
 })
+
 </script>
 
 <template>
@@ -40,24 +56,23 @@ watchEffect(async () => {
             <TransitionGroup enter-active-class="animate__animated animate__bounceInDown"
         leave-active-class="animate__animated animate__bounceOutUp">
 
-                <TopNavigationItem key="home" v-show="showItem1" :to="'/'">
-                    Home
+                <TopNavigationItem key="home" v-show="helpers.showNavItems[1]" :to="'/' + $page.props.locale">
+                    {{__('Home')}}
                 </TopNavigationItem>
-                <TopNavigationItem key="bled" v-show="showItem2" :to="'/bled'">
-                    Bled
+                <TopNavigationItem key="accomodations" v-show="helpers.showNavItems[2]" :to="`/${$page.props.locale}/accomodations`">
+                    {{__('Our Apartments')}}
                 </TopNavigationItem>
-                <TopNavigationItem key="nassfeld" v-show="showItem3" :to="'/nassfeld'">
-                    Nassfeld
+                <TopNavigationItem key="aboutus" v-show="helpers.showNavItems[3]" :to="`/${$page.props.locale}/about-us`">
+                    {{ __('About Us') }}
                 </TopNavigationItem>
-                <TopNavigationItem key="reservation" v-show="showItem4" :to="'/reservation'">
+                <TopNavigationItem key="reservation" v-show="helpers.showNavItems[4]" :to="'/reservation'">
                     Reservation
                 </TopNavigationItem>
-                <button class="block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-deep-cerulean-700 dark:text-white md:dark:hover:text-deep-cerulean-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-                    @click="helpers.showContactDrawer"
-                    v-show="showItem5"
-                    key="contact">
+
+                <TopNavigationItem as="button" key="contact" v-show="helpers.showNavItems[5]" @click="helpers.showContactDrawer">
                     Contact Us
-                </button>
+                </TopNavigationItem>
+
                 <!-- <TopNavigationItem key="contact" v-show="showItem5" :to="'/contact-us'">
                     Contact Us
                 </TopNavigationItem> -->

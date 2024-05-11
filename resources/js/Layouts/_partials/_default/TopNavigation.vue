@@ -5,17 +5,21 @@ import LanguageDropdown from '@/Components/_default/LanguageDropdown.vue';
 import TopNavigationItems from './TopNavigationItems.vue';
 import LogoComponent from '@/Components/_default/LogoComponent.vue';
 import ShapeBottom from '@/Components/_default/ShapeBottom.vue';
+import UserDropdown from '@/Components/TopNavigation/UserDropdown.vue';
+import { useHelperStore } from '@/stores/helpers';
 
 const props = defineProps({
     scrollPosition: Number,
     show: Boolean,
 })
 
-const showLogo = ref(false)
+const helpers = useHelperStore()
+/* const showLogo = ref(false)
 const showNav = ref(false)
 const showIcons = ref(false)
 const showLang = ref(false)
 const showTheme = ref(false)
+const showUserDropdown = ref(false) */
 
 const headerClasses = computed(() => {
     return [
@@ -23,25 +27,20 @@ const headerClasses = computed(() => {
     ]
 })
 watchEffect(async () => {
-    if (props.show) {
-        setTimeout(() => {
-            showLogo.value = true
-            setTimeout(() => {
-                showNav.value = true
-                setTimeout(() => {
-                    showIcons.value = true
-                    setTimeout(() => {
-                        showLang.value = true
-                        setTimeout(() => {
-                            showTheme.value = true
-                        }, 100);
-                    }, 100);
-                }, 800);
-            }, 600);
-        }, 600);
-
+    if (props.show && !helpers.pageLoaded) {
+        helpers.delay(0)
+            .then(() => helpers.showLogo = true)
+            .then(() => helpers.delay(1000))
+            .then(() => helpers.showNav = true)
+            .then(() => helpers.delay(800))
+            .then(() => helpers.showIcons = true)
+            .then(() => helpers.delay(100))
+            .then(() => helpers.showLang = true)
+            .then(() => helpers.delay(100))
+            .then(() => helpers.showTheme = true)
+            .then(() => helpers.delay(100))
+            .then(() => helpers.showUserDropdown = true);
     }
-
 });
 
 </script>
@@ -54,27 +53,29 @@ watchEffect(async () => {
         <nav v-show="show"
             class="hidden md:block bg-gray-50 border-gray-200 dark:bg-gray-950  left-0 right-0 top-0 transition-all fixed ease-out duration-300 "
             :class="scrollPosition > 100 ? 'min-h-14 ' : 'min-h-[128px]'">
-            <ShapeBottom class="absolute transition-all ease-out duration-300 inset-y-full z-10 left-0 right-0 w-full transform -translate-y-4 text-gray-50 dark:text-gray-950 drop-shadow-b-lg " />
+            <ShapeBottom
+                class="absolute transition-all ease-out duration-300 inset-y-full z-10 left-0 right-0 w-full transform -translate-y-4 text-gray-50 dark:text-gray-950 drop-shadow-b-lg " />
             <div class="max-w-screen-xl  flex flex-wrap items-center justify-between mx-auto transition-all duration-300 ease-out overflow-visible"
                 :class="scrollPosition > 100 ? 'p-0' : 'p-0'">
                 <Transition enter-active-class="animate__animated animate__bounceInDown"
                     leave-active-class="animate__animated animate__bounceOutUp">
 
-                    <inertia-link v-show="showLogo" href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
+                    <inertia-link v-show="helpers.showLogo" href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
                         <LogoComponent :scrollPosition="scrollPosition" class="ms-3 translate-y-4 z-20  " />
                     </inertia-link>
 
                 </Transition>
 
-                <div class="flex items-center justify-end md:order-2 space-x-1 md:space-x-0 rtl:space-x-reverse md:min-w-[192px] ">
+                <div
+                    class="flex items-center justify-end md:order-2 space-x-1 md:space-x-0 rtl:space-x-reverse md:min-w-[192px] ">
                     <Transition enter-active-class="animate__animated animate__bounceInDown"
                         leave-active-class="animate__animated animate__bounceOutUp">
 
-                        <div class="flex justify-end  space-x-2 me-2" v-show="showIcons">
+                        <div class="flex justify-end  space-x-2 me-2" v-show="helpers.showIcons">
                             <Transition enter-active-class="animate__animated animate__bounceInDown"
                                 leave-active-class="animate__animated animate__bounceOutUp">
 
-                                <LanguageDropdown v-show="showLang" />
+                                <LanguageDropdown v-show="helpers.showLang" />
                             </Transition>
 
                             <button data-collapse-toggle="navbar-language" type="button"
@@ -90,7 +91,12 @@ watchEffect(async () => {
                             <Transition enter-active-class="animate__animated animate__bounceInDown"
                                 leave-active-class="animate__animated animate__bounceOutUp">
 
-                                <ThemeSwitch v-show="showTheme" />
+                                <ThemeSwitch v-show="helpers.showTheme" />
+                            </Transition>
+                            <Transition enter-active-class="animate__animated animate__bounceInDown"
+                                leave-active-class="animate__animated animate__bounceOutUp">
+
+                                <UserDropdown v-if="$page.props.auth.user" v-show="helpers.showUserDropdown" />
                             </Transition>
                         </div>
                     </Transition>
@@ -99,7 +105,7 @@ watchEffect(async () => {
                 <div class="items-center justify-between hidden w-full lg:flex md:w-auto md:order-1"
                     id="navbar-language">
 
-                    <TopNavigationItems :show="showNav" />
+                    <TopNavigationItems :show="helpers.showNav" />
 
 
                 </div>

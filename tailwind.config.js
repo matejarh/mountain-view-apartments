@@ -23,6 +23,7 @@ export default {
             },
             animation: {
                 shake: 'shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both',
+                'spin-slow': 'spin 30s linear infinite',
             },
             keyframes: {
                 shake: {

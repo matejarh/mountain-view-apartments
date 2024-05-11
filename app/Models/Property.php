@@ -16,19 +16,35 @@ class Property extends Model
 
     protected $table = 'properties';
 
+    /**
+     * The model's default values for attributes.
+     *
+     * @var array
+     */
+/*     protected $attributes = [
+        'title' => $this->langArray(),
+        'description' => $this->langArray(),
+        'keywords' => $this->langArray(),
+        'rules' => $this->langArray(),
+    ]; */
+
     protected $casts = [
         'coordinates' => 'object',
         'bed_types' => 'array',
         'recomended' => 'array',
         'prices' => 'array',
-        'rules' => 'array',
+        'rules' => 'object',
         'is_entire_apartment' => 'boolean',
+        'title' => 'object',
+        'description' => 'object',
+        'keywords' => 'object',
     ];
 
     protected $appends = [
         'can',
         'address_for_map',
         'google_maps_link',
+        'avatar_url',
     ];
 
     /**
@@ -52,6 +68,8 @@ class Property extends Model
                 $property->facilities()->detach($facility); // Detach the facility from the property
             }
         });
+
+
     }
 
     /**
@@ -90,6 +108,13 @@ class Property extends Model
     public function galleries(): BelongsToMany
     {
         return $this->belongsToMany(Gallery::class, 'properties_galleries', 'property_id', 'gallery_id')->latest();
+    }
+
+    public function langArray() :array
+    {
+        $langarray = [];
+        foreach (config('app.supported_locales') as $key => $value) { $langarray[$value] = ''; }
+        return $langarray;
     }
 
     /**
@@ -136,6 +161,26 @@ class Property extends Model
     public function getGoogleMapsLinkAttribute(): string
     {
         return $this->googleMapsLink();
+    }
+
+    /**
+     * Get the default image avatar URL if no galleries are attached.
+     *
+     * @return string
+     */
+    protected function defaultPhotoUrl(): string
+    {
+        return "https://api.dicebear.com/8.x/pixel-art/svg?seed=" . urlencode($this->slug) . ""; // icons | pixel-art | ident ...  check https://www.dicebear.com/styles/
+    }
+
+    public function avatarUrl( ) :string
+    {
+        return $this->galleries->count() > 0 ? $this->galleries[0]->images[0]->thumb_url : $this->defaultPhotoUrl();
+    }
+
+    public function getAvatarUrlAttribute( ) :string
+    {
+        return $this->avatarUrl();
     }
     /**
      * Filters given query by given filters

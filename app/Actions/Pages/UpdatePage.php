@@ -26,20 +26,25 @@ class UpdatePage implements UpdatesPages
             'keywords' => __('Keywords'),
         );
 
-        //dd($input['description']['en']);
-        //\Log::debug('update', $input['description']);
-
-        $validator = Validator::make($input, [
+        $rules = [
             'name' => ['required', 'string', 'max:255', new SpamFree, Rule::unique('pages')->ignore($page->id)],
-            'description' => ['nullable', 'array', 'min:1'],
-            'description.*' => ['nullable', 'string', 'distinct', new SpamFree],
-            'title' => ['nullable', 'array', 'min:1'],
-            'title.*' => ['nullable', 'string', 'distinct', new SpamFree],
-            'keywords' => ['nullable', 'array', 'min:1'],
-            'keywords.*' => ['nullable', 'string', 'distinct', new SpamFree],
-        ]);
+            'description' => ['required', 'array', 'min:0'],
+            'title' => ['required', 'array', 'min:0'],
+            'keywords' => ['required', 'array', 'min:0'],
+        ];
 
-        $validator->setAttributeNames($attributeNames)->validate();
+        foreach (config('app.supported_locales') as $key => $value) {
+            # code...
+            $rules += [
+                'description.' . $value => ['nullable', 'string', 'distinct', new SpamFree],
+                'title.' . $value => ['nullable', 'string', 'distinct', new SpamFree],
+                'keywords.' . $value => ['nullable', 'string', 'distinct', new SpamFree],
+            ];
+        }
+        // \Log::info('rules', $rules);
+        $validator = Validator::make($input, $rules);
+
+        $validator->setAttributeNames($attributeNames)->validateWithBag('updatingPage');
 
         $page->forceFill([
             'name' => $input['name'],
