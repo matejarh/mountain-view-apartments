@@ -2,7 +2,6 @@
 import ShapeBottom from '@/Components/_default/ShapeBottom.vue';
 import ShapeTop from '@/Components/_default/ShapeTop.vue';
 import { usePage } from '@inertiajs/vue3';
-import { initCarousels } from 'flowbite';
 import _ from 'lodash';
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 import LogoHero from '@/Components/LogoHero.vue';
@@ -13,33 +12,32 @@ const page = usePage()
 
 const bgImage = ref(new URL('/resources/images/backgrounds/winter-sunrise.jpg', import.meta.url))
 
-const interval = ref(null)
-
-/* const gallery = computed(() => {
-    return _.filter(page.props.page.galleries, ['name', 'Home Page Hero'])[0]
-}) */
-const defaultBackgroundImage = new URL('/resources/images/backgrounds/winter-sunrise.jpg', import.meta.url)
+let interval;
 
 const initBgImageRotation = () => {
-    if (page.props.page.galleries.length <=0) {
-        clearInterval(interval)
-        return
+    const galleries = page.props.page.galleries;
+
+    if (galleries.length <= 0) {
+        clearInterval(interval);
+        return;
     }
-    const gallery = _.filter(page.props.page.galleries, ['name', page.props.page.name])[0]
 
-    bgImage.value = gallery.images[0].photo_url
-    let current = 0
+    const gallery = galleries.find(g => g.name === page.props.page.name);
 
-    interval.value = setInterval(() => {
-        bgImage.value = gallery.images[current].photo_url
+    if (!gallery || !gallery.images || gallery.images.length === 0) {
+        clearInterval(interval);
+        return;
+    }
 
-        if (current + 1 >= gallery.images.length) {
-            current = 0
-        } else {
-            current++
-        }
+    let current = 0;
+
+    bgImage.value = gallery.images[current].photo_url;
+
+    interval = setInterval(() => {
+        current = (current + 1) % gallery.images.length;
+        bgImage.value = gallery.images[current].photo_url;
     }, 5000);
-}
+};
 
 const gotoBookNow = () => {
     document.getElementById("booknow").scrollIntoView();
@@ -50,12 +48,11 @@ const stopBgRotation = () => {
 }
 
 onMounted(() => {
-    initCarousels()
     initBgImageRotation()
 })
 
 onBeforeUnmount(() => {
-    clearInterval(interval.value)
+    clearInterval(interval)
 })
 </script>
 
