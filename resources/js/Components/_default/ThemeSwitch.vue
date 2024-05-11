@@ -2,56 +2,45 @@
 import MoonIcon from '@/Icons/MoonIcon.vue';
 import SunIcon from '@/Icons/SunIcon.vue';
 import { useHelperStore } from '@/stores/helpers';
-import { onMounted, ref } from 'vue';
+import { onMounted } from 'vue';
 
 const helpers = useHelperStore()
 
 const toggle = () => {
-    helpers.isDark = !helpers.isDark
+    helpers.isDark = !helpers.isDark;
 
-    if (localStorage.getItem('color-theme')) {
-        if (localStorage.getItem('color-theme') === 'light') {
-            document.documentElement.classList.add('dark');
-            localStorage.setItem('color-theme', 'dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-            localStorage.setItem('color-theme', 'light');
-        }
+    const colorTheme = localStorage.getItem('color-theme') === 'dark' ? 'light' : 'dark';
+    document.documentElement.classList.toggle('dark', helpers.isDark);
 
-        // if NOT set via local storage previously
-    } else {
-        if (document.documentElement.classList.contains('dark')) {
-            document.documentElement.classList.remove('dark');
-            localStorage.setItem('color-theme', 'light');
-        } else {
-            document.documentElement.classList.add('dark');
-            localStorage.setItem('color-theme', 'dark');
-        }
-    }
-}
+    localStorage.setItem('color-theme', colorTheme);
+};
+
+const updateColorTheme = () => {
+    const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const colorTheme = localStorage.getItem('color-theme') || (prefersDarkMode ? 'dark' : 'light');
+
+    helpers.isDark = colorTheme === 'dark';
+    document.documentElement.classList.toggle('dark', colorTheme === 'dark');
+
+    localStorage.setItem('color-theme', colorTheme);
+};
 
 onMounted(() => {
-    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        helpers.isDark = true
-        document.documentElement.classList.add('dark');
-    } else {
-        helpers.isDark = false
-        document.documentElement.classList.remove('dark');
-    }
-})
+    updateColorTheme();
+});
 </script>
 
 <template>
     <button id="theme-toggle" @click="toggle" type="button"
         class="transition-color ease-out duration-150 text-gray-900 dark:text-bittersweet-50 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm px-2 py-2">
-        <div class="relative">
-            <SunIcon id="theme-toggle-dark-icon" v-show="helpers.isDark" class=" absolute hover:animate-ping w-5 h-5" />
-            <SunIcon id="theme-toggle-dark-icon" v-show="helpers.isDark" class=" w-5 h-5" />
+        <div class="relative" v-if="helpers.isDark">
+            <SunIcon id="theme-toggle-dark-icon" class="absolute hover:animate-ping w-5 h-5" />
+            <SunIcon id="theme-toggle-dark-icon" class="w-5 h-5" />
         </div>
-        <div class="relative">
+        <div class="relative" v-else>
 
-            <MoonIcon id="theme-toggle-light-icon" v-show="!helpers.isDark" class=" absolute hover:animate-ping w-5 h-5" />
-            <MoonIcon id="theme-toggle-light-icon" v-show="!helpers.isDark" class=" w-5 h-5" />
+            <MoonIcon id="theme-toggle-light-icon" class="absolute hover:animate-ping w-5 h-5" />
+            <MoonIcon id="theme-toggle-light-icon" class="w-5 h-5" />
         </div>
 
     </button>
