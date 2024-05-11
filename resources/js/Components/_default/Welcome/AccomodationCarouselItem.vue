@@ -28,7 +28,7 @@ defineProps({
             </div>
         </div>
         <div v-if="accomodation.galleries.length > 0">
-            <Carousel :items="accomodation.galleries[0].images" height="h-64 sm:h-screen md:h-screen-md lg:h-96 xl:h-[27rem]"
+            <Carousel :items="accomodation.galleries[0].images" height="h-64 sm:h-[34rem] md:h-[33rem] lg:h-[20rem] xl:h-[27rem]"
                 width="" class="shadow-lg" />
 
         </div>

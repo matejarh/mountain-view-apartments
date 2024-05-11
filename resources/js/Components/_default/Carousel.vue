@@ -73,7 +73,7 @@ onMounted(() => {
 <div :id="id" class="relative w-full">
     <!-- Carousel wrapper -->
     <div
-        class="relative h-56 overflow-hidden rounded-lg sm:h-[60vh] xl:h-80 2xl:h-[50vh]"
+        class="relative h-[100vh] overflow-hidden rounded-lg sm:min-h-[55rem] md:h-64 lg:min-h-[56vh] xl:min-h-[45vh] 2xl:min-h-[50vh]"
     >
         <slot />
         <!-- <div v-for="image, key in slides" :id="`carousel-item-${key}`" class="hidden duration-700 ease-in-out" >
