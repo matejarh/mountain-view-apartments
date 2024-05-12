@@ -6,7 +6,7 @@ const props = defineProps({
     hasError: {
         default: false,
         type: Boolean,
-    }
+    },
 });
 
 defineEmits(['update:modelValue']);
@@ -47,6 +47,6 @@ const classes = computed(() => {
 
 <template>
     <input :value="modelValue" ref="input" @input="$emit('update:modelValue', $event.target.value)"
-        class="sm:text-sm rounded-lg block w-full p-2.5" :class="classes">
+        class="sm:text-sm rounded-lg block p-2.5" :class="[classes]">
 
 </template>
