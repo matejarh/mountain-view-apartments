@@ -20,7 +20,7 @@ class PagePolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return $user->is_admin;
     }
 
     /**
@@ -28,7 +28,7 @@ class PagePolicy
      */
     public function view(User $user, Page $page): bool
     {
-        //
+        return $user->id === $page->user_id;
     }
 
     /**
@@ -36,7 +36,7 @@ class PagePolicy
      */
     public function create(User $user): bool
     {
-        //
+        return $user->is_admin;
     }
 
     /**
@@ -44,7 +44,7 @@ class PagePolicy
      */
     public function update(User $user, Page $page): bool
     {
-        //
+        return $user->id === $page->user_id;
     }
 
     /**
@@ -52,7 +52,7 @@ class PagePolicy
      */
     public function delete(User $user, Page $page): bool
     {
-        //
+        return $user->id === $page->user_id;
     }
 
     /**
@@ -60,7 +60,7 @@ class PagePolicy
      */
     public function restore(User $user, Page $page): bool
     {
-        //
+        return $user->id === $page->user_id;
     }
 
     /**
@@ -68,6 +68,6 @@ class PagePolicy
      */
     public function forceDelete(User $user, Page $page): bool
     {
-        //
+        return $user->id === $page->user_id;
     }
 }
