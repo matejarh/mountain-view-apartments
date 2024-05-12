@@ -37,6 +37,7 @@ class Property extends Model
         'is_entire_apartment' => 'boolean',
         'title' => 'object',
         'description' => 'object',
+        'long_description' => 'object',
         'keywords' => 'object',
     ];
 

@@ -48,6 +48,31 @@ class PropertiesSeeder extends Seeder
                 "fr" => "Doté d'un jardin, le Nassfeld and Lake Apartment propose des hébergements à Hermagor. Cet établissement offre l'accès à un balcon et un parking privé gratuit. L'hébergement propose un enregistrement et un départ privés ainsi qu'un parking à vélos pour les clients.",
                 "cs" => "Nabízející zahradu, apartmán Nassfeld and Lake poskytuje ubytování v Hermagoru. Tento objekt nabízí přístup na balkon a bezplatné soukromé parkoviště. Ubytování zajišťuje soukromé ubytování a odhlášení a parkování pro kola pro hosty.",
             ],
+            'long_description' => [
+                "sl" => "Nastanitev Nassfeld and Lake Apartment se nahaja približno 47 km od znamenitosti skakalnica Villacher Alpenarena in ponuja razgled na vrt, balkon ter aparat za kavo. Nastanitev je 28 km od znamenitosti Terra Mystica Mine in nudi vrt ter brezplačno zasebno parkirišče.
+
+                Apartma s teraso in pogledom na gore ima spalnico (1), dnevno sobo, TV z ravnim zaslonom, opremljeno kuhinjo s hladilnikom in s pečico ter kopalnico (1) s kadjo. V apartmaju lahko koristite brisače in posteljnino.
+
+                V sklopu nastanitve je na voljo otroško igrišče, v bližini pa se lahko podate na smučanje.
+
+                Znamenitost Porcia Castle je od nastanitve Nassfeld and Lake Apartment oddaljena 49 km. Najbližje letališče (Letališče Celovec) je 87 km od nastanitve Nassfeld and Lake Apartment.
+
+                Razdalja v opisu nastanitve je izračunana z © OpenStreetMap.",
+                "en" => "Featuring a garden, Nassfeld and Lake Apartment offers accommodations in Hermagor. This property offers access to a balcony and free private parking. The accommodation provides private check-in and check-out and bicycle parking for guests.
+
+                Offering a terrace and mountain views, the apartment includes 1 bedroom, a living room, cable flat-screen TV, an equipped kitchen, and 1 bathroom with a bath. This apartment also has a patio that doubles up as an outdoor dining area. The apartment offers bed linen, towels, and ironing service.
+
+                For guests with children, the apartment features outdoor play equipment. Ski storage space is available on-site and skiing can be enjoyed close to Nassfeld and Lake Apartment.
+
+                Porcia Castle is 30 miles from the accommodation, while Lake Pressegger is 5 miles from the property. The nearest airport is Klagenfurt Airport, 54 miles from Nassfeld and Lake Apartment.
+
+                Distance in property description is calculated using © OpenStreetMap",
+                "de" => "Mit einem Garten erwartet Sie das Nassfeld and Lake Apartment in Hermagor. Diese Unterkunft bietet Zugang zu einem Balkon und kostenfreie private Parkplätze. Die Unterkunft bietet einen privaten Check-in und Check-out sowie Fahrradparkplätze für die Gäste.",
+                "hu" => "A Nassfeld and Lake Apartment kerttel várja vendégeit Hermagorban. A szálláshely teraszhoz és ingyenes privát parkolási lehetőséghez biztosít hozzáférést. A szálláshely magáncsekkolást és kijelentkezést kínál, valamint biciklitárolót a vendégek számára.",
+                "it" => "Dotato di giardino, il Nassfeld and Lake Apartment offre sistemazioni a Hermagor. Questa struttura offre l'accesso a un balcone e un parcheggio privato gratuito. L'alloggio fornisce check-in e check-out privati e parcheggio per biciclette per gli ospiti.",
+                "fr" => "Doté d'un jardin, le Nassfeld and Lake Apartment propose des hébergements à Hermagor. Cet établissement offre l'accès à un balcon et un parking privé gratuit. L'hébergement propose un enregistrement et un départ privés ainsi qu'un parking à vélos pour les clients.",
+                "cs" => "Nabízející zahradu, apartmán Nassfeld and Lake poskytuje ubytování v Hermagoru. Tento objekt nabízí přístup na balkon a bezplatné soukromé parkoviště. Ubytování zajišťuje soukromé ubytování a odhlášení a parkování pro kola pro hosty.",
+            ],
             'keywords' => [
                 'sl' => "accommodations, Hermagor ",
                 "en" => "",

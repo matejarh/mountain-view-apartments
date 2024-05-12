@@ -35,6 +35,7 @@ class CreateNewProperty implements CreatesNewProperties
             'type' => ['required', 'string', 'max:255', new SpamFree] ,
             'name' => ['required', 'string', 'max:255', new SpamFree, 'unique:properties'],
             'description' => ['required', 'array', 'min:1'],
+            'long_description' => ['required', 'array', 'min:1'],
             'keywords' => ['required', 'array', 'min:1'],
             'title' => ['required', 'array', 'min:1'],
             'address' => ['required', 'string', 'max:255', new SpamFree] ,
@@ -52,9 +53,25 @@ class CreateNewProperty implements CreatesNewProperties
         ];
 
         foreach (config('app.supported_locales') as $key => $value) {
-            # code...
+            if (!isset($input['title'][$value])) {
+                $input['title'][$value] = '';
+            }
+            if (!isset($input['description'][$value])) {
+                $input['description'][$value] = '';
+            }
+            if (!isset($input['long_description'][$value])) {
+                $input['long_description'][$value] = '';
+            }
+            if (!isset($input['keywords'][$value])) {
+                $input['keywords'][$value] = '';
+            }
+            if (!isset($input['rules'][$value])) {
+                $input['rules'][$value] = '';
+            }
+
             $rules += [
                 'description.' . $value => ['nullable', 'string', 'distinct', new SpamFree],
+                'long_description.' . $value => ['nullable', 'string', 'distinct', new SpamFree],
                 'title.' . $value => ['nullable', 'string', 'distinct', new SpamFree],
                 'keywords.' . $value => ['nullable', 'string', 'distinct', new SpamFree],
                 'rules.' . $value => ['required', 'array', 'distinct', 'min:1'],
@@ -74,6 +91,7 @@ class CreateNewProperty implements CreatesNewProperties
             'type' => $input['type'],
             'slug' => str($input['name'])->slug(),
             'description' => isset($input['description']) ? $input['description'] : null,
+            'long_description' => isset($input['long_description']) ? $input['long_description'] : null,
             'title' => isset($input['title']) ? $input['title'] : null,
             'address' => isset($input['address']) ? $input['address'] : null,
             'keywords' => isset($input['keywords']) ? $input['keywords'] : null,
