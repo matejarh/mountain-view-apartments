@@ -13,7 +13,7 @@ import { computed, ref } from 'vue';
 import PhotoGallery from './PhotoGallery.vue';
 import FullScreenImagesModal from '@/Pages/Admin/Images/_partials/FullScreenImagesModal.vue';
 import MapCard from '@/Pages/Admin/Properties/_partials/MapCard.vue';
-import DinamicIcon from '@/Icons/DinamicIcon.vue';
+import DinamicIcon from '@/Components/DinamicIcon.vue';
 
 const page = usePage()
 const facilitiesWithIcons = computed(() => {
