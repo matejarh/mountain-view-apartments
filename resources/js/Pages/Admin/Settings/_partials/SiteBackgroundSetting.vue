@@ -7,8 +7,9 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import ImagesListDialog from './ImagesListDialog.vue';
 import CheckCircleIcon from '@/Icons/CheckCircleIcon.vue';
 import LightbulbIcon from '@/Icons/LightbulbIcon.vue';
+import YearProgress from '@/Components/Settings/YearProgress.vue';
 
-const props=defineProps({
+const props = defineProps({
     settings: Array,
 })
 
@@ -66,23 +67,25 @@ const handleSelect = (attribute) => {
                 <CreateSetting v-if="background_settings?.length <= 0" :setting="setting" />
 
                 <div v-else class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
-
-                    <div class="" v-for="attribute,key in background_settings.attributes">
+                    <YearProgress />
+                    <div class="" v-for="attribute, key in background_settings.attributes">
                         <div class="flex justify-between items-center">
                             <h3>{{ key }} image</h3>
                             <div class="relative" v-if="key === $page.props.current_season">
-                                <LightbulbIcon class="absolute animate-ping h-6 w-6 text-yellow-400"  />
+                                <LightbulbIcon class="absolute animate-ping h-6 w-6 text-yellow-400" />
                                 <LightbulbIcon class="h-6 w-6 text-yellow-300" />
 
                             </div>
                         </div>
-                        <div :class="{'rounded-lg shadow-2xl shadow-amazon-300': key === $page.props.current_season}" class="" v-if="attribute">
+                        <div :class="{ 'rounded-lg shadow-2xl shadow-amazon-300': key === $page.props.current_season }"
+                            class="" v-if="attribute">
                             <img :src="attribute.thumb_url" class="w-full h-auto rounded-lg" />
 
                         </div>
                         <div class="mt-2">
                             <PrimaryButton class="w-full" type="button" @click="handleSelect(key)">
-                                select {{ key }} image
+                                <template v-if="!attribute"> select {{ key }} image </template>
+                                <template v-else> change {{ key }} image </template>
                             </PrimaryButton>
 
                         </div>
@@ -92,5 +95,6 @@ const handleSelect = (attribute) => {
             </template>
         </ActionSection>
     </div>
-    <ImagesListDialog  :show="showSelectImageDialog" @close="showSelectImageDialog = false" :setting="background_settings" :attribute="selectedAttribute" />
+    <ImagesListDialog :show="showSelectImageDialog" @close="showSelectImageDialog = false"
+        :setting="background_settings" :attribute="selectedAttribute" />
 </template>
