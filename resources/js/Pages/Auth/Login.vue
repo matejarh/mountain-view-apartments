@@ -56,7 +56,7 @@ const submit = () => {
 
                 <TextInput type="email" name="email" id="email" v-model="form.email"
                     :has-error="!!form.errors.email"
-                    class=""
+                    class="w-full"
                     :placeholder="__('name@company.com')" required autofocus />
                 <InputError class="mt-2" :message="form.errors.email" />
             </div>
@@ -65,7 +65,7 @@ const submit = () => {
             <div>
                 <InputLabel for="password" >{{ __('Password') }}</InputLabel>
                 <TextInput type="password" name="password" id="password" v-model="form.password" placeholder="••••••••"
-                    class=""
+                    class="w-full"
                     required />
             </div>
 
