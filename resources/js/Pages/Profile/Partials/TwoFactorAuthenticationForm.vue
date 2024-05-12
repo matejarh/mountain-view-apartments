@@ -11,6 +11,8 @@ import SecondaryButton from '@/Components/SecondaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import Tooltip from '@/Components/Tooltip.vue';
 import GALogo from '/resources/images/branding/google_authenticator-logo.png'
+import TwoFactorCodeInput from '@/Components/Authentication/TwoFactorCodeInput.vue';
+import SegmentedInput from '@/Components/SegmentedInput.vue';
 
 const props = defineProps({
     requiresConfirmation: Boolean,
@@ -28,10 +30,6 @@ const confirmationForm = useForm({
     code: '',
 });
 
-const codeSplited = ref([])
-
-const code1 = ref(null)
-
 const twoFactorEnabled = computed(
     () => !enabling.value && page.props.auth.user?.two_factor_enabled,
 );
@@ -40,23 +38,12 @@ watch(twoFactorEnabled, () => {
     if (!twoFactorEnabled.value) {
         confirmationForm.reset();
         confirmationForm.clearErrors();
-        // codeSplited.value = [];
-        // code1.value.focus()
     }
 });
 
-watchEffect(() => {
-    if (codeSplited.value.length >= 6) {
-        let code = codeSplited.value.join(',').replaceAll(',', '')
-        // console.log(code)
-        confirmationForm.code = code
-        confirmTwoFactorAuthentication()
-    }
-})
-
 const enableTwoFactorAuthentication = () => {
     enabling.value = true;
-
+    confirmationForm.clearErrors();
     router.post(route('two-factor.enable'), {}, {
         preserveScroll: true,
         onSuccess: () => Promise.all([
@@ -91,6 +78,7 @@ const showRecoveryCodes = () => {
 
 const confirmTwoFactorAuthentication = () => {
     confirming.value = true;
+    confirmationForm.clearErrors();
     confirmationForm.post(route('two-factor.confirm'), {
         errorBag: "confirmTwoFactorAuthentication",
         preserveScroll: true,
@@ -101,12 +89,11 @@ const confirmTwoFactorAuthentication = () => {
             setupKey.value = null;
         },
         onFinish: () => {
-            codeSplited.value = [];
+            // codeSplited.value = [];
             confirmationForm.reset()
         },
         onError: () => {
-            code1.value.focus()
-
+            confirmationForm.code = ''
         }
     });
 };
@@ -194,55 +181,10 @@ const disableTwoFactorAuthentication = () => {
                     </div>
 
                     <div v-if="confirming" class="mt-4">
+                        {{confirmationForm.code}}
                         <InputLabel for="code" :value="__('Code')" />
 
-                        <div class="flex mb-2 space-x-2 rtl:space-x-reverse">
-                            <!-- @keyup.enter="confirmTwoFactorAuthentication" -->
-                            <TextInput id="code-1" v-model="codeSplited[0]" type="text" name="code-1"
-                                ref="code1"
-                                pattern="[0-9]{1,1}"
-                                class="block w-9 h-9 py-3 text-base font-extrabold text-center text-gray-900 bg-white border border-gray-300 rounded-lg focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                inputmode="numeric" autofocus :has-error="!!confirmationForm.errors.code"
-                                @input="Number.isInteger(parseInt($event.data)) ? $refs.code2.focus() : codeSplited.splice(0, 1)"
-                                @keyup.backspace="codeSplited.splice(0, 1)" />
-                            <TextInput id="code-2" v-model="codeSplited[1]" type="text" name="code-2"
-                                ref="code2"
-                                pattern="[0-9]{1,1}"
-                                class="block w-9 h-9 py-3 text-base font-extrabold text-center text-gray-900 bg-white border border-gray-300 rounded-lg focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                inputmode="numeric" :has-error="!!confirmationForm.errors.code"
-                                @input="Number.isInteger(parseInt($event.data)) ? $refs.code3.focus() : codeSplited.splice(1, 1)"
-                                @keyup.backspace="codeSplited.splice(1, 1), $refs.code1.focus()" />
-                            <TextInput id="code-3" v-model="codeSplited[2]" type="text" name="code-3"
-                                ref="code3"
-                                pattern="[0-9]{1,1}"
-                                class="block w-9 h-9 py-3 text-base font-extrabold text-center text-gray-900 bg-white border border-gray-300 rounded-lg focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                inputmode="numeric" :has-error="!!confirmationForm.errors.code"
-                                @input="Number.isInteger(parseInt($event.data)) ? $refs.code4.focus() : codeSplited.splice(2, 1)"
-                                @keyup.backspace="codeSplited.splice(2, 1), $refs.code2.focus()" />
-                            <TextInput id="code-4" v-model="codeSplited[3]" type="text" name="code-4"
-                                ref="code4"
-                                pattern="[0-9]{1,1}"
-                                class="block w-9 h-9 py-3 text-base font-extrabold text-center text-gray-900 bg-white border border-gray-300 rounded-lg focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                inputmode="numeric" :has-error="!!confirmationForm.errors.code"
-                                @input="Number.isInteger(parseInt($event.data)) ? $refs.code5.focus() : codeSplited.splice(3, 1)"
-                                @keyup.backspace="codeSplited.splice(3, 1), $refs.code3.focus()" />
-                            <TextInput id="code-5" v-model="codeSplited[4]" type="text" name="code-5"
-                                ref="code5"
-                                pattern="[0-9]{1,1}"
-                                class="block w-9 h-9 py-3 text-base font-extrabold text-center text-gray-900 bg-white border border-gray-300 rounded-lg focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                inputmode="numeric" :has-error="!!confirmationForm.errors.code"
-                                @input="Number.isInteger(parseInt($event.data)) ? $refs.code6.focus() : codeSplited.splice(4, 1)"
-                                @keyup.backspace="codeSplited.splice(4, 1), $refs.code4.focus()" />
-                            <TextInput id="code-6" v-model="codeSplited[5]" type="text" name="code-6"
-                                ref="code6"
-                                pattern="[0-9]{1,1}"
-                                class="block w-9 h-9 py-3 text-base font-extrabold text-center text-gray-900 bg-white border border-gray-300 rounded-lg focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                inputmode="numeric" :has-error="!!confirmationForm.errors.code"
-                                @change="Number.isInteger(parseInt($event.data)) ? confirmTwoFactorAuthentication : codeSplited.splice(5, 1)"
-                                @keyup.enter="confirmTwoFactorAuthentication"
-                                @keyup.backspace="codeSplited.splice(5, 1), $refs.code5.focus()" />
-
-                        </div>
+                        <SegmentedInput :digits="6" v-model="confirmationForm.code" :error="confirmationForm.errors.code" @submit="confirmTwoFactorAuthentication" />
 
                         <InputError :message="confirmationForm.errors.code" class="mt-2" />
                     </div>

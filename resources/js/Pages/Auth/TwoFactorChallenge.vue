@@ -7,6 +7,7 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
+import SegmentedInput from '@/Components/SegmentedInput.vue';
 
 const recovery = ref(false);
 
@@ -61,7 +62,9 @@ const submit = () => {
         <form @submit.prevent="submit">
             <div v-if="! recovery">
                 <InputLabel :has-error="form.errors.code" for="code" :value="__('Code')" />
-                <TextInput
+
+                <SegmentedInput id="code" ref="codeInput" :digits="6" v-model="form.code" :error="form.errors.code" @submit="submit" />
+                <!-- <TextInput
                     id="code"
                     ref="codeInput"
                     v-model="form.code"
@@ -70,7 +73,7 @@ const submit = () => {
                     class="mt-1 block w-full"
                     autofocus
                     autocomplete="one-time-code" :has-error="form.errors.code"
-                />
+                /> -->
                 <InputError class="mt-2" :message="form.errors.code" />
             </div>
 
