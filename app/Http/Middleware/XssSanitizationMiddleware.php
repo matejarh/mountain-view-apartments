@@ -18,7 +18,20 @@ class XssSanitizationMiddleware
         $input = $request->all();
 
         array_walk_recursive($input, function (&$input) {
-            $input = strip_tags($input);
+            $input = strip_tags($input, [
+                '<strong>',
+                '<p>',
+                '<h2>',
+                '<h3>',
+                '<h4>',
+                '<h5>',
+                '<em>',
+                '<a>',
+                '<ul>',
+                '<ol>',
+                '<li>',
+                '<u>',
+            ]);
             $input = trim($input);
         });
 

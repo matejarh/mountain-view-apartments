@@ -62,7 +62,7 @@ class UpdateProperty implements UpdatesProperties
         foreach (config('app.supported_locales') as $key => $value) {
             $rules += [
                 'description.' . $value => ['nullable', 'string', 'distinct', new SpamFree],
-                'long_description.' . $value => ['nullable', 'string', 'distinct', new SpamFree],
+                'long_description.' . $value => ['nullable', 'string', 'distinct'],
                 'title.' . $value => ['nullable', 'string', 'distinct', new SpamFree],
                 'keywords.' . $value => ['nullable', 'string', 'distinct', new SpamFree],
                 'rules.' . $value => ['required', 'array', 'distinct', 'min:1'],
@@ -75,7 +75,7 @@ class UpdateProperty implements UpdatesProperties
         $validator = Validator::make($input, $rules);
 
         $validator->setAttributeNames($attributeNames)->validateWithBag('updatingProperty');
-
+        //dd($input['description']);
         $property->forceFill([
             'name' => $input['name'],
             'type' => $input['type'],

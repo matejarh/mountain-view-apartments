@@ -9,7 +9,7 @@ import InfoSection from './_partials/InfoSection.vue';
 
 <template>
     <DefaultLayout :title="$page.props.property?.title[$page.props.locale]"
-        :description="$page.props.property?.description[$page.props.locale]"
+        :description="$page.props.property?.seo_description[$page.props.locale]"
         :keywords="$page.props.property?.keywords[$page.props.locale]">
 
         <div class="space-y-0">

@@ -46,6 +46,7 @@ class Property extends Model
         'address_for_map',
         'google_maps_link',
         'avatar_url',
+        'seo_description',
     ];
 
     /**
@@ -182,6 +183,19 @@ class Property extends Model
     public function getAvatarUrlAttribute( ) :string
     {
         return $this->avatarUrl();
+    }
+
+    public function seoDescription( ) :array
+    {
+        $striped = [];
+        foreach (config('app.supported_locales') as $key => $locale) {
+            $striped[$locale] = strip_tags($this->description->$locale);
+        }
+        return $striped;
+    }
+    public function getSeoDescriptionAttribute( ) :array
+    {
+        return $this->seoDescription();
     }
     /**
      * Filters given query by given filters

@@ -55,9 +55,7 @@ const detach = (gallery) => {
                 </div>
             </template>
             <template #description>
-                <div class="whitespace-pre-wrap">
-
-                    {{ $page.props.property.description[$page.props.locale] }}
+                <div class="whitespace-pre-wrap" v-html="$page.props.property.description[$page.props.locale]">
                 </div>
 
             </template>
@@ -66,7 +64,7 @@ const detach = (gallery) => {
                 <div class="lg:grid lg:grid-cols-1 xl:grid-cols-3 lg:gap-8 xl:gap-16">
                     <div class=" mx-auto flex flex-col space-y-4">
                         <PrimaryButton @click="showAttachGalleryDialog = true"
-                            v-if="$page.props.property.galleries.length <= 0">attach gallery</PrimaryButton>
+                            v-if="$page.props.property.galleries.length <= 0">{{__('attach gallery')}}</PrimaryButton>
 
                         <div class="" v-if="$page.props.property.galleries.length > 0">
                             <div class="grid grid-cols-3" v-for="gallery in $page.props.property.galleries"

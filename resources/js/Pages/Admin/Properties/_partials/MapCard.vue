@@ -36,7 +36,7 @@ const zoom = ref(14);
                         <img v-if="property.galleries.length>0" :src="property.galleries[0].images[0].thumb_url" class="w-24 h-16 float-left pr-2" />
                         <div class="item-body  ">
                             <h3 class="font-bold text-base leading-tight">{{ property.title[$page.props.locale] }}</h3>
-                            {{ property.description[$page.props.locale] }}
+                            {{ property.seo_description[$page.props.locale] }}
                         </div>
                     </div>
                     <!-- <div class="flex">

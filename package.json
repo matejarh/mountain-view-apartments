@@ -23,6 +23,7 @@
     },
     "dependencies": {
         "@vuepic/vue-datepicker": "^8.5.1",
+        "@vueup/vue-quill": "^1.2.0",
         "animate.css": "^4.1.1",
         "country-flag-icons": "^1.5.11",
         "country-list": "^2.3.0",

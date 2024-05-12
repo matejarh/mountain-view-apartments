@@ -18,6 +18,10 @@ import HorizontalTabs from '@/Components/HorizontalTabs.vue';
 import HorizontalTabItem from '@/Components/HorizontalTabItem.vue';
 import { useTranslationsStore } from '@/stores/translations';
 import GridSection from '@/Components/GridSection.vue';
+import WysiwygInput from '@/Components/WysiwygInput.vue';
+import { QuillEditor } from '@vueup/vue-quill';
+import '@vueup/vue-quill/dist/vue-quill.snow.css';
+/* import '@vueup/vue-quill/dist/vue-quill.bubble.css'; */
 
 const page = usePage()
 
@@ -28,6 +32,7 @@ const form = useForm({
     name: page.props.property?.name,
     title: page.props.property?.title,
     description: page.props.property?.description,
+    long_description: page.props.property?.long_description,
     address: page.props.property?.address,
     keywords: page.props.property?.keywords,
     size: page.props.property?.size,
@@ -184,11 +189,38 @@ const handleAddRecomended = () => {
                     autocomplete="title" :has-error="!!form.errors.title" :placeholder="__('Enter title') + '...'" />
                 <InputError :message="form.errors.title" class="mt-2" />
             </div>
-            <div class="col-span-full">
+            <!-- <div class="col-span-full">
                 <InputLabel for="description" :value="__('Description')" />
                 <TextArea id="description" v-model="form.description[selectedTab]" class="mt-1 block w-full"
                     autocomplete="description" :has-error="!!form.errors.description"
                     :placeholder="__('Enter description') + '...'"></TextArea>
+                <InputError :message="form.errors.description" class="mt-2" />
+            </div> -->
+            <div class="col-span-full">
+                <InputLabel for="description" :value="__('Description')" />
+                <div class="block rounded-lg overflow-hidden border border-thin border-gray-100 dark:border-gray-600 ">
+
+                    <QuillEditor v-model:content="form.description[selectedTab]" contentType="html" theme="snow"  />
+                </div>
+
+                <!-- <WysiwygInput id="description" v-model="form.description[selectedTab]" class="mt-1 block w-full"
+                    autocomplete="description" :has-error="!!form.errors.description"
+                    :placeholder="__('Enter description') + '...'" /> -->
+
+                <InputError :message="form.errors.description" class="mt-2" />
+            </div>
+            <div class="col-span-full">
+                <InputLabel for="long_description" :value="__('Long description')" />
+
+                <div class="block rounded-lg overflow-hidden border-thin border-gray-400 ">
+                    <QuillEditor v-model:content="form.long_description[selectedTab]" contentType="html" theme="snow" />
+
+                </div>
+
+                <!-- <WysiwygInput  id="long_description" v-model="form.long_description[selectedTab]" class="mt-1 block w-full mb-4"
+                    autocomplete="long_description" :has-error="!!form.errors.long_description"
+                    :placeholder="__('Enter long description') + '...'" /> -->
+
                 <InputError :message="form.errors.description" class="mt-2" />
             </div>
             <div class="col-span-full">
