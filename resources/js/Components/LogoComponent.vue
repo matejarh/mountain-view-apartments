@@ -24,9 +24,11 @@ defineProps({
 <template>
     <div class="relative">
         <div class="relative">
-            <SunLogoIcon class="absolute animate-spin-slow top-0  drop-shadow transition-all duration-300 ease-out"
+            <SunLogoIcon class="absolute animate-spin-slow top-0  drop-shadow transition-all duration-300 ease-out text-yellow-300"
                 :class="scrollPosition > 100 ? 'w-8 h-8' : 'w-12 h-12'" />
-            <SunLogoIcon class="absolute top-0 animate-ping drop-shadow transition-all duration-300 ease-out"
+            <SunLogoIcon class="absolute animate-spin-reverse top-0  drop-shadow transition-all duration-300 ease-out text-yellow-300"
+                :class="scrollPosition > 100 ? 'w-8 h-8' : 'w-12 h-12'" />
+            <SunLogoIcon class="absolute top-0 animate-ping drop-shadow transition-all duration-300 ease-out text-yellow-300"
                 :class="scrollPosition > 100 ? 'w-8 h-8' : 'w-12 h-12'" />
 
         </div>

@@ -24,6 +24,8 @@ export default {
             animation: {
                 shake: 'shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both',
                 'spin-slow': 'spin 30s linear infinite',
+                'spin-slower': 'spin 45s linear infinite',
+                'spin-reverse': 'reverse-spin 45s linear infinite',
             },
             keyframes: {
                 shake: {
@@ -32,6 +34,11 @@ export default {
                     '30%, 50%, 70%': { transform: 'translate3d(-4px, 0, 0)' },
                     '40%, 60%': { transform: 'translate3d(4px, 0, 0)' },
                 },
+                'reverse-spin': {
+                    from: {
+                      transform: 'rotate(360deg)'
+                    },
+                }
 
             },
             colors: {
