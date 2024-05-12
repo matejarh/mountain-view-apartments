@@ -41,8 +41,8 @@ const initBgImageRotation = () => {
     }, 5000);
 }
 
-const gotoBookNow = () => {
-    document.getElementById("booknow").scrollIntoView();
+const gotoAvailability = () => {
+    document.getElementById("availability").scrollIntoView();
 }
 
 const stopBgRotation = () => {
@@ -78,7 +78,7 @@ onBeforeUnmount(() => {
                     $page.props.property.description[$page.props.locale] }}</p>
 
                 <div class="mb-8 flex flex-col space-y-4 sm:space-x-4 sm:flex-row sm:justify-center sm:space-y-0">
-                    <PrimaryButton @click="gotoBookNow" class="py-3 px-5 " type="button">
+                    <PrimaryButton @click="gotoAvailability" class="py-3 px-5 " type="button">
 
                         {{__('Check Availability')}}
                         <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true"
