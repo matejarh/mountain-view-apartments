@@ -29,6 +29,10 @@ defineProps({
         type: Boolean,
         default: true
     },
+    rounded: {
+        type: String,
+        // default: 'rounded-lg'
+    }
 })
 
 const i18n = ref({
@@ -53,8 +57,8 @@ const i18n = ref({
                     :transition="transition"
                     :i18n="i18n"
                     :pause-autoplay-on-hover="true"
-                    class="relative  overflow-hidden rounded-lg "
-                    :class="height">
+                    class="relative  overflow-hidden  "
+                    :class="[height, rounded]">
 
             <slide v-for="slide, key in items" :key="key" class="">
                 <div :class="[height, width]">

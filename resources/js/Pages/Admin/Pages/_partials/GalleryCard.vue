@@ -30,7 +30,7 @@ const carouselHeight = 'h-56'
             class="max-w-sm bg-white border border-gray-200 overflow-hidden rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700  transition duration-150 ease-out">
             <div class="flex flex-col justify-between pb-4 h-full space-y-4">
 
-                <Carousel v-if="gallery.images.length > 0" :items="gallery.images" class="shadow-lg"
+                <Carousel v-if="gallery.images.length > 0" :items="gallery.images" rounded="rounded-t-lg" class="shadow-lg"
                     :height="carouselHeight" />
                 <div class="w-full flex items-center justify-center shadow-lg" :class="carouselHeight" v-else>
 
