@@ -119,6 +119,28 @@ onBeforeMount(() => {
                                 </template>
 
                             </div>
+                            <div class="w-full md:text-right" v-if="activity.type === 'created_page'">
+                                <template v-if="activity.location">
+                                    {{ activity.location.cityName }},
+                                    {{ activity.location.countryName }}
+
+                                </template>
+                                <template v-else>
+                                    {{__('no location')}}
+                                </template>
+
+                            </div>
+                            <div class="w-full md:text-right" v-if="activity.type === 'updated_page'">
+                                <template v-if="activity.location">
+                                    {{ activity.location.cityName }},
+                                    {{ activity.location.countryName }}
+
+                                </template>
+                                <template v-else>
+                                    {{__('no location')}}
+                                </template>
+
+                            </div>
                         </div>
 
 
