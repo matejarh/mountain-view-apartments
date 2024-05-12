@@ -21,7 +21,7 @@ class SettingsTest extends TestCase
 
         $this->setting = [
             'name' => 'Test Setting',
-            'description' => fake()->sentence(),
+            'description' => 'test description',
             'attributes' => [
                 'setting1' => 'setting1',
                 'setting2' => 'setting2',
@@ -101,7 +101,7 @@ class SettingsTest extends TestCase
 
         $updatedsetting = [
             'name' => 'Test Updated Setting',
-            'description' => fake()->sentence(),
+            'description' => 'test description',
             'attributes' => [
                 'setting1' => 'newsetting1',
                 'setting2' => 'newsetting2',

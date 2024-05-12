@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Activity;
 use App\Models\Gallery;
 use App\Models\Image;
 use App\Models\User;
@@ -25,13 +26,13 @@ class GalleriesTest extends TestCase
 
         $this->gallery = [
             'name' => 'Test Gallery',
-            'description' => fake()->sentence(),
+            'description' => 'test description',
         ];
 
         $this->image = [
             'photo' => UploadedFile::fake()->image('image.jpg',1280,720),
             'name' => "Test Image",
-            'description' => fake()->sentence(),
+            'description' => 'test description',
         ];
     }
 
@@ -64,7 +65,7 @@ class GalleriesTest extends TestCase
 
         $gallery = [
             'name' => 'Test Gallery',
-            'description' => fake()->sentence(),
+            'description' => 'Test description',
         ];
 
         $response = $this->actingAs($this->admin)->post(route('admin.galleries.store'), $gallery);
@@ -74,6 +75,7 @@ class GalleriesTest extends TestCase
         $this->assertDatabaseHas('galleries', $gallery);
         $this->assertEquals(1, Gallery::count());
         $this->assertDatabaseHas(Gallery::class, $gallery);
+
 
     }
 
@@ -101,7 +103,7 @@ class GalleriesTest extends TestCase
 
         $gallery = [
             'name' => 'Test Gallery',
-            'description' => fake()->sentence(),
+            'description' => 'test description',
         ];
 
         $response = $this->actingAs($this->user)->post(route('admin.galleries.store'), $gallery);
@@ -114,7 +116,7 @@ class GalleriesTest extends TestCase
 
         $gallery = [
             'name' => 'Test Gallery',
-            'description' => fake()->sentence(),
+            'description' => 'test description',
         ];
 
         $response = $this->actingAs($this->admin)->post(route('admin.galleries.store'), $gallery);
@@ -130,7 +132,7 @@ class GalleriesTest extends TestCase
 
         $updatedgallery = [
             'name' => 'Test Updated Gallery',
-            'description' => fake()->sentence(),
+            'description' => 'updated description',
         ];
 
         $response = $this->actingAs($this->admin)->put("/admin/galleries/$gallery->slug", $updatedgallery);
@@ -151,7 +153,7 @@ class GalleriesTest extends TestCase
         $image = [
             'photo' => UploadedFile::fake()->image('image.jpg',1280,720),
             'name' => "Test Image",
-            'description' => fake()->sentence(),
+            'description' => 'test description',
         ];
 
         // dd($image);
@@ -175,14 +177,14 @@ class GalleriesTest extends TestCase
 /*         $gallery = Gallery::factory([
             'name' => 'Test Gallery',
             'slug' => 'test-gallery',
-            'description' => fake()->sentence(),
+            'description' => 'test description',
         ])->create(); */
         $image = Image::factory(['user_id' => $this->admin->id])->create();
 
         $updatedimage = [
             'photo' => UploadedFile::fake()->image('image.jpg',1280,720),
             'name' => "Test updated Image",
-            'description' => fake()->sentence(),
+            'description' => 'test description',
         ];
 
         $response = $this->actingAs($this->admin)->post(route('admin.images.update', $image), $updatedimage);
@@ -206,13 +208,13 @@ class GalleriesTest extends TestCase
         $gallery = Gallery::factory([
             'name' => 'Test Gallery',
             'slug' => 'test-gallery',
-            'description' => fake()->sentence(),
+            'description' => 'test description',
         ])->create();
 
         $gallery1 = Gallery::factory([
             'name' => 'Test Gallery',
             'slug' => 'test-gallery',
-            'description' => fake()->sentence(),
+            'description' => 'test description',
         ])->create();
 
         $response = $this->actingAs($this->admin)->put(route('admin.images.attach', ['image' => $image, 'gallery' => $gallery]));
@@ -243,7 +245,7 @@ class GalleriesTest extends TestCase
         $gallery = Gallery::factory([
             'name' => 'Test Gallery',
             'slug' => 'test-gallery',
-            'description' => fake()->sentence(),
+            'description' => 'test description',
         ])->create();
 
         $image->galleries()->attach($gallery);
@@ -266,7 +268,7 @@ class GalleriesTest extends TestCase
         $gallery = Gallery::factory([
             'name' => 'Test Gallery',
             'slug' => 'test-gallery',
-            'description' => fake()->sentence(),
+            'description' => 'test description',
         ])->create();
 
         $image->galleries()->attach($gallery);
