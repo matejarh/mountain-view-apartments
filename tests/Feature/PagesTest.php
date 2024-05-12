@@ -49,6 +49,26 @@ class PagesTest extends TestCase
                 'fr' => 'Appartements Koman, propose, élégamment, confortablement, meublés, salle de bain privée, balcon, terrasse, climatisation, chauffage, cuisine entièrement équipée, télévision par câble, parking gratuit, WiFi gratuit',
                 'cs' => 'Apartmány Koman, nabízí, elegantně, pohodlně, zařízené, vlastní koupelna, balkon, terasa, klimatizace, topení, plně vybavená kuchyň, kabelová televize, zdarma parkování, zdarma WiFi',
             ],
+            'extras' => [
+                'nasfield_text' => [
+                    'sl' => '',
+                    'en' => '',
+                    'de' => '',
+                    'hu' => '',
+                    'it' => '',
+                    'fr' => '',
+                    'cs' => '',
+                ],
+                'bled_text' => [
+                    'sl' => '',
+                    'en' => '',
+                    'de' => '',
+                    'hu' => '',
+                    'it' => '',
+                    'fr' => '',
+                    'cs' => '',
+                ]
+            ]
         ];
 
 
@@ -95,6 +115,12 @@ class PagesTest extends TestCase
                 'sl' => 'sl keywords',
                 'en' => 'en keywords',
             ],
+            'extras' => [
+                'testextra' => [
+                    'sl' => 'sl extra',
+                    'en' => 'en extra',
+                ]
+            ],
         ];
 
         $response = $this->actingAs($this->admin)->post(route('admin.pages.store'), $page)
@@ -102,18 +128,18 @@ class PagesTest extends TestCase
             ->assertSessionHas(["status" => "page-created"]);
 
         $new_page = Page::where('name', $page['name'])->first();
-        //dd($new_page->fresh()->title);
+        // dd($new_page);
         $this->assertEquals($new_page->fresh()->name, $page["name"]);
         $this->assertCount(collect(config('app.supported_locales'))->count(), collect($new_page->fresh()->keywords));
         $this->assertCount(collect(config('app.supported_locales'))->count(), collect($new_page->fresh()->description));
         $this->assertCount(collect(config('app.supported_locales'))->count(), collect($new_page->fresh()->title));
-        $this->assertCount(collect(config('app.supported_locales'))->count(), collect($new_page->fresh()->keywords));
+        $this->assertCount(collect(config('app.supported_locales'))->count(), collect($new_page->fresh()->extras->testextra));
         $this->assertEquals(1, Page::count());
     }
 
     public function test_admin_may_update_page(): void
     {
-        // $this->withoutExceptionHandling();
+        $this->withoutExceptionHandling();
         $page = Page::factory()->create(['name' => 'Test Page Name', 'title' => $this->page['title']]);
 
         /* $page->name='Changed name'; */
@@ -123,6 +149,12 @@ class PagesTest extends TestCase
             'title' => $this->page['title'],
             'description' => $this->page['description'],
             'keywords' => $this->page['keywords'],
+            'extras' => [
+                'testextra' => [
+                    'sl' => 'sl nova extra',
+                    'en' => 'en npova extra',
+                ]
+            ],
         ];
 
         $response = $this->actingAs($this->admin)->put(route('admin.pages.update', $page), $updated);
@@ -132,6 +164,8 @@ class PagesTest extends TestCase
 
         $this->assertEquals($page->fresh()->name, 'Changed name');
         $this->assertEquals((array) $page->fresh()->description, $this->page['description']);
+        $this->assertEquals($page->fresh()->extras->testextra->sl, 'sl nova extra');
+        $this->assertEquals($page->fresh()->extras->testextra->en, 'en npova extra');
 
     }
 
@@ -143,18 +177,33 @@ class PagesTest extends TestCase
         $updated = [
             'name' => 'spam',
             'description' => $this->page['description'],
+            'extras' => [
+                'nassfeld' => [
+                    'sl' => 'sl nova extra',
+                    'en' => 'en npova extra',
+                ]
+            ],
         ];
 
         $response = $this->actingAs($this->admin)->put(route('admin.pages.update', $page), $updated)
             ->assertStatus(302);
-            //dd($response->getSession());
-            // dd($response->ddSession());
-            $response->assertSessionHasErrorsIn('updatingPage', ['name']);
+        //dd($response->getSession());
+        // dd($response->ddSession());
+        $response->assertSessionHasErrorsIn('updatingPage', ['name']);
 
         $updated['description']['en'] = 'spam';
         $response = $this->actingAs($this->admin)->put(route('admin.pages.update', $page), $updated)
+            ->assertStatus(302)
+            ->assertSessionHasErrorsIn('description.en')
+            ->assertSessionMissing(["status" => "page-updated"]);
+
+        $updated['extras']['nassfeld']['en'] = 'spam';
+
+        $response = $this->actingAs($this->admin)->put(route('admin.pages.update', $page), $updated)
+            ->assertSessionHasErrorsIn('extras.nassfeld.en')
             ->assertStatus(302)->assertSessionMissing(["status" => "page-updated"]);
-           // dd($response->ddSession());
+
+        // dd($response->ddSession());
         $response->assertSessionHasErrorsIn('updatingPage', ['description.en']);
         $this->assertNotEquals($page->fresh()->description->en, 'spam');
 
@@ -235,7 +284,7 @@ class PagesTest extends TestCase
         $this->assertCount(0, $page->fresh()->galleries);
     }
 
-    public function test_admin_may_attach_and_detach_galleries( )
+    public function test_admin_may_attach_and_detach_galleries()
     {
         $gallery1 = Gallery::factory()->create();
 

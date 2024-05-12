@@ -20,6 +20,7 @@ return new class extends Migration
             $table->json('title');
             $table->json('description')->nullable();
             $table->json('keywords')->nullable();
+            $table->json('extras')->nullable();
             $table->timestamps();
         });
 

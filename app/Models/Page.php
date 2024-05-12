@@ -24,6 +24,7 @@ class Page extends Model
             'title' => 'object',
             'description' => 'object',
             'keywords' => 'object',
+            'extras' => 'object',
         ];
     }
 

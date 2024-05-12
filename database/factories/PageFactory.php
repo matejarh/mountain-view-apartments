@@ -40,12 +40,24 @@ class PageFactory extends Factory
         }
         $name = fake()->sentence(3);
 
+        $extras= [
+            'definition_name' =>  [
+
+            ]
+        ];
+
+        foreach ($languages as $key => $language) {
+            //array_push($keywords, [$language => str(fake()->words(6, true))->replace(' ', ', ')]);
+            $extras['definition_name'][$language] = '';
+        }
+
         return [
             'name' => $name,
             'slug' => str($name)->slug(),
             'title' => $titles,
             'description' => $descriptions,
             'keywords' => $keywords,
+            'extras' => $extras,
         ];
     }
 }

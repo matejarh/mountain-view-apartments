@@ -30,23 +30,36 @@ class CreateNewPage implements CreatesNewPages
             'description' => ['required', 'array', 'min:1'],
             'title' => ['required', 'array', 'min:1'],
             'keywords' => ['required', 'array', 'min:1'],
+            'extras' => ['required', 'array', 'min:1'],
         ];
 
-        foreach (config('app.supported_locales') as $key => $value) {
-            if (!isset($input['title'][$value])) {
-                $input['title'][$value] = '';
+        foreach (config('app.supported_locales') as $key => $locale) {
+            if (!isset($input['title'][$locale])) {
+                $input['title'][$locale] = '';
             }
-            if (!isset($input['description'][$value])) {
-                $input['description'][$value] = '';
+            if (!isset($input['description'][$locale])) {
+                $input['description'][$locale] = '';
             }
-            if (!isset($input['keywords'][$value])) {
-                $input['keywords'][$value] = '';
+            if (!isset($input['keywords'][$locale])) {
+                $input['keywords'][$locale] = '';
+            }
+            if (isset($input['extras'])) {
+                foreach ($input['extras'] as $ekey => $extra) {
+
+                    if (!isset($input['extras'][$ekey][$locale])) {
+                        $input['extras'][$ekey][$locale] = '';
+                    }
+
+                    $rules += [
+                        "extras.$ekey.$locale" => ['nullable', 'string', 'distinct', new SpamFree],
+                    ];
+                }
             }
             # code...
             $rules += [
-                'description.' . $value => ['nullable', 'string', 'distinct', new SpamFree],
-                'title.' . $value => ['nullable', 'string', 'distinct', new SpamFree],
-                'keywords.' . $value => ['nullable', 'string', 'distinct', new SpamFree],
+                'description.' . $locale => ['nullable', 'string', 'distinct', new SpamFree],
+                'title.' . $locale => ['nullable', 'string', 'distinct', new SpamFree],
+                'keywords.' . $locale => ['nullable', 'string', 'distinct', new SpamFree],
             ];
         }
 
@@ -60,6 +73,7 @@ class CreateNewPage implements CreatesNewPages
             'title' => $input['title'],
             'description' => isset($input['description']) ? $input['description'] : null,
             'keywords' => isset($input['keywords']) ? $input['keywords'] : null,
+            'extras' => isset($input['extras']) ? $input['extras'] : null,
         ]);
 
         session()->flash('flash.banner', __('Page has been created.'));

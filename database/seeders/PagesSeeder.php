@@ -43,6 +43,26 @@ class PagesSeeder extends Seeder
                 'fr' => 'Appartements Koman, propose, élégamment, confortablement, meublés, salle de bain privée, balcon, terrasse, climatisation, chauffage, cuisine entièrement équipée, télévision par câble, parking gratuit, WiFi gratuit',
                 'cs' => 'Apartmány Koman, nabízí, elegantně, pohodlně, zařízené, vlastní koupelna, balkon, terasa, klimatizace, topení, plně vybavená kuchyň, kabelová televize, zdarma parkování, zdarma WiFi',
             ],
+            'extras' => [
+                'nasfield_text' => [
+                    'sl' => '',
+                    'en' => '',
+                    'de' => '',
+                    'hu' => '',
+                    'it' => '',
+                    'fr' => '',
+                    'cs' => '',
+                ],
+                'bled_text' => [
+                    'sl' => '',
+                    'en' => '',
+                    'de' => '',
+                    'hu' => '',
+                    'it' => '',
+                    'fr' => '',
+                    'cs' => '',
+                ]
+            ]
         ];
 
         $about_us = [
