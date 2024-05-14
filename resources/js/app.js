@@ -8,6 +8,7 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
 import { Translator } from './translator';
 import { createPinia } from 'pinia';
+import VueSocialSharing from 'vue-social-sharing'
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -38,6 +39,7 @@ createInertiaApp({
             .use(pinia)
             .component('InertiaLink', Link)
             .use(Translator, props.initialPage.props.translations)
+            .use(VueSocialSharing)
             //.use(Globals, )
             .mount(el);
         return app

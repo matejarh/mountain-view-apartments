@@ -3,6 +3,11 @@ import DefaultLayout from '@/Layouts/DefaultLayout.vue';
 import HeroSection from './_partials/HeroSection.vue';
 import AvailabilityCalendar from './_partials/AvailabilityCalendar.vue';
 import InfoSection from './_partials/InfoSection.vue';
+import PricesSection from './_partials/PricesSection.vue';
+import MapSection from './_partials/MapSection.vue';
+import HouseRules from './_partials/HouseRules.vue';
+import FacilitiesSection from './_partials/FacilitiesSection.vue';
+
 
 
 </script>
@@ -14,9 +19,14 @@ import InfoSection from './_partials/InfoSection.vue';
 
         <div class="space-y-0">
             <HeroSection />
-            <AvailabilityCalendar id="availability" />
+            <!-- <div class="spacer h-48 w-full"></div> -->
+            <InfoSection id="info" class="z-20" />
+            <MapSection class="mt-6 h-[28rem]" />
+            <AvailabilityCalendar id="availability" class="pb-20" />
+            <HouseRules id="rules" class="z-20" />
             <div class="spacer h-48 w-full"></div>
-            <InfoSection id="info" />
+            <FacilitiesSection id="facilities" class="pt-12"/>
+            <PricesSection id="prices" class="pt-12"/>
             <div class="spacer h-48 w-full"></div>
         </div>
     </DefaultLayout>
