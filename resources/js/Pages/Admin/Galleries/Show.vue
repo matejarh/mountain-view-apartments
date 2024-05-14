@@ -28,6 +28,40 @@ const showDestroyConfirm = ref(false)
 const showingImage = ref(null)
 const editing = ref(false)
 
+const imagesProxy = ref(props.gallery?.images)
+
+const moveUp = (index) => {
+  if (index > 0) {
+    const temp = imagesProxy.value[index];
+    imagesProxy.value.splice(index, 1);
+    imagesProxy.value.splice(index - 1, 0, temp);
+    updateOrder();
+  }
+};
+
+const moveDown = (index) => {
+  if (index < imagesProxy.value.length - 1) {
+    const temp = imagesProxy.value[index];
+    imagesProxy.value.splice(index, 1);
+    imagesProxy.value.splice(index + 1, 0, temp);
+    updateOrder();
+  }
+};
+
+const updateOrderForm = useForm({
+    orderedItemIds: [],
+})
+
+const updateOrder = () => {
+  updateOrderForm.orderedItemIds = imagesProxy.value.map(item => item.id);
+  updateOrderForm.put(route('admin.galleries.update-images-order', props.gallery),{
+    onSuccess: () => {
+        imagesProxy.value = props.gallery?.images
+    }
+  });
+};
+
+
 const form = useForm({
     name: props.gallery?.name,
     description: props.gallery?.description
@@ -125,10 +159,10 @@ onUnmounted(() => {
                 <div v-if="!editing">{{ __(gallery.description) }}</div>
             </template>
             <template #content>
-                <div class="relative" v-if="gallery.images.length > 0">
+                <div class="relative" v-if="imagesProxy.length > 0">
                     <TransitionGroup name="list" tag="ul"
-                        class=" relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 4xl:grid-cols-6 gap-4 md:gap-4 lg:gap-6 2xl:gap-8">
-                        <li key="0">
+                        class="list-group relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 4xl:grid-cols-6 gap-4 md:gap-4 lg:gap-6 2xl:gap-8">
+                        <li key="0" class="list-group-item">
 
                             <figure @click="showImagesDialog = true"
                                 class="flex flex-col items-center justify-center text-center select-none hover:scale-105 active:scale-95 rounded-lg min-h-full relative shadow-lg  transition-all duration-300 cursor-pointer overflow-visible">
@@ -138,8 +172,11 @@ onUnmounted(() => {
                             </figure>
                         </li>
 
-                        <ImageCard v-for="image, key in gallery.images" :key="image.id" :image="image"
-                            :has-gallery="true" @clicked="handleClicked" />
+
+                        <ImageCard v-for="image, key in imagesProxy" :key="image.id" :item-key="key"
+                            :images-count="imagesProxy.length" :image="image" :has-gallery="true" :is-busy="updateOrderForm.processing"
+                            @clicked="handleClicked" @move-up="moveUp" @move-down="moveDown" />
+
                     </TransitionGroup>
 
                 </div>
@@ -159,13 +196,15 @@ onUnmounted(() => {
         </ActionSection>
         <div class=" fixed top-28 sm:top-20 right-4 md:top-20  md:right-4 z-10">
             <Tooltip :text="__('Upload And Attach Images')" location="left">
-                <button @click="showImagesDialog = true" class=" drop-shadow-lg active:drop-shadow hover:drop-shadow-xl transition-all ease-in-out duration-150 rounded-full bg-transparent ">
+                <button @click="showImagesDialog = true"
+                    class=" drop-shadow-lg active:drop-shadow hover:drop-shadow-xl transition-all ease-in-out duration-150 rounded-full bg-transparent ">
                     <CirclePlusIcon
                         class="w-16 h-16 text-amazon-400 hover:scale-105 hover:rotate-180  active:scale-95 transition-all ease-in-out duration-150 " />
                 </button>
             </Tooltip>
             <Tooltip :text="__('Remove Gallery')" location="left">
-                <button @click="showDestroyConfirm = true" class=" drop-shadow-lg active:drop-shadow hover:drop-shadow-xl transition-all ease-in-out duration-150 rounded-full bg-transparent ">
+                <button @click="showDestroyConfirm = true"
+                    class=" drop-shadow-lg active:drop-shadow hover:drop-shadow-xl transition-all ease-in-out duration-150 rounded-full bg-transparent ">
                     <TrashBinIcon
                         class="w-16 h-16 text-bittersweet-400 hover:scale-105 hover:rotate-3 active:scale-95 transition-all ease-in-out duration-150 " />
                 </button>
@@ -182,7 +221,8 @@ onUnmounted(() => {
                 <TrashBinIcon class=" text-gray-400 dark:text-gray-500 w-11 h-11 mb-3.5 mx-auto" />
             </template>
             <template #content>
-                <p class="mb-4 text-gray-500 dark:text-gray-300 text-lg">{{ __('This will remove gallery from the server.')}}</p>
+                <p class="mb-4 text-gray-500 dark:text-gray-300 text-lg">
+                    {{ __('This will remove gallery from the server.')}}</p>
                 <p class="mb-4 text-gray-500 dark:text-gray-300 text-sm">{{ __('Images will not be deleted, and can be attached in other galleries.')}}</p>
             </template>
         </ConfirmationModal>
