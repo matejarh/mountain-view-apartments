@@ -11,6 +11,7 @@ import ContactDrawer from './_partials/_default/ContactDrawer.vue';
 
 import { useHelperStore } from '@/stores/helpers'
 import { useScrollStore } from '@/stores/scroll';
+import { useClientStore } from '@/stores/client';
 
 defineProps({
     title: String,
@@ -23,6 +24,7 @@ const container = ref(null)
 
 const helpers = useHelperStore()
 const scroll = useScrollStore()
+const client = useClientStore()
 
 const page = usePage()
 
@@ -54,6 +56,7 @@ const handleScroll = (e) => {
 }
 
 onMounted(() => {
+    client.getLocation()
     if(!helpers.pageLoaded) {
         helpers.delay(600)
             .then(() => {

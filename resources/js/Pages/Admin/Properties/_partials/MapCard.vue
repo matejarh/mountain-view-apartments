@@ -24,7 +24,7 @@ const zoom = ref(14);
                 name="OpenStreetMap"></l-tile-layer>
 
         </l-map> -->
-        <l-map class="rounded-lg" :useGlobalLeaflet="false" ref="map" v-model:zoom="zoom" :center="coordinates">
+        <l-map class="z-0 rounded-lg" :useGlobalLeaflet="false" ref="map" v-model:zoom="zoom" :center="coordinates">
             <!-- <l-tile-layer url="http://tile.stamen.com/watercolor/{z}/{x}/{y}.jpg" layer-type="base"
                 name="Stamen Watercolor"
                 attribution="Map tiles by <a href='http://stamen.com'>Stamen Design</a>, under <a href='http://creativecommons.org/licenses/by/3.0'>CC BY 3.0</a>. Data by <a href='http://openstreetmap.org'>OpenStreetMap</a>, under <a href='http://creativecommons.org/licenses/by-sa/3.0'>CC BY SA</a>." /> -->

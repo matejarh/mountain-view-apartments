@@ -1,7 +1,7 @@
 <script setup>
 import CarouselCarretLeftIcon from '@/Icons/CarouselCarretLeftIcon.vue';
 import { Carousel } from 'flowbite';
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
 const props = defineProps({
     id: String,
@@ -9,7 +9,19 @@ const props = defineProps({
     interval: {
         default: 3000,
         type: Number,
+    },
+    image: {
+        type:Object,
+        default: {
+            image:null,
+            key:0,
+        },
+    },
+    isFullScreen: {
+        type: Boolean,
+        default: false,
     }
+
 })
 
 const carousel=ref(null)
@@ -29,7 +41,13 @@ const makeIndicators = () => {
     return items
 }
 
-onMounted(() => {
+const fullScreenClasses = computed(() => {
+    return [
+        props.isFullScreen ? 'min-h-[30vh] sm:h-[85vh]  md:h-[48vh] lg:h-[85vh]' : 'h-[100vh] sm:min-h-[55rem] md:h-64 lg:min-h-[56vh] xl:min-h-[45vh] 2xl:min-h-[50vh]'
+    ]
+})
+
+const initialize = () => {
     const items = makeItems()
     const indicators = makeIndicators()
 
@@ -65,6 +83,13 @@ onMounted(() => {
     };
     const carouselElement = document.getElementById(props.id);
     carousel.value = new Carousel(carouselElement, items, options, instanceOptions);
+
+    carousel.value.slideTo(props.image.key)
+
+}
+
+onMounted(() => {
+    initialize()
 })
 
 </script>
@@ -73,7 +98,7 @@ onMounted(() => {
 <div :id="id" class="relative w-full">
     <!-- Carousel wrapper -->
     <div
-        class="relative h-[100vh] overflow-hidden rounded-lg sm:min-h-[55rem] md:h-64 lg:min-h-[56vh] xl:min-h-[45vh] 2xl:min-h-[50vh]"
+        class="relative overflow-hidden rounded-lg " :class="fullScreenClasses"
     >
         <slot />
         <!-- <div v-for="image, key in slides" :id="`carousel-item-${key}`" class="hidden duration-700 ease-in-out" >
@@ -87,7 +112,7 @@ onMounted(() => {
     </div>
     <!-- Slider indicators -->
     <div
-        class="absolute bottom-0 left-1/2 z-30 flex -translate-x-1/2 space-x-3 rtl:space-x-reverse"
+        class="absolute -bottom-2 left-1/2 z-30 flex -translate-x-1/2 space-x-3 rtl:space-x-reverse"
     >
         <button
             v-for="item, key in slides"

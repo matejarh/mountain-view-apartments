@@ -67,9 +67,13 @@ const maxWidthClass = computed(() => {
         '2xl': 'sm:max-w-2xl',
         '3xl': 'md:max-w-3xl',
         '4xl': 'md:max-w-4xl',
-        'screen': 'max-w-screen-xl',
+        'screen': 'max-w-screen',
     }[props.maxWidth];
 });
+
+const fullScreenClasses = computed(() => {
+    return props.isFullScreen ? 'bg-transparent w-full' : 'bg-white dark:bg-gray-800 overflow-x-visible overflow-y-auto lg:mb-6 w-full sm:w-full sm:mx-4'
+})
 </script>
 
 <template>
@@ -114,8 +118,8 @@ const maxWidthClass = computed(() => {
                     leave-from-class="opacity-100 translate-y-0 sm:scale-100"
                     leave-to-class="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
 
-                    <div v-show="show" :class="maxWidthClass"
-                        class="overflow-x-visible overflow-y-auto lg:mb-6 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 rounded-lg shadow-xl  scrollbar-thin transform transition-all w-full sm:w-full sm:mx-4 ">
+                    <div v-show="show" :class="[maxWidthClass,fullScreenClasses]"
+                        class="  text-gray-700 dark:text-gray-200 rounded-lg shadow-xl  scrollbar-thin transform transition-all  ">
                         <slot v-if="showSlot" />
                     </div>
                 </transition>

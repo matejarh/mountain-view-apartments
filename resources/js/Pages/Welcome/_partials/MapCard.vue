@@ -4,7 +4,7 @@ import { LMap, LTileLayer, LMarker, LPopup, LPolygon, LControl } from "@vue-leaf
 import { ref, computed } from 'vue';
 
 const props = defineProps({
-    //property: Object
+    property: Object
 })
 
 const coordinates = computed(() => {
@@ -17,14 +17,14 @@ const zoom = ref(14);
 </script>
 
 <template>
-    <div class="w-full h-96 z-0">
+    <div class="w-full z-0">
         <l-map class="rounded-lg" :useGlobalLeaflet="false" ref="map" v-model:zoom="zoom" :center="coordinates">
                 <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" layer-type="base"
                     name="OpenStreetMap" />
             <l-marker :lat-lng="coordinates" class="">
                 <l-popup class="">
                     <div class="content py-2">
-                        <!-- <img :src="property.galleries[0].images[0].thumb_url" class="w-24 h-16 float-left pr-2" /> -->
+                        <img :src="property.galleries[0].images[0].thumb_url" class="w-24 h-16 float-left pr-2" />
                         <div class="item-body  ">
                             <h3 class="font-bold text-base leading-tight">Test naslov</h3>
                             <p>test opis </p>

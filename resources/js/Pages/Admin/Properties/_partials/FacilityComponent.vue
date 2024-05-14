@@ -1,7 +1,7 @@
 <script setup>
 import Tooltip from '@/Components/Tooltip.vue';
 import SpinnerIcon from '@/Icons/SpinnerIcon.vue';
-import XIcon from '@/Icons/XIcon.vue';
+import CloseXIcon from '@/Icons/CloseXIcon.vue';
 import { useForm } from '@inertiajs/vue3';
 
 defineProps({
@@ -33,7 +33,7 @@ const attach = (facility, property) => {
                     :disabled="dForm.processing || dForm.recentlySuccessful"
                     class="inline-flex items-center p-1  ms-2 text-sm text-amazon-400 bg-transparent rounded-sm hover:bg-amazon-200 hover:text-amazon-900 dark:hover:bg-amazon-800 dark:hover:text-amazon-300"
                     aria-label="Remove">
-                    <XIcon class="w-2 h-2 " v-show="!dForm.processing" />
+                    <CloseXIcon class="w-2 h-2 " v-show="!dForm.processing" />
                     <SpinnerIcon v-show="dForm.processing" class="animate-spin  h-2 w-2 " />
                     <span class="sr-only">{{ __('Remove badge') }}</span>
                 </button>
@@ -48,7 +48,7 @@ const attach = (facility, property) => {
                     :disabled="aForm.processing || aForm.recentlySuccessful"
                     class="inline-flex items-center p-1  ms-2 text-sm text-bittersweet-400 bg-transparent rounded-sm hover:bg-bittersweet-200 hover:text-bittersweet-900 dark:hover:bg-bittersweet-800 dark:hover:text-bittersweet-300"
                     aria-label="Remove">
-                    <XIcon class="w-2 h-2 rotate-45" v-show="!aForm.processing" />
+                    <CloseXIcon class="w-2 h-2 rotate-45" v-show="!aForm.processing" />
                     <SpinnerIcon v-show="aForm.processing" class="animate-spin  h-2 w-2 " />
                     <span class="sr-only">{{ __('Remove badge') }}</span>
                 </button>

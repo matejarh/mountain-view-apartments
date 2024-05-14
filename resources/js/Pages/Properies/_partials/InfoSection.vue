@@ -11,18 +11,21 @@ import { usePage } from '@inertiajs/vue3';
 import _ from 'lodash';
 import { computed, ref } from 'vue';
 import PhotoGallery from './PhotoGallery.vue';
+import SocialSharingDialog from './SocialSharingDialog.vue';
 import FullScreenImagesModal from '@/Pages/Admin/Images/_partials/FullScreenImagesModal.vue';
 import MapCard from '@/Pages/Admin/Properties/_partials/MapCard.vue';
+import FeaturedGallery from '@/Components/_default/FeaturedGallery.vue';
 import DinamicIcon from '@/Components/DinamicIcon.vue';
 
-const page = usePage()
-const facilitiesWithIcons = computed(() => {
-    return _.filter(page.props.property?.facilities, ['has_icon_file', true])
-    //.orderBy(props.property.facilities, ['has_icon_file'], ['desc'])
-})
+import Popover from '@/Components/_default/Popover.vue';
+import Tooltip from '@/Components/_default/Tooltip.vue';
+import ShareNodesIcon from '@/Icons/ShareNodesIcon.vue';
+import RatingStars from '@/Components/_default/Properties/RatingStars.vue';
+import ShapedSection from '@/Components/_default/ShapedSection.vue';
 
 const showFullScreenImageModal = ref(false)
-const imageProxy = ref(null)
+const showSocialSharingDialog = ref(false)
+const imageProxy = ref({})
 
 const handleFullScreenImage = (image) => {
     imageProxy.value = image
@@ -31,7 +34,7 @@ const handleFullScreenImage = (image) => {
 </script>
 
 <template>
-    <section class="relative py-8 bg-white md:py-16 dark:bg-gray-900 antialiased">
+    <ShapedSection class="py-8 md:py-16" :color="{ light: 'gray-50', dark: 'gray-900' }">
         <div class="max-w-screen-xl px-4 mx-auto 2xl:px-0">
             <div class="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16">
                 <div class="shrink-0 max-w-md lg:max-w-lg mx-auto">
@@ -39,9 +42,14 @@ const handleFullScreenImage = (image) => {
                         src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front.svg" alt="" />
                     <img class="w-full hidden dark:block"
                         src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front-dark.svg" alt="" /> -->
-                    <PhotoGallery class="w-full" @clicked="handleFullScreenImage" />
-                    <MapCard :property="$page.props.property" class="mt-6" />
+                    <!-- <PhotoGallery class="w-full" @clicked="handleFullScreenImage" /> -->
+                    <FeaturedGallery :images="$page.props.property.galleries[0].images" class="w-full"
+                        @clicked="handleFullScreenImage" />
+                    <!-- <MapCard :property="$page.props.property" class="mt-6" /> -->
+                    <!-- <p class="mt-4 font-lg font-semibold">Spread the word</p> -->
+
                 </div>
+
 
                 <div class="mt-6 sm:mt-8 lg:mt-0">
                     <h1 class="text-2xl font-extrabold text-gray-900 sm:text-3xl dark:text-white">
@@ -53,51 +61,13 @@ const handleFullScreenImage = (image) => {
                             {{ __($page.props.property.type) }}
                         </p>
 
-                        <div class="flex items-center gap-2 mt-2 sm:mt-0">
-                            <div class="flex items-center gap-1">
-                                <svg class="w-4 h-4 text-yellow-300" aria-hidden="true"
-                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path
-                                        d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z" />
-                                </svg>
-                                <svg class="w-4 h-4 text-yellow-300" aria-hidden="true"
-                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path
-                                        d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z" />
-                                </svg>
-                                <svg class="w-4 h-4 text-yellow-300" aria-hidden="true"
-                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path
-                                        d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z" />
-                                </svg>
-                                <svg class="w-4 h-4 text-yellow-300" aria-hidden="true"
-                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path
-                                        d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z" />
-                                </svg>
-                                <svg class="w-4 h-4 text-yellow-300" aria-hidden="true"
-                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path
-                                        d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z" />
-                                </svg>
-                            </div>
-                            <p class="text-sm font-medium leading-none text-gray-500 dark:text-gray-400">
-                                (5.0)
-                            </p>
-                            <a href="#"
-                                class="text-sm font-medium leading-none text-gray-900 underline hover:no-underline dark:text-white">
-                                345 Reviews
-                            </a>
-                        </div>
+                        <RatingStars />
+
                     </div>
 
                     <div class="mt-4 sm:flex sm:space-x-4">
-                        <div class="flex space-x-2 items-center" v-for="type,key in $page.props.property.bed_types" :key="key">
+                        <div class="flex space-x-2 items-center" v-for="type, key in $page.props.property.bed_types"
+                            :key="key">
 
                             <DinamicIcon :icon="type.icon" class="w-8 h-8" />
                             <p class="capitalize">{{ __(type.title) }}</p>
@@ -106,11 +76,16 @@ const handleFullScreenImage = (image) => {
                         <!-- {{ $page.props.property.bed_types }} -->
                     </div>
 
-                    <div class="mt-2 ">
+                    <div class="mt-2">
                         <a :href="$page.props.property.google_maps_link" target="_blank"
-                        class="text-md font-semibold text-gray-900 sm:text-md dark:text-gray-300 flex items-center hover:font-bold transition">
-                        <MapLocationIcon class="w-8 h-5" />
-                            {{ $page.props.property.address }}
+                            class="text-md font-semibold text-gray-900 sm:text-md dark:text-gray-300 hover:font-bold transition">
+                            <div class="flex items-center w-fit">
+                                <MapLocationIcon class="w-8 h-5" />
+                                <Tooltip :text="__('Get Travel Directions')" key="directions" placement="top">
+                                    {{ $page.props.property.address }}
+                                </Tooltip>
+
+                            </div>
                         </a>
 
                     </div>
@@ -137,14 +112,21 @@ const handleFullScreenImage = (image) => {
                             role="button">
                             <CommentDotsIcon class="w-5 h-5 -ms-2 me-2" />
 
-                            Post Rewiew
+                            Post Review
+                        </a>
+
+                        <a href="#" @click="showSocialSharingDialog = true" title=""
+                            class="text-white mt-4 sm:mt-0 bg-amazon-700 hover:bg-amazon-800 focus:ring-4 focus:ring-amazon-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-amazon-600 dark:hover:bg-amazon-700 focus:outline-none dark:focus:ring-amazon-800 flex items-center justify-center"
+                            role="button">
+                            <ShareNodesIcon class="w-5 h-5 -ms-2 me-2" />
+
+                            Share
                         </a>
                     </div>
-                    <div class="grid grid-cols-4 md:grid-cols-6 gap-4 mt-6 text-gray-500">
 
-                        <FacilityIcon v-for="facility in facilitiesWithIcons" :facility="facility" :key="facility.id" class="text-center" />
+                    <!-- <SocialSharing class="mt-2 w-full" /> -->
 
-                    </div>
+
 
                     <hr class="my-6 md:my-8 border-gray-200 dark:border-gray-800" />
 
@@ -156,9 +138,10 @@ const handleFullScreenImage = (image) => {
             </div>
         </div>
 
-        <ShapeBottom
-            class="absolute inset-y-full z-10 left-0 right-0 top-0 w-full rotate-180 text-white    dark:text-gray-900 " />
-        <ShapeTop class="absolute inset-y-full z-0 left-0 right-0 w-full bottom-1/2 text-white   dark:text-gray-900 " />
-        <FullScreenImagesModal :image="imageProxy" :show="showFullScreenImageModal" @close="showFullScreenImageModal = false" />
-    </section>
+        <FullScreenImagesModal :images="$page.props.property.galleries[0].images" :image="imageProxy" :show="showFullScreenImageModal"
+        @close="showFullScreenImageModal = false" />
+        <SocialSharingDialog :show="showSocialSharingDialog"
+        @close="showSocialSharingDialog = false" />
+    </ShapedSection>
+
 </template>

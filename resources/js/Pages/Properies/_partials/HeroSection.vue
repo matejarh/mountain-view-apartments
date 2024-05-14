@@ -2,7 +2,6 @@
 import ShapeBottom from '@/Components/_default/ShapeBottom.vue';
 import ShapeTop from '@/Components/_default/ShapeTop.vue';
 import { usePage } from '@inertiajs/vue3';
-import { initCarousels } from 'flowbite';
 import _ from 'lodash';
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 import LogoHero from '@/Components/LogoHero.vue';
@@ -14,11 +13,6 @@ const page = usePage()
 const bgImage = ref(new URL('/resources/images/backgrounds/winter-sunrise.jpg', import.meta.url))
 
 const interval = ref(null)
-
-/* const gallery = computed(() => {
-    return _.filter(page.props.property.galleries, ['name', 'Home Page Hero'])[0]
-}) */
-const defaultBackgroundImage = new URL('/resources/images/backgrounds/winter-sunrise.jpg', import.meta.url)
 
 const initBgImageRotation = () => {
     if (page.props.property.galleries.length <=0) {
@@ -50,7 +44,6 @@ const stopBgRotation = () => {
 }
 
 onMounted(() => {
-    initCarousels()
     initBgImageRotation()
 })
 
@@ -74,8 +67,7 @@ onBeforeUnmount(() => {
                 <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-white md:text-5xl lg:text-6xl">
                     {{ $page.props.property.title[$page.props.locale] }}</h1>
 
-                <p class="mb-8 text-lg font-normal text-gray-300 lg:text-xl sm:px-16 lg:px-48">{{
-                    $page.props.property.description[$page.props.locale] }}</p>
+                <div class="mb-8 text-lg font-normal text-gray-300 lg:text-xl sm:px-16 lg:px-48" v-html="$page.props.property.description[$page.props.locale]"></div>
 
                 <div class="mb-8 flex flex-col space-y-4 sm:space-x-4 sm:flex-row sm:justify-center sm:space-y-0">
                     <PrimaryButton @click="gotoAvailability" class="py-3 px-5 " type="button">

@@ -4,8 +4,8 @@ import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css'
 import { useForm, usePage } from '@inertiajs/vue3';
 import { useHelperStore } from '@/stores/helpers';
-import ShapeTop from '@/Components/_default/ShapeTop.vue';
 import InfoIcon from '@/Icons/InfoIcon.vue';
+import ShapedSection from '@/Components/_default/ShapedSection.vue';
 
 const page = usePage()
 
@@ -74,19 +74,19 @@ const book = () => {
 
     if (date.value.length > 0) {
         picker.classList.remove('animate-shake')
-        alert ('You selected from ' + date.value[0].toLocaleDateString(page.props.locale) + ' to ' + date.value[1].toLocaleDateString(page.props.locale));
+        alert('You selected from ' + date.value[0].toLocaleDateString(page.props.locale) + ' to ' + date.value[1].toLocaleDateString(page.props.locale));
     } else {
         picker.classList.add('animate-shake')
 
         helpers.delay(1000)
-        .then(() => { picker.classList.remove('animate-shake') })
+            .then(() => { picker.classList.remove('animate-shake') })
     }
 }
 
 </script>
 
 <template>
-    <section class="relative bg-primary-700 dark:bg-primary-900 pt-8 sm:pt-4 md:pt-0">
+    <ShapedSection class="pt-8 sm:pt-4 md:pt-0" :color="{ light: 'primary-700', dark: 'primary-900' }">
         <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
             <div class="mx-auto max-w-screen-xl text-center">
                 <h2 class="mb-4 text-4xl tracking-tight font-extrabold leading-tight text-white dark:text-white">
@@ -94,21 +94,11 @@ const book = () => {
 
                 <div class="flex justify-center w-full mb-2">
                     <div id="rangepicker">
-                        <VueDatePicker v-model="date"
-                            :range="options.range"
-                            :multi-calendars="options.multi"
-                            :min-date="new Date()"
-                            prevent-min-max-navigation
-                            :markers="notAvailableMarkers"
-                            :disabled-dates="disabledDates"
-                            :highlight="highlightedDates"
-                            :enable-time-picker="false"
-                            :locale="$page.props.locale"
-                            :format="$page.props.date_format_pattern"
-                            :dark="helpers.isDark"
-                            :six-weeks="false"
-                            inline
-                            auto-apply
+                        <VueDatePicker v-model="date" :range="options.range" :multi-calendars="options.multi"
+                            :min-date="new Date()" prevent-min-max-navigation :markers="notAvailableMarkers"
+                            :disabled-dates="disabledDates" :highlight="highlightedDates" :enable-time-picker="false"
+                            :locale="$page.props.locale" :format="$page.props.date_format_pattern"
+                            :dark="helpers.isDark" :six-weeks="false" inline auto-apply
                             :placeholder="__('Select arrival & departure dates...')">
 
                             <template #marker="{ marker, day, date }">
@@ -127,7 +117,7 @@ const book = () => {
                 <p class="flex mb-6 font-light text-gray-100 dark:text-gray-300 md:text-lg rounded-lg">
                     <span class="mx-auto flex items-center">
                         <InfoIcon class="w-6 h-6 me-2" />
-                        {{__('Availabiliti calendar for')}} {{ $page.props.property?.title[$page.props.locale] }}
+                        {{ __('Availabiliti calendar for') }} {{ $page.props.property?.title[$page.props.locale] }}
 
                     </span>
                 </p>
@@ -136,23 +126,18 @@ const book = () => {
                     {{ __('Check Availability') }}</a>
             </div>
         </div>
-        <!--         <ShapeBottom
-            class="absolute inset-y-full z-10 left-0 right-0 w-full rotate-180 text-primary-700 dark:text-primary-900 " /> -->
-        <ShapeTop
-            class="absolute inset-y-full z-0 left-0 right-0 w-full bottom-1/2 text-primary-700 dark:text-primary-900 " />
-    </section>
+    </ShapedSection>
 </template>
 
 <style>
-
 .not-available-marker {
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: 8px;
-  width: 8px;
-  border-radius: 100%;
-  background-color: #e52f1d;
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 8px;
+    width: 8px;
+    border-radius: 100%;
+    background-color: #e52f1d;
 }
 
 :root {
