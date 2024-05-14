@@ -13,25 +13,21 @@ const page = usePage()
 
 const bgImage = ref(new URL('/resources/images/backgrounds/winter-sunrise.jpg', import.meta.url))
 
-const interval = ref(null)
-
-/* const gallery = computed(() => {
-    return _.filter(page.props.page.galleries, ['name', 'Home Page Hero'])[0]
-}) */
-
-const defaultBackgroundImage = new URL('/resources/images/backgrounds/winter-sunrise.jpg', import.meta.url)
+let interval
 
 const initBgImageRotation = () => {
-    if (page.props.page.galleries.length <=0) {
+    if (page.props.page.galleries.length <= 0) {
         clearInterval(interval)
         return
     }
-    const gallery = _.filter(page.props.page.galleries, ['name', 'Home Page Hero'])[0]
+    //const gallery = _.filter(page.props.page.galleries, ['name', 'Home Page Hero'])[0]
+    const gallery = page.props.page.galleries.find(gallery => gallery.name === 'Home Page Hero');
+
 
     bgImage.value = gallery.images[0].photo_url
     let current = 0
 
-    interval.value = setInterval(() => {
+    interval = setInterval(() => {
         bgImage.value = gallery.images[current].photo_url
 
         if (current + 1 >= gallery.images.length) {
@@ -47,7 +43,7 @@ const gotoBookNow = () => {
 }
 
 const stopBgRotation = () => {
-    clearInterval(interval.value)
+    clearInterval(interval)
 }
 
 onMounted(() => {
@@ -56,7 +52,7 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
-    clearInterval(interval.value)
+    clearInterval(interval)
 })
 </script>
 

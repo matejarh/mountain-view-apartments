@@ -22,6 +22,7 @@ import Tooltip from '@/Components/_default/Tooltip.vue';
 import ShareNodesIcon from '@/Icons/ShareNodesIcon.vue';
 import RatingStars from '@/Components/_default/Properties/RatingStars.vue';
 import ShapedSection from '@/Components/_default/ShapedSection.vue';
+import TileGallery from '@/Components/_default/TileGallery.vue';
 
 const showFullScreenImageModal = ref(false)
 const showSocialSharingDialog = ref(false)
@@ -43,8 +44,9 @@ const handleFullScreenImage = (image) => {
                     <img class="w-full hidden dark:block"
                         src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front-dark.svg" alt="" /> -->
                     <!-- <PhotoGallery class="w-full" @clicked="handleFullScreenImage" /> -->
-                    <FeaturedGallery :images="$page.props.property.galleries[0].images" class="w-full"
-                        @clicked="handleFullScreenImage" />
+                    <!-- <FeaturedGallery :images="$page.props.property.galleries[0].images" class="w-full"
+                        @clicked="handleFullScreenImage" /> -->
+                        <TileGallery :images="$page.props.property.galleries[0].images" @clicked="handleFullScreenImage" />
                     <!-- <MapCard :property="$page.props.property" class="mt-6" /> -->
                     <!-- <p class="mt-4 font-lg font-semibold">Spread the word</p> -->
 
@@ -131,7 +133,7 @@ const handleFullScreenImage = (image) => {
                     <hr class="my-6 md:my-8 border-gray-200 dark:border-gray-800" />
 
 
-                    <div class="mb-6 text-gray-500 dark:text-gray-400"
+                    <div class="mb-6 text-gray-500 dark:text-gray-400 space-y-2 text-justify"
                         v-html="$page.props.property.long_description[$page.props.locale]"></div>
 
                 </div>

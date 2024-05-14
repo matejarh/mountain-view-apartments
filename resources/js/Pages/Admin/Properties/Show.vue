@@ -22,12 +22,14 @@ const showFacilitiesDialog = ref(false)
 const showAttachGalleryDialog = ref(false)
 
 const facilitiesWithIcons = computed(() => {
-    return _.filter(props.property.facilities, ['has_icon_file', true])
-    //.orderBy(props.property.facilities, ['has_icon_file'], ['desc'])
+    // return _.filter(props.property.facilities, ['has_icon_file', true])
+    return props.property.facilities.filter(facility => facility.has_icon_file);
 })
+
 const facilitiesWithoutIcons = computed(() => {
-    return _.filter(props.property.facilities, ['has_icon_file', false])
-    //.orderBy(props.property.facilities, ['has_icon_file'], ['desc'])
+    return props.property.facilities.filter(facility => !facility.has_icon_file);
+
+    //return _.filter(props.property.facilities, ['has_icon_file', false])
 })
 
 const detachForm = useForm({})

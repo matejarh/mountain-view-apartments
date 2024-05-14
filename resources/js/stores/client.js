@@ -12,7 +12,7 @@ export const useClientStore = defineStore('client', () => {
 
     const handlePosition = (position) => {
         location.value = position
-        console.log(location.value)
+        // console.log(location.value)
     }
 
     return { location, getLocation }

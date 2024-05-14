@@ -89,7 +89,7 @@ const clearPhotoFileInput = () => {
 </script>
 
 <template>
-    <DialogModal max-width="screen" :show="show" @close="form.reset(), $emit('close')">
+    <DialogModal max-width="4xl" :show="show" @close="form.reset(), $emit('close')">
         <template #title>{{ image ? __('Edit Image') : __('Create Image') }}</template>
 
         <template #content>

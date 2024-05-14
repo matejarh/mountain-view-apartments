@@ -20,6 +20,7 @@ const form = useForm({
     name: '',
     text: ''
 })
+
 const store = () => {
     form.clearErrors()
     form.post(route('admin.facilities.store'), {
@@ -28,8 +29,6 @@ const store = () => {
         }
     })
 }
-
-
 </script>
 
 <template>

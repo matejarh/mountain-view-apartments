@@ -17,6 +17,7 @@ const showFullScreenImageModal = ref(false)
 const showingImage = ref(null)
 
 const handleClicked = (image) => {
+    console.log(image)
     showingImage.value = image
 }
 </script>
@@ -43,7 +44,7 @@ const handleClicked = (image) => {
                             </figure>
                         </li>
 
-                        <ImageCard v-for="image, key in $page.props.images.data" :key="image.id" :image="image"
+                        <ImageCard v-for="image, key in $page.props.images.data" :images-count="$page.props.images.total" :key="image.id" :image="image"
                             @clicked="handleClicked" :is-index="true" />
 
 

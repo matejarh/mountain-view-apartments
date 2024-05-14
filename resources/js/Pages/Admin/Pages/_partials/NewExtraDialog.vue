@@ -7,6 +7,8 @@ import TextInput from '@/Components/TextInput.vue';
 import SpinnerIcon from '@/Icons/SpinnerIcon.vue';
 import { useForm, usePage } from '@inertiajs/vue3';
 import { computed } from 'vue';
+import sulgify from 'slugify';
+import slugify from 'slugify';
 
 
 const props = defineProps({
@@ -16,14 +18,15 @@ const props = defineProps({
 const page = usePage()
 
 const extra = computed(() => {
-    let e = {
-        [form.name]: {}
-    }
+    const key = slugify(form.name).replace('-', '_');
+    const e = {};
+
     page.props.supported_locales.forEach(locale => {
-        e[form.name][locale] = ""
+        e[key] = { ...e[key], [locale]: "" };
     });
-    return e
-})
+
+    return e;
+});
 
 const form = useForm({
     name: '',
@@ -50,7 +53,7 @@ const emit = defineEmits(['close', 'create'])
         <template #footer>
             <PrimaryButton type="button"
                 :class="{ 'opacity-25': form.processing || form.recentlySuccessful || !form.isDirty }"
-                :disabled="form.processing || form.recentlySuccessful || !form.isDirty" @click="$emit('create', extra)">
+                :disabled="form.processing || form.recentlySuccessful || !form.isDirty" @click="$emit('create', extra), $emit('close'), form.reset()">
                 <div class="flex items-center">
                     <SpinnerIcon v-show="form.processing"
                         class="animate-spin -ml-1 mr-3 h-5 w-5 text-white dark:text-white" />
