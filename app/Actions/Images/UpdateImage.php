@@ -27,7 +27,7 @@ class UpdateImage implements UpdatesImages
         $validator = Validator::make($input, [
             'name' => ['required', 'string', 'max:255', new SpamFree],
             'description' => ['nullable', 'string', new SpamFree],
-            'photo' => ['nullable', 'mimes:jpg,jpeg,png,svg', 'max:4096', 'dimensions:min_width=1024,min_height=576'],
+            'photo' => ['nullable', 'mimes:jpg,jpeg,png,svg', 'max:4096', 'dimensions:min_width=675,min_height=675'],
         ],[
             'photo.dimensions' => __('Image dimensions must be at least 1280x720(HD)px'),
         ]);
@@ -40,6 +40,7 @@ class UpdateImage implements UpdatesImages
 
         $image->forceFill([
             'name' => $input['name'],
+            'slug' => str($input['name'])->slug() . '-' . str()->random(5),
             'description' => $input['description'],
         ])->save();
 
