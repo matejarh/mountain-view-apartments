@@ -5,11 +5,13 @@ use App\Contracts\AttachesGalleriesToImages;
 use App\Contracts\AttachesGalleriesToPages;
 use App\Contracts\AttachesGalleriesToProperties;
 use App\Contracts\AttachesImagesToGalleries;
+use App\Contracts\CreatesNewFacilities;
 use App\Contracts\CreatesNewGalleries;
 use App\Contracts\CreatesNewImages;
 use App\Contracts\CreatesNewPages;
 use App\Contracts\CreatesNewProperties;
 use App\Contracts\CreatesNewSettings;
+use App\Contracts\DeletesFacilities;
 use App\Contracts\DeletesGalleries;
 use App\Contracts\DeletesImages;
 use App\Contracts\DeletesPages;
@@ -18,6 +20,7 @@ use App\Contracts\DetachesGalleriesFromImages;
 use App\Contracts\DetachesGalleriesFromPages;
 use App\Contracts\DetachesGalleriesFromProperties;
 use App\Contracts\DetachesImagesFromGalleries;
+use App\Contracts\UpdatesFacilities;
 use App\Contracts\UpdatesGalleries;
 use App\Contracts\UpdatesImages;
 use App\Contracts\UpdatesPages;
@@ -277,5 +280,38 @@ class Fortify
     public static function detachGalleriesFromPropertiesUsing(string $callback)
     {
         app()->singleton(DetachesGalleriesFromProperties::class, $callback);
+    }
+
+        /**
+     * Register a class / callback that should be used to create new galleries.
+     *
+     * @param  string  $callback
+     * @return void
+     */
+    public static function createFacilitiesUsing(string $callback)
+    {
+        app()->singleton(CreatesNewFacilities::class, $callback);
+    }
+
+    /**
+     * Register a class / callback that should be used to update given gallery.
+     *
+     * @param  string  $callback
+     * @return void
+     */
+    public static function updateFacilitiesUsing(string $callback)
+    {
+        app()->singleton(UpdatesFacilities::class, $callback);
+    }
+
+    /**
+     * Register a class / callback that should be used to destroyes given gallery.
+     *
+     * @param  string  $callback
+     * @return void
+     */
+    public static function destroyFacilitiesUsing(string $callback)
+    {
+        app()->singleton(DeletesFacilities::class, $callback);
     }
 }

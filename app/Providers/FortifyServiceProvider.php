@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Actions\Facilities\CreateNewFacility;
+use App\Actions\Facilities\DeleteFacility;
+use App\Actions\Facilities\UpdateFacility;
 use App\Actions\Fortify\CreateNewUser;
 use App\Actions\Fortify\ResetUserPassword;
 use App\Actions\Fortify\UpdateUserPassword;
@@ -30,7 +33,10 @@ use App\Actions\Properties\UpdateProperty;
 use App\Actions\Settings\CreateNewSetting;
 use App\Actions\Settings\UpdateSetting;
 use App\Contracts\FacilityAttacheResponse as FacilityAttacheResponseContract;
+use App\Contracts\FacilityCreateResponse as FacilityCreateResponseContract;
+use App\Contracts\FacilityDeleteResponse as FacilityDeleteResponseContract;
 use App\Contracts\FacilityDetacheResponse as FacilityDetacheResponseContract;
+use App\Contracts\FacilityUpdateResponse as FacilityUpdateResponseContract;
 use App\Contracts\GalleryAttacheResponse as GalleryAttacheResponseContract;
 use App\Contracts\GalleryCreateResponse as GalleryCreateResponseContract;
 use App\Contracts\GalleryDeleteResponse as GalleryDeleteResponseContract;
@@ -49,7 +55,10 @@ use App\Contracts\PropertyUpdateResponse as PropertyUpdateResponseContract;
 use App\Contracts\SettingCreateResponse as SettingCreateResponseContract;
 use App\Contracts\SettingUpdateResponse as SettingUpdateResponseContract;
 use App\Http\Responses\FacilityAttachedResponse;
+use App\Http\Responses\FacilityCreatedResponse;
+use App\Http\Responses\FacilityDeletedResponse;
 use App\Http\Responses\FacilityDetachedResponse;
+use App\Http\Responses\FacilityUpdatedResponse;
 use App\Http\Responses\GalleryAttachedResponse;
 use App\Http\Responses\GalleryCreatedResponse;
 use App\Http\Responses\GalleryDeletedResponse;
@@ -115,6 +124,10 @@ class FortifyServiceProvider extends ServiceProvider
         $this->app->singleton(PageCreateResponseContract::class, PageCreatedResponse::class);
         $this->app->singleton(PageUpdateResponseContract::class, PageUpdatedResponse::class);
         $this->app->singleton(PageDeleteResponseContract::class, PageDeletedResponse::class);
+
+        $this->app->singleton(FacilityCreateResponseContract::class, FacilityCreatedResponse::class);
+        $this->app->singleton(FacilityUpdateResponseContract::class, FacilityUpdatedResponse::class);
+        $this->app->singleton(FacilityDeleteResponseContract::class, FacilityDeletedResponse::class);
     }
 
     /**
@@ -154,6 +167,10 @@ class FortifyServiceProvider extends ServiceProvider
         AppFortify::destroyPagesUsing(DeletePage::class);
         AppFortify::attachGalleriesToPagesUsing(AttachPageGallery::class);
         AppFortify::detachGalleriesFromPagesUsing(DetachPageGallery::class);
+
+        AppFortify::createFacilitiesUsing(CreateNewFacility::class);
+        AppFortify::updateFacilitiesUsing(UpdateFacility::class);
+        AppFortify::destroyFacilitiesUsing(DeleteFacility::class);
 
         RateLimiter::for('login', function (Request $request) {
             $throttleKey = str(str($request->input(Fortify::username()))->lower().'|'.$request->ip())->transliterate();

@@ -1,6 +1,7 @@
 <?php
 use App\Http\Controllers\Admin\ActivitiesLogController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\FacilitiesController;
 use App\Http\Controllers\Admin\GalleriesController;
 use App\Http\Controllers\Admin\ImagesController;
 use App\Http\Controllers\Admin\PagesController;
@@ -41,6 +42,12 @@ Route::group(['middleware' => config('jetstream.middleware')], function () {
             Route::put('detach-facility/{property}/{facility}', [PropertiesController::class, 'detachFacility'])->name('detach.facility');
             Route::put('attach-gallery/{property}/{gallery}', [PropertiesController::class, 'attachGallery'])->name('attach.gallery');
             Route::put('detach-gallery/{property}/{gallery}', [PropertiesController::class, 'detachGallery'])->name('detach.gallery');
+        });
+
+        Route::name('facilities.')->prefix('facilities')->namespace('facilities')->group(function() {
+            Route::post('/', [FacilitiesController::class, 'store'])->name('store');
+            Route::put('/{facility}', [FacilitiesController::class, 'update'])->name('update');
+            Route::delete('/{facility}', [FacilitiesController::class, 'destroy'])->name('destroy');
         });
 
         Route::name('users.')->prefix('users')->namespace('users')->group(function() {
