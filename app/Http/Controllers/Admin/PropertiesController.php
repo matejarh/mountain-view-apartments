@@ -20,6 +20,7 @@ use App\Models\Facility;
 use App\Models\Gallery;
 use App\Models\Property;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -48,42 +49,61 @@ class PropertiesController extends Controller
         ]);
     }
 
-/**
- * Display the specified property.
- *
- * @param  \Illuminate\Http\Request  $request
- * @param  \App\Models\Property  $property
- * @return \Illuminate\Http\Response
- * @throws \Illuminate\Auth\Access\AuthorizationException
- */
-public function show(Request $request, Property $property): Response
-{
-    // Check if the user has permission to view the property
-    Gate::authorize('view', $property);
+    /**
+     * Display the specified property.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Property  $property
+     * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function show(Request $request, Property $property): Response
+    {
+        // Check if the user has permission to view the property
+        Gate::authorize('view', $property);
 
-    // Render the property details page using Inertia.js
-    return Inertia::render('Admin/Properties/Show', [
-        // Pass the property details along with its galleries and facilities
-        'property' => Property::with('galleries', 'facilities')->find($property->id),
+        // Render the property details page using Inertia.js
+        return Inertia::render('Admin/Properties/Show', [
+            // Pass the property details along with its galleries and facilities
+            'property' => Property::with('galleries', 'facilities')->find($property->id),
 
-        // Retrieve facilities not currently associated with the property
-        'facilities_not_in_property' => Facility::all()->intersect(
-            Facility::whereNotIn('id', $property->facilities->pluck('id')->toArray())->get()
-        ),
+            'icon_list' => $this->fetchIconsList(),
 
-        // Retrieve galleries not currently associated with the property, including their images
-        'galleries_not_in_property' => Gallery::with('images')->get()->intersect(
-            Gallery::whereNotIn('id', $property->galleries->pluck('id')->toArray())->get()
-        ),
+            // Retrieve facilities not currently associated with the property
+            'facilities_not_in_property' => Facility::all()->intersect(
+                Facility::whereNotIn('id', $property->facilities->pluck('id')->toArray())->get()
+            ),
 
-        // Determine the user's permissions for this property
-        'can' => [
-            'view_property' => auth()->user()->can('view', $property),
-            'edit_property' => auth()->user()->can('update', $property),
-            'delete_property' => auth()->user()->can('delete', $property),
-        ],
-    ]);
-}
+            // Retrieve galleries not currently associated with the property, including their images
+            'galleries_not_in_property' => Gallery::with('images')->get()->intersect(
+                Gallery::whereNotIn('id', $property->galleries->pluck('id')->toArray())->get()
+            ),
+
+            // Determine the user's permissions for this property
+            'can' => [
+                'view_property' => auth()->user()->can('view', $property),
+                'edit_property' => auth()->user()->can('update', $property),
+                'delete_property' => auth()->user()->can('delete', $property),
+            ],
+        ]);
+    }
+
+    public function fetchIconsList() :Collection
+    {
+        $path = "/resources/js/Icons";
+
+        $files = scandir(base_path().$path);
+        unset($files[0], $files[1]);
+        $files = str_replace(".vue","",$files);
+        $mapped = [];
+        foreach ($files as $key => $file) {
+            $mapped[$file] = preg_replace('/(?<!^)([A-Z])/', ' $1', $file);
+        }
+
+        unset($mapped['DinamicIcon']);
+
+        return collect($mapped);
+    }
 
     /**
      * Creates new property with given information.
