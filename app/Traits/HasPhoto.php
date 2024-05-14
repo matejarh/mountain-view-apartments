@@ -21,17 +21,23 @@ trait HasPhoto
         $disk = Storage::disk('public')->path('/');
         $path = $storagePath . '/' . str(auth()->user()->name)->slug() . '/';
         $thumbpath = $storagePath . '/' . str(auth()->user()->name)->slug() . '/thumbs/';
+        $tilepath = $storagePath . '/' . str(auth()->user()->name)->slug() . '/tiles/';
         $destinationPath = $disk . $path;
         $destinationPathThumbnail = $disk . $thumbpath;
+        $destinationPathTile = $disk . $tilepath;
 
         if (!file_exists($destinationPath)) mkdir($destinationPath, 755, true);
         if (!file_exists($destinationPathThumbnail)) mkdir($destinationPathThumbnail, 755, true);
+        if (!file_exists($destinationPathTile)) mkdir($destinationPathTile, 755, true);
 
         $imageName = hash('sha256', now()->timestamp . '-' . $photo->getClientOriginalName()) . '.' . $photo->getClientOriginalExtension();
-        $image = ImageFacade::read($photo);
 
+        $image = ImageFacade::read($photo);
         $this->handleImage($path, $image, $imageName, $destinationPath);
+        $image = ImageFacade::read($photo);
         $this->handleThumb($thumbpath, $image, $imageName, $destinationPathThumbnail);
+        $image = ImageFacade::read($photo);
+        $this->handleTile($tilepath, $image, $imageName, $destinationPathTile);
 
     }
 
@@ -61,7 +67,7 @@ trait HasPhoto
     }
 
     /**
-     * Creates and saves main image
+     * Creates and savesthumbnail
      *
      * @param string $thumbpath
      * @param \Intervention\Image\Image $image
@@ -86,6 +92,37 @@ trait HasPhoto
 
             $this->forceFill([
                 'thumb_path' => $thumbpath . $imageName,
+            ])->save();
+
+            if ($previous) {
+                Storage::disk($this->photoDisk())->delete($previous);
+            }
+        });
+    }
+
+    /**
+     * Creates and saves tile
+     *
+     * @param string $tilepath
+     * @param \Intervention\Image\Image $image
+     * @param string $imageName
+     * @param string $destinationPathTile
+     * @return void
+     */
+    private function handleTile(string $tilepath, \Intervention\Image\Image $image, string $imageName, string $destinationPathTile) : void {
+        tap($this->tile_path, function ($previous) use ($tilepath, $image, $imageName, $destinationPathTile) {
+
+/*             if ($image->width() > $image->height()) {
+                $image->scale(200, null);
+            } elseif ($image->width() < $image->height()) {
+                $image->scale(200, null);
+            } */
+            $image->scaleDown(width: 200);
+
+            $image->save($destinationPathTile . $imageName);
+
+            $this->forceFill([
+                'tile_path' => $tilepath . $imageName,
             ])->save();
 
             if ($previous) {
@@ -131,6 +168,24 @@ trait HasPhoto
     }
 
     /**
+     * Delete the image tile.
+     *
+     * @return void
+     */
+    public function deleteTile()
+    {
+        if (is_null($this->tile_path)) {
+            return;
+        }
+
+        Storage::disk($this->photoDisk())->delete($this->tile_path);
+
+        $this->forceFill([
+            'tile_path' => null,
+        ])->save();
+    }
+
+    /**
      * Get the URL to the image photo.
      *
      * @return \Illuminate\Database\Eloquent\Casts\Attribute
@@ -154,6 +209,20 @@ trait HasPhoto
         return Attribute::get(function (): string {
             return $this->thumb_path
                 ? Storage::disk($this->photoDisk())->url($this->thumb_path)
+                : $this->defaultPhotoUrl();
+        });
+    }
+
+    /**
+     * Get the URL to the image tile.
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    public function tileUrl(): Attribute
+    {
+        return Attribute::get(function (): string {
+            return $this->tile_path
+                ? Storage::disk($this->photoDisk())->url($this->tile_path)
                 : $this->defaultPhotoUrl();
         });
     }

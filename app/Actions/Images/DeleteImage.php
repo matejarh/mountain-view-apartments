@@ -19,6 +19,7 @@ class DeleteImage implements DeletesImages
     {
         $image->deletePhoto();
         $image->deleteThumb();
+        $image->deleteTile();
         $image->delete();
 
         session()->flash('flash.banner', __('Image and all its files and thumbnails has been deleted.'));

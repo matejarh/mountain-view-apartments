@@ -38,26 +38,26 @@ class GalleriesSeeder extends Seeder
 
         \DB::unprepared($sql);
 
-        $sql="INSERT INTO `galleries_images` (`id`, `gallery_id`, `image_id`, `created_at`, `updated_at`) VALUES
-        (4, 1, 3, NULL, NULL),
-        (5, 2, 3, NULL, NULL),
-        (6, 3, 3, NULL, NULL),
-        (7, 1, 2, NULL, NULL),
-        (8, 2, 2, NULL, NULL),
-        (9, 3, 2, NULL, NULL),
-        (10, 1, 1, NULL, NULL),
-        (11, 2, 1, NULL, NULL),
-        (12, 3, 1, NULL, NULL),
-        (13, 4, 2, NULL, NULL),
-        (14, 4, 1, NULL, NULL),
-        (15, 4, 3, NULL, NULL),
-        (16, 5, 12, NULL, NULL),
-        (17, 5, 11, NULL, NULL),
-        (18, 5, 10, NULL, NULL),
-        (19, 5, 9, NULL, NULL),
-        (20, 5, 8, NULL, NULL),
-        (21, 5, 7, NULL, NULL),
-        (22, 5, 5, NULL, NULL);
+        $sql="INSERT INTO `galleries_images` (`id`, `gallery_id`, `image_id`,`order`, `created_at`, `updated_at`) VALUES
+        (4, 1, 3, 1, NULL, NULL),
+        (5, 2, 3, 1, NULL, NULL),
+        (6, 3, 3, 1, NULL, NULL),
+        (7, 1, 2, 2, NULL, NULL),
+        (8, 2, 2, 2, NULL, NULL),
+        (9, 3, 2, 2, NULL, NULL),
+        (10, 1, 1, 3, NULL, NULL),
+        (11, 2, 1, 3, NULL, NULL),
+        (12, 3, 1, 3, NULL, NULL),
+        (13, 4, 2, 1, NULL, NULL),
+        (14, 4, 1, 2, NULL, NULL),
+        (15, 4, 3, 3, NULL, NULL),
+        (16, 5, 12, 1, NULL, NULL),
+        (17, 5, 11, 2, NULL, NULL),
+        (18, 5, 10, 3, NULL, NULL),
+        (19, 5, 9, 4, NULL, NULL),
+        (20, 5, 8, 5, NULL, NULL),
+        (21, 5, 7, 6, NULL, NULL),
+        (22, 5, 5, 7,NULL, NULL);
         INSERT INTO `pages_galleries` (`id`, `gallery_id`, `page_id`, `created_at`, `updated_at`) VALUES
         (1, 4, 1, NULL, NULL);
         INSERT INTO `properties_galleries` (`id`, `property_id`, `gallery_id`, `created_at`, `updated_at`) VALUES
