@@ -21,6 +21,7 @@ class FacilitiesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Contracts\CreatesNewFacilities  $creator
      * @return \App\Contracts\FacilityCreateResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function store(Request $request, CreatesNewFacilities $creator): FacilityCreateResponse
     {
@@ -38,6 +39,7 @@ class FacilitiesController extends Controller
      * @param  \App\Models\Facility  $facility
      * @param  \App\Contracts\UpdatesFacilities  $updater
      * @return \App\Contracts\FacilityUpdateResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(Request $request, Facility $facility, UpdatesFacilities $updater): FacilityUpdateResponse
     {
@@ -56,6 +58,7 @@ class FacilitiesController extends Controller
      * @param  \App\Models\Facility $facility
      * @param  \App\Contracts\DeletesFacilities $destroyer
      * @return \App\Contracts\FacilityDeleteResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function destroy(Request $request, Facility $facility, DeletesFacilities $destroyer): FacilityDeleteResponse
     {

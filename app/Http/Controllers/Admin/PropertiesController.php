@@ -88,21 +88,45 @@ class PropertiesController extends Controller
         ]);
     }
 
-    public function fetchIconsList() :Collection
+    /**
+     * This method is responsible for fetching a list of icons from a specified directory and formatting the filenames and labels.
+     *
+     * @return \Illuminate\Support\Collection Object
+     * (
+     *    [items:protected] => Array
+     *        (
+     *            [IconName1] => Icon Name 1
+     *            [IconName2] => Icon Name 2
+     *            ...
+     *        )
+     * )
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function fetchIconsList(): Collection
     {
+        Gate::authorize('viewAny', Property::class);
+
         $path = "/resources/js/Icons";
 
-        $files = scandir(base_path().$path);
-        unset($files[0], $files[1]);
-        $files = str_replace(".vue","",$files);
-        $mapped = [];
-        foreach ($files as $key => $file) {
-            $mapped[$file] = preg_replace('/(?<!^)([A-Z])/', ' $1', $file);
-        }
+        // Get all files in the directory
+        $files = array_diff(scandir(base_path() . $path), ['.', '..']);
 
-        unset($mapped['DinamicIcon']);
+        // Remove the file extension and format the filenames
+        $formattedFiles = array_map(function ($file) {
+            $file = str_replace('.vue', '', $file);
+            return [
+                'name' => $file,
+                'label' => preg_replace('/(?<!^)([A-Z])/', ' $1', $file)
+            ];
+        }, $files);
 
-        return collect($mapped);
+        // Filter out the 'DinamicIcon' file
+        $formattedFiles = array_filter($formattedFiles, function ($file) {
+            return $file['name'] !== 'DinamicIcon';
+        });
+
+        // Convert the array to a collection
+        return collect($formattedFiles);
     }
 
     /**

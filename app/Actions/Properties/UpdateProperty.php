@@ -77,7 +77,7 @@ class UpdateProperty implements UpdatesProperties
         $validator = Validator::make($input, $rules);
 
         $validator->setAttributeNames($attributeNames)->validateWithBag('updatingProperty');
-        //dd($input['description']);
+        // dd($input['description']);
         $property->forceFill([
             'name' => $input['name'],
             'type' => $input['type'],

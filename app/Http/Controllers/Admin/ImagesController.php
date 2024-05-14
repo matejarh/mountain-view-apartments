@@ -3,11 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Contracts\AttachesGalleriesToImages;
-use App\Contracts\AttachesImagesToGalleries;
 use App\Contracts\CreatesNewImages;
 use App\Contracts\DeletesImages;
 use App\Contracts\DetachesGalleriesFromImages;
-use App\Contracts\DetachesImagesFromGalleries;
 use App\Contracts\ImageAttacheResponse;
 use App\Contracts\ImageCreateResponse;
 use App\Contracts\ImageDeleteResponse;
@@ -55,6 +53,7 @@ class ImagesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Contracts\CreatesNewImages  $creator
      * @return \App\Contracts\ImageCreateResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function store(Request $request, CreatesNewImages $creator): ImageCreateResponse
     {
@@ -73,6 +72,7 @@ class ImagesController extends Controller
      * @param  \App\Models\Image  $image
      * @param  \App\Contracts\UpdatesImages  $updater
      * @return \App\Contracts\ImageUpdateResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(Request $request, Image $image, UpdatesImages $updater): ImageUpdateResponse
     {
@@ -90,6 +90,7 @@ class ImagesController extends Controller
      * @param  \App\Models\Image  $image
      * @param  \App\Contracts\DeletesImages  $updater
      * @return \App\Contracts\ImageDeleteResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function destroy(Request $request, Image $image, DeletesImages $destroyer): ImageDeleteResponse
     {
@@ -108,6 +109,7 @@ class ImagesController extends Controller
      * @param  \App\Models\Gallery  $gallery
      * @param  \App\Contracts\AttachesGalleriesToImages  $attacher
      * @return \App\Contracts\ImageAttacheResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function attach(Request $request, Image $image, Gallery $gallery, AttachesGalleriesToImages $attacher): ImageAttacheResponse
     {
@@ -126,6 +128,7 @@ class ImagesController extends Controller
      * @param  \App\Models\Gallery  $gallery
      * @param  \App\Contracts\DetachesGalleriesFromImages  $attacher
      * @return \App\Contracts\ImageDetacheResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function detach(Request $request, Image $image, Gallery $gallery, DetachesGalleriesFromImages $attacher): ImageDetacheResponse
     {
