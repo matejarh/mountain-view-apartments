@@ -11,40 +11,13 @@ const page = usePage()
 
 const store = useTranslationsStore()
 
-const languages = ref([
-    { name: 'English', code: 'en', flag_url: new URL('/resources/images/flags/1x1/gb.svg', import.meta.url) },
-    { name: 'Slovensko', code: 'sl', flag_url: new URL('/resources/images/flags/1x1/si.svg', import.meta.url) },
-    { name: 'Čeština', code: 'cs', flag_url: new URL('/resources/images/flags/1x1/cz.svg', import.meta.url) },
-    { name: 'Deutsch', code: 'de', flag_url: new URL('/resources/images/flags/1x1/de.svg', import.meta.url) },
-    { name: 'Italiano', code: 'it', flag_url: new URL('/resources/images/flags/1x1/it.svg', import.meta.url) },
-    { name: 'Magyar', code: 'hu', flag_url: new URL('/resources/images/flags/1x1/hu.svg', import.meta.url) },
-    { name: 'Français', code: 'fr', flag_url: new URL('/resources/images/flags/1x1/fr.svg', import.meta.url) },
-])
-
 const selectedLanguage = computed(() => {
 
-    return languages.value.filter((language) => {
-        return language.code === page.props.locale
-    })[0]
+    return store.languages.find(language => language.code === page.props.locale);
 })
-
-const form = useForm({ language: '' })
 
 const switchLanguage = (lang) => {
     localStorage.setItem('language', lang)
-    return
-    form.language = lang
-
-    form.post(route('switch.language'), {
-        preserveState: true,
-        // resetOnSuccess: false,
-        onSuccess: () => {
-            // selectLanguage(page.props.locale)
-
-            store.updateTranslations(page.props.translations)
-
-        }
-    })
 }
 
 onMounted(() => {
@@ -71,7 +44,7 @@ onMounted(() => {
             </template>
             <template #content>
                 <ul class="py-2 font-medium" role="none">
-                    <LanguageDropdownItem v-for="language, key in languages" :key="language.code" :language="language"
+                    <LanguageDropdownItem v-for="language, key in store.languages" :key="language.code" :language="language"
                         @click="switchLanguage(language.code)" />
                 </ul>
             </template>

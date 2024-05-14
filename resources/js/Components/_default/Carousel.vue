@@ -65,13 +65,13 @@ const initialize = () => {
 
         // callback functions
         onNext: () => {
-            console.log('next slider item is shown');
+            //console.log('next slider item is shown');
         },
         onPrev: () => {
-            console.log('previous slider item is shown');
+            //console.log('previous slider item is shown');
         },
         onChange: () => {
-            console.log('new slider item has been shown');
+            //console.log('new slider item has been shown');
         },
 
     };
@@ -86,6 +86,8 @@ const initialize = () => {
 
     carousel.value.slideTo(props.image.key)
 
+    carousel.value.cycle();
+
 }
 
 onMounted(() => {
@@ -98,7 +100,7 @@ onMounted(() => {
 <div :id="id" class="relative w-full">
     <!-- Carousel wrapper -->
     <div
-        class="relative overflow-hidden rounded-lg " :class="fullScreenClasses"
+        class="relative overflow-hidden rounded-lg " @mouseenter="carousel.pause()" @mouseleave="carousel.cycle()" :class="fullScreenClasses"
     >
         <slot />
         <!-- <div v-for="image, key in slides" :id="`carousel-item-${key}`" class="hidden duration-700 ease-in-out" >

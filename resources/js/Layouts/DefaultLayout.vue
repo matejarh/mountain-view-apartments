@@ -35,29 +35,30 @@ const showFooter = ref(true)
 const defaultBackgroundImage = new URL('/resources/images/backgrounds/winter-sunrise.jpg', import.meta.url)
 
 const backgroundImageUrl = computed(() => {
-    let setting = page.props.settings.filter((setting) => {
-        return setting.slug === 'site-backgrounds'
-    })
+    const setting = page.props.settings.find(setting => setting.slug === 'site-backgrounds');
 
-    return setting.length > 0 ? (setting[0].attributes[page.props.current_season] !== '' ? setting[0].attributes[page.props.current_season].photo_url : defaultBackgroundImage) : defaultBackgroundImage
-})
+    if (setting) {
+        const backgroundImage = setting.attributes[page.props.current_season];
+        return backgroundImage !== '' ? backgroundImage.photo_url : defaultBackgroundImage;
+    } else {
+        return defaultBackgroundImage;
+    }
+});
 
 const handleScroll = (e) => {
-    scroll.updateScrollPosition(e.target.scrollTop)
-    scroll.scrollPosition = e.target.scrollTop
-    // console.log(e.target.scrollTop)
-    const parallaxElements =
-        document.querySelectorAll('.bg-parallax');
-    parallaxElements.forEach(function (element) {
-        //let scroll.scrollPosition = e.target.scrollTop;
-        element.style.transform =
-            'translateY(' + scroll.scrollPosition * 0.5 + 'px)';
+    const scrollTop = e.target.scrollTop;
+    scroll.updateScrollPosition(scrollTop);
+    scroll.scrollPosition = scrollTop;
+
+    const parallaxElements = document.querySelectorAll('.bg-parallax');
+    parallaxElements.forEach((element) => {
+        element.style.transform = `translateY(${scroll.scrollPosition * 0.5}px)`;
     });
 }
 
 onMounted(() => {
     client.getLocation()
-    if(!helpers.pageLoaded) {
+    if (!helpers.pageLoaded) {
         helpers.delay(600)
             .then(() => {
                 helpers.showMain = true;
