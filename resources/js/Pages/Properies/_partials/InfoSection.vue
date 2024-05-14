@@ -50,7 +50,7 @@ const handleFullScreenImage = (image) => {
                     </h1>
                     <div class="mt-4 sm:items-center sm:gap-4 sm:flex">
                         <p class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">
-                            {{ $page.props.property.type }}
+                            {{ __($page.props.property.type) }}
                         </p>
 
                         <div class="flex items-center gap-2 mt-2 sm:mt-0">
@@ -100,16 +100,16 @@ const handleFullScreenImage = (image) => {
                         <div class="flex space-x-2 items-center" v-for="type,key in $page.props.property.bed_types" :key="key">
 
                             <DinamicIcon :icon="type.icon" class="w-8 h-8" />
-                            <p class="capitalize">{{ type.title }}</p>
-                            <p class="capitalize">{{ type.name }}</p>
+                            <p class="capitalize">{{ __(type.title) }}</p>
+                            <p class="capitalize">{{ __(type.name) }}</p>
                         </div>
                         <!-- {{ $page.props.property.bed_types }} -->
                     </div>
 
-                    <div class="mt-2 flex items-center">
-                        <MapLocationIcon class="w-8 h-5" />
+                    <div class="mt-2 ">
                         <a :href="$page.props.property.google_maps_link" target="_blank"
-                            class="text-md font-semibold text-gray-900 sm:text-md dark:text-white">
+                        class="text-md font-semibold text-gray-900 sm:text-md dark:text-gray-300 flex items-center hover:font-bold transition">
+                        <MapLocationIcon class="w-8 h-5" />
                             {{ $page.props.property.address }}
                         </a>
 
@@ -140,7 +140,7 @@ const handleFullScreenImage = (image) => {
                             Post Rewiew
                         </a>
                     </div>
-                    <div class="grid grid-cols-4 md:grid-cols-6 gap-4 mt-6">
+                    <div class="grid grid-cols-4 md:grid-cols-6 gap-4 mt-6 text-gray-500">
 
                         <FacilityIcon v-for="facility in facilitiesWithIcons" :facility="facility" :key="facility.id" class="text-center" />
 
@@ -157,8 +157,8 @@ const handleFullScreenImage = (image) => {
         </div>
 
         <ShapeBottom
-            class="absolute inset-y-full z-10 left-0 right-0 top-0 w-full rotate-180 text-white    dark:text-white " />
-        <ShapeTop class="absolute inset-y-full z-0 left-0 right-0 w-full bottom-1/2 text-white   dark:text-white " />
+            class="absolute inset-y-full z-10 left-0 right-0 top-0 w-full rotate-180 text-white    dark:text-gray-900 " />
+        <ShapeTop class="absolute inset-y-full z-0 left-0 right-0 w-full bottom-1/2 text-white   dark:text-gray-900 " />
         <FullScreenImagesModal :image="imageProxy" :show="showFullScreenImageModal" @close="showFullScreenImageModal = false" />
     </section>
 </template>
