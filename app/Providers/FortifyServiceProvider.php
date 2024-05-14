@@ -10,6 +10,7 @@ use App\Actions\Fortify\ResetUserPassword;
 use App\Actions\Fortify\UpdateUserPassword;
 use App\Actions\Fortify\UpdateUserProfileInformation;
 use App\Actions\Galleries\AttachToImage;
+use App\Actions\Galleries\ChangeImagesOrder;
 use App\Actions\Galleries\CreateNewGallery;
 use App\Actions\Galleries\DetachFromImage;
 use App\Actions\Galleries\UpdateGallery;
@@ -46,6 +47,7 @@ use App\Contracts\ImageAttacheResponse as ImageAttacheResponseContract;
 use App\Contracts\ImageCreateResponse as ImageCreateResponseContract;
 use App\Contracts\ImageDeleteResponse as ImageDeleteResponseContract;
 use App\Contracts\ImageDetacheResponse as ImageDetacheResponseContract;
+use App\Contracts\ImageOrderChangeResponse as ImageOrderChangeResponseContract;
 use App\Contracts\ImageUpdateResponse as ImageUpdateResponseContract;
 use App\Contracts\PageCreateResponse as PageCreateResponseContract;
 use App\Contracts\PageDeleteResponse as PageDeleteResponseContract;
@@ -68,6 +70,7 @@ use App\Http\Responses\ImageAttachedResponse;
 use App\Http\Responses\ImageCreatedResponse;
 use App\Http\Responses\ImageDeletedResponse;
 use App\Http\Responses\ImageDetachedResponse;
+use App\Http\Responses\ImageOrderChangedResponse;
 use App\Http\Responses\ImageUpdatedResponse;
 use App\Http\Responses\PageCreatedResponse;
 use App\Http\Responses\PageDeletedResponse;
@@ -105,6 +108,7 @@ class FortifyServiceProvider extends ServiceProvider
         $this->app->singleton(GalleryDeleteResponseContract::class, GalleryDeletedResponse::class);
         $this->app->singleton(GalleryAttacheResponseContract::class, GalleryAttachedResponse::class);
         $this->app->singleton(GalleryDetacheResponseContract::class, GalleryDetachedResponse::class);
+        $this->app->singleton(ImageOrderChangeResponseContract::class, ImageOrderChangedResponse::class);
 
         $this->app->singleton(ImageCreateResponseContract::class, ImageCreatedResponse::class);
         $this->app->singleton(ImageDeleteResponseContract::class, ImageDeletedResponse::class);
@@ -140,6 +144,7 @@ class FortifyServiceProvider extends ServiceProvider
         AppFortify::destroyGalleriesUsing(DeleteGallery::class);
         AppFortify::attachImagesToGalleriesUsing(AttachToImage::class);
         AppFortify::detachImagesFromGalleriesUsing(DetachFromImage::class);
+        AppFortify::changeImagesOrderUsing(ChangeImagesOrder::class);
 
         AppFortify::createImagesUsing(CreateNewImage::class);
         AppFortify::updateImagesUsing(UpdateImage::class);

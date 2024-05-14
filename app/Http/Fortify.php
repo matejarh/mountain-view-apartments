@@ -5,6 +5,7 @@ use App\Contracts\AttachesGalleriesToImages;
 use App\Contracts\AttachesGalleriesToPages;
 use App\Contracts\AttachesGalleriesToProperties;
 use App\Contracts\AttachesImagesToGalleries;
+use App\Contracts\ChangesImagesOrder;
 use App\Contracts\CreatesNewFacilities;
 use App\Contracts\CreatesNewGalleries;
 use App\Contracts\CreatesNewImages;
@@ -115,6 +116,17 @@ class Fortify
     public static function destroyGalleriesUsing(string $callback)
     {
         app()->singleton(DeletesGalleries::class, $callback);
+    }
+
+    /**
+     * Register a class / callback that should be used to change images order for given gallery.
+     *
+     * @param  string  $callback
+     * @return void
+     */
+    public static function changeImagesOrderUsing(string $callback)
+    {
+        app()->singleton(ChangesImagesOrder::class, $callback);
     }
 
     /**

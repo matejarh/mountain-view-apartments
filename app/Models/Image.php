@@ -24,9 +24,9 @@ class Image extends Model
     protected $appends = [
         'photo_url',
         'thumb_url',
+        'tile_url',
         'can'
     ];
-
     protected static function boot(): void
     {
         parent::boot();
@@ -51,7 +51,10 @@ class Image extends Model
      */
     public function galleries(): BelongsToMany
     {
-        return $this->belongsToMany(Gallery::class, 'galleries_images', 'image_id', 'gallery_id')->latest();
+        return $this->belongsToMany(Gallery::class, 'galleries_images', 'image_id', 'gallery_id')
+            ->withPivot('order')
+            ->withTimestamps()
+            ->orderBy('galleries_images.order');
     }
 
     /**

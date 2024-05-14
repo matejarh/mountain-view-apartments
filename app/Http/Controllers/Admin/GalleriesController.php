@@ -2,22 +2,20 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Contracts\AttachesGalleriesToImages;
 use App\Contracts\AttachesImagesToGalleries;
+use App\Contracts\ChangesImagesOrder;
 use App\Contracts\CreatesNewGalleries;
 use App\Contracts\DeletesGalleries;
-use App\Contracts\DetachesGalleriesFromImages;
 use App\Contracts\DetachesImagesFromGalleries;
 use App\Contracts\GalleryAttacheResponse;
 use App\Contracts\GalleryCreateResponse;
 use App\Contracts\GalleryDeleteResponse;
 use App\Contracts\GalleryDetacheResponse;
 use App\Contracts\GalleryUpdateResponse;
+use App\Contracts\ImageOrderChangeResponse;
 use App\Contracts\UpdatesGalleries;
 use App\Filters\GalleryFilters;
 use App\Http\Controllers\Controller;
-use App\Http\Responses\GalleryCreatedResponse;
-use App\Http\Responses\GalleryUpdatedResponse;
 use App\Models\Gallery;
 use App\Models\Image;
 use Illuminate\Http\Request;
@@ -55,6 +53,7 @@ class GalleriesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Gallery  $gallery
      * @return \Inertia\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function show(Request $request, Gallery $gallery): Response
     {
@@ -78,6 +77,7 @@ class GalleriesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Contracts\CreatesNewGalleries  $creator
      * @return \App\Contracts\GalleryCreateResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function store(Request $request, CreatesNewGalleries $creator): GalleryCreateResponse
     {
@@ -95,6 +95,7 @@ class GalleriesController extends Controller
      * @param  \App\Models\Gallery  $gallery
      * @param  \App\Contracts\UpdatesGalleries  $updater
      * @return \App\Contracts\GalleryUpdateResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(Request $request, Gallery $gallery, UpdatesGalleries $updater): GalleryUpdateResponse
     {
@@ -113,6 +114,7 @@ class GalleriesController extends Controller
      * @param  \App\Models\Gallery $gallery
      * @param  \App\Contracts\DeletesGalleries $destroyer
      * @return \App\Contracts\GalleryDeleteResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function destroy(Request $request, Gallery $gallery, DeletesGalleries $destroyer): GalleryDeleteResponse
     {
@@ -131,6 +133,7 @@ class GalleriesController extends Controller
      * @param  \App\Models\Image $image
      * @param  \App\Contracts\AttachesImagesToGalleries $attacher
      * @return \App\Contracts\ImageAttacheResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function attach(Request $request, Gallery $gallery, Image $image, AttachesImagesToGalleries $attacher): GalleryAttacheResponse
     {
@@ -149,6 +152,7 @@ class GalleriesController extends Controller
      * @param  \App\Models\Image $image
      * @param  \App\Contracts\DetachesImagesFromGalleries $attacher
      * @return \App\Contracts\GalleryDetacheResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function detach(Request $request, Gallery $gallery, Image $image, DetachesImagesFromGalleries $attacher): GalleryDetacheResponse
     {
@@ -157,5 +161,24 @@ class GalleriesController extends Controller
         $attacher->detach($image, $gallery);
 
         return app(GalleryDetacheResponse::class);
+    }
+
+    /**
+     * Changes images order for given gallery.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Models\Gallery $gallery
+     * @param  \App\Contracts\ChangesImagesOrder $orderer
+     * @return \App\Contracts\ImageOrderChangeResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function updateImagesOrder(Request $request, Gallery $gallery, ChangesImagesOrder $orderer): ImageOrderChangeResponse
+    {
+        Gate::authorize('update', $gallery);
+
+        $orderer->order($gallery, $request->all());
+
+        return app(ImageOrderChangeResponse::class);
+
     }
 }

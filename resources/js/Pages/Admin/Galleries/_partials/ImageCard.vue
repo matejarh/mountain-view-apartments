@@ -7,6 +7,8 @@ import ArrowUpRightIcon from '@/Icons/ArrowUpRightIcon.vue';
 import EditIcon from '@/Icons/EditIcon.vue';
 import EditImageInfoDialog from './EditImageInfoDialog.vue';
 import TrashBinIcon from '@/Icons/TrashBinIcon.vue';
+import ArrowUpIcon from '@/Icons/ArrowUpIcon.vue';
+import CarretLeftIcon from '@/Icons/CarretLeftIcon.vue';
 
 const props = defineProps({
     image: Object,
@@ -17,10 +19,22 @@ const props = defineProps({
     isIndex: {
         default: false,
         type: Boolean,
-    }
+    },
+    imagesCount: {
+        default: 0,
+        type: Number,
+    },
+    itemKey: {
+        default: null,
+        type: Number,
+    },
+    isBusy: {
+        default: false,
+        type: Boolean,
+    },
 })
 
-const emit = defineEmits(['clicked'])
+const emit = defineEmits(['clicked', 'moveUp', 'moveDown'])
 
 const page = usePage()
 
@@ -64,18 +78,33 @@ const destroy = () => {
     })
 }
 
-
-
 </script>
 
 <template>
     <li v-if="show">
 
         <figure
-            class="min-h-[240px] sm:min-h-[252px] md:min-h-[164px] lg:min-h-[160px] xl:min-h-auto relative shadow-lg active:shadow hover:shadow-xl  transition-shadow duration-150 cursor-pointer  overflow-visible">
-            <div @click="$emit('clicked', image)">
+            class="min-h-[240px] z-0 sm:min-h-[252px] md:min-h-[164px] lg:min-h-[160px] xl:min-h-auto relative shadow-lg active:shadow hover:shadow-xl brightness-90 hover:brightness-105 transition-all ease-out duration-150 cursor-pointer  overflow-visible">
+            <div @click="$emit('clicked', {image:image, key:0})">
                 <img class="rounded-lg" :src="image.thumb_url" :alt="image.name">
             </div>
+
+            <figcaption id="moveup" v-if="image.pivot && image.pivot.order < imagesCount && itemKey+1 < imagesCount" class="order top-0 bottom-0 right-0 text-gray-50 font-bold text-3xl absolute h-full flex flex-col justify-center items-end ">
+                <Tooltip :text="__('Move Back')">
+                    <button id="moveupbutton" :disabled="isBusy" @click="$emit('moveDown', itemKey)" :class="{ 'opacity-75' : isBusy }" class="hover:translate-x-1 transition">
+                        <CarretLeftIcon class="w-8 h-8 -rotate-180" />
+                    </button>
+                </Tooltip>
+            </figcaption>
+
+            <figcaption id="movedown" v-if="image.pivot && image.pivot.order > 1 && itemKey !== 0" class="order top-0 bottom-0 left-0 text-gray-50 font-bold text-3xl absolute h-full flex flex-col justify-center items-start ">
+                <Tooltip :text="__('Move Forward')">
+                    <button id="movedownbutton" :disabled="isBusy" @click="$emit('moveUp', itemKey)" c :class="{ 'opacity-75' : isBusy }" class="hover:-translate-x-1 transition">
+                        <CarretLeftIcon class="w-8 h-8 " />
+                    </button>
+                </Tooltip>
+            </figcaption>
+
             <figcaption
                 class="absolute flex rounded-t-lg justify-between px-2 py-1 text-md text-gray-700 dark:text-gray-300 top-0 bg-white dark:bg-gray-800  w-full bg-opacity-50 dark:bg-opacity-50 backdrop-blur-lg">
                 <div class="left flex justify-start items-center">

@@ -43,7 +43,7 @@ class AttachToImage implements AttachesImagesToGalleries
 
         $validator->setAttributeNames($attributeNames)->validateWithBag('attachingToImage');
 
-        $gallery->images()->attach($image);
+        $gallery->images()->attach($image, ['order' => $gallery->images->count() + 1]);
 
         session()->flash('flash.banner', __('Image has been attached to the gallery.'));
     }
