@@ -3,9 +3,7 @@ import DialogModal from '@/Components/DialogModal.vue'
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
-import SelectInput from '@/Components/SelectInput.vue';
 import TextInput from '@/Components/TextInput.vue';
-import { reactive, ref, watchEffect } from 'vue';
 import FacilityComponent from './FacilityComponent.vue';
 import { useForm } from '@inertiajs/vue3';
 import CirclePlusIcon from '@/Icons/CirclePlusIcon.vue';
@@ -40,7 +38,7 @@ const store = () => {
 
         <template #content>
             <div class="grid sm:grid-cols-2 gap-6">
-                <div class="order-2 sm:order-1 sm:text-right relative " >
+                <div class="order-2 sm:order-1 sm:text-right relative ">
                     <h5 class="font-bold">
                         {{ __('Attached') }}
 
@@ -78,13 +76,13 @@ const store = () => {
                                 autocomplete="name" :has-error="!!form.errors.name"
                                 :placeholder="__('Enter new facility name') + '...'" />
 
-                                <PrimaryButton type="button"
+                            <PrimaryButton type="button"
                                 :class="{ 'opacity-25': form.processing || form.recentlySuccessful || !form.isDirty }"
                                 :disabled="form.processing || form.recentlySuccessful || !form.isDirty" @click="store">
                                 <div class="flex items-center">
                                     <SpinnerIcon v-if="form.processing"
-                                    class="animate-spin h-5 w-5 text-white dark:text-white" />
-                                    <CirclePlusIcon v-else class="h-5 w-5 text-white dark:text-white"  />
+                                        class="animate-spin h-5 w-5 text-white dark:text-white" />
+                                    <CirclePlusIcon v-else class="h-5 w-5 text-white dark:text-white" />
                                 </div>
                             </PrimaryButton>
                         </div>
