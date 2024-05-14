@@ -68,6 +68,7 @@ const newRecomended = reactive({
 })
 
 const update = () => {
+    form.clearErrors()
     form.put(route('admin.properties.update', page.props.property), {
         preserveScroll: true,
         preserveState: true,
@@ -559,10 +560,6 @@ const handleAddRecomended = () => {
 
         </GridSection>
 
-
-
-
-
         <PrimaryButton type="button"
             :class="{ 'opacity-25': form.processing || form.recentlySuccessful || !form.isDirty }"
             :disabled="form.processing || form.recentlySuccessful || !form.isDirty" @click="update">
@@ -571,7 +568,6 @@ const handleAddRecomended = () => {
                     class="animate-spin -ml-1 mr-3 h-5 w-5 text-white dark:text-white" />
                 {{ form.processing ? __('Saving') + '...' : form.recentlySuccessful ? __('Saved') : __('Save')
                 }}
-
             </div>
         </PrimaryButton>
 
