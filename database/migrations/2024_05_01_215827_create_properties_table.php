@@ -24,6 +24,7 @@ return new class extends Migration
             $table->text('address')->nullable();
             $table->json('title')->nullable();
             $table->json('description')->nullable();
+            $table->json('quote')->nullable();
             $table->json('long_description')->nullable();
             $table->json('keywords')->nullable();
             $table->string('size')->nullable();

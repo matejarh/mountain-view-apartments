@@ -48,6 +48,15 @@ class PropertiesSeeder extends Seeder
                 "fr" => "Doté d'un jardin, le Nassfeld and Lake Apartment propose des hébergements à Hermagor. Cet établissement offre l'accès à un balcon et un parking privé gratuit. L'hébergement propose un enregistrement et un départ privés ainsi qu'un parking à vélos pour les clients.",
                 "cs" => "Nabízející zahradu, apartmán Nassfeld and Lake poskytuje ubytování v Hermagoru. Tento objekt nabízí přístup na balkon a bezplatné soukromé parkoviště. Ubytování zajišťuje soukromé ubytování a odhlášení a parkování pro kola pro hosty.",
             ],
+            'quote' => [
+                "sl" => "Avstrijska Koroška je čudovita dežela.",
+                "en" => "Austrian Carinthia is a wonderful land.",
+                "de" => "Österreichisch Kärnten ist ein wundervolles Land.",
+                "hu" => "Az osztrák Károlyi a csodálatos föld.",
+                "it" => "La Carinzia austriaca è una terra meravigliosa.",
+                "fr" => "La Carinthie autrichienne est une terre merveilleuse.",
+                "cs" => "Rakouská Korutanská je nádherná země.",
+            ],
             'long_description' => [
                 "sl" => "Nastanitev Nassfeld and Lake Apartment se nahaja približno 47 km od znamenitosti skakalnica Villacher Alpenarena in ponuja razgled na vrt, balkon ter aparat za kavo. Nastanitev je 28 km od znamenitosti Terra Mystica Mine in nudi vrt ter brezplačno zasebno parkirišče.
 

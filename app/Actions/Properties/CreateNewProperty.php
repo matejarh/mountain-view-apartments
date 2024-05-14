@@ -35,6 +35,7 @@ class CreateNewProperty implements CreatesNewProperties
             'type' => ['required', 'string', 'max:255', new SpamFree] ,
             'name' => ['required', 'string', 'max:255', new SpamFree, 'unique:properties'],
             'description' => ['required', 'array', 'min:1'],
+            'quote' => ['required', 'array', 'min:1'],
             'long_description' => ['required', 'array', 'min:1'],
             'keywords' => ['required', 'array', 'min:1'],
             'title' => ['required', 'array', 'min:1'],
@@ -56,6 +57,9 @@ class CreateNewProperty implements CreatesNewProperties
             if (!isset($input['title'][$value])) {
                 $input['title'][$value] = '';
             }
+            if (!isset($input['quote'][$value])) {
+                $input['quote'][$value] = '';
+            }
             if (!isset($input['description'][$value])) {
                 $input['description'][$value] = '';
             }
@@ -70,14 +74,15 @@ class CreateNewProperty implements CreatesNewProperties
             }
 
             $rules += [
-                'description.' . $value => ['nullable', 'string', 'distinct', new SpamFree],
-                'long_description.' . $value => ['nullable', 'string', 'distinct', new SpamFree],
-                'title.' . $value => ['nullable', 'string', 'distinct', new SpamFree],
-                'keywords.' . $value => ['nullable', 'string', 'distinct', new SpamFree],
-                'rules.' . $value => ['required', 'array', 'distinct', 'min:1'],
-                'rules.' . $value . '.*.title' => ['nullable', 'string', new SpamFree],
-                'rules.' . $value . '.*.description' => ['nullable', 'string', new SpamFree],
-                'rules.' . $value . '.*.name' => ['nullable', 'string', new SpamFree],
+                "description.$value" => ['nullable', 'string', 'distinct', new SpamFree],
+                "quote.$value" => ['nullable', 'string', 'distinct', new SpamFree],
+                "long_description.$value" => ['nullable', 'string', 'distinct', new SpamFree],
+                "title.$value" => ['nullable', 'string', 'distinct', new SpamFree],
+                "keywords.$value" => ['nullable', 'string', 'distinct', new SpamFree],
+                "rules.$value" => ['required', 'array', 'distinct', 'min:1'],
+                "rules.$value.*.title" => ['nullable', 'string', new SpamFree],
+                "rules.$value.*.description" => ['nullable', 'string', new SpamFree],
+                "rules.$value.*.name" => ['nullable', 'string', new SpamFree],
             ];
         }
 
@@ -91,6 +96,7 @@ class CreateNewProperty implements CreatesNewProperties
             'type' => $input['type'],
             'slug' => str($input['name'])->slug(),
             'description' => isset($input['description']) ? $input['description'] : null,
+            'quote' => isset($input['quote']) ? $input['quote'] : null,
             'long_description' => isset($input['long_description']) ? $input['long_description'] : null,
             'title' => isset($input['title']) ? $input['title'] : null,
             'address' => isset($input['address']) ? $input['address'] : null,

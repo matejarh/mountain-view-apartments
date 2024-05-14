@@ -31,6 +31,7 @@ const form = useForm({
     type: page.props.property?.type,
     name: page.props.property?.name,
     title: page.props.property?.title,
+    quote: page.props.property?.quote,
     description: page.props.property?.description,
     long_description: page.props.property?.long_description,
     address: page.props.property?.address,
@@ -151,13 +152,13 @@ const handleAddRecomended = () => {
     <div class="">
         <GridSection>
 
-            <div class="col-span-6 xl:col-span-3">
+            <div class="col-span-full">
                 <InputLabel :value="__('Type')" for="type" />
                 <TextInput id="type" v-model="form.type" type="text" class="mt-1 block w-full" required
                     autocomplete="type" :has-error="!!form.errors.type" :placeholder="__('Enter type') + '...'" />
                 <InputError :message="form.errors.type" class="mt-2" />
             </div>
-            <div class="col-span-6 xl:col-span-3">
+            <div class="col-span-full">
                 <InputLabel for="name" :value="__('Name')" />
                 <TextInput id="name" v-model="form.name" type="text" class="mt-1 block w-full" required
                     autocomplete="name" :has-error="!!form.errors.name" :placeholder="__('Enter name') + '...'" />
@@ -182,8 +183,8 @@ const handleAddRecomended = () => {
                 </HorizontalTabItem>
             </template>
         </HorizontalTabs>
-        <GridSection>
-            <div class="col-span-6 xl:col-span-3">
+        <GridSection class="mt-4">
+            <div class="col-span-full xl:col-span-full">
                 <InputLabel for="title" :value="__('Title')" />
                 <TextInput id="title" v-model="form.title[selectedTab]" type="text" class="mt-1 block w-full" required
                     autocomplete="title" :has-error="!!form.errors.title" :placeholder="__('Enter title') + '...'" />
@@ -196,6 +197,14 @@ const handleAddRecomended = () => {
                     :placeholder="__('Enter description') + '...'"></TextArea>
                 <InputError :message="form.errors.description" class="mt-2" />
             </div> -->
+            <div class="col-span-full">
+                <InputLabel for="quote" :value="__('Quote')" />
+                <div class="block rounded-lg overflow-hidden border border-thin border-gray-100 dark:border-gray-600 ">
+                    <QuillEditor v-model:content="form.quote[selectedTab]" contentType="html" theme="snow"  />
+                </div>
+
+                <InputError :message="form.errors.quote" class="mt-2" />
+            </div>
             <div class="col-span-full">
                 <InputLabel for="description" :value="__('Description')" />
                 <div class="block rounded-lg overflow-hidden border border-thin border-gray-100 dark:border-gray-600 ">
@@ -231,40 +240,42 @@ const handleAddRecomended = () => {
                 <InputError :message="form.errors.keywords" class="mt-2" />
             </div>
         </GridSection>
+        <GridSection class="mt-4">
 
-        <div class="col-span-3 ">
-            <InputLabel for="size" :value="`${__('Size in')} m²`" />
-            <TextInput id="size" v-model="form.size" type="text" class="mt-1 block w-full" required autocomplete="size"
-                :has-error="!!form.errors.size" :placeholder="__('Enter size') + '...'" />
-            <InputError :message="form.errors.size" class="mt-2" />
-        </div>
-        <div class="col-span-3 relative">
+            <div class="col-span-3 ">
+                <InputLabel for="size" :value="`${__('Size in')} m²`" />
+                <TextInput id="size" v-model="form.size" type="text" class="mt-1 block w-full" required autocomplete="size"
+                    :has-error="!!form.errors.size" :placeholder="__('Enter size') + '...'" />
+                <InputError :message="form.errors.size" class="mt-2" />
+            </div>
+            <div class="col-span-3 relative">
 
-            <InputLabel class="inline-flex items-center justify-center  cursor-pointer w-full">
-                {{ __('Is entire apartment') }}
-                <input type="checkbox" value="" class="sr-only peer" id="is_entire_apartment"
-                    v-model.checked="form.is_entire_apartment" :checked="form.is_entire_apartment">
-                <div
-                    class="mx-auto mt-3 relative w-14 h-7 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-amazon-600 dark:peer-focus:ring-amazon-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all dark:border-gray-600 peer-checked:bg-amazon-600">
-                </div>
-            </InputLabel>
+                <InputLabel class="inline-flex items-center justify-center  cursor-pointer w-full">
+                    {{ __('Is entire apartment') }}
+                    <input type="checkbox" value="" class="sr-only peer" id="is_entire_apartment"
+                        v-model.checked="form.is_entire_apartment" :checked="form.is_entire_apartment">
+                    <div
+                        class="mx-auto mt-3 relative w-14 h-7 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-amazon-600 dark:peer-focus:ring-amazon-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all dark:border-gray-600 peer-checked:bg-amazon-600">
+                    </div>
+                </InputLabel>
 
 
-        </div>
-        <div class="col-span-3 xl:col-span-3">
-            <InputLabel for="coordinates_lat" :value="`${__('Latitude')}`" />
-            <TextInput id="coordinates_lat" v-model="form.coordinates['lat']" type="text" class="mt-1 block w-full"
-                required autocomplete="coordinates_lat" :has-error="!!form.errors['coordinates.lat']"
-                :placeholder="__('Enter latitude') + '...'" />
-            <InputError :message="form.errors['coordinates.lat']" class="mt-2" />
-        </div>
-        <div class="col-span-3 xl:col-span-3">
-            <InputLabel for="coordinates_lng" :value="`${__('Longitude')}`" />
-            <TextInput id="coordinates_lng" v-model="form.coordinates['lng']" type="text" class="mt-1 block w-full"
-                required autocomplete="coordinates_lng" :has-error="!!form.errors['coordinates.lng']"
-                :placeholder="__('Enter longitude') + '...'" />
-            <InputError :message="form.errors['coordinates.lng']" class="mt-2" />
-        </div>
+            </div>
+            <div class="col-span-3 xl:col-span-3">
+                <InputLabel for="coordinates_lat" :value="`${__('Latitude')}`" />
+                <TextInput id="coordinates_lat" v-model="form.coordinates['lat']" type="text" class="mt-1 block w-full"
+                    required autocomplete="coordinates_lat" :has-error="!!form.errors['coordinates.lat']"
+                    :placeholder="__('Enter latitude') + '...'" />
+                <InputError :message="form.errors['coordinates.lat']" class="mt-2" />
+            </div>
+            <div class="col-span-3 xl:col-span-3">
+                <InputLabel for="coordinates_lng" :value="`${__('Longitude')}`" />
+                <TextInput id="coordinates_lng" v-model="form.coordinates['lng']" type="text" class="mt-1 block w-full"
+                    required autocomplete="coordinates_lng" :has-error="!!form.errors['coordinates.lng']"
+                    :placeholder="__('Enter longitude') + '...'" />
+                <InputError :message="form.errors['coordinates.lng']" class="mt-2" />
+            </div>
+        </GridSection>
 
         <hr class="my-4 md:my-4 border-gray-200 dark:border-gray-800 col-span-full" />
 
@@ -297,9 +308,7 @@ const handleAddRecomended = () => {
 
                     <SelectInput v-model="form.bed_types[key].icon" :id="`bed_type_${key}_icon`">
                         <option disabled value="">- {{ __('select icon') }} -</option>
-                        <option value="QueenBedIcon">{{ __('Queen Bed') }}</option>
-                        <option value="SingleBedIcon">{{ __('Single Bed') }}</option>
-                        <option value="SofaBedIcon">{{ __('Sofa Bed') }}</option>
+                        <option v-for="icon,key in $page.props.icon_list" :key="key" :value="key">{{ __(icon) }}</option>
                     </SelectInput>
                 </div>
                 <div class="">
@@ -327,9 +336,7 @@ const handleAddRecomended = () => {
 
                     <SelectInput v-model="newBedType.icon" id="bed_type_new_icon">
                         <option disabled value="none">- {{ __('select icon') }} -</option>
-                        <option value="QueenBedIcon">{{ __('Queen Bed') }}</option>
-                        <option value="SingleBedIcon">{{ __('Single Bed') }}</option>
-                        <option value="SofaBedIcon">{{ __('Sofa Bed') }}</option>
+                        <option v-for="icon,key in $page.props.icon_list" :key="key" :value="key">{{ __(icon) }}</option>
                     </SelectInput>
                 </div>
                 <div class="">
@@ -475,7 +482,8 @@ const handleAddRecomended = () => {
                             <div class="w-full">
                                 <SelectInput v-model="form.rules[selectedTab][key].icon" :id="`bed_type_${key}_new_icon`">
                                     <option disabled value="none">- {{ __('select icon') }} -</option>
-                                    <option value="CheckInIcon">{{ __('Check In') }}</option>
+                                    <option v-for="icon,key in $page.props.icon_list" :key="key" :value="key">{{ __(icon) }}</option>
+<!--                                     <option value="CheckInIcon">{{ __('Check In') }}</option>
                                     <option value="CheckOutIcon">{{ __('Check Out') }}</option>
                                     <option value="CancellationPrepaymentIcon">{{ __('Cancellation Prepayment') }}
                                     </option>
@@ -484,7 +492,7 @@ const handleAddRecomended = () => {
                                     <option value="NonSmokingRoomsIcon">{{ __('Non Smoking Rooms') }}</option>
                                     <option value="PartiesIcon">{{ __('No Parties') }}</option>
                                     <option value="QuietHoursIcon">{{ __('Quiet Hours') }}</option>
-                                    <option value="PetsIcon">{{ __('No Pets Icon') }}</option>
+                                    <option value="PetsIcon">{{ __('No Pets Icon') }}</option> -->
                                 </SelectInput>
                             </div>
                         </div>
@@ -529,16 +537,7 @@ const handleAddRecomended = () => {
                             <div class="w-full">
                                 <SelectInput v-model="newRule.icon" id="rule_new_icon">
                                     <option disabled value="none">- {{ __('select icon') }} -</option>
-                                    <option value="CheckInIcon">{{ __('Check In') }}</option>
-                                    <option value="CheckOutIcon">{{ __('Check Out') }}</option>
-                                    <option value="CancellationPrepaymentIcon">{{ __('Cancellation Prepayment') }}
-                                    </option>
-                                    <option value="ChildrenBedsIcon">{{ __('Children Beds') }}</option>
-                                    <option value="AgeRestrictionIcon">{{ __('Age Restriction') }}</option>
-                                    <option value="NonSmokingRoomsIcon">{{ __('Non Smoking Rooms') }}</option>
-                                    <option value="PartiesIcon">{{ __('No Parties') }}</option>
-                                    <option value="QuietHoursIcon">{{ __('Quiet Hours') }}</option>
-                                    <option value="PetsIcon">{{ __('No Pets Icon') }}</option>
+                                    <option v-for="icon,key in $page.props.icon_list" :key="key" :value="key">{{ __(icon) }}</option>
                                 </SelectInput>
                             </div>
                         </div>

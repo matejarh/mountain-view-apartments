@@ -38,6 +38,13 @@ class PropertyFactory extends Factory
             $descriptions[$language] = fake($language)->paragraph();
         }
 
+        $quotes = [];
+
+        foreach ($languages as $key => $language) {
+            //array_push($quotes, [$language => fake($language)->paragraph()]);
+            $quotes[$language] = fake($language)->paragraph();
+        }
+
         $keywords = [];
 
         foreach ($languages as $key => $language) {
@@ -63,6 +70,7 @@ class PropertyFactory extends Factory
             'address' => fake('sl_SI')->address(),
             'title' => $titles,
             'description' => $descriptions,
+            'quote' => $quotes,
             'keywords' => $keywords,
             'is_entire_apartment' => fake()->randomElement([true, false]),
             'coordinates' => [

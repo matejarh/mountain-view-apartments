@@ -42,6 +42,7 @@ class UpdateProperty implements UpdatesProperties
             'type' => ['required', 'string', 'max:255', new SpamFree] ,
             'name' => ['required', 'string', 'max:255', new SpamFree, Rule::unique('properties')->ignore($property->id)],
             'description' => ['required', 'array', 'min:1'],
+            'quote' => ['required', 'array', 'min:1'],
             'long_description' => ['required', 'array', 'min:1'],
             'keywords' => ['required', 'array', 'min:1'],
             'title' => ['required', 'array', 'min:1'],
@@ -61,14 +62,15 @@ class UpdateProperty implements UpdatesProperties
 
         foreach (config('app.supported_locales') as $key => $value) {
             $rules += [
-                'description.' . $value => ['nullable', 'string', 'distinct', new SpamFree],
-                'long_description.' . $value => ['nullable', 'string', 'distinct'],
-                'title.' . $value => ['nullable', 'string', 'distinct', new SpamFree],
-                'keywords.' . $value => ['nullable', 'string', 'distinct', new SpamFree],
-                'rules.' . $value => ['required', 'array', 'distinct', 'min:1'],
-                'rules.' . $value . '.*.title' => ['nullable', 'string', new SpamFree],
-                'rules.' . $value . '.*.description' => ['nullable', 'string', new SpamFree],
-                'rules.' . $value . '.*.name' => ['nullable', 'string', new SpamFree],
+                "description.$value" => ['nullable', 'string', 'distinct', new SpamFree],
+                "quote.$value" => ['nullable', 'string', 'distinct', new SpamFree],
+                "long_description.$value" => ['nullable', 'string', 'distinct', new SpamFree],
+                "title.$value" => ['nullable', 'string', 'distinct', new SpamFree],
+                "keywords.$value" => ['nullable', 'string', 'distinct', new SpamFree],
+                "rules.$value" => ['required', 'array', 'distinct', 'min:1'],
+                "rules.$value.*.title" => ['nullable', 'string', new SpamFree],
+                "rules.$value.*.description" => ['nullable', 'string', new SpamFree],
+                "rules.$value.*.name" => ['nullable', 'string', new SpamFree],
             ];
         }
 
@@ -81,6 +83,7 @@ class UpdateProperty implements UpdatesProperties
             'type' => $input['type'],
             'slug' => str($input['name'])->slug(),
             'description' => isset($input['description']) ? $input['description'] : $property->description,
+            'quote' => isset($input['quote']) ? $input['quote'] : $property->quote,
             'long_description' => isset($input['long_description']) ? $input['long_description'] : $property->long_description,
             'title' => isset($input['title']) ? $input['title'] : $property->title,
             'address' => isset($input['address']) ? $input['address'] : $property->address,

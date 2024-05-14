@@ -44,6 +44,15 @@ class PropertiesTest extends TestCase
                 "fr" => "Doté d'un jardin, le Nassfeld and Lake Apartment propose des hébergements à Hermagor. Cet établissement offre l'accès à un balcon et un parking privé gratuit. L'hébergement propose un enregistrement et un départ privés ainsi qu'un parking à vélos pour les clients.",
                 "cs" => "Nabízející zahradu, apartmán Nassfeld and Lake poskytuje ubytování v Hermagoru. Tento objekt nabízí přístup na balkon a bezplatné soukromé parkoviště. Ubytování zajišťuje soukromé ubytování a odhlášení a parkování pro kola pro hosty.",
             ],
+            'quote' => [
+                "sl" => "S svojim vrtom ponuja apartma Nassfeld and Lake namestitev v kraju Hermagor. Ta nastanitev nudi dostop do balkona in brezplačnega zasebnega parkirišča. Nastanitev nudi tudi možnost zasebnega prijave in odjave ter parkirišče za kolesa za goste.",
+                "en" => "Featuring a garden, Nassfeld and Lake Apartment offers accommodations in Hermagor. This property offers access to a balcony and free private parking. The accommodation provides private check-in and check-out and bicycle parking for guests.",
+                "de" => "Mit einem Garten erwartet Sie das Nassfeld and Lake Apartment in Hermagor. Diese Unterkunft bietet Zugang zu einem Balkon und kostenfreie private Parkplätze. Die Unterkunft bietet einen privaten Check-in und Check-out sowie Fahrradparkplätze für die Gäste.",
+                "hu" => "A Nassfeld and Lake Apartment kerttel várja vendégeit Hermagorban. A szálláshely teraszhoz és ingyenes privát parkolási lehetőséghez biztosít hozzáférést. A szálláshely magáncsekkolást és kijelentkezést kínál, valamint biciklitárolót a vendégek számára.",
+                "it" => "Dotato di giardino, il Nassfeld and Lake Apartment offre sistemazioni a Hermagor. Questa struttura offre l'accesso a un balcone e un parcheggio privato gratuito. L'alloggio fornisce check-in e check-out privati e parcheggio per biciclette per gli ospiti.",
+                "fr" => "Doté d'un jardin, le Nassfeld and Lake Apartment propose des hébergements à Hermagor. Cet établissement offre l'accès à un balcon et un parking privé gratuit. L'hébergement propose un enregistrement et un départ privés ainsi qu'un parking à vélos pour les clients.",
+                "cs" => "Nabízející zahradu, apartmán Nassfeld and Lake poskytuje ubytování v Hermagoru. Tento objekt nabízí přístup na balkon a bezplatné soukromé parkoviště. Ubytování zajišťuje soukromé ubytování a odhlášení a parkování pro kola pro hosty.",
+            ],
             'long_description' => [
                 "sl" => "S svojim vrtom ponuja apartma Nassfeld and Lake namestitev v kraju Hermagor. Ta nastanitev nudi dostop do balkona in brezplačnega zasebnega parkirišča. Nastanitev nudi tudi možnost zasebnega prijave in odjave ter parkirišče za kolesa za goste.",
                 "en" => "Featuring a garden, Nassfeld and Lake Apartment offers accommodations in Hermagor. This property offers access to a balcony and free private parking. The accommodation provides private check-in and check-out and bicycle parking for guests.",
@@ -226,6 +235,7 @@ class PropertiesTest extends TestCase
 
     public function test_admin_may_update_property(): void
     {
+        $this->withExceptionHandling();
         $property = Property::factory()->create($this->property);
 
         $property = Property::where('name', $property->name)->first();
@@ -235,22 +245,17 @@ class PropertiesTest extends TestCase
         $updated = $this->property;
         $updated['name'] = "new name";
         $updated['rules']['en'] = ['name' => 'Pets', 'title' => '', 'description' => 'Pets are allowed.', 'icon' => 'QuietHoursIcon'];
+        $updated['quote']['en'] = 'Test text';
 
-
-
-        //$property = Property::where('name', $this->property['name'])->first();
-        // dd($property);
-        $this->actingAs($this->admin)->put(route('admin.properties.update', $property), $updated)
+        $response = $this->actingAs($this->admin)->put(route('admin.properties.update', $property), $updated)
             ->assertStatus(302)
-            ->assertRedirect('/')
-            ->assertSessionHas(["status" => "property-updated"]);
-
-        //dd($property);
+            ->assertRedirect('/');
+            //dd($response->ddSession());
+            $response->assertSessionHas(["status" => "property-updated"]);
 
         $this->assertEquals('new name', $property->fresh()->name);
         $this->assertEquals('Pets are allowed.', $property->fresh()->rules->en->description);
-        // $response->assertRedirect(route('login'));
-
+        $this->assertEquals('Test text', $property->fresh()->quote->en);
     }
 
     public function test_facilities_can_be_attached_to_properties(): void
