@@ -1,0 +1,77 @@
+<script setup>
+import { getCurrentInstance, onMounted, ref } from 'vue'
+import { Popover } from 'flowbite'
+import InfoIcon from '@/Icons/InfoIcon.vue';
+
+const props = defineProps({
+    title: String,
+    placement: {
+        default: 'top',
+        type: String,
+    },
+    triggerType: {
+        default: 'hover',
+        type: String,
+    }
+})
+
+const component = getCurrentInstance()
+
+const popoverButton = ref(null)
+const popoverContent = ref(null)
+
+const initialize = () => {
+    // set the popover content element
+    const $triggerEl = popoverButton.value
+
+    // set the element that trigger the popover using hover or click
+    const $targetEl = popoverContent.value;
+
+    // options with default values
+    const options = {
+        placement: props.placement,
+        triggerType: props.triggerType,
+        offset: 10,
+        onHide: () => {
+            // console.log('popover is shown');
+        },
+        onShow: () => {
+            // console.log('popover is hidden');
+        }
+    };
+
+    if ($targetEl) {
+        /*
+        * targetEl: required
+        * triggerEl: required
+        * options: optional
+        */
+        const popover = new Popover($targetEl, $triggerEl, options);
+
+        //popover.show();
+    }
+}
+onMounted(() => {
+    initialize()
+})
+</script>
+
+<template>
+    <div class="">
+        <span :id="`popoverButton${component.vnode.key}`" ref="popoverButton" class="relative" type="button">
+            <slot />
+        </span>
+        <div data-popover :id="`popoverContent${component.vnode.key}`" ref="popoverContent" role="tooltip"
+            class="absolute z-10 invisible inline-block w-64 text-sm font-light text-gray-500 transition-opacity duration-300 bg-white border-0 border-primary-700 rounded-lg shadow-lg opacity-0 dark:text-gray-400 dark:border-gray-950 dark:bg-gray-800">
+            <div
+                class="px-3 py-2 bg-primary-600 border-b border-primary-600 rounded-t-lg dark:border-primary-800 dark:bg-primary-800 flex items-center justify-between">
+                <h3 class="font-semibold text-white dark:text-white">{{ title }}</h3>
+                <InfoIcon class="w-4 h-4 text-white dark:text-white" />
+            </div>
+            <div class="px-3 py-2">
+                <slot name="content"></slot>
+            </div>
+            <div data-popper-arrow></div>
+        </div>
+    </div>
+</template>
