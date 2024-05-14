@@ -33,7 +33,7 @@ createInertiaApp({
     title: (title) => `${title} - ${appName}`,
     resolve: (name) => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob('./Pages/**/*.vue')),
     setup({ el, App, props, plugin }) {
-        let app = createApp({ render: () => h(App, props) })
+        const app = createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(ZiggyVue)
             .use(pinia)
@@ -42,6 +42,7 @@ createInertiaApp({
             .use(VueSocialSharing)
             //.use(Globals, )
             .mount(el);
+
         return app
     },
     progress: {

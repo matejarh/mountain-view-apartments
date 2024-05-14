@@ -1,27 +1,20 @@
 <script setup>
-import FormSection from '@/Components/FormSection.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextArea from '@/Components/TextArea.vue';
 import TextInput from '@/Components/TextInput.vue';
 import SpinnerIcon from '@/Icons/SpinnerIcon.vue';
-import BedTypesSection from './BedTypesSection.vue';
 import { useForm, usePage } from '@inertiajs/vue3';
-import BedTypeIcon from './BedTypeIcon.vue';
 import SelectInput from '@/Components/SelectInput.vue';
 import TrashBinIcon from '@/Icons/TrashBinIcon.vue';
 import { reactive, ref } from 'vue';
 import CirclePlusIcon from '@/Icons/CirclePlusIcon.vue';
-import FormSectionNoForm from '@/Components/FormSectionNoForm.vue';
 import HorizontalTabs from '@/Components/HorizontalTabs.vue';
 import HorizontalTabItem from '@/Components/HorizontalTabItem.vue';
 import { useTranslationsStore } from '@/stores/translations';
 import GridSection from '@/Components/GridSection.vue';
-import WysiwygInput from '@/Components/WysiwygInput.vue';
-import { QuillEditor } from '@vueup/vue-quill';
-import '@vueup/vue-quill/dist/vue-quill.snow.css';
-/* import '@vueup/vue-quill/dist/vue-quill.bubble.css'; */
+import TipTapInput from '@/Components/TipTapInput.vue';
 
 const page = usePage()
 
@@ -191,66 +184,45 @@ const handleAddRecomended = () => {
                     autocomplete="title" :has-error="!!form.errors.title" :placeholder="__('Enter title') + '...'" />
                 <InputError :message="form.errors.title" class="mt-2" />
             </div>
-            <!-- <div class="col-span-full">
-                <InputLabel for="description" :value="__('Description')" />
-                <TextArea id="description" v-model="form.description[selectedTab]" class="mt-1 block w-full"
-                    autocomplete="description" :has-error="!!form.errors.description"
-                    :placeholder="__('Enter description') + '...'"></TextArea>
-                <InputError :message="form.errors.description" class="mt-2" />
-            </div> -->
+
             <div class="col-span-full">
                 <InputLabel for="quote" :value="__('Quote')" />
-                <div class="block rounded-lg overflow-hidden border border-thin border-gray-100 dark:border-gray-600 ">
-                    <QuillEditor v-model:content="form.quote[selectedTab]" contentType="html" theme="snow"  />
-                </div>
-
-                <InputError :message="form.errors.quote" class="mt-2" />
+                <TextInput id="quote" v-model="form.quote[selectedTab]" type="text" class="mt-1 block w-full"
+                    autocomplete="quote" :has-error="!!form.errors[`quote.${selectedTab}`]" :placeholder="__('Enter quote') + '...'" />
+                <InputError :message="form.errors[`quote.${selectedTab}`]" class="mt-2" />
             </div>
+
             <div class="col-span-full">
                 <InputLabel for="description" :value="__('Description')" />
-                <div class="block rounded-lg overflow-hidden border border-thin border-gray-100 dark:border-gray-600 ">
-
-                    <QuillEditor v-model:content="form.description[selectedTab]" contentType="html" theme="snow"  />
-                </div>
-
-                <!-- <WysiwygInput id="description" v-model="form.description[selectedTab]" class="mt-1 block w-full"
-                    autocomplete="description" :has-error="!!form.errors.description"
-                    :placeholder="__('Enter description') + '...'" /> -->
-
-                <InputError :message="form.errors.description" class="mt-2" />
+                <TipTapInput v-model="form.description[selectedTab]" :has-error="!!form.errors[`description.${selectedTab}`]" />
+                <InputError :message="form.errors[`description.${selectedTab}`]" class="mt-2" />
             </div>
+
             <div class="col-span-full">
                 <InputLabel for="long_description" :value="__('Long description')" />
-
-                <div class="block rounded-lg overflow-hidden border-thin border-gray-400 ">
-                    <QuillEditor v-model:content="form.long_description[selectedTab]" contentType="html" theme="snow" />
-
-                </div>
-
-                <!-- <WysiwygInput  id="long_description" v-model="form.long_description[selectedTab]" class="mt-1 block w-full mb-4"
-                    autocomplete="long_description" :has-error="!!form.errors.long_description"
-                    :placeholder="__('Enter long description') + '...'" /> -->
-
-                <InputError :message="form.errors.description" class="mt-2" />
+                <TipTapInput v-model="form.long_description[selectedTab]"
+                    :has-error="!!form.errors[`long_description.${selectedTab}`]" />
+                <InputError :message="form.errors[`long_description.${selectedTab}`]" class="mt-2" />
             </div>
+
             <div class="col-span-full">
                 <InputLabel for="keywords" :value="__('Keywords')" />
                 <TextArea id="keywords" v-model="form.keywords[selectedTab]" class="mt-1 block w-full"
-                    autocomplete="keywords" :has-error="!!form.errors.keywords"
+                    autocomplete="keywords" :has-error="!!form.errors[`keywords.${selectedTab}`]"
                     :placeholder="__('Enter keywords') + '...'"></TextArea>
-                <InputError :message="form.errors.keywords" class="mt-2" />
+                <InputError :message="form.errors[`keywords.${selectedTab}`]" class="mt-2" />
             </div>
         </GridSection>
-        <GridSection class="mt-4">
 
+        <GridSection class="mt-4">
             <div class="col-span-3 ">
                 <InputLabel for="size" :value="`${__('Size in')} m²`" />
-                <TextInput id="size" v-model="form.size" type="text" class="mt-1 block w-full" required autocomplete="size"
-                    :has-error="!!form.errors.size" :placeholder="__('Enter size') + '...'" />
+                <TextInput id="size" v-model="form.size" type="text" class="mt-1 block w-full" required
+                    autocomplete="size" :has-error="!!form.errors.size" :placeholder="__('Enter size') + '...'" />
                 <InputError :message="form.errors.size" class="mt-2" />
             </div>
-            <div class="col-span-3 relative">
 
+            <div class="col-span-3 relative">
                 <InputLabel class="inline-flex items-center justify-center  cursor-pointer w-full">
                     {{ __('Is entire apartment') }}
                     <input type="checkbox" value="" class="sr-only peer" id="is_entire_apartment"
@@ -259,9 +231,8 @@ const handleAddRecomended = () => {
                         class="mx-auto mt-3 relative w-14 h-7 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-amazon-600 dark:peer-focus:ring-amazon-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all dark:border-gray-600 peer-checked:bg-amazon-600">
                     </div>
                 </InputLabel>
-
-
             </div>
+
             <div class="col-span-3 xl:col-span-3">
                 <InputLabel for="coordinates_lat" :value="`${__('Latitude')}`" />
                 <TextInput id="coordinates_lat" v-model="form.coordinates['lat']" type="text" class="mt-1 block w-full"
@@ -269,6 +240,7 @@ const handleAddRecomended = () => {
                     :placeholder="__('Enter latitude') + '...'" />
                 <InputError :message="form.errors['coordinates.lat']" class="mt-2" />
             </div>
+
             <div class="col-span-3 xl:col-span-3">
                 <InputLabel for="coordinates_lng" :value="`${__('Longitude')}`" />
                 <TextInput id="coordinates_lng" v-model="form.coordinates['lng']" type="text" class="mt-1 block w-full"
@@ -309,7 +281,8 @@ const handleAddRecomended = () => {
 
                     <SelectInput v-model="form.bed_types[key].icon" :id="`bed_type_${key}_icon`">
                         <option disabled value="">- {{ __('select icon') }} -</option>
-                        <option v-for="icon,key in $page.props.icon_list" :key="key" :value="key">{{ __(icon) }}</option>
+                        <option v-for="icon, key in $page.props.icon_list" :key="key" :value="icon.name">{{ __(icon.label) }}
+                        </option>
                     </SelectInput>
                 </div>
                 <div class="">
@@ -337,7 +310,8 @@ const handleAddRecomended = () => {
 
                     <SelectInput v-model="newBedType.icon" id="bed_type_new_icon">
                         <option disabled value="none">- {{ __('select icon') }} -</option>
-                        <option v-for="icon,key in $page.props.icon_list" :key="key" :value="key">{{ __(icon) }}</option>
+                        <option v-for="icon, key in $page.props.icon_list" :key="key" :value="icon.name">{{ __(icon.label) }}
+                        </option>
                     </SelectInput>
                 </div>
                 <div class="">
@@ -452,6 +426,7 @@ const handleAddRecomended = () => {
         </HorizontalTabs>
 
         <h4 class="text-xl font-bold dark:text-white">{{ __('Rules') }}</h4>
+
         <GridSection>
             <div class="col-span-full">
                 <div class="flex items-center">
@@ -460,50 +435,46 @@ const handleAddRecomended = () => {
 
                     <p class="w-full">{{ __('Icon') }}</p>
                 </div>
+
                 <div class="flex items-center space-x-2 mb-4" v-for="rule, key in form.rules[selectedTab]">
-                    <!-- <BedTypeIcon :icon="type.icon" /> -->
                     <div class="w-full">
-
                         <div class="flex items-center space-x-2">
-                            <!-- {{ form.rules[selectedTab][key] }} -->
                             <div class="w-full">
 
-                                <TextInput :id="`rule_${key}_name`" v-model="form.rules[selectedTab][key].name" type="text"
-                                    class="mt-1 block w-full" required :has-error="!!form.errors['rules.' + selectedTab + key + '.name']"
+                                <TextInput :id="`rule_${key}_name`" v-model="form.rules[selectedTab][key].name"
+                                    type="text" class="mt-1 block w-full" required
+                                    :has-error="!!form.errors['rules.' + selectedTab + key + '.name']"
                                     :placeholder="__('Enter number of name') + '...'" />
-                                <InputError :message="form.errors['rules.' + selectedTab + key + '.name']" class="mt-2" />
+                                <InputError :message="form.errors['rules.' + selectedTab + key + '.name']"
+                                    class="mt-2" />
                             </div>
                             <div class="w-full">
 
-                                <TextInput :id="`rule_${key}_title`" v-model="form.rules[selectedTab][key].title" type="text"
-                                    class="mt-1 block w-full" required :has-error="!!form.errors['rules.'+ selectedTab + key + '.title']"
+                                <TextInput :id="`rule_${key}_title`" v-model="form.rules[selectedTab][key].title"
+                                    type="text" class="mt-1 block w-full" required
+                                    :has-error="!!form.errors['rules.' + selectedTab + key + '.title']"
                                     :placeholder="__('Enter title') + '...'" />
-                                <InputError :message="form.errors['rules.' + selectedTab + key + '.title']" class="mt-2" />
+                                <InputError :message="form.errors['rules.' + selectedTab + key + '.title']"
+                                    class="mt-2" />
                             </div>
                             <div class="w-full">
-                                <SelectInput v-model="form.rules[selectedTab][key].icon" :id="`bed_type_${key}_new_icon`">
+                                <SelectInput v-model="form.rules[selectedTab][key].icon"
+                                    :id="`bed_type_${key}_new_icon`">
                                     <option disabled value="none">- {{ __('select icon') }} -</option>
-                                    <option v-for="icon,key in $page.props.icon_list" :key="key" :value="key">{{ __(icon) }}</option>
-<!--                                     <option value="CheckInIcon">{{ __('Check In') }}</option>
-                                    <option value="CheckOutIcon">{{ __('Check Out') }}</option>
-                                    <option value="CancellationPrepaymentIcon">{{ __('Cancellation Prepayment') }}
+                                    <option v-for="icon, key in $page.props.icon_list" :key="key" :value="icon.name">{{
+                                        __(icon.label) }}
                                     </option>
-                                    <option value="ChildrenBedsIcon">{{ __('Children Beds') }}</option>
-                                    <option value="AgeRestrictionIcon">{{ __('Age Restriction') }}</option>
-                                    <option value="NonSmokingRoomsIcon">{{ __('Non Smoking Rooms') }}</option>
-                                    <option value="PartiesIcon">{{ __('No Parties') }}</option>
-                                    <option value="QuietHoursIcon">{{ __('Quiet Hours') }}</option>
-                                    <option value="PetsIcon">{{ __('No Pets Icon') }}</option> -->
                                 </SelectInput>
                             </div>
                         </div>
                         <div class="w-full">
 
-                            <TextArea :id="`rule_${key}_description`" rows="2" v-model="form.rules[selectedTab][key].description"
-                                type="text" class="mt-1 block w-full" required
-                                :has-error="!!form.errors['rules.' + selectedTab + key + '.description']"
+                            <TextArea :id="`rule_${key}_description`" rows="2"
+                                v-model="form.rules[selectedTab][key].description" type="text" class="mt-1 block w-full"
+                                required :has-error="!!form.errors['rules.' + selectedTab + key + '.description']"
                                 :placeholder="__('Enter description') + '...'" />
-                            <InputError :message="form.errors['rules.' + selectedTab + key + '.description']" class="mt-2" />
+                            <InputError :message="form.errors['rules.' + selectedTab + key + '.description']"
+                                class="mt-2" />
                         </div>
                     </div>
                     <div class="">
@@ -511,42 +482,36 @@ const handleAddRecomended = () => {
                             <TrashBinIcon class="text-bittersweet-700 dark:text-bittersweet-500" />
                         </button>
                     </div>
-
-
-
                 </div>
+
                 <h4 class="text-base font-bold dark:text-white mt-2">{{ __('Add New') }}</h4>
 
                 <div class="flex items-center space-x-2">
-                    <!-- <BedTypeIcon :icon="type.icon" /> -->
                     <div class="w-full">
-
                         <div class="flex items-center space-x-2">
-
                             <div class="w-full">
-
                                 <TextInput :id="`new_rule_name`" v-model="newRule.name" type="text"
                                     class="mt-1 block w-full" required :placeholder="__('Enter rule name') + '...'" />
-
                             </div>
-                            <div class="w-full">
 
+                            <div class="w-full">
                                 <TextInput :id="`new_rule_title`" v-model="newRule.title" type="text"
                                     class="mt-1 block w-full" required :placeholder="__('Enter rule title') + '...'" />
-
                             </div>
+
                             <div class="w-full">
                                 <SelectInput v-model="newRule.icon" id="rule_new_icon">
                                     <option disabled value="none">- {{ __('select icon') }} -</option>
-                                    <option v-for="icon,key in $page.props.icon_list" :key="key" :value="key">{{ __(icon) }}</option>
+                                    <option v-for="icon, key in $page.props.icon_list" :key="key" :value="icon.name">{{
+                                        __(icon.label) }}
+                                    </option>
                                 </SelectInput>
                             </div>
                         </div>
-                        <div class="w-full">
 
+                        <div class="w-full">
                             <TextArea :id="`new_rule_description`" rows="2" v-model="newRule.description" type="text"
                                 class="mt-1 block w-full" required :placeholder="__('Enter description') + '...'" />
-
                         </div>
                     </div>
 
@@ -557,7 +522,6 @@ const handleAddRecomended = () => {
                     </div>
                 </div>
             </div>
-
         </GridSection>
 
         <PrimaryButton type="button"

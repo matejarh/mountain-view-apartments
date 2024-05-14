@@ -12,12 +12,10 @@ import TextArea from '@/Components/TextArea.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SpinnerIcon from '@/Icons/SpinnerIcon.vue';
 import TextInputHelper from '@/Components/TextInputHelper.vue';
-import DangerButton from '@/Components/DangerButton.vue';
 import TrashBinIcon from '@/Icons/TrashBinIcon.vue';
-import { QuillEditor } from '@vueup/vue-quill';
-import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import CirclePlusIcon from '@/Icons/CirclePlusIcon.vue';
 import NewExtraDialog from './NewExtraDialog.vue';
+import TipTapInput from '@/Components/TipTapInput.vue';
 
 const translations = useTranslationsStore()
 
@@ -126,7 +124,7 @@ const handleCreateExtra = (extra) => {
             <hr class="my-4 md:my-4 border-gray-200 dark:border-gray-800 col-span-full" />
 
             <div class="flex justify-between col-span-full w-full">
-                <h4 class="text-xl font-bold dark:text-white">{{ __('Extras') }}</h4>
+                <h4 class="text-2xl font-bold dark:text-white">{{ __('Extras') }}</h4>
                 <button @click="showNewExtraDialog = true" class="text-amazon-500 dark:text-amazon-600">
                     <CirclePlusIcon />
                 </button>
@@ -135,18 +133,18 @@ const handleCreateExtra = (extra) => {
             <!--  {{ form.extras }} -->
             <div class="col-span-full" v-for="extra, key in form.extras" :key="key">
                 <div class="flex justify-between">
-                    <h5>
+                    <h5 class="capitalize font-semibold text-lg">
                         {{ key.replace('_', ' ') }}
                     </h5>
                     <button class="text-bittersweet-600 dark:text-bittersweet-700" @click="delete form.extras[key]">
                         <TrashBinIcon />
                     </button>
                 </div>
-                {{ form.extras[key][selectedTab] }}
-                <div class="block rounded-lg overflow-visible border-thin border-gray-400 ">
-                    <QuillEditor v-model:content="form.extras[key][selectedTab]" contentType="html" theme="snow" />
 
-                </div>
+                 <TipTapInput v-model="form.extras[key][selectedTab]"
+                    :has-error="!!form.errors[`extras.${key}.${selectedTab}`]" />
+
+
                 <InputError :message="form.errors[`extras.${key}.${selectedTab}`]" class="mt-2" />
 
                 <!-- <TextArea :id="`extra-${key}-${selectedTab}`" v-model="form.extras[key][selectedTab]" class="mt-1 block w-full"
