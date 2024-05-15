@@ -61,7 +61,7 @@ const images = ref([])
 
 const fetch = async () => {
     isFetching.value = true
-    await axios.get(`/admin/images/fetch-backgrounds/?attribute=${props.setting.attributes[props.attribute].photo_url}`)
+    await axios.get(`/admin/images/fetch-backgrounds/?attribute=${props.setting.attributes[props.attribute]?.photo_url}`)
         .then(response => {
             images.value = response.data.images
             isFetching.value = false

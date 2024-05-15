@@ -29,14 +29,14 @@ const carousel=ref(null)
 const makeItems = () => {
     let items = []
     props.slides?.forEach((slide, index) => {
-        items.push({position: index, el: document.getElementById(`carousel-item-${index}`)})
+        items.push({position: index, el: document.getElementById(`${props.id}-item-${index}`)})
     });
     return items
 }
 const makeIndicators = () => {
     let items = []
     props.slides?.forEach((slide, index) => {
-        items.push({position: index, el: document.getElementById(`carousel-indicator-${index}`)})
+        items.push({position: index, el: document.getElementById(`${props.id}-indicator-${index}`)})
     });
     return items
 }
@@ -119,7 +119,7 @@ onMounted(() => {
         <button
             v-for="item, key in slides"
             :key="key"
-            :id="`carousel-indicator-${key}`"
+            :id="`${id}-indicator-${key}`"
             type="button"
             class="h-3 w-3 rounded-full bg-primary-500 hover:bg-primary-500"
             aria-current="true"

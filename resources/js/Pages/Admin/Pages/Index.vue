@@ -14,7 +14,7 @@ const showCreateDialog = ref(false)
 </script>
 
 <template>
-    <FullLayout>
+    <FullLayout :title="__('Pages')">
         <ActionSection :fullwidth="true">
             <template #title>
                 {{ __('Pages') }}

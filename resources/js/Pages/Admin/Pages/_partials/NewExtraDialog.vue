@@ -22,7 +22,16 @@ const extra = computed(() => {
     const e = {};
 
     page.props.supported_locales.forEach(locale => {
-        e[key] = { ...e[key], [locale]: "" };
+        e[key] = {
+            title: {
+                ...e[key]?.title,
+                [locale]: ""
+            },
+            text: {
+                ...e[key]?.text,
+                [locale]: ""
+            }
+        };
     });
 
     return e;

@@ -22,6 +22,7 @@ use App\Contracts\DetachesGalleriesFromPages;
 use App\Contracts\DetachesGalleriesFromProperties;
 use App\Contracts\DetachesImagesFromGalleries;
 use App\Contracts\LikesProperties;
+use App\Contracts\ReviewsProperties;
 use App\Contracts\UpdatesFacilities;
 use App\Contracts\UpdatesGalleries;
 use App\Contracts\UpdatesImages;
@@ -304,6 +305,17 @@ class Fortify
     public static function toggleLikeForPropertyUsing(string $callback)
     {
         app()->singleton(LikesProperties::class, $callback);
+    }
+
+    /**
+     * Register a class / callback that should be used to post review for given property.
+     *
+     * @param  string  $callback
+     * @return void
+     */
+    public static function reviewPropertyUsing(string $callback)
+    {
+        app()->singleton(ReviewsProperties::class, $callback);
     }
 
         /**

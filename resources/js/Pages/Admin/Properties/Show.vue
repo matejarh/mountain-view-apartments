@@ -56,11 +56,11 @@ const detach = (gallery) => {
                     </span>
                 </div>
             </template>
-            <template #description>
+<!--             <template #description>
                 <div class="whitespace-pre-wrap" v-html="$page.props.property.description[$page.props.locale]">
                 </div>
 
-            </template>
+            </template> -->
 
             <template #content>
                 <div class="lg:grid lg:grid-cols-1 xl:grid-cols-3 lg:gap-8 xl:gap-16">

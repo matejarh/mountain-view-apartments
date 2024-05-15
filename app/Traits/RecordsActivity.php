@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use App\Models\Activity;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Laravel\Jetstream\Agent;
 use Stevebauman\Location\Facades\Location;
 
@@ -23,12 +24,12 @@ trait RecordsActivity
 
     }
 
-    protected static function getActivitiesToRecord()
+    protected static function getActivitiesToRecord(): array
     {
         return ['created', 'updated', 'deleted'];
     }
 
-    protected function recordActivity($event)
+    protected function recordActivity($event) :void
     {
         $agent = $this->createAgent(request()->header('user-agent'));
         $ip=request()->ip();
@@ -49,18 +50,18 @@ trait RecordsActivity
         ]);
     }
 
-    protected function createAgent($session)
+    protected function createAgent($session): Agent
     {
         return tap(new Agent(), fn($agent) => $agent->setUserAgent($session));
     }
 
-    public function getActivityType($event)
+    public function getActivityType($event): string
     {
         $type = str((new \ReflectionClass($this))->getShortName())->lower();
         return $event . '_' . $type;
     }
 
-    protected function activity()
+    protected function activity(): MorphMany
     {
         return $this->morphMany(Activity::class, 'subject');
     }

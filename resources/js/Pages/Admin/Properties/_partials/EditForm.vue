@@ -8,7 +8,7 @@ import SpinnerIcon from '@/Icons/SpinnerIcon.vue';
 import { useForm, usePage } from '@inertiajs/vue3';
 import SelectInput from '@/Components/SelectInput.vue';
 import TrashBinIcon from '@/Icons/TrashBinIcon.vue';
-import { reactive, ref } from 'vue';
+import { onBeforeUnmount, onMounted, reactive, ref } from 'vue';
 import CirclePlusIcon from '@/Icons/CirclePlusIcon.vue';
 import HorizontalTabs from '@/Components/HorizontalTabs.vue';
 import HorizontalTabItem from '@/Components/HorizontalTabItem.vue';
@@ -140,6 +140,19 @@ const handleAddRecomended = () => {
         newRecomended.title = ''
     }
 }
+
+const saveOnCtrlS = (e) => {
+    const isCtrlS = e.ctrlKey && e.key === 's';
+    const canSave = form.isDirty && !form.processing && !form.recentlySuccessful;
+
+    if (isCtrlS && canSave) {
+        e.preventDefault();
+        update();
+    }
+};
+
+onMounted(() => document.addEventListener('keydown', saveOnCtrlS));
+onBeforeUnmount(() => document.removeEventListener('keydown', saveOnCtrlS));
 </script>
 
 <template>

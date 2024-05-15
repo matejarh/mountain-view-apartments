@@ -79,6 +79,7 @@ class Gallery extends Model
                     ->withPivot('order')
                     ->withTimestamps()
                     ->orderBy('galleries_images.order');
+                    //->orderByRaw('CONVERT(galleries_images.order, SIGNED) asc');
     }
 
     /**

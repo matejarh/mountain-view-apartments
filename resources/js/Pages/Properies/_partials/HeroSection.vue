@@ -35,8 +35,8 @@ const initBgImageRotation = () => {
     }, 5000);
 }
 
-const gotoAvailability = () => {
-    document.getElementById("availability").scrollIntoView();
+const scrollTo = (view) => {
+    document.getElementById(view).scrollIntoView(false);
 }
 
 const stopBgRotation = () => {
@@ -70,7 +70,7 @@ onBeforeUnmount(() => {
                 <div class="mb-8 text-lg font-normal text-gray-300 lg:text-xl sm:px-16 lg:px-48" v-html="$page.props.property.description[$page.props.locale]"></div>
 
                 <div class="mb-8 flex flex-col space-y-4 sm:space-x-4 sm:flex-row sm:justify-center sm:space-y-0">
-                    <PrimaryButton @click="gotoAvailability" class="py-3 px-5 " type="button">
+                    <PrimaryButton @click="scrollTo('availability')" class="py-3 px-5 " type="button">
 
                         {{__('Check Availability')}}
                         <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true"
@@ -80,7 +80,7 @@ onBeforeUnmount(() => {
                         </svg>
                     </PrimaryButton class="py-3 px-5 ">
 
-                    <SecondaryButton type="button">
+                    <SecondaryButton type="button" @click="scrollTo('info')">
                         {{__('Learn more')}}
                     </SecondaryButton>
                     <!-- <a href="#" @click="initBgImageRotation"

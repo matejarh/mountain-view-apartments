@@ -36,8 +36,16 @@ class UpdatePage implements UpdatesPages
 
         foreach (config('app.supported_locales') as $key => $locale) {
             foreach ($input['extras'] as $ekey => $extra) {
+                if (!isset($input['extras'][$ekey]['title'][$locale])) {
+                    $input['extras'][$ekey]['title'][$locale] = '';
+                }
+                if (!isset($input['extras'][$ekey]['text'][$locale])) {
+                    $input['extras'][$ekey]['text'][$locale] = '';
+                }
+
                 $rules += [
-                    "extras.$ekey.$locale" => ['nullable', 'string', 'distinct', new SpamFree],
+                    "extras.$ekey.title.$locale" => ['nullable', 'string', 'distinct', new SpamFree],
+                    "extras.$ekey.text.$locale" => ['nullable', 'string', 'distinct', new SpamFree],
                 ];
             }
 
@@ -49,7 +57,7 @@ class UpdatePage implements UpdatesPages
         }
         // \Log::info('rules', $rules);
         $validator = Validator::make($input, $rules);
-
+        // dd($validator);
         $validator->setAttributeNames($attributeNames)->validateWithBag('updatingPage');
 
         $page->forceFill([

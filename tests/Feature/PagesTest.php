@@ -51,22 +51,44 @@ class PagesTest extends TestCase
             ],
             'extras' => [
                 'nasfield_text' => [
-                    'sl' => '',
-                    'en' => '',
-                    'de' => '',
-                    'hu' => '',
-                    'it' => '',
-                    'fr' => '',
-                    'cs' => '',
+                    'title' => [
+                        'sl' => '',
+                        'en' => '',
+                        'de' => '',
+                        'hu' => '',
+                        'it' => '',
+                        'fr' => '',
+                        'cs' => '',
+                    ],
+                    'text' => [
+                        'sl' => '',
+                        'en' => '',
+                        'de' => '',
+                        'hu' => '',
+                        'it' => '',
+                        'fr' => '',
+                        'cs' => '',
+                    ],
                 ],
                 'bled_text' => [
-                    'sl' => '',
-                    'en' => '',
-                    'de' => '',
-                    'hu' => '',
-                    'it' => '',
-                    'fr' => '',
-                    'cs' => '',
+                    'title' => [
+                        'sl' => '',
+                        'en' => '',
+                        'de' => '',
+                        'hu' => '',
+                        'it' => '',
+                        'fr' => '',
+                        'cs' => '',
+                    ],
+                    'text' => [
+                        'sl' => '',
+                        'en' => '',
+                        'de' => '',
+                        'hu' => '',
+                        'it' => '',
+                        'fr' => '',
+                        'cs' => '',
+                    ],
                 ]
             ]
         ];
@@ -117,8 +139,10 @@ class PagesTest extends TestCase
             ],
             'extras' => [
                 'testextra' => [
-                    'sl' => 'sl extra',
-                    'en' => 'en extra',
+                    'title' => [
+                        'sl' => 'sl extra',
+                        'en' => 'en extra',
+                    ]
                 ]
             ],
         ];
@@ -133,7 +157,7 @@ class PagesTest extends TestCase
         $this->assertCount(collect(config('app.supported_locales'))->count(), collect($new_page->fresh()->keywords));
         $this->assertCount(collect(config('app.supported_locales'))->count(), collect($new_page->fresh()->description));
         $this->assertCount(collect(config('app.supported_locales'))->count(), collect($new_page->fresh()->title));
-        $this->assertCount(collect(config('app.supported_locales'))->count(), collect($new_page->fresh()->extras->testextra));
+        $this->assertCount(collect(config('app.supported_locales'))->count(), collect($new_page->fresh()->extras->testextra->title));
         $this->assertEquals(1, Page::count());
     }
 
@@ -151,8 +175,10 @@ class PagesTest extends TestCase
             'keywords' => $this->page['keywords'],
             'extras' => [
                 'testextra' => [
-                    'sl' => 'sl nova extra',
-                    'en' => 'en npova extra',
+                    'title' => [
+                        'sl' => 'sl nova extra',
+                        'en' => 'en nova extra',
+                    ]
                 ]
             ],
         ];
@@ -164,8 +190,8 @@ class PagesTest extends TestCase
 
         $this->assertEquals($page->fresh()->name, 'Changed name');
         $this->assertEquals((array) $page->fresh()->description, $this->page['description']);
-        $this->assertEquals($page->fresh()->extras->testextra->sl, 'sl nova extra');
-        $this->assertEquals($page->fresh()->extras->testextra->en, 'en npova extra');
+        $this->assertEquals($page->fresh()->extras->testextra->title->sl, 'sl nova extra');
+        $this->assertEquals($page->fresh()->extras->testextra->title->en, 'en nova extra');
 
     }
 
@@ -290,9 +316,9 @@ class PagesTest extends TestCase
 
         $page = Page::factory()->create();
 
-        $this->actingAs($this->admin)->put(route('admin.pages.attach.gallery', ['gallery' => $gallery1, 'page' => $page]))
+        $request = $this->actingAs($this->admin)->put(route('admin.pages.attach.gallery', ['gallery' => $gallery1, 'page' => $page]))
             ->assertSessionHas(["status" => "gallery-attached"]);
-
+        //dd($request);
         $this->assertDatabaseCount('pages_galleries', 1);
 
         $this->actingAs($this->admin)->put(route('admin.pages.detach.gallery', ['gallery' => $gallery1, 'page' => $page]))

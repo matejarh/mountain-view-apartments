@@ -51,7 +51,7 @@ watchEffect(async () => {
         leave-active-class="animate__animated animate__slideOutUp">
 
         <nav v-show="show"
-            class="hidden md:block bg-gray-50 dark:bg-gray-950  left-0 right-0 top-0 transition-all fixed ease-out duration-300 "
+            class="hidden md:block bg-gray-50 dark:bg-gray-950  left-0 right-0 top-0 transition-all fixed ease-out duration-300 z-40"
             :class="scrollPosition > 100 ? 'min-h-14 ' : 'min-h-[128px]'">
             <ShapeBottom
                 class="absolute drop-shadow-lg transition-all ease-out duration-300 inset-y-full z-10 left-0 right-0 w-full transform -translate-y-4 text-gray-50 dark:text-gray-950 drop-shadow-b-lg " />

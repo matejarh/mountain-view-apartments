@@ -85,21 +85,34 @@ const destroy = () => {
 
         <figure
             class="min-h-[240px] z-0 sm:min-h-[252px] md:min-h-[164px] lg:min-h-[160px] xl:min-h-auto relative shadow-lg active:shadow hover:shadow-xl brightness-90 hover:brightness-105 transition-all ease-out duration-150 cursor-pointer  overflow-visible">
-            <div @click="$emit('clicked', {image:image, key:0})">
+            <div @click="$emit('clicked', { image: image, key: 0 })">
                 <img class="rounded-lg" :src="image.thumb_url" :alt="image.name">
             </div>
 
-            <figcaption id="moveup" v-if="image.pivot && image.pivot.order < imagesCount && itemKey+1 < imagesCount" class="order top-0 bottom-0 right-0 text-gray-50 font-bold text-3xl absolute h-full flex flex-col justify-center items-end ">
+            <!-- <figcaption
+                class="absolute top-0 w-full flex justify-center items-center h-full text-gray-50 font-bold text-4xl drop-shadow-lg">
+                <p>
+
+                    {{ image.pivot.order }}
+                    {{ itemKey }}
+                </p>
+            </figcaption> -->
+
+            <figcaption id="moveup" v-if="image.pivot && image.pivot.order < imagesCount && itemKey + 1 < imagesCount"
+                class="order top-0 bottom-0 right-0 text-gray-50 font-bold text-3xl absolute h-full flex flex-col justify-center items-end ">
                 <Tooltip :text="__('Move Back')">
-                    <button id="moveupbutton" :disabled="isBusy" @click="$emit('moveDown', itemKey)" :class="{ 'opacity-75' : isBusy }" class="hover:translate-x-1 transition">
+                    <button id="moveupbutton" :disabled="isBusy" @click="$emit('moveDown', itemKey)"
+                        :class="{ 'opacity-75': isBusy }" class="hover:translate-x-1 transition">
                         <CarretLeftIcon class="w-8 h-8 -rotate-180" />
                     </button>
                 </Tooltip>
             </figcaption>
 
-            <figcaption id="movedown" v-if="image.pivot && image.pivot.order > 1 && itemKey !== 0" class="order top-0 bottom-0 left-0 text-gray-50 font-bold text-3xl absolute h-full flex flex-col justify-center items-start ">
+            <figcaption id="movedown" v-if="image.pivot && image.pivot.order > 1 && itemKey !== 0"
+                class="order top-0 bottom-0 left-0 text-gray-50 font-bold text-3xl absolute h-full flex flex-col justify-center items-start ">
                 <Tooltip :text="__('Move Forward')">
-                    <button id="movedownbutton" :disabled="isBusy" @click="$emit('moveUp', itemKey)" c :class="{ 'opacity-75' : isBusy }" class="hover:-translate-x-1 transition">
+                    <button id="movedownbutton" :disabled="isBusy" @click="$emit('moveUp', itemKey)" c
+                        :class="{ 'opacity-75': isBusy }" class="hover:-translate-x-1 transition">
                         <CarretLeftIcon class="w-8 h-8 " />
                     </button>
                 </Tooltip>
@@ -143,20 +156,16 @@ const destroy = () => {
             <figcaption
                 class="absolute px-2 py-1 text-lg rounded-b-lg text-white bottom-0 bg-white dark:bg-gray-800 max-h-16 overflow-y-auto scrollbar-none  w-full bg-opacity-50 dark:bg-opacity-50 backdrop-blur-lg">
                 <h3 class="text-gray-700 dark:text-gray-300 whitespace-nowrap overflow-hidden">{{ image.name }}</h3>
-                <p class="text-gray-700 dark:text-gray-300 text-sm whitespace-pre-wrap leading-tight">{{ image.description }}</p>
+                <p class="text-gray-700 dark:text-gray-300 text-sm whitespace-pre-wrap leading-tight">{{
+                    image.description }}</p>
             </figcaption>
         </figure>
 
 
 
-        <ConfirmationModal  :is-danger="true"
-                            :show="showDetachConfirm"
-                            :form="detachForm"
-                            :busy-text="__('Detaching from gallery')"
-                            :recently-successful-text="__('Detached from gallery')"
-                            @close="showDetachConfirm = false"
-                            @confirmed="detach"
-                            >
+        <ConfirmationModal :is-danger="true" :show="showDetachConfirm" :form="detachForm"
+            :busy-text="__('Detaching from gallery')" :recently-successful-text="__('Detached from gallery')"
+            @close="showDetachConfirm = false" @confirmed="detach">
             <template #icon>
                 <ArrowUpRightIcon class=" text-gray-400 dark:text-gray-500 w-11 h-11 mb-3.5 mx-auto" />
             </template>
@@ -166,31 +175,22 @@ const destroy = () => {
             </template>
         </ConfirmationModal>
 
-        <ConfirmationModal  :is-danger="false"
-                            :show="showAttachConfirm"
-                            :form="attachForm"
-                            :busy-text="__('Attaching to gallery')"
-                            :recently-successful-text="__('Attached')"
-                            @close="showAttachConfirm = false"
-                            @confirmed="attach"
-                            >
+        <ConfirmationModal :is-danger="false" :show="showAttachConfirm" :form="attachForm"
+            :busy-text="__('Attaching to gallery')" :recently-successful-text="__('Attached')"
+            @close="showAttachConfirm = false" @confirmed="attach">
             <template #icon>
                 <ArrowUpRightIcon class=" text-gray-400 dark:text-gray-500 w-11 h-11 mb-3.5 mx-auto" />
             </template>
             <template #content>
-                <p class="mb-4 text-gray-500 dark:text-gray-300 text-lg">{{ __('This will add image to this gallery.') }}
+                <p class="mb-4 text-gray-500 dark:text-gray-300 text-lg">{{ __('This will add image to this gallery.')
+                    }}
                 </p>
             </template>
         </ConfirmationModal>
 
-        <ConfirmationModal  :is-danger="true"
-                            :show="showDestroyConfirm"
-                            :form="destroyForm"
-                            :busy-text="__('Deleting Image')"
-                            :recently-successful-text="__('Image Deleted')"
-                            @close="showDestroyConfirm = false"
-                            @confirmed="destroy"
-                            >
+        <ConfirmationModal :is-danger="true" :show="showDestroyConfirm" :form="destroyForm"
+            :busy-text="__('Deleting Image')" :recently-successful-text="__('Image Deleted')"
+            @close="showDestroyConfirm = false" @confirmed="destroy">
             <template #icon>
                 <TrashBinIcon class=" text-gray-400 dark:text-gray-500 w-11 h-11 mb-3.5 mx-auto" />
             </template>

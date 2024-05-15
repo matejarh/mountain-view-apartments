@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, onUnmounted, ref } from 'vue';
+import { onMounted, onUnmounted, ref, watchEffect } from 'vue';
 import { router, useForm } from '@inertiajs/vue3';
 import ActionSection from '@/Components/ActionSection.vue';
 import FullLayout from '@/Layouts/FullLayout.vue';
@@ -61,6 +61,10 @@ const updateOrder = () => {
   });
 };
 
+watchEffect(() => {
+    imagesProxy.value = props.gallery?.images
+})
+
 
 const form = useForm({
     name: props.gallery?.name,
@@ -80,6 +84,7 @@ const update = () => {
             preserveState: true,
             onSuccess: () => {
                 editing.value = false
+                imagesProxy.value = props.gallery?.images
             }
         })
     }

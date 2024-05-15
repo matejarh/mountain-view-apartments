@@ -41,7 +41,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Gallery::class, 'gallery_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->foreignIdFor(Image::class, 'image_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
-            $table->integer('order');
+            $table->integer('order')->default(0);
             $table->timestamps();
 
             $table->unique(['gallery_id', 'image_id']);

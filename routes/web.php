@@ -19,7 +19,6 @@ Route::group(['prefix' => '{lang}', 'middleware' => 'web'], function () {
     Route::name('properties.')->prefix('accomodations')->namespace('accomodations')->group(function () {
         Route::get('/', [PropertiesController::class, 'index'])->name('index');
         Route::get('/{property}', [PropertiesController::class, 'show'])->name('show');
-        Route::post('/{property}/like', [PropertiesController::class, 'like'])->name('like');
     });
 
 
@@ -35,6 +34,11 @@ Route::middleware([
                 return redirect(route('admin.dashboard.show'));
             return Inertia::render('Dashboard');
         })->name('show');
+    });
+
+    Route::name('properties.')->prefix('accomodations')->namespace('accomodations')->group(function () {
+        Route::post('/{property}/like', [PropertiesController::class, 'like'])->name('like');
+        Route::post('/{property}/review', [PropertiesController::class, 'review'])->name('review');
     });
 
     Route::get('/user/activities', [ActivitiesController::class, 'index'])->name('activities');

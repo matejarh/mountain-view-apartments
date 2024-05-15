@@ -1,10 +1,4 @@
 <script setup>
-import FacebookIcon from '@/Icons/FacebookIcon.vue';
-import TwitterIcon from '@/Icons/TwitterIcon.vue';
-import XIcon from '@/Icons/XIcon.vue';
-import FbMessengerIcon from '@/Icons/FbMessengerIcon.vue';
-import WhatsUpIcon from '@/Icons/WhatsUpIcon.vue';
-import InstagramIcon from '@/Icons/InstagramIcon.vue';
 import Tooltip from './Tooltip.vue';
 import { reactive } from 'vue';
 import DinamicIcon from '../DinamicIcon.vue';

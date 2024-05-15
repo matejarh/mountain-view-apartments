@@ -22,7 +22,7 @@ return Application::configure(basePath: dirname(__DIR__))
             // \App\Http\Middleware\LanguageMiddleware::class,
             \App\Http\Middleware\HandleInertiaRequests::class,
             \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
-            \App\Http\Middleware\XssSanitizationMiddleware::class,
+            // \App\Http\Middleware\XssSanitizationMiddleware::class,
             'throttle:global',
         ]);
         $middleware->throttleWithRedis();

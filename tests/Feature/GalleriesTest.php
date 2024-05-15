@@ -56,7 +56,7 @@ class GalleriesTest extends TestCase
 
         $response = $this->actingAs($this->admin)->get(route('admin.galleries.index'));
 
-        $response->assertStatus(200);
+        $response->assertStatus(200)->assertSee('Galleries');
     }
 
     public function test_admin_may_create_new_gallery(): void
@@ -70,7 +70,7 @@ class GalleriesTest extends TestCase
 
         $response = $this->actingAs($this->admin)->post(route('admin.galleries.store'), $gallery);
 
-        $response->assertStatus(302);
+        $response->assertStatus(302)->assertSessionHas(['status' => 'gallery-created']);
 
         $this->assertDatabaseHas('galleries', $gallery);
         $this->assertEquals(1, Gallery::count());
@@ -89,7 +89,7 @@ class GalleriesTest extends TestCase
 
         $response = $this->actingAs($this->admin)->post(route('admin.galleries.store'), $gallery);
 
-        $response->assertStatus(302);
+        $response->assertStatus(302)->assertSessionMissing(['status' => 'gallery-created']);
 
         $response->assertSessionHasErrors(['name', 'description']);
 
@@ -108,7 +108,7 @@ class GalleriesTest extends TestCase
 
         $response = $this->actingAs($this->user)->post(route('admin.galleries.store'), $gallery);
 
-        $response->assertStatus(403);
+        $response->assertStatus(403)->assertSessionMissing(['status' => 'gallery-created']);
     }
 
     public function test_admin_may_update_gallery(): void
@@ -120,10 +120,10 @@ class GalleriesTest extends TestCase
         ];
 
         $response = $this->actingAs($this->admin)->post(route('admin.galleries.store'), $gallery);
-        $response->assertStatus(302);
+        $response->assertStatus(302)->assertSessionHas(['status' => 'gallery-created']);
 
         $response = $this->actingAs($this->user)->post(route('admin.galleries.store'), $gallery);
-        $response->assertStatus(403);
+        $response->assertStatus(403)->assertSessionMissing(['status' => 'gallery-detached']);
 
         $this->assertDatabaseHas('galleries', $gallery);
         $this->assertCount(1, Gallery::all()->toArray());
@@ -137,7 +137,7 @@ class GalleriesTest extends TestCase
 
         $response = $this->actingAs($this->admin)->put("/admin/galleries/$gallery->slug", $updatedgallery);
 
-        $response->assertStatus(302);
+        $response->assertStatus(302)->assertSessionHas(['status' => 'gallery-updated']);
 
         $this->assertDatabaseHas('galleries', $updatedgallery);
 
@@ -161,7 +161,7 @@ class GalleriesTest extends TestCase
 
         $response = $this->actingAs($this->admin)->post(route('admin.images.store'), $image);
 
-        $response->assertStatus(302);
+        $response->assertStatus(302)->assertSessionHas(['status' => 'image-created']);
 
         $response->assertSessionHasNoErrors();
         $this->assertEquals(1, Image::count());
@@ -189,7 +189,7 @@ class GalleriesTest extends TestCase
 
         $response = $this->actingAs($this->admin)->post(route('admin.images.update', $image), $updatedimage);
 
-        $response->assertStatus(302);
+        $response->assertStatus(302)->assertSessionHas(['status' => 'image-updated']);
 
         $response->assertSessionHasNoErrors();
         $this->assertEquals(1, Image::count());
@@ -217,23 +217,31 @@ class GalleriesTest extends TestCase
             'description' => 'test description',
         ])->create();
 
-        $response = $this->actingAs($this->admin)->put(route('admin.images.attach', ['image' => $image, 'gallery' => $gallery]));
+        $response = $this->actingAs($this->admin)->put(route('admin.images.attach', ['image' => $image, 'gallery' => $gallery]))
+        ->assertSessionHas(['status' => 'image-attached']);
 
         //$image->galleries()->attach($gallery);
 
         $this->assertCount(1, $gallery->fresh()->images);
-        $response = $this->actingAs($this->admin)->put(route('admin.images.attach', ['image' => $image1, 'gallery' => $gallery]));
+        $response = $this->actingAs($this->admin)->put(route('admin.images.attach', ['image' => $image1, 'gallery' => $gallery]))
+            ->assertSessionHas(['status' => 'image-attached']);
+
         $this->assertCount(2, $gallery->fresh()->images);
 
-        $response = $this->actingAs($this->admin)->put(route('admin.images.detach', ['image' => $image, 'gallery' => $gallery]));
-
+        $response = $this->actingAs($this->admin)->put(route('admin.images.detach', ['image' => $image, 'gallery' => $gallery]))
+            ->assertSessionHas(['status' => 'image-detached']);
         $this->assertCount(1, $gallery->fresh()->images);
 
-        $response = $this->actingAs($this->admin)->put(route('admin.galleries.attach', ['image' => $image, 'gallery' => $gallery]));
+        $response = $this->actingAs($this->admin)->put(route('admin.galleries.attach', ['image' => $image, 'gallery' => $gallery]))
+            ->assertSessionHas(['status' => 'gallery-attached']);
         $this->assertCount(2, $gallery->fresh()->images);
-        $response = $this->actingAs($this->admin)->put(route('admin.galleries.detach', ['image' => $image, 'gallery' => $gallery]));
+
+        $response = $this->actingAs($this->admin)->put(route('admin.galleries.detach', ['image' => $image, 'gallery' => $gallery]))
+            ->assertSessionHas(['status' => 'gallery-detached']);
         $this->assertCount(1, $gallery->fresh()->images);
-        $response = $this->actingAs($this->admin)->put(route('admin.galleries.detach', ['image' => $image1, 'gallery' => $gallery]));
+
+        $response = $this->actingAs($this->admin)->put(route('admin.galleries.detach', ['image' => $image1, 'gallery' => $gallery]))
+            ->assertSessionHas(['status' => 'gallery-detached']);
         $this->assertCount(0, $gallery->fresh()->images);
     }
 
@@ -252,7 +260,7 @@ class GalleriesTest extends TestCase
 
         $response = $this->actingAs($this->admin)->delete(route('admin.images.destroy', $image));
 
-        $response->assertStatus(302);
+        $response->assertStatus(302)->assertSessionHas(['status' => 'image-destroyed']);
 
         $response->assertSessionHasNoErrors();
 
@@ -275,7 +283,7 @@ class GalleriesTest extends TestCase
 
         $response = $this->actingAs($this->admin)->delete(route('admin.galleries.destroy', $gallery));
 
-        $response->assertStatus(302);
+        $response->assertStatus(302)->assertSessionHas(['status' => 'gallery-destroyed']);
 
         $response->assertSessionHasNoErrors();
 
@@ -297,7 +305,7 @@ class GalleriesTest extends TestCase
 
         $response = $this->actingAs($this->admin)->post(route('admin.images.store'), $image);
 
-        $response->assertStatus(302);
+        $response->assertStatus(302)->assertSessionHas(['status' => 'image-created']);
 
         $image=Image::where('name', 'test image')->first();
 
@@ -309,7 +317,7 @@ class GalleriesTest extends TestCase
 
         $response = $this->actingAs($this->admin)->post(route('admin.images.update', $image), $updatedimage);
 
-        $response->assertStatus(302);
+        $response->assertStatus(302)->assertSessionHas(['status' => 'image-updated']);
     }
 
 }

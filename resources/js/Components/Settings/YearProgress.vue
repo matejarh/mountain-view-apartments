@@ -78,7 +78,7 @@ const width = computed(calculateWidth);
         <div :class="textClasses"
             class="absolute transition -top-6 -translate-x-1/2 mb-1 text-base font-medium capitalize"
             :style="`left: ${width}%`">
-            It's {{ $page.props.current_season }}</div>
+            {{ __("It's " + $page.props.current_season)}} </div>
         <div class="w-full bg-gray-200 rounded-full h-2.5 mb-4 dark:bg-gray-700">
             <div :class="colorClasses" class="h-2.5 rounded-full" :style="`width: ${width}%`"></div>
         </div>

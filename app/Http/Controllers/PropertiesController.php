@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Contracts\LikesProperties;
 use App\Contracts\PropertyLikeResponse;
+use App\Contracts\PropertyReviewResponse;
+use App\Contracts\ReviewsProperties;
 use App\Filters\PropertyFilters;
 use App\Models\Like;
 use App\Models\Property;
+use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
@@ -22,7 +25,7 @@ class PropertiesController extends Controller
      * @param \App\Filters\PropertyFilters
      * @return \Inertia\Response
      */
-    public function index(Request $request, PropertyFilters $filters): Response
+    public function index(Request $request, string $lang, PropertyFilters $filters): Response
     {
         // Gate::authorize('viewAny', Property::class);
 
@@ -32,6 +35,11 @@ class PropertiesController extends Controller
             'can' => [
                 'view_properties' => auth()->check() ? auth()->user()->can('viewAny', Property::class) : false,
             ],
+            'seo' => [
+                'title' => __('Mountain View Apartments'),
+                'description' => '',
+                'keywords' => ''
+            ]
         ]);
     }
 
@@ -43,7 +51,7 @@ class PropertiesController extends Controller
      * @param  \App\Models\Property  $property
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, $lang, Property $property): Response
+    public function show(Request $request, string $lang, Property $property): Response
     {
 
         // Render the property details page using Inertia.js
@@ -59,12 +67,21 @@ class PropertiesController extends Controller
         ]);
     }
 
-    public function like(Request $request, string $lang, Property $property, LikesProperties $liker ) : PropertyLikeResponse
+    public function like(Request $request, Property $property, LikesProperties $liker ) : PropertyLikeResponse
     {
         Gate::authorize('create', Like::class);
 
         $liker->like($property);
 
         return app(PropertyLikeResponse::class);
+    }
+
+    public function review(Request $request, Property $property, ReviewsProperties $reviewer ) : PropertyReviewResponse
+    {
+        Gate::authorize('create', Review::class);
+
+        $reviewer->review($property, $request->all());
+
+        return app(PropertyReviewResponse::class);
     }
 }

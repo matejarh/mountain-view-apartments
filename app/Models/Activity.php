@@ -194,7 +194,7 @@ class Activity extends Model
 
         return static::latest()
             ->with('subject', 'owner')
-            ->filter($filters)->paginate(12, ['*'], __('page'))->onEachSide(2)->withQueryString()
+            ->filter($filters)->paginate(24, ['*'], __('page'))->onEachSide(2)->withQueryString()
             /* ->groupBy(function ($activity) use ($locale) {
                 return $activity->created_at->locale($locale)->isoFormat('L');
             }) */ ;

@@ -12,15 +12,13 @@ trait Likable
     public static function bootLikable()
     {
         static::deleting(function ($model) {
-            // Delete all likes associated with the model
+            \log::debug('deleting');
             $model->likes()->delete();
-
-            // Decrement the likes count when the model is deleted
-            $model->decrement('likes_count');
+            // $model->decrement('likes_count');
         });
 
         static::created(function ($model) {
-            // Increment the likes count when a new model instance is created
+            \log::debug('created');
             $model->increment('likes_count');
         });
     }
@@ -48,7 +46,9 @@ trait Likable
         } else {
             // Like the model if the user hasn't already liked it
             $attributes = ['user_id' => auth()->id()];
-            $this->likes()->create($attributes);
+            if ($this->likes()->forceCreate($attributes)) {
+                $this->increment('likes_count');
+            }
         }
     }
 
@@ -61,7 +61,10 @@ trait Likable
     {
         // Delete the like record associated with the current user
         $attributes = ['user_id' => auth()->id()];
-        $this->likes()->where($attributes)->delete();
+        if ($this->likes()->where($attributes)->delete()) {
+            $this->decrement('likes_count');
+
+        }
     }
 
     /**

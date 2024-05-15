@@ -2,7 +2,7 @@
 import HorizontalTabs from '@/Components/HorizontalTabs.vue';
 import HorizontalTabItem from '@/Components/HorizontalTabItem.vue';
 import { useForm, usePage } from '@inertiajs/vue3';
-import { ref } from 'vue';
+import { onBeforeUnmount, onMounted, ref } from 'vue';
 import { useTranslationsStore } from '@/stores/translations';
 import GridSection from '@/Components/GridSection.vue';
 import InputLabel from '@/Components/InputLabel.vue';
@@ -53,21 +53,29 @@ const store = () => {
 }
 
 const handleSubmit = () => {
-    if (page.props.page) {
-        update()
-    } else {
-        store()
-    }
+    page.props.page ? update() : store();
 }
 
 const handleCreateExtra = (extra) => {
-    //Object.keys(extra)
     let key = Object.keys(extra)[0]
-    console.log(key)
-
     form.extras[key] = extra[key]
 }
 
+const saveOnCtrlS = (e) => {
+    const isCtrlS = e.ctrlKey && e.key === 's';
+    const canSave = form.isDirty && !form.processing && !form.recentlySuccessful;
+
+    if (isCtrlS && canSave) {
+        e.preventDefault();
+        page.props.page ? update() : store();
+    }
+};
+
+onMounted(() => document.addEventListener('keydown', saveOnCtrlS));
+
+onBeforeUnmount(() => {
+    document.removeEventListener('keydown', saveOnCtrlS);
+});
 </script>
 
 <template>
@@ -141,11 +149,20 @@ const handleCreateExtra = (extra) => {
                     </button>
                 </div>
 
-                 <TipTapInput v-model="form.extras[key][selectedTab]"
-                    :has-error="!!form.errors[`extras.${key}.${selectedTab}`]" />
+                <div class="col-span-full">
+                    <TextInput :id="`title-${key}-${selectedTab}`" v-model="form.extras[key].title[selectedTab]"
+                        class="mt-1 block w-full" autocomplete="title"
+                        :has-error="!!form.errors[`errors.${key}.title.${selectedTab}`]"
+                        :placeholder="__('Enter title') + '...'"></TextInput>
+                    <InputError :message="form.errors[`errors.${key}.title.${selectedTab}`]" class="mt-2" />
+                </div>
 
+                <div class="mt-4">
+                    <TipTapInput v-model="form.extras[key].text[selectedTab]"
+                        :has-error="!!form.errors[`extras.${key}.text.${selectedTab}`]" />
 
-                <InputError :message="form.errors[`extras.${key}.${selectedTab}`]" class="mt-2" />
+                    <InputError :message="form.errors[`extras.${key}.text.${selectedTab}`]" class="mt-2" />
+                </div>
 
                 <!-- <TextArea :id="`extra-${key}-${selectedTab}`" v-model="form.extras[key][selectedTab]" class="mt-1 block w-full"
                     autocomplete="extra" :has-error="!!form.errors[`extras.${key}.${selectedTab}`]"
@@ -168,10 +185,7 @@ const handleCreateExtra = (extra) => {
                 </div>
             </PrimaryButton>
         </div>
-        <!-- {{ $page.props.page.name }}
-        {{ $page.props.page.title[selectedTab] }}
-        {{ $page.props.page.description[selectedTab] }}
-        {{ $page.props.page.keywords[selectedTab] }} -->
+
         <NewExtraDialog :show="showNewExtraDialog" @close="showNewExtraDialog = false" @create="handleCreateExtra" />
     </div>
 </template>

@@ -26,38 +26,38 @@
     --vc-pgn-margin: 4px;
     --vc-pgn-border-radius: 100%;
     --vc-pgn-background-color: var(--vc-clr-secondary);
-    --vc-pgn-active-color: var(--vc-clr-primary);
+    --vc-pgn-active-color: var(--vc-clr-secondary);
     --vc-pgn-background-dark-color: var(--vc-clr-dark-secondary);
     --vc-pgn-active-dark-color: var(--vc-clr-dark-primary);
-  }
+}
 
-  .carousel {
+.carousel {
     position: relative;
     text-align: center;
     box-sizing: border-box;
     touch-action: pan-y;
     overscroll-behavior: none;
-  }
+}
 
-  .carousel.is-dragging {
+.carousel.is-dragging {
     touch-action: none;
-  }
+}
 
-  .carousel * {
+.carousel * {
     box-sizing: border-box;
-  }
+}
 
-  .carousel__track {
+.carousel__track {
     display: flex;
     padding: 0 !important;
     position: relative;
-  }
+}
 
-  .carousel__viewport {
+.carousel__viewport {
     overflow: hidden;
-  }
+}
 
-  .carousel__sr-only {
+.carousel__sr-only {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -66,16 +66,16 @@
     overflow: hidden;
     clip: rect(0, 0, 0, 0);
     border: 0;
-  }
+}
 
-  .carousel__icon {
+.carousel__icon {
     width: var(--vc-icn-width);
     height: var(--vc-icn-width);
     fill: currentColor;
-  }
+}
 
-  .carousel__prev,
-  .carousel__next {
+.carousel__prev,
+.carousel__next {
     box-sizing: content-box;
     background: var(--vc-nav-background);
     border-radius: var(--vc-nav-border-radius);
@@ -94,49 +94,51 @@
     margin: 0 10px;
     top: 50%;
     transform: translateY(-50%);
-  }
+}
 
-  .dark .carousel__prev,
-  .dark .carousel__next {
+.dark .carousel__prev,
+.dark .carousel__next {
     color: var(--vc-nav-color);
-  }
+}
 
-  .carousel__next--disabled,
-  .carousel__prev--disabled {
+.carousel__next--disabled,
+.carousel__prev--disabled {
     cursor: not-allowed;
     opacity: 0.5;
-  }
+}
 
-  .carousel__prev {
+.carousel__prev {
     left: 0;
-  }
+}
 
-  .carousel__next {
+.carousel__next {
     right: 0;
-  }
+}
 
-  .carousel--rtl .carousel__prev {
+.carousel--rtl .carousel__prev {
     left: auto;
     right: 0;
-  }
+}
 
-  .carousel--rtl .carousel__next {
+.carousel--rtl .carousel__next {
     right: auto;
     left: 0;
-  }
+}
 
-  @media (hover: hover) {
+@media (hover: hover) {
+
     .carousel__prev:hover,
     .carousel__next:hover {
-      color: var(--vc-nav-color-hover);
+        color: var(--vc-nav-color-hover);
     }
+
     .dark .carousel__prev:hover,
     .dark .carousel__next:hover {
-      color: var(--vc-nav-color-hover);
+        color: var(--vc-nav-color-hover);
     }
-  }
+}
 
-  .carousel__pagination {
+.carousel__pagination {
     display: flex;
     justify-content: center;
     list-style: none;
@@ -144,9 +146,9 @@
     margin: 10px 0 0;
     padding: 0;
     transform: translateY(-36px);
-  }
+}
 
-  .carousel__pagination-button {
+.carousel__pagination-button {
     display: block;
     border: 0;
     margin: 0;
@@ -154,6 +156,7 @@
     padding: var(--vc-pgn-margin);
     background: transparent;
     transition: all ease-out 150ms;
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
 }
 
 .carousel__pagination-button::after {
@@ -164,29 +167,31 @@
     height: var(--vc-pgn-height);
     border-radius: var(--vc-pgn-border-radius);
     background-color: var(--vc-pgn-background-color);
-  }
+}
 
-  .carousel__pagination-button--active::after {
+.carousel__pagination-button--active::after {
     background-color: var(--vc-pgn-active-color);
     opacity: 0.9;
-  }
-  .dark.carousel__pagination-button--active::after {
+}
+
+.dark.carousel__pagination-button--active::after {
     background-color: var(--vc-pgn-active-dark-color);
     opacity: 0.9;
-  }
+}
 
-  @media(hover: hover) {
+@media(hover: hover) {
     .carousel__pagination-button:hover::after {
-      background-color: var(--vc-pgn-active-color);
-      opacity: 0.9;
+        background-color: var(--vc-pgn-active-color);
+        opacity: 0.9;
     }
-    .dark.carousel__pagination-button:hover::after {
-      background-color: var(--vc-pgn-active-dark-color);
-      opacity: 0.9;
-    }
-  }
 
-  .carousel__slide {
+    .dark.carousel__pagination-button:hover::after {
+        background-color: var(--vc-pgn-active-dark-color);
+        opacity: 0.9;
+    }
+}
+
+.carousel__slide {
     scroll-snap-stop: auto;
     flex-shrink: 0;
     margin: 0;
@@ -198,5 +203,4 @@
 
     /* Fix iOS scrolling #22 */
     transform: translateZ(0);
-  }
-
+}

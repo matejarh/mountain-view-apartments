@@ -23,22 +23,30 @@ class GalleriesSeeder extends Seeder
         (3, 1, 'test-gallery-3', 'Test Gallery 3', 'Voluptatem velit ullam labore nihil id voluptatibus.', '2024-05-10 21:20:48', '2024-05-10 21:20:48'),
         (4, 1, 'home-page-hero', 'Home Page Hero', NULL, '2024-05-10 21:58:40', '2024-05-10 21:58:40'),
         (5, 1, 'nassfeld-and-lake-apartment', 'Nassfeld and Lake Apartment', NULL, '2024-05-10 22:28:26', '2024-05-10 22:28:26');
-        INSERT INTO `images` (`id`, `user_id`, `slug`, `name`, `description`, `image_path`, `thumb_path`, `created_at`, `updated_at`) VALUES
-        (1, 1, 'nassfeld', 'Nassfeld', '', 'galleries-photos/test-admin/7869a422e4ee6b40d436802258fe32f71c593c415b7d1e19023a9376d3e0ad1f.jpg', 'galleries-photos/test-admin/thumbs/7869a422e4ee6b40d436802258fe32f71c593c415b7d1e19023a9376d3e0ad1f.jpg', '2024-05-06 09:49:12', '2024-05-06 09:49:13'),
-        (2, 1, 'bled', 'Bled', '', 'galleries-photos/test-admin/991d665201f1b0265386cc54b2aeb1e00cf3857521659c6683a005be8acde105.jpg', 'galleries-photos/test-admin/thumbs/991d665201f1b0265386cc54b2aeb1e00cf3857521659c6683a005be8acde105.jpg', '2024-05-06 09:49:15', '2024-05-06 09:49:15'),
-        (3, 1, 'winter-sunrise', 'Winter Sunrise', '', 'galleries-photos/test-admin/32af93f3987513d62f85bd2c3f87ada668f39f28b5fce4e7386f1eb3b11b5555.jpg', 'galleries-photos/test-admin/thumbs/32af93f3987513d62f85bd2c3f87ada668f39f28b5fce4e7386f1eb3b11b5555.jpg', '2024-05-06 09:49:18', '2024-05-06 09:49:19'),
-        (5, 1, 'bedroom', 'Bedroom', '', 'galleries-photos/test-admin/6fc1cba52ab6e9e9d57dea7a52b3772e13de5150c4cc43ae4cdccb7addfc3948.jpg', 'galleries-photos/test-admin/thumbs/6fc1cba52ab6e9e9d57dea7a52b3772e13de5150c4cc43ae4cdccb7addfc3948.jpg', '2024-05-10 22:29:23', '2024-05-10 22:29:23'),
-        (6, 1, 'bedroom', 'Bedroom', '', 'galleries-photos/test-admin/d234f60418d2333f1af443967a26b10a59fdf91d3ae83d979dcc8621e037f6ff.jpg', 'galleries-photos/test-admin/thumbs/d234f60418d2333f1af443967a26b10a59fdf91d3ae83d979dcc8621e037f6ff.jpg', '2024-05-10 22:29:33', '2024-05-10 22:29:33'),
-        (7, 1, 'beddroom', 'Beddroom', '', 'galleries-photos/test-admin/022aac956d12601211ccf2f2c4ca9f83fe3808d1e5560089f4d5cb7c90fa6ad5.jpg', 'galleries-photos/test-admin/thumbs/022aac956d12601211ccf2f2c4ca9f83fe3808d1e5560089f4d5cb7c90fa6ad5.jpg', '2024-05-10 22:29:37', '2024-05-10 22:29:37'),
-        (8, 1, 'dining-corner', 'Dining corner', '', 'galleries-photos/test-admin/e09b2f492e4dd6b8a1d50f414c914bae6903fb20165f1c3fd437b27f2344303f.jpg', 'galleries-photos/test-admin/thumbs/e09b2f492e4dd6b8a1d50f414c914bae6903fb20165f1c3fd437b27f2344303f.jpg', '2024-05-10 22:29:48', '2024-05-10 22:29:49'),
-        (9, 1, 'bathroom', 'Bathroom', '', 'galleries-photos/test-admin/7af0fa16e1d15d148fb6c0b6ea4e5c4bf2ce0d04d1b3775ec6ebec013d8ace99.jpg', 'galleries-photos/test-admin/thumbs/7af0fa16e1d15d148fb6c0b6ea4e5c4bf2ce0d04d1b3775ec6ebec013d8ace99.jpg', '2024-05-10 22:29:55', '2024-05-10 22:29:56'),
-        (10, 1, 'patio', 'Patio', '', 'galleries-photos/test-admin/146ccec1927d076c536e11b1e43b38c12cebcec7de8dcbadd41ad8a189733c41.jpg', 'galleries-photos/test-admin/thumbs/146ccec1927d076c536e11b1e43b38c12cebcec7de8dcbadd41ad8a189733c41.jpg', '2024-05-10 22:30:05', '2024-05-10 22:30:05'),
-        (11, 1, 'view', 'View', '', 'galleries-photos/test-admin/77f2991b0cf3c1f9ae3363b5ddcb99266db0496cbf2db550903fbb309ebf55e4.jpg', 'galleries-photos/test-admin/thumbs/77f2991b0cf3c1f9ae3363b5ddcb99266db0496cbf2db550903fbb309ebf55e4.jpg', '2024-05-10 22:30:11', '2024-05-10 22:30:11'),
-        (12, 1, 'lake-with-mountains', 'Lake with mountains', '', 'galleries-photos/test-admin/987e2d07949c0ef98daaeb20018d0577a6465f96f5210d92c21f831f250681c8.jpg', 'galleries-photos/test-admin/thumbs/987e2d07949c0ef98daaeb20018d0577a6465f96f5210d92c21f831f250681c8.jpg', '2024-05-10 22:30:25', '2024-05-10 22:30:25');";
+        INSERT INTO `images` (`id`, `user_id`, `slug`, `name`, `description`, `image_path`, `thumb_path`, `tile_path`, `created_at`, `updated_at`) VALUES
+        (1, 1, 'nassfeld-9iCW3', 'Nassfeld', '', 'galleries-photos/test-admin/4af1fb1a278b345e26ceb06aaff8f3008559bf9f9d110fbc1241e54bcfce6c06.jpg', 'galleries-photos/test-admin/thumbs/4af1fb1a278b345e26ceb06aaff8f3008559bf9f9d110fbc1241e54bcfce6c06.jpg', 'galleries-photos/test-admin/tiles/4af1fb1a278b345e26ceb06aaff8f3008559bf9f9d110fbc1241e54bcfce6c06.jpg', '2024-05-06 05:49:12', '2024-05-14 17:57:29'),
+        (2, 1, 'bled-BS31f', 'Bled', '', 'galleries-photos/test-admin/989ce257afae3e0fa57a6758d64abd10e9652f070a102b4d075b4ef434322dc3.jpg', 'galleries-photos/test-admin/thumbs/989ce257afae3e0fa57a6758d64abd10e9652f070a102b4d075b4ef434322dc3.jpg', 'galleries-photos/test-admin/tiles/989ce257afae3e0fa57a6758d64abd10e9652f070a102b4d075b4ef434322dc3.jpg', '2024-05-06 05:49:15', '2024-05-14 17:57:08'),
+        (3, 1, 'winter-sunrise-8fo9g', 'Winter Sunrise', '', 'galleries-photos/test-admin/35c1d23d6de66417723a8f3beb58e5800a87684a9b0435ae1b0034e088d0f2da.jpg', 'galleries-photos/test-admin/thumbs/35c1d23d6de66417723a8f3beb58e5800a87684a9b0435ae1b0034e088d0f2da.jpg', 'galleries-photos/test-admin/tiles/35c1d23d6de66417723a8f3beb58e5800a87684a9b0435ae1b0034e088d0f2da.jpg', '2024-05-06 05:49:18', '2024-05-14 17:56:43'),
+        (5, 1, 'bedroom-pxHNw', 'Bedroom', '', 'galleries-photos/test-admin/ee219ccaf236c039063420f3df6089cdf60e84191ef2a1ca27667cdcb45db7ca.jpg', 'galleries-photos/test-admin/thumbs/ee219ccaf236c039063420f3df6089cdf60e84191ef2a1ca27667cdcb45db7ca.jpg', 'galleries-photos/test-admin/tiles/ee219ccaf236c039063420f3df6089cdf60e84191ef2a1ca27667cdcb45db7ca.jpg', '2024-05-10 18:29:23', '2024-05-14 17:46:43'),
+        (6, 1, 'bedroom-Gfk65', 'Bedroom', '', 'galleries-photos/test-admin/46c33c5c316a580ce2d7d51705d4bbf239138e6e9383e1b0b9fa2e3347b26c04.jpg', 'galleries-photos/test-admin/thumbs/46c33c5c316a580ce2d7d51705d4bbf239138e6e9383e1b0b9fa2e3347b26c04.jpg', 'galleries-photos/test-admin/tiles/46c33c5c316a580ce2d7d51705d4bbf239138e6e9383e1b0b9fa2e3347b26c04.jpg', '2024-05-10 18:29:33', '2024-05-14 17:47:00'),
+        (7, 1, 'beddroom-oRGAn', 'Beddroom', '', 'galleries-photos/test-admin/c55e0869589e35c39cde95c7061bb969dff885a197936db1b8151ab5e6e40a16.jpg', 'galleries-photos/test-admin/thumbs/c55e0869589e35c39cde95c7061bb969dff885a197936db1b8151ab5e6e40a16.jpg', 'galleries-photos/test-admin/tiles/c55e0869589e35c39cde95c7061bb969dff885a197936db1b8151ab5e6e40a16.jpg', '2024-05-10 18:29:37', '2024-05-14 17:46:33'),
+        (8, 1, 'dining-corner-Rq5LP', 'Dining corner', '', 'galleries-photos/test-admin/c5768357958a271bd0fa6caae7a1d64cf79973b0aa9baa2cf17bc4e485368888.jpg', 'galleries-photos/test-admin/thumbs/c5768357958a271bd0fa6caae7a1d64cf79973b0aa9baa2cf17bc4e485368888.jpg', 'galleries-photos/test-admin/tiles/c5768357958a271bd0fa6caae7a1d64cf79973b0aa9baa2cf17bc4e485368888.jpg', '2024-05-10 18:29:48', '2024-05-14 17:46:19'),
+        (9, 1, 'bathroom-ECWoj', 'Bathroom', '', 'galleries-photos/test-admin/3bd735ae4155ec01ff2bd8abe5bd1acd7ced14002037e60fa03e6009c4be5f59.jpg', 'galleries-photos/test-admin/thumbs/3bd735ae4155ec01ff2bd8abe5bd1acd7ced14002037e60fa03e6009c4be5f59.jpg', 'galleries-photos/test-admin/tiles/3bd735ae4155ec01ff2bd8abe5bd1acd7ced14002037e60fa03e6009c4be5f59.jpg', '2024-05-10 18:29:55', '2024-05-14 17:46:08'),
+        (10, 1, 'patio-GMS8f', 'Patio', '', 'galleries-photos/test-admin/7a9ed0938e3c38413a49c5483053c7384c7807a2ebde92a04bcff140b89def33.jpg', 'galleries-photos/test-admin/thumbs/7a9ed0938e3c38413a49c5483053c7384c7807a2ebde92a04bcff140b89def33.jpg', 'galleries-photos/test-admin/tiles/7a9ed0938e3c38413a49c5483053c7384c7807a2ebde92a04bcff140b89def33.jpg', '2024-05-10 18:30:05', '2024-05-14 17:44:28'),
+        (11, 1, 'view-LS9nn', 'View', '', 'galleries-photos/test-admin/7fc525d57259b20fe30c84de0b1689aecd72086d6623bc36858e8d98661f640d.jpg', 'galleries-photos/test-admin/thumbs/7fc525d57259b20fe30c84de0b1689aecd72086d6623bc36858e8d98661f640d.jpg', 'galleries-photos/test-admin/tiles/7fc525d57259b20fe30c84de0b1689aecd72086d6623bc36858e8d98661f640d.jpg', '2024-05-10 18:30:11', '2024-05-14 17:44:15'),
+        (12, 1, 'lake-with-mountains-ReVf1', 'Lake with mountains', '', 'galleries-photos/test-admin/aa100f3a29944a1f24c57cad2f16303ff46fc86f461fec73082ec8e8dbdbe828.jpg', 'galleries-photos/test-admin/thumbs/aa100f3a29944a1f24c57cad2f16303ff46fc86f461fec73082ec8e8dbdbe828.jpg', 'galleries-photos/test-admin/tiles/aa100f3a29944a1f24c57cad2f16303ff46fc86f461fec73082ec8e8dbdbe828.jpg', '2024-05-10 18:30:25', '2024-05-14 17:43:57'),
+        (13, 1, 'under-construction-t5CE0', 'Under Construction', '', 'galleries-photos/test-admin/6044d3a7af7166e758b0c3be0e7c96883f9a01b20fff0b9fdcd237b076153732.jpg', 'galleries-photos/test-admin/thumbs/6044d3a7af7166e758b0c3be0e7c96883f9a01b20fff0b9fdcd237b076153732.jpg', 'galleries-photos/test-admin/tiles/6044d3a7af7166e758b0c3be0e7c96883f9a01b20fff0b9fdcd237b076153732.jpg', '2024-05-14 22:30:28', '2024-05-14 22:30:29'),
+        (14, 1, 'cycling-zOK1g', 'Cycling', '', 'galleries-photos/test-admin/e3e7ff440652bec56412e01ebeece27d0cbec3a84ecbd858f22a321d449eeb1f.jpg', 'galleries-photos/test-admin/thumbs/e3e7ff440652bec56412e01ebeece27d0cbec3a84ecbd858f22a321d449eeb1f.jpg', 'galleries-photos/test-admin/tiles/e3e7ff440652bec56412e01ebeece27d0cbec3a84ecbd858f22a321d449eeb1f.jpg', '2024-05-15 04:39:20', '2024-05-15 04:39:21'),
+        (15, 1, 'cow-zjAtR', 'Cow', '', 'galleries-photos/test-admin/9df990ea046d1bd528e4b921d143a05c2418db6669ec3f85bf0519d381e2e387.jpg', 'galleries-photos/test-admin/thumbs/9df990ea046d1bd528e4b921d143a05c2418db6669ec3f85bf0519d381e2e387.jpg', 'galleries-photos/test-admin/tiles/9df990ea046d1bd528e4b921d143a05c2418db6669ec3f85bf0519d381e2e387.jpg', '2024-05-15 04:40:09', '2024-05-15 04:40:10'),
+        (16, 1, 'peer-RF2rH', 'Peer', '', 'galleries-photos/test-admin/2219b72e3b3097d5635ee87766b5c9c9c9792dcbb24a860655ea8562be362194.jpg', 'galleries-photos/test-admin/thumbs/2219b72e3b3097d5635ee87766b5c9c9c9792dcbb24a860655ea8562be362194.jpg', 'galleries-photos/test-admin/tiles/2219b72e3b3097d5635ee87766b5c9c9c9792dcbb24a860655ea8562be362194.jpg', '2024-05-15 04:40:50', '2024-05-15 04:40:51'),
+        (17, 1, 'field-V7Wuo', 'Field', '', 'galleries-photos/test-admin/4bbbe2bed440a8e690a0d98f056e4dc4bda7b4060fab82818b0254884700cf61.jpg', 'galleries-photos/test-admin/thumbs/4bbbe2bed440a8e690a0d98f056e4dc4bda7b4060fab82818b0254884700cf61.jpg', 'galleries-photos/test-admin/tiles/4bbbe2bed440a8e690a0d98f056e4dc4bda7b4060fab82818b0254884700cf61.jpg', '2024-05-15 04:41:46', '2024-05-15 04:41:46'),
+        (18, 1, 'lake-BvE7Z', 'lake', '', 'galleries-photos/test-admin/cdaa3f7701cce9abee2aa2109eda654c1d49558d8b4e2729df69d11f5e52f2d2.jpg', 'galleries-photos/test-admin/thumbs/cdaa3f7701cce9abee2aa2109eda654c1d49558d8b4e2729df69d11f5e52f2d2.jpg', 'galleries-photos/test-admin/tiles/cdaa3f7701cce9abee2aa2109eda654c1d49558d8b4e2729df69d11f5e52f2d2.jpg', '2024-05-15 04:43:57', '2024-05-15 04:43:58'),
+        (19, 1, 'wc-cGis9', 'wc', NULL, 'galleries-photos/test-admin/89c74f68814e8d3b858c8455c8f90397f7fa9240dfc556724324d15d2894340a.jpg', 'galleries-photos/test-admin/thumbs/89c74f68814e8d3b858c8455c8f90397f7fa9240dfc556724324d15d2894340a.jpg', 'galleries-photos/test-admin/tiles/89c74f68814e8d3b858c8455c8f90397f7fa9240dfc556724324d15d2894340a.jpg', '2024-05-15 07:17:28', '2024-05-15 07:17:28');";
+
 
         \DB::unprepared($sql);
 
-        $sql="INSERT INTO `galleries_images` (`id`, `gallery_id`, `image_id`,`order`, `created_at`, `updated_at`) VALUES
+        $sql = "INSERT INTO `galleries_images` (`id`, `gallery_id`, `image_id`, `order`, `created_at`, `updated_at`) VALUES
         (4, 1, 3, 1, NULL, NULL),
         (5, 2, 3, 1, NULL, NULL),
         (6, 3, 3, 1, NULL, NULL),
@@ -50,14 +58,21 @@ class GalleriesSeeder extends Seeder
         (12, 3, 1, 3, NULL, NULL),
         (13, 4, 2, 1, NULL, NULL),
         (14, 4, 1, 2, NULL, NULL),
-        (15, 4, 3, 3, NULL, NULL),
-        (16, 5, 12, 1, NULL, NULL),
-        (17, 5, 11, 2, NULL, NULL),
-        (18, 5, 10, 3, NULL, NULL),
-        (19, 5, 9, 4, NULL, NULL),
-        (20, 5, 8, 5, NULL, NULL),
-        (21, 5, 7, 6, NULL, NULL),
-        (22, 5, 5, 7,NULL, NULL);
+        (16, 5, 12, 1, NULL, '2024-05-15 06:30:18'),
+        (17, 5, 11, 7, NULL, '2024-05-15 07:24:42'),
+        (18, 5, 10, 9, NULL, '2024-05-15 07:21:58'),
+        (19, 5, 9, 11, NULL, '2024-05-15 07:21:58'),
+        (20, 5, 8, 14, NULL, '2024-05-15 07:21:58'),
+        (21, 5, 7, 10, NULL, '2024-05-15 07:21:58'),
+        (22, 5, 5, 2, NULL, '2024-05-15 07:21:58'),
+        (23, 5, 6, 5, '2024-05-14 18:02:33', '2024-05-15 07:24:46'),
+        (24, 5, 14, 13, '2024-05-15 04:39:28', '2024-05-15 07:21:58'),
+        (25, 5, 15, 4, '2024-05-15 04:40:15', '2024-05-15 07:21:58'),
+        (26, 5, 16, 8, '2024-05-15 04:40:55', '2024-05-15 07:21:58'),
+        (27, 5, 17, 6, '2024-05-15 04:41:51', '2024-05-15 07:24:46'),
+        (28, 5, 18, 3, '2024-05-15 04:44:03', '2024-05-15 07:21:58'),
+        (29, 5, 19, 12, '2024-05-15 07:17:37', '2024-05-15 07:21:58'),
+        (30, 5, 13, 15, '2024-05-15 07:24:57', '2024-05-15 07:24:57');
         INSERT INTO `pages_galleries` (`id`, `gallery_id`, `page_id`, `created_at`, `updated_at`) VALUES
         (1, 4, 1, NULL, NULL);
         INSERT INTO `properties_galleries` (`id`, `property_id`, `gallery_id`, `created_at`, `updated_at`) VALUES
@@ -66,14 +81,14 @@ class GalleriesSeeder extends Seeder
         \DB::unprepared($sql);
 
 
-/*         $galleries = Gallery::latest();
-        $images = Image::latest();
+        /*         $galleries = Gallery::latest();
+                $images = Image::latest();
 
-        $images->each(function ($image) use ($galleries) {
-            $galleries->each(function ($gallery) use ($image) {
-                $gallery->images()->attach($image);
-            });
-        }); */
+                $images->each(function ($image) use ($galleries) {
+                    $galleries->each(function ($gallery) use ($image) {
+                        $gallery->images()->attach($image);
+                    });
+                }); */
 
     }
 }

@@ -20,7 +20,7 @@ const scrollToTop = () => {
             enter-to-class="opacity-100 translate-y-0 sm:scale-100" leave-active-class="ease-in duration-200"
             leave-from-class="opacity-100 translate-y-0 sm:scale-100"
             leave-to-class="opacity-0 translate-y-16 sm:scale-95">
-            <div class="absolute bottom-2 right-6 z-20" v-if="scrollTop > 200">
+            <div class="absolute bottom-2 right-6 z-30" v-if="scrollTop > 200">
                 <button @click="scrollToTop"
                     class="inline-flex bg-opacity-20 shadow-lg overflow-visible dark:bg-opacity-20 hover:bg-opacity-70 hover:bg-primary-700 dark:hover:bg-primary-600 hover:dark:bg-opacity-70 justify-center p-0 text-gray-100 rounded-lg cursor-pointer dark:text-gray-200 dark:hover:text-white hover:text-white bg-primary-700 dark:bg-primary-800 transition ease-in-out duration-300 hover:-translate-y-1">
                     <Tooltip :text="__('Scroll To Top')">

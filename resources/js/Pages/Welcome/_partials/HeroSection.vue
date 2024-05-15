@@ -1,6 +1,7 @@
 <script setup>
 import ShapeBottom from '@/Components/_default/ShapeBottom.vue';
 import ShapeTop from '@/Components/_default/ShapeTop.vue';
+import HeroTitlesCarousel from '@/Components/_default/Welcome/HeroTitlesCarousel.vue';
 import { usePage } from '@inertiajs/vue3';
 import { initCarousels } from 'flowbite';
 import _ from 'lodash';
@@ -20,12 +21,11 @@ const initBgImageRotation = () => {
         clearInterval(interval)
         return
     }
-    //const gallery = _.filter(page.props.page.galleries, ['name', 'Home Page Hero'])[0]
     const gallery = page.props.page.galleries.find(gallery => gallery.name === 'Home Page Hero');
 
 
     bgImage.value = gallery.images[0].photo_url
-    let current = 0
+    let current = 1
 
     interval = setInterval(() => {
         bgImage.value = gallery.images[current].photo_url
@@ -38,8 +38,8 @@ const initBgImageRotation = () => {
     }, 5000);
 }
 
-const gotoBookNow = () => {
-    document.getElementById("booknow").scrollIntoView();
+const scrollTo = (element) => {
+    document.getElementById(element).scrollIntoView(false);
 }
 
 const stopBgRotation = () => {
@@ -61,24 +61,31 @@ onBeforeUnmount(() => {
         class="bg-center bg-no-repeat bg-cover bg-fixed min-h-screen flex flex-col justify-center  bg-gray-500 bg-blend-multiply transition-all duration-[2000ms] ease-in-out bg-paralax relative"
         :style="`background-image: url(${bgImage});`">
 
-        <div class="px-4 mx-auto max-w-screen-xl text-center py-24 md:py-56 lg:py-56">
-            <div class="">
+        <div class="px-4 mx-auto max-w-screen-xl text-center pt-24 md:pt-56 lg:pt-56">
+            <div class="flex flex-col min-w-full">
                 <div class="flex justify-center mx-auto">
 
-                    <LogoHero  />
+                    <LogoHero />
                 </div>
+                <!-- <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-white md:text-5xl lg:text-6xl">
+                    {{ page.props?.page.title[$page.props.locale] }}</h1>
 
-                <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-white md:text-5xl lg:text-6xl">
-                    {{ $page.props.page.title[$page.props.locale] }}</h1>
+                <div class="mb-8 text-lg font-normal text-gray-300 lg:text-xl sm:px-16 lg:px-48"
+                    v-html="page.props?.page.description[$page.props.locale]"></div> -->
+            </div>
+        </div>
+        <div class="mx-auto max-w-screen text-center">
+            <div class="flex flex-col min-w-full">
 
-
-
-                <div class="mb-8 text-lg font-normal text-gray-300 lg:text-xl sm:px-16 lg:px-48" v-html="$page.props.page.description[$page.props.locale]"></div>
-
+                <HeroTitlesCarousel class="w-screen" />
+            </div>
+        </div>
+        <div class="px-4 mx-auto max-w-screen-xl text-center pb-24 md:pb-56 lg:pb-56">
+            <div class="flex flex-col min-w-full">
                 <div class="mb-8 flex flex-col space-y-4 sm:space-x-4 sm:flex-row sm:justify-center sm:space-y-0">
-                    <PrimaryButton @click="gotoBookNow" class="py-3 px-5 " type="button">
+                    <PrimaryButton @click="scrollTo('booknow')" class="py-3 px-5 " type="button">
 
-                        {{__('Check Availability')}}
+                        {{ __('Check Availability') }}
                         <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -86,8 +93,8 @@ onBeforeUnmount(() => {
                         </svg>
                     </PrimaryButton class="py-3 px-5 ">
 
-                    <SecondaryButton type="button">
-                        {{__('Learn more')}}
+                    <SecondaryButton type="button" @click="scrollTo('accomodations')">
+                        {{ __('Learn more') }}
                     </SecondaryButton>
                     <!-- <a href="#" @click="initBgImageRotation"
                         class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
@@ -98,7 +105,7 @@ onBeforeUnmount(() => {
                     </a> -->
 
                 </div>
-                <!-- <form class="w-full max-w-md mx-auto">
+                <!--                 <form class="w-full max-w-md mx-auto">
                     <label for="default-email"
                         class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Email sign-up</label>
                     <div class="relative">

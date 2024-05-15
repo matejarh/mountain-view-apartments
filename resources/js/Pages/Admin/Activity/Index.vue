@@ -6,13 +6,15 @@ import ArrowDownIcon from '@/Icons/ArrowDownIcon.vue';
 import ActivityTableHeader from './ActivityTableHeader.vue';
 import ActivityTableRow from './ActivityTableRow.vue';
 import FiltersSection from '@/Components/FiltersSection.vue';
+import ActivityList from './ActivityList.vue';
 
 
 </script>
 
 <template>
     <FullLayout :title="__('Activities')">
-        <ActionSection>
+        <ActivityList />
+<!--         <ActionSection>
             <template #title>
                 {{ __("Activity Log") }}
             </template>
@@ -20,7 +22,7 @@ import FiltersSection from '@/Components/FiltersSection.vue';
 
                 <TableSection :paginator="$page.props.activities">
                     <template #header>
-                        <!-- <ActivityTableHeader /> -->
+
                         <FiltersSection id="activities-filters" route="admin.users.activities.index" placeholder="Search for activities" />
                     </template>
 
@@ -89,6 +91,6 @@ import FiltersSection from '@/Components/FiltersSection.vue';
                 </TableSection>
             </template>
         </ActionSection>
-
+ -->
     </FullLayout>
 </template>

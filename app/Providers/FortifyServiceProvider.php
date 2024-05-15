@@ -31,6 +31,7 @@ use App\Actions\Properties\CreateNewProperty;
 use App\Actions\Properties\DetachFacility;
 use App\Actions\Properties\DetachGallery as DetachPropertyGallery;
 use App\Actions\Properties\LikeProperty;
+use App\Actions\Properties\ReviewProperty;
 use App\Actions\Properties\UpdateProperty;
 use App\Actions\Settings\CreateNewSetting;
 use App\Actions\Settings\UpdateSetting;
@@ -55,6 +56,7 @@ use App\Contracts\PageDeleteResponse as PageDeleteResponseContract;
 use App\Contracts\PageUpdateResponse as PageUpdateResponseContract;
 use App\Contracts\PropertyCreateResponse as PropertyCreateResponseContract;
 use App\Contracts\PropertyLikeResponse as PropertyLikeResponseContract;
+use App\Contracts\PropertyReviewResponse as PropertyReviewResponseContract;
 use App\Contracts\PropertyUpdateResponse as PropertyUpdateResponseContract;
 use App\Contracts\SettingCreateResponse as SettingCreateResponseContract;
 use App\Contracts\SettingUpdateResponse as SettingUpdateResponseContract;
@@ -79,6 +81,7 @@ use App\Http\Responses\PageDeletedResponse;
 use App\Http\Responses\PageUpdatedResponse;
 use App\Http\Responses\PropertyCreatedResponse;
 use App\Http\Responses\PropertyLikedResponse;
+use App\Http\Responses\PropertyReviewedResponse;
 use App\Http\Responses\PropertyUpdatedResponse;
 use App\Http\Responses\SettingCreatedResponse;
 use App\Http\Responses\SettingUpdatedResponse;
@@ -125,6 +128,7 @@ class FortifyServiceProvider extends ServiceProvider
         $this->app->singleton(PropertyCreateResponseContract::class, PropertyCreatedResponse::class);
         $this->app->singleton(PropertyUpdateResponseContract::class, PropertyUpdatedResponse::class);
         $this->app->singleton(PropertyLikeResponseContract::class, PropertyLikedResponse::class);
+        $this->app->singleton(PropertyReviewResponseContract::class, PropertyReviewedResponse::class);
 
         $this->app->singleton(FacilityAttacheResponseContract::class, FacilityAttachedResponse::class);
         $this->app->singleton(FacilityDetacheResponseContract::class, FacilityDetachedResponse::class);
@@ -171,6 +175,7 @@ class FortifyServiceProvider extends ServiceProvider
         AppFortify::attachGalleriesToPropertiesUsing(AttachPropertyGallery::class);
         AppFortify::detachGalleriesFromPropertiesUsing(DetachPropertyGallery::class);
         AppFortify::toggleLikeForPropertyUsing(LikeProperty::class);
+        AppFortify::reviewPropertyUsing(ReviewProperty::class);
 
         AppFortify::createPagesUsing(CreateNewPage::class);
         AppFortify::updatePagesUsing(UpdatePage::class);

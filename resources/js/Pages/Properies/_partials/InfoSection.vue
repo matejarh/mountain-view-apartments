@@ -23,6 +23,7 @@ import ShareNodesIcon from '@/Icons/ShareNodesIcon.vue';
 import RatingStars from '@/Components/_default/Properties/RatingStars.vue';
 import ShapedSection from '@/Components/_default/ShapedSection.vue';
 import TileGallery from '@/Components/_default/TileGallery.vue';
+import LikeButton from '@/Components/_default/Properties/LikeButton.vue';
 
 const showFullScreenImageModal = ref(false)
 const showSocialSharingDialog = ref(false)
@@ -39,10 +40,7 @@ const handleFullScreenImage = (image) => {
         <div class="max-w-screen-xl px-4 mx-auto 2xl:px-0">
             <div class="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16">
                 <div class="shrink-0 max-w-md lg:max-w-lg mx-auto">
-                    <!-- <img class="w-full dark:hidden"
-                        src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front.svg" alt="" />
-                    <img class="w-full hidden dark:block"
-                        src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front-dark.svg" alt="" /> -->
+
                     <!-- <PhotoGallery class="w-full" @clicked="handleFullScreenImage" /> -->
                     <!-- <FeaturedGallery :images="$page.props.property.galleries[0].images" class="w-full"
                         @clicked="handleFullScreenImage" /> -->
@@ -72,8 +70,8 @@ const handleFullScreenImage = (image) => {
                             :key="key">
 
                             <DinamicIcon :icon="type.icon" class="w-8 h-8" />
-                            <p class="capitalize">{{ __(type.title) }}</p>
-                            <p class="capitalize">{{ __(type.name) }}</p>
+                            <p class="">{{ __(type.title) }}</p>
+                            <p class="">{{ __(type.name) }}</p>
                         </div>
                         <!-- {{ $page.props.property.bed_types }} -->
                     </div>
@@ -94,19 +92,14 @@ const handleFullScreenImage = (image) => {
 
 
                     <div class="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
-                        <a href="#" title=""
-                            class="flex items-center justify-center py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-                            role="button">
-                            <HeartIcon class="w-5 h-5 -ms-2 me-2" />
-                            Like
-                        </a>
+                        <LikeButton :item="$page.props.property" />
 
-                        <a href="#" title=""
+                        <a href="#availability" title=""
                             class="text-white mt-4 sm:mt-0 bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800 flex items-center justify-center"
                             role="button">
                             <CalendarIcon class="w-5 h-5 -ms-2 me-2" />
 
-                            Check Availability
+                            {{__('Check Availability')}}
                         </a>
 
                         <a href="#" title=""
@@ -114,7 +107,7 @@ const handleFullScreenImage = (image) => {
                             role="button">
                             <CommentDotsIcon class="w-5 h-5 -ms-2 me-2" />
 
-                            Post Review
+                            {{__('Post Review')}}
                         </a>
 
                         <a href="#" @click="showSocialSharingDialog = true" title=""
@@ -122,7 +115,7 @@ const handleFullScreenImage = (image) => {
                             role="button">
                             <ShareNodesIcon class="w-5 h-5 -ms-2 me-2" />
 
-                            Share
+                            {{__('Share')}}
                         </a>
                     </div>
 

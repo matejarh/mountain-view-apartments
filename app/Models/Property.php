@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Filters\PropertyFilters;
 use App\Traits\Likable;
 use App\Traits\RecordsActivity;
+use App\Traits\Reviewable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -13,7 +14,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 class Property extends Model
 {
-    use HasFactory, RecordsActivity, Likable;
+    use HasFactory, RecordsActivity, Likable, Reviewable;
 
     protected $table = 'properties';
 
@@ -49,6 +50,7 @@ class Property extends Model
         'google_maps_link',
         'avatar_url',
         'seo_description',
+        'is_liked',
     ];
 
     /**

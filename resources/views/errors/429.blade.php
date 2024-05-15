@@ -1,4 +1,4 @@
-@extends('errors::tailwind')
+@extends('errors::tailwind', ['background' => 'background.jpg'])
 
 @section('title', __('Too Many Requests'))
 @section('code', '429')

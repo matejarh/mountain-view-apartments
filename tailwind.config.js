@@ -41,6 +41,9 @@ export default {
                 }
 
             },
+            dropShadow: {
+                'up-lg': ['0 -10px 8px rgba(0, 0, 0, 0.4)', '0 -10px 8px rgba(0, -4px, 3px, 0.1)'],  //0 10px 8px rgb(0 0 0 / 0.04) //0 4px 3px rgb(0 0 0 / 0.1)
+            },
             colors: {
                 'primary': {
                     '50': '#eafeff',

@@ -70,7 +70,7 @@ const handleSelect = (attribute) => {
                     <YearProgress />
                     <div class="" v-for="attribute, key in background_settings.attributes">
                         <div class="flex justify-between items-center">
-                            <h3>{{ key }} image</h3>
+                            <h3>{{__('image')}} {{__('for')}} {{ __(key) }}</h3>
                             <div class="relative" v-if="key === $page.props.current_season">
                                 <LightbulbIcon class="absolute animate-ping h-6 w-6 text-yellow-400" />
                                 <LightbulbIcon class="h-6 w-6 text-yellow-300" />
@@ -83,9 +83,10 @@ const handleSelect = (attribute) => {
 
                         </div>
                         <div class="mt-2">
+
                             <PrimaryButton class="w-full" type="button" @click="handleSelect(key)">
-                                <template v-if="!attribute"> select {{ key }} image </template>
-                                <template v-else> change {{ key }} image </template>
+                                <template v-if="!attribute"> {{__(`select ${key} image`)}} </template>
+                                <template v-else> {{__(`change ${key} image`)}} </template>
                             </PrimaryButton>
 
                         </div>

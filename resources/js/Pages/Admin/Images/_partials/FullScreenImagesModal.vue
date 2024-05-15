@@ -25,7 +25,7 @@ const close = () => {
             <img v-if="image" :src="image?.photo_url" class="w-full h-auto">
         </div> -->
         <Carousel id="accomodation-gallery-carousel" v-if="images" :slides="images" :image="image" :is-full-screen="true">
-            <div v-for="image, key in images" :id="`carousel-item-${key}`" class="hidden duration-700 ease-in-out" >
+            <div v-for="image, key in images" :id="`accomodation-gallery-carousel-item-${key}`" class="hidden duration-700 ease-in-out" >
                 <img v-if="image" :src="image?.photo_url" class="w-full h-auto">
             </div>
         </Carousel>
