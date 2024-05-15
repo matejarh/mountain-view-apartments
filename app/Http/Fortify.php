@@ -21,6 +21,7 @@ use App\Contracts\DetachesGalleriesFromImages;
 use App\Contracts\DetachesGalleriesFromPages;
 use App\Contracts\DetachesGalleriesFromProperties;
 use App\Contracts\DetachesImagesFromGalleries;
+use App\Contracts\LikesProperties;
 use App\Contracts\UpdatesFacilities;
 use App\Contracts\UpdatesGalleries;
 use App\Contracts\UpdatesImages;
@@ -292,6 +293,17 @@ class Fortify
     public static function detachGalleriesFromPropertiesUsing(string $callback)
     {
         app()->singleton(DetachesGalleriesFromProperties::class, $callback);
+    }
+
+    /**
+     * Register a class / callback that should be used to toggle like for given property.
+     *
+     * @param  string  $callback
+     * @return void
+     */
+    public static function toggleLikeForPropertyUsing(string $callback)
+    {
+        app()->singleton(LikesProperties::class, $callback);
     }
 
         /**

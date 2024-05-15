@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\LikesProperties;
+use App\Contracts\PropertyLikeResponse;
 use App\Filters\PropertyFilters;
+use App\Models\Like;
 use App\Models\Property;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -53,5 +57,14 @@ class PropertiesController extends Controller
                 'delete_property' => auth()->check() ? auth()->user()->can('delete', $property) : false,
             ],
         ]);
+    }
+
+    public function like(Request $request, string $lang, Property $property, LikesProperties $liker ) : PropertyLikeResponse
+    {
+        Gate::authorize('create', Like::class);
+
+        $liker->like($property);
+
+        return app(PropertyLikeResponse::class);
     }
 }

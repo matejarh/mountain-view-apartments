@@ -19,6 +19,7 @@ Route::group(['prefix' => '{lang}', 'middleware' => 'web'], function () {
     Route::name('properties.')->prefix('accomodations')->namespace('accomodations')->group(function () {
         Route::get('/', [PropertiesController::class, 'index'])->name('index');
         Route::get('/{property}', [PropertiesController::class, 'show'])->name('show');
+        Route::post('/{property}/like', [PropertiesController::class, 'like'])->name('like');
     });
 
 

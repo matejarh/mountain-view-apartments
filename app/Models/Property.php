@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Filters\PropertyFilters;
+use App\Traits\Likable;
 use App\Traits\RecordsActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -12,7 +13,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 class Property extends Model
 {
-    use HasFactory, RecordsActivity;
+    use HasFactory, RecordsActivity, Likable;
 
     protected $table = 'properties';
 

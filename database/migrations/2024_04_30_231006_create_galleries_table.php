@@ -32,6 +32,8 @@ return new class extends Migration
             $table->string('image_path', 2048)->nullable();
             $table->string('thumb_path', 2048)->nullable();
             $table->string('tile_path', 2048)->nullable();
+            $table->unsignedBigInteger('likes_count')->default(0);
+            $table->unsignedBigInteger('comments_count')->default(0);
             $table->timestamps();
         });
 
@@ -39,7 +41,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Gallery::class, 'gallery_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->foreignIdFor(Image::class, 'image_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
-            $table->string('order', 10);
+            $table->integer('order');
             $table->timestamps();
 
             $table->unique(['gallery_id', 'image_id']);

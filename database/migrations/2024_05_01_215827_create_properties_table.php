@@ -34,6 +34,8 @@ return new class extends Migration
             $table->json('recomended')->nullable();
             $table->json('prices')->nullable();
             $table->json('rules')->nullable();
+            $table->unsignedBigInteger('likes_count')->default(0);
+            $table->unsignedBigInteger('comments_count')->default(0);
             $table->timestamps();
         });
 
