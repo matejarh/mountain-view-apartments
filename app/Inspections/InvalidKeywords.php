@@ -344,10 +344,8 @@ class InvalidKeywords
         'Outstanding values',
         'Passwords',
         'Pennies a day',
-        'Per day',
-        'Per week',
+
         // 'Performance',
-        'Phone',
         'Please read',
         'Potential earnings',
         'Pre-approved',
