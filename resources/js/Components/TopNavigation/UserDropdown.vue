@@ -24,7 +24,7 @@ const logout = () => {
             <DropdownItem :href="route('profile.show')">
                 {{ __("My Profile") }}
             </DropdownItem>
-            <DropdownItem :href="route('admin.dashboard.show')">
+            <DropdownItem v-if="$page.props.auth.user.is_admin":href="route('admin.dashboard.show')">
                 {{__("Administration")}}
             </DropdownItem>
 

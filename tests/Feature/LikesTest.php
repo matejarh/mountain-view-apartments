@@ -24,21 +24,26 @@ class LikesTest extends TestCase
         ->assertStatus(302)->assertSessionHas(['status' => 'property-like-toggled']);
 
         $this->assertCount(1, $property->fresh()->likes);
+        $this->assertEquals(1, $property->fresh()->likes_count);
 
         $response = $this->actingAs($this->user)->post(route('properties.like', ['property' => $property, 'lang' => app()->currentLocale()]))
         ->assertStatus(302)->assertSessionHas(['status' => 'property-like-toggled']);
 
         $this->assertCount(0, $property->fresh()->likes);
+        $this->assertEquals(0, $property->fresh()->likes_count);
 
         $property1 = Property::factory()->create();
 
         $response = $this->actingAs($this->user)->post(route('properties.like', ['property' => $property1, 'lang' => app()->currentLocale()]))
         ->assertStatus(302)->assertSessionHas(['status' => 'property-like-toggled']);
         $this->assertCount(1, $property1->fresh()->likes);
+        $this->assertEquals(1, $property1->fresh()->likes_count);
         $response = $this->actingAs(User::factory()->create())->post(route('properties.like', ['property' => $property1, 'lang' => app()->currentLocale()]))
         ->assertStatus(302)->assertSessionHas(['status' => 'property-like-toggled']);
+        $this->assertEquals(2, $property1->fresh()->likes_count);
         $this->assertCount(2, $property1->fresh()->likes);
         $this->assertCount(0, $property->fresh()->likes);
+        $this->assertEquals(0, $property->fresh()->likes_count);
 
 
     }
