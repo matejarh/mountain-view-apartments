@@ -12,13 +12,10 @@ class LanguageController extends Controller
 {
     public function switch(Request $request) : Redirector|RedirectResponse {
 
-        //Route::currentRouteName();
-
-        //dd($request->route()->getAction());
         $language = $request->input('language');
 
-        session(['language' => $language, 'locale' => $language]);
+        session()->put(['language' => $language, 'locale' => $language]);
 
-        return redirect()->back()->withCookie(cookie()->forever('language', $language));
+        return redirect()->back()/* ->withCookie(cookie()->forever('language', $language)) */;
     }
 }
