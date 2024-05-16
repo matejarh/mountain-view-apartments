@@ -19,7 +19,7 @@ const showItem4 = ref(false)
 const showItem5 = ref(false)
 
 watchEffect(async () => {
-    if(props.show && !helpers.pageLoaded) {
+    if (props.show && !helpers.pageLoaded) {
         helpers.delay(0)
             .then(() => {
                 helpers.showNavItems[1] = true
@@ -54,23 +54,29 @@ watchEffect(async () => {
         <ul v-show="show"
             class="flex flex-col font-medium p-4 md:p-0 mt-4 border  rounded-lg  md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 ">
             <TransitionGroup enter-active-class="animate__animated animate__bounceInDown"
-        leave-active-class="animate__animated animate__bounceOutUp">
+                leave-active-class="animate__animated animate__bounceOutUp">
 
                 <TopNavigationItem key="home" v-show="helpers.showNavItems[1]" :to="'/' + $page.props.locale">
-                    {{__('Home')}}
+                    {{ __('Home') }}
                 </TopNavigationItem>
-                <TopNavigationItem key="accomodations" v-show="helpers.showNavItems[2]" :to="`/${$page.props.locale}/accomodations`">
-                    {{__('Our Apartments')}}
+                <TopNavigationItem key="accomodations" v-show="helpers.showNavItems[2]"
+                    :to="`/${$page.props.locale}/accomodations`">
+                    {{ __('Our Apartments') }}
                 </TopNavigationItem>
-                <TopNavigationItem key="aboutus" v-show="helpers.showNavItems[3]" :to="`/${$page.props.locale}/about-us`">
+                <TopNavigationItem key="aboutus" v-show="helpers.showNavItems[3]"
+                    :to="`/${$page.props.locale}/about-us`">
                     {{ __('About Us') }}
                 </TopNavigationItem>
+                <!-- <TopNavigationItem key="reservation" v-show="helpers.showNavItems[4]" :to="'/reservation'">
+                    {{ __('Reservation') }}
+                </TopNavigationItem> -->
                 <TopNavigationItem key="reservation" v-show="helpers.showNavItems[4]" :to="'/reservation'">
-                    Reservation
+                    {{ __('Stories') }}
                 </TopNavigationItem>
 
-                <TopNavigationItem as="button" key="contact" v-show="helpers.showNavItems[5]" @click="helpers.showContactDrawer">
-                    Contact Us
+                <TopNavigationItem as="button" key="contact" v-show="helpers.showNavItems[5]"
+                    @click="helpers.showContactDrawer">
+                    {{ __('Contact Us') }}
                 </TopNavigationItem>
 
                 <!-- <TopNavigationItem key="contact" v-show="showItem5" :to="'/contact-us'">

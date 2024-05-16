@@ -120,7 +120,7 @@ const handleAddPrice = () => {
     }
 }
 const handleAddRule = () => {
-    if (newRule.name !== '' && newRule.title !== '' && newRule.description !== '' && newRule.icon !== 'none') {
+    if (newRule.name !== '' && newRule.description !== '' && newRule.icon !== 'none') {
         let item = {
             name: newRule.name,
             title: newRule.title,
@@ -158,7 +158,6 @@ onBeforeUnmount(() => document.removeEventListener('keydown', saveOnCtrlS));
 <template>
     <div class="">
         <GridSection>
-
             <div class="col-span-full">
                 <InputLabel :value="__('Type')" for="type" />
                 <TextInput id="type" v-model="form.type" type="text" class="mt-1 block w-full" required
@@ -201,13 +200,15 @@ onBeforeUnmount(() => document.removeEventListener('keydown', saveOnCtrlS));
             <div class="col-span-full">
                 <InputLabel for="quote" :value="__('Quote')" />
                 <TextInput id="quote" v-model="form.quote[selectedTab]" type="text" class="mt-1 block w-full"
-                    autocomplete="quote" :has-error="!!form.errors[`quote.${selectedTab}`]" :placeholder="__('Enter quote') + '...'" />
+                    autocomplete="quote" :has-error="!!form.errors[`quote.${selectedTab}`]"
+                    :placeholder="__('Enter quote') + '...'" />
                 <InputError :message="form.errors[`quote.${selectedTab}`]" class="mt-2" />
             </div>
 
             <div class="col-span-full">
                 <InputLabel for="description" :value="__('Description')" />
-                <TipTapInput v-model="form.description[selectedTab]" :has-error="!!form.errors[`description.${selectedTab}`]" />
+                <TipTapInput v-model="form.description[selectedTab]"
+                    :has-error="!!form.errors[`description.${selectedTab}`]" />
                 <InputError :message="form.errors[`description.${selectedTab}`]" class="mt-2" />
             </div>
 
@@ -265,7 +266,7 @@ onBeforeUnmount(() => document.removeEventListener('keydown', saveOnCtrlS));
 
         <hr class="my-4 md:my-4 border-gray-200 dark:border-gray-800 col-span-full" />
 
-        <h4 class="text-xl font-bold dark:text-white">{{ __('Bed Types') }}</h4>
+        <h4 class="text-xl mt-4 font-bold dark:text-white">{{ __('Bed Types') }}</h4>
 
         <div class="col-span-full">
             <div class="flex items-center">
@@ -294,7 +295,8 @@ onBeforeUnmount(() => document.removeEventListener('keydown', saveOnCtrlS));
 
                     <SelectInput v-model="form.bed_types[key].icon" :id="`bed_type_${key}_icon`">
                         <option disabled value="">- {{ __('select icon') }} -</option>
-                        <option v-for="icon, key in $page.props.icon_list" :key="key" :value="icon.name">{{ __(icon.label) }}
+                        <option v-for="icon, key in $page.props.icon_list" :key="key" :value="icon.name">{{
+                            __(icon.label) }}
                         </option>
                     </SelectInput>
                 </div>
@@ -323,7 +325,8 @@ onBeforeUnmount(() => document.removeEventListener('keydown', saveOnCtrlS));
 
                     <SelectInput v-model="newBedType.icon" id="bed_type_new_icon">
                         <option disabled value="none">- {{ __('select icon') }} -</option>
-                        <option v-for="icon, key in $page.props.icon_list" :key="key" :value="icon.name">{{ __(icon.label) }}
+                        <option v-for="icon, key in $page.props.icon_list" :key="key" :value="icon.name">{{
+                            __(icon.label) }}
                         </option>
                     </SelectInput>
                 </div>
@@ -336,7 +339,7 @@ onBeforeUnmount(() => document.removeEventListener('keydown', saveOnCtrlS));
         </div>
         <hr class="my-4 md:my-4 border-gray-200 dark:border-gray-800 col-span-full" />
 
-        <h4 class="text-xl font-bold dark:text-white">{{ __('Recommended') }}</h4>
+        <h4 class="text-xl mt-4 font-bold dark:text-white">{{ __('Recommended') }}</h4>
 
         <div class="col-span-full">
             <div class="flex items-center space-x-2" v-for="recomended, key in form.recomended">
@@ -372,7 +375,7 @@ onBeforeUnmount(() => document.removeEventListener('keydown', saveOnCtrlS));
             </div>
         </div>
 
-        <h4 class="text-xl font-bold dark:text-white">{{ __('Prices') }}</h4>
+        <h4 class="text-xl mt-4 font-bold dark:text-white">{{ __('Prices') }}</h4>
 
         <div class="col-span-full">
             <div class="flex items-center">
@@ -438,7 +441,7 @@ onBeforeUnmount(() => document.removeEventListener('keydown', saveOnCtrlS));
             </template>
         </HorizontalTabs>
 
-        <h4 class="text-xl font-bold dark:text-white">{{ __('Rules') }}</h4>
+        <h4 class="text-xl mt-4 font-bold dark:text-white">{{ __('Rules') }}</h4>
 
         <GridSection>
             <div class="col-span-full">
@@ -456,18 +459,18 @@ onBeforeUnmount(() => document.removeEventListener('keydown', saveOnCtrlS));
 
                                 <TextInput :id="`rule_${key}_name`" v-model="form.rules[selectedTab][key].name"
                                     type="text" class="mt-1 block w-full" required
-                                    :has-error="!!form.errors['rules.' + selectedTab + key + '.name']"
+                                    :has-error="!!form.errors['rules.' + selectedTab + '.' + key + '.name']"
                                     :placeholder="__('Enter number of name') + '...'" />
-                                <InputError :message="form.errors['rules.' + selectedTab + key + '.name']"
+                                <InputError :message="form.errors['rules.' + selectedTab + '.' + key + '.name']"
                                     class="mt-2" />
                             </div>
                             <div class="w-full">
 
                                 <TextInput :id="`rule_${key}_title`" v-model="form.rules[selectedTab][key].title"
                                     type="text" class="mt-1 block w-full" required
-                                    :has-error="!!form.errors['rules.' + selectedTab + key + '.title']"
+                                    :has-error="!!form.errors['rules.' + selectedTab + '.' + key + '.title']"
                                     :placeholder="__('Enter title') + '...'" />
-                                <InputError :message="form.errors['rules.' + selectedTab + key + '.title']"
+                                <InputError :message="form.errors['rules.' + selectedTab + '.' + key + '.title']"
                                     class="mt-2" />
                             </div>
                             <div class="w-full">
@@ -480,13 +483,16 @@ onBeforeUnmount(() => document.removeEventListener('keydown', saveOnCtrlS));
                                 </SelectInput>
                             </div>
                         </div>
-                        <div class="w-full">
-
-                            <TextArea :id="`rule_${key}_description`" rows="2"
+                        <div class="w-full mt-2">
+                            <TipTapInput :is-small="true"
+                                :id="`rule_${key}_description`"
+                                v-model="form.rules[selectedTab][key].description"
+                                :has-error="!!form.errors['rules.' + selectedTab + '.' + key + '.description']" />
+                            <!-- <TextArea :id="`rule_${key}_description`" rows="2"
                                 v-model="form.rules[selectedTab][key].description" type="text" class="mt-1 block w-full"
-                                required :has-error="!!form.errors['rules.' + selectedTab + key + '.description']"
-                                :placeholder="__('Enter description') + '...'" />
-                            <InputError :message="form.errors['rules.' + selectedTab + key + '.description']"
+                                required :has-error="!!form.errors['rules.' + selectedTab + '.' + key + '.description']"
+                                :placeholder="__('Enter description') + '...'" /> -->
+                            <InputError :message="form.errors['rules.' + selectedTab + '.' + key + '.description']"
                                 class="mt-2" />
                         </div>
                     </div>
@@ -522,9 +528,10 @@ onBeforeUnmount(() => document.removeEventListener('keydown', saveOnCtrlS));
                             </div>
                         </div>
 
-                        <div class="w-full">
-                            <TextArea :id="`new_rule_description`" rows="2" v-model="newRule.description" type="text"
-                                class="mt-1 block w-full" required :placeholder="__('Enter description') + '...'" />
+                        <div class="w-full mt-2">
+                            <TipTapInput :is-small="true" :id="`new_rule_description`" v-model="newRule.description" />
+                            <!-- <TextArea :id="`new_rule_description`" rows="2" v-model="newRule.description" type="text"
+                                class="mt-1 block w-full" required :placeholder="__('Enter description') + '...'" /> -->
                         </div>
                     </div>
 

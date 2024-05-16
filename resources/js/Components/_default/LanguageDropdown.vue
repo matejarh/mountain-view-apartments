@@ -5,7 +5,7 @@ import Dropdown from '@/Components/Dropdown.vue';
 import { useForm, usePage } from '@inertiajs/vue3';
 import { useTranslationsStore } from '@/stores/translations';
 
-defineProps({ language: String, direction: { type: String, default: 'up' } })
+defineProps({ language: String, direction: { type: String, default: 'up' }, align: { type: String, default: 'right' }, noLabel: { type: Boolean, default: false } })
 
 const page = usePage()
 
@@ -33,19 +33,21 @@ onMounted(() => {
 
 <template>
     <div class="">
-        <Dropdown>
+        <Dropdown align="left">
             <template #trigger>
                 <span
                     class="inline-flex items-center font-medium justify-center px-4 py-2 text-sm text-gray-900 dark:text-white rounded-lg cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
 
                     <img :src="selectedLanguage?.flag_url" class="w-5 h-5 rounded-full me-3">
-                    {{ selectedLanguage?.name }}
+                    <span v-if="!noLabel">
+                        {{ selectedLanguage?.name }}
+                    </span>
                 </span>
             </template>
             <template #content>
                 <ul class="py-2 font-medium" role="none">
-                    <LanguageDropdownItem v-for="language, key in store.languages" :key="language.code" :language="language"
-                        @click="switchLanguage(language.code)" />
+                    <LanguageDropdownItem v-for="language, key in store.languages" :key="language.code"
+                        :language="language" @click="switchLanguage(language.code)" />
                 </ul>
             </template>
         </Dropdown>

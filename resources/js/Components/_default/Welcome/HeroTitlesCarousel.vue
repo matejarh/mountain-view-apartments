@@ -51,7 +51,7 @@ const slidesProxy = ref([
                 <h2 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-white md:text-5xl lg:text-6xl">
                     {{ slide?.title[$page.props.locale] }}</h2>
 
-                <div class="mb-8 text-lg font-normal text-gray-300 lg:text-xl sm:px-16 lg:px-48"
+                <div class="mb-8 space-y-2 text-lg font-normal text-gray-300 lg:text-xl sm:px-16 lg:px-48"
                     v-html="slide?.text[$page.props.locale]"></div>
 
             </div>

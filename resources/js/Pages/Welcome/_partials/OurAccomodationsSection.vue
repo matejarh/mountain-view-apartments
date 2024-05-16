@@ -11,7 +11,7 @@ import AccomodationCarousel from '@/Components/_default/Welcome/AccomodationsCar
 <template>
     <AnimatedLayout min-height="md:min-h-[515px]" :delay="100"
         enter-active-class="animate__animated animate__bounceInUp">
-        <section class="relative bg-white dark:bg-gray-900 py-6 md:py-12">
+        <section class="relative bg-white dark:bg-gray-900 pb-6 pt-8 md:pb-12 md:pt-20">
             <AccomodationCarousel />
             <ShapeBottom
                 class="absolute -scale-x-100 inset-y-full z-10 left-0 right-0 top-0 w-full rotate-180 text-white dark:text-gray-900 " />

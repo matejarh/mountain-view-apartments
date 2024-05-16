@@ -51,7 +51,7 @@ const component = computed(() => {
 
         </template>
 
-        <component :is="component" class="sm:pt-36">
+        <component :is="component" :class="{'sm:pt-36':!$page.props.auth.user.is_admin}">
             <TabsSection :confirms-two-factor-authentication="confirmsTwoFactorAuthentication" :sessions="sessions">
                 <template #buttons>
                     <TabButton for="profile" @clicked="show = 'profile'" :show="show">

@@ -38,8 +38,8 @@ function warnDisabled() {
         <div class="space-y-0">
             <HeroSection id="hero" />
             <BookNowSection id="booknow" />
-            <div class="spacer h-48 w-full"></div>
-            <OurAccomodationsSection id="accomodations" />
+            <!-- <div class="spacer h-48 w-full"></div> -->
+            <OurAccomodationsSection id="accomodations"  />
             <div class="spacer h-48 w-full"></div>
             <FacilitiesBlock />
             <div class="spacer h-48 w-full"></div>

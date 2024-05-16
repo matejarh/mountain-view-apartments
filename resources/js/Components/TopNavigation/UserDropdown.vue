@@ -21,7 +21,7 @@ const logout = () => {
             <span class="block text-sm text-gray-900 truncate dark:text-white">{{ $page.props.auth.user.email }}</span>
         </div>
         <ul class="py-1 text-gray-700 dark:text-gray-300">
-            <DropdownItem :href="route('profile.show')">
+            <DropdownItem :href="$page.props.auth.user.is_admin ? route('profile.show') : route('profile.show')">
                 {{ __("My Profile") }}
             </DropdownItem>
             <DropdownItem v-if="$page.props.auth.user.is_admin":href="route('admin.dashboard.show')">

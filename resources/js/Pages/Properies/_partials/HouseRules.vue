@@ -22,8 +22,8 @@ import ShapedSection from '@/Components/_default/ShapedSection.vue';
 
                     </div>
                     <h3 class="mb-2 text-xl font-bold dark:text-white">{{ rule.name }}</h3>
-                    <p class="text-gray-500 dark:text-gray-400">{{ rule.title }}</p>
-                    <p class="text-gray-500 dark:text-gray-400">{{ rule.description }}</p>
+                    <p class="text-gray-500 dark:text-gray-400 font-semibold text-lg">{{ rule.title }}</p>
+                    <p class="text-gray-500 dark:text-gray-400" v-html="rule.description"></p>
                 </div>
                 <!-- <div>
                     <div

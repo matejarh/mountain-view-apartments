@@ -19,17 +19,21 @@ defineProps({
     }
 })
 
+const sunSize = computed(() => {
+    return 'w-8 h-8 md:w-12 md:h-12'
+})
+
 </script>
 
 <template>
     <div class="relative">
         <div class="relative">
             <SunLogoIcon class="absolute animate-spin-slow top-0  drop-shadow transition-all duration-300 ease-out text-yellow-300"
-                :class="scrollPosition > 100 ? 'w-8 h-8' : 'w-12 h-12'" />
+                :class="scrollPosition > 100 ? 'w-8 h-8' : sunSize" />
             <SunLogoIcon class="absolute animate-spin-reverse top-0  drop-shadow transition-all duration-300 ease-out text-yellow-300"
-                :class="scrollPosition > 100 ? 'w-8 h-8' : 'w-12 h-12'" />
+                :class="scrollPosition > 100 ? 'w-8 h-8' : sunSize" />
             <SunLogoIcon class="absolute top-0 animate-ping drop-shadow transition-all duration-300 ease-out text-yellow-300"
-                :class="scrollPosition > 100 ? 'w-8 h-8' : 'w-12 h-12'" />
+                :class="scrollPosition > 100 ? 'w-8 h-8' : sunSize" />
 
         </div>
 
