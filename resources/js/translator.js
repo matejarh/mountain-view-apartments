@@ -4,16 +4,42 @@ export const Translator = {
     install: (v) => {
         const store = useTranslationsStore()
 
-        v.config.globalProperties.__ = function(key, replace = {}) {
-            let translation = store.translations[key]
-                ? store.translations[key]
-                : key;
+        v.config.globalProperties.__ = function (key, count = 1, replace = {}) {
+            let translation = store.translations[key] || key;
 
-            Object.keys(replace).forEach(function (key) {
-                translation = translation.replaceAll(':' + key, replace[key])
+            // Check if translation is a string
+            if (typeof translation !== 'string') {
+                console.error(`Translation for key "${key}" is not a string.`);
+                return key;
+            }
+
+            // Parse the Laravel pluralization syntax
+            const parts = translation.split('|');
+            if (parts.length > 1) {
+            }
+            let pluralTranslation = null;
+
+            parts.forEach(part => {
+                const [condition, value] = part.split(':');
+                const [start, end] = condition.split(',').map(Number);
+                if (isNaN(start)) {
+                    pluralTranslation = value;
+                } else {
+                    if ((isNaN(end) && count === start) || (count >= start && count <= end)) {
+                        pluralTranslation = value.replace(':count', count);
+                    }
+                }
             });
 
-            return translation
+            // If plural translation is not found, use the original translation
+            translation = pluralTranslation || translation;
+
+            // Replace placeholders
+            Object.keys(replace).forEach(function (key) {
+                translation = translation.replaceAll(':' + key, replace[key]);
+            });
+
+            return translation;
         };
     },
 };
