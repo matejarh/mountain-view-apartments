@@ -10,10 +10,10 @@ import LightbulbIcon from '@/Icons/LightbulbIcon.vue';
 import YearProgress from '@/Components/Settings/YearProgress.vue';
 
 const props = defineProps({
-    settings: Array,
+    setting: Object,
 })
 
-const setting = ref({
+const newSetting = ref({
     name: 'Site backgrounds',
     description: 'Backgrounds for site',
     attributes: {
@@ -26,22 +26,22 @@ const setting = ref({
 
 const showSelectImageDialog = ref(false)
 
-const background_settings = computed(() => {
+/* const background_settings = computed(() => {
     if (props.settings.length <= 0) return []
 
     return props.settings?.filter((setting) => {
         return setting.slug === 'site-backgrounds'
     })[0]
-})
+}) */
 
 const form = useForm({
-    name: background_settings?.name,
-    description: background_settings?.description,
-    attributes: background_settings?.attributes,
+    name: props.setting?.name,
+    description: props.setting?.description,
+    attributes: props.setting?.attributes,
 })
 
 const update = () => {
-    form.put(route('admin.settings.update', background_settings), {
+    form.put(route('admin.settings.update', props.setting), {
         preserveScroll: true,
         preserveState: true,
         onSuccess: () => {
@@ -64,11 +64,11 @@ const handleSelect = (attribute) => {
             <template #title>{{ __('Site Backgrounds') }}</template>
             <template #content>
 
-                <CreateSetting v-if="background_settings?.length <= 0" :setting="setting" />
+                <CreateSetting v-if="setting?.length <= 0" :setting="newSetting" />
 
                 <div v-else class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
                     <YearProgress />
-                    <div class="" v-for="attribute, key in background_settings.attributes">
+                    <div class="" v-for="attribute, key in setting.attributes">
                         <div class="flex justify-between items-center">
                             <h3>{{__('image')}} {{__('for')}} {{ __(key) }}</h3>
                             <div class="relative" v-if="key === $page.props.current_season">
@@ -97,5 +97,5 @@ const handleSelect = (attribute) => {
         </ActionSection>
     </div>
     <ImagesListDialog :show="showSelectImageDialog" @close="showSelectImageDialog = false"
-        :setting="background_settings" :attribute="selectedAttribute" />
+        :setting="setting" :attribute="selectedAttribute" />
 </template>

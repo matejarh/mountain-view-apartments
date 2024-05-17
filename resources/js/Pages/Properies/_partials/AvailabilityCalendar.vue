@@ -48,10 +48,12 @@ const notAvailableMarkers = computed(() => {
 
 const highlightedDates = ref(["2024-05-11", "2024-05-12", "2024-05-13", "2024-05-14"])
 
+const datepickerRange = page.props.settings?.find(setting => setting.slug === 'datepicker-range')
+
 const options = ref({
     range: {
-        minRange: 1,
-        maxRange: 7,
+        minRange: datepickerRange.attributes?.min,
+        maxRange: datepickerRange.attributes?.max,
         partialRange: false,
         noDisabledRange: true,
     },

@@ -1,15 +1,32 @@
 <script setup>
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css'
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useHelperStore } from '@/stores/helpers';
+import InputLabel from '../InputLabel.vue';
+import TextInput from '../TextInput.vue';
+import InputError from '../InputError.vue';
+import TextArea from '../TextArea.vue';
+import { useForm, usePage } from '@inertiajs/vue3';
 
-const date = ref(null)
+const form = useForm({
+    subject: '',
+    message: '',
+    date: null,
+
+})
+
+const page = usePage()
+
+const datepickerRange = page.props.settings?.find(setting => setting.slug === 'datepicker-range')
+
+
+// const date = ref(null)
 const disabledDates = ref([])
 const helpers = useHelperStore()
 const options = ref({
-    minRange: 2,
-    maxRange: 7,
+    minRange: datepickerRange.attributes?.min,
+    maxRange: datepickerRange.attributes?.max,
     partialRange: false,
     noDisabledRange: true,
 })
@@ -19,24 +36,25 @@ const options = ref({
 <template>
     <form class=" ">
         <div class="">
-            <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('Subject')
-                }}</label>
-            <input type="text" id="title"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                placeholder="Apple Keynote" required />
+            <InputLabel :value="__('Subject')" for="subject" />
+            <TextInput id="subject" v-model="form.subject" type="text" class="mt-1 block w-full" required
+            autocomplete="subject" :has-error="!!form.errors.subject"
+            :placeholder="__('Enter subject') + '...'" />
+            <InputError :message="form.errors.subject" class="mt-2" />
+
         </div>
         <div class="mt-4">
-            <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{
-                __('Message')
-                }}</label>
-            <textarea id="description" rows="4"
-                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                placeholder="Write event description..."></textarea>
+            <InputLabel :value="__('Message')" for="message" />
+
+            <TextArea id="message" v-model="form.message" type="text" class="mt-1 block w-full"
+            required autocomplete="message" :has-error="!!form.errors.message"
+            :placeholder="__('Enter message') + '...'" />
+            <InputError :message="form.errors.description" class="mt-2" />
         </div>
 
         <div class="relative mt-4 ">
-            <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('Date (from-to)')}}</label>
-            <VueDatePicker v-model="date" :range="options" :min-date="new Date()" prevent-min-max-navigation
+            <InputLabel :value="__('Date (from-to)')" for="date" />
+            <VueDatePicker id="date" v-model="form.date" :range="options" :min-date="new Date()" prevent-min-max-navigation
                 :disabled-dates="disabledDates" :enable-time-picker="false" :locale="$page.props.locale"
                 :format="$page.props.date_format_pattern" :dark="helpers.isDark" six-weeks="center"
                 :placeholder="__('Select arrival & departure dates') + '...'"></VueDatePicker>
@@ -77,7 +95,7 @@ const options = ref({
                     d="M18 2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2ZM2 18V7h6.7l.4-.409A4.309 4.309 0 0 1 15.753 7H18v11H2Z" />
                 <path
                     d="M8.139 10.411 5.289 13.3A1 1 0 0 0 5 14v2a1 1 0 0 0 1 1h2a1 1 0 0 0 .7-.288l2.886-2.851-3.447-3.45ZM14 8a2.463 2.463 0 0 0-3.484 0l-.971.983 3.468 3.468.987-.971A2.463 2.463 0 0 0 14 8Z" />
-            </svg> Pošlji</button>
+            </svg> {{__('Submit')}}</button>
     </form>
 </template>
 

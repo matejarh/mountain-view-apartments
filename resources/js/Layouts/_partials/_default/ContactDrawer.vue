@@ -1,36 +1,26 @@
 <script setup>
-import DateRangePicker from 'flowbite-datepicker/DateRangePicker';
 import Drawer from '@/Components/Drawer.vue';
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css'
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 import { useHelperStore } from '@/stores/helpers';
+import { usePage } from '@inertiajs/vue3';
+
+const page = usePage()
 
 const date = ref(null)
 const disabledDates = ref([])
 const helpers = useHelperStore()
+
+const datepickerRange = page.props.settings?.find(setting => setting.slug === 'datepicker-range')
+
 const options = ref({
-    minRange: 2,
-    maxRange: 7,
+    minRange: datepickerRange.attributes?.min,
+    maxRange: datepickerRange.attributes?.max,
     partialRange: false,
     noDisabledRange: true,
 })
 
-onMounted(() => {
-    /*     const dateRangePickerEl = document.getElementById('dateRangePicker');
-        new DateRangePicker(dateRangePickerEl, {
-            // options
-        }); */
-    /*     const dateRangePickerStart = document.getElementsByName('start');
-        const dateRangePickerEnd = document.getElementsByName('end');
-        new DateRangePicker(dateRangePickerStart, {
-            // options
-        });
-        new DateRangePicker(dateRangePickerEnd, {
-            // options
-        }); */
-
-})
 </script>
 
 <template>

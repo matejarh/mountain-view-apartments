@@ -28,9 +28,11 @@ const handleSelected = (accomodation) => {
     form.accomodationId = accomodation.id
 }
 
+const datepickerRange = page.props.settings?.find(setting => setting.slug === 'datepicker-range')
+
 const options = ref({
-    minRange: 2,
-    maxRange: 7,
+    minRange: datepickerRange.attributes?.min,
+    maxRange: datepickerRange.attributes?.max,
     partialRange: false,
     noDisabledRange: true,
 })
