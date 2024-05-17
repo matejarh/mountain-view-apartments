@@ -6,6 +6,7 @@ use App\Filters\UserFilters;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Traits\RecordsActivity;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -211,5 +212,10 @@ class User extends Authenticatable implements MustVerifyEmail
                 return Location::get($ip);
             }),
         ]);
+    }
+
+    public static function adminsMailingList() :Collection
+    {
+        return self::where('is_admin', true)->get();
     }
 }

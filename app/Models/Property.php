@@ -6,11 +6,13 @@ use App\Filters\PropertyFilters;
 use App\Traits\Likable;
 use App\Traits\RecordsActivity;
 use App\Traits\Reviewable;
+use Illuminate\Support\Collection\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\JsonResponse;
 
 class Property extends Model
 {
@@ -212,5 +214,19 @@ class Property extends Model
     {
         return $filters->apply($query);
 
+    }
+
+    public function fetchListForDropdowns() : \Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection
+    {
+        $properties = Property::latest()->get()->map(function($property) {
+            return [
+                'slug' => $property->slug,
+                'type' => $property->type,
+                'title' => $property->title,
+                'avatar_url' => $property->avatar_url,
+            ];
+        });
+
+        return $properties;
     }
 }

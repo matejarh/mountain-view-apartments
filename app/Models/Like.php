@@ -12,7 +12,6 @@ class Like extends Model
 
     use RecordsActivity;
 
-    protected $guarded = [];
 
     // protected $with = ['liked'];
 

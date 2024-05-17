@@ -20,6 +20,10 @@ use App\Actions\Images\CreateNewImage;
 use App\Actions\Images\DeleteImage;
 use App\Actions\Images\DetachFromGallery;
 use App\Actions\Images\UpdateImage;
+use App\Actions\Inquiries\AdminCreateInquiry;
+use App\Actions\Inquiries\CreateInquiry;
+use App\Actions\Inquiries\DeleteInquiry;
+use App\Actions\Inquiries\UpdateInquiry;
 use App\Actions\Pages\AttachGallery as AttachPageGallery;
 use App\Actions\Pages\CreateNewPage;
 use App\Actions\Pages\DeletePage;
@@ -45,12 +49,16 @@ use App\Contracts\GalleryCreateResponse as GalleryCreateResponseContract;
 use App\Contracts\GalleryDeleteResponse as GalleryDeleteResponseContract;
 use App\Contracts\GalleryDetacheResponse as GalleryDetacheResponseContract;
 use App\Contracts\GalleryUpdateResponse as GalleryUpdateResponseContract;
+use App\Contracts\GuestInquiryStoreResponse as GuestInquiryStoreResponseContract;
 use App\Contracts\ImageAttacheResponse as ImageAttacheResponseContract;
 use App\Contracts\ImageCreateResponse as ImageCreateResponseContract;
 use App\Contracts\ImageDeleteResponse as ImageDeleteResponseContract;
 use App\Contracts\ImageDetacheResponse as ImageDetacheResponseContract;
 use App\Contracts\ImageOrderChangeResponse as ImageOrderChangeResponseContract;
 use App\Contracts\ImageUpdateResponse as ImageUpdateResponseContract;
+use App\Contracts\InquiryCreateResponse as InquiryCreateResponseContract;
+use App\Contracts\InquiryDeleteResponse as InquiryDeleteResponseContract;
+use App\Contracts\InquiryUpdateResponse as InquiryUpdateResponseContract;
 use App\Contracts\PageCreateResponse as PageCreateResponseContract;
 use App\Contracts\PageDeleteResponse as PageDeleteResponseContract;
 use App\Contracts\PageUpdateResponse as PageUpdateResponseContract;
@@ -70,12 +78,16 @@ use App\Http\Responses\GalleryCreatedResponse;
 use App\Http\Responses\GalleryDeletedResponse;
 use App\Http\Responses\GalleryDetachedResponse;
 use App\Http\Responses\GalleryUpdatedResponse;
+use App\Http\Responses\GuestInquiryStoredResponse;
 use App\Http\Responses\ImageAttachedResponse;
 use App\Http\Responses\ImageCreatedResponse;
 use App\Http\Responses\ImageDeletedResponse;
 use App\Http\Responses\ImageDetachedResponse;
 use App\Http\Responses\ImageOrderChangedResponse;
 use App\Http\Responses\ImageUpdatedResponse;
+use App\Http\Responses\InquiryCreatedResponse;
+use App\Http\Responses\InquiryDeletedResponse;
+use App\Http\Responses\InquiryUpdatedResponse;
 use App\Http\Responses\PageCreatedResponse;
 use App\Http\Responses\PageDeletedResponse;
 use App\Http\Responses\PageUpdatedResponse;
@@ -140,6 +152,12 @@ class FortifyServiceProvider extends ServiceProvider
         $this->app->singleton(FacilityCreateResponseContract::class, FacilityCreatedResponse::class);
         $this->app->singleton(FacilityUpdateResponseContract::class, FacilityUpdatedResponse::class);
         $this->app->singleton(FacilityDeleteResponseContract::class, FacilityDeletedResponse::class);
+
+        $this->app->singleton(InquiryCreateResponseContract::class, InquiryCreatedResponse::class);
+        $this->app->singleton(InquiryUpdateResponseContract::class, InquiryUpdatedResponse::class);
+        $this->app->singleton(InquiryDeleteResponseContract::class, InquiryDeletedResponse::class);
+
+        $this->app->singleton(GuestInquiryStoreResponseContract::class, GuestInquiryStoredResponse::class);
     }
 
     /**
@@ -186,6 +204,12 @@ class FortifyServiceProvider extends ServiceProvider
         AppFortify::createFacilitiesUsing(CreateNewFacility::class);
         AppFortify::updateFacilitiesUsing(UpdateFacility::class);
         AppFortify::destroyFacilitiesUsing(DeleteFacility::class);
+
+        AppFortify::createInquiriesUsing(AdminCreateInquiry::class);
+        AppFortify::updateInquiriesUsing(UpdateInquiry::class);
+        AppFortify::destroyInquiriesUsing(DeleteInquiry::class);
+
+        AppFortify::guestCreateInquiriesUsing(CreateInquiry::class);
 
         RateLimiter::for('login', function (Request $request) {
             $throttleKey = str(str($request->input(Fortify::username()))->lower().'|'.$request->ip())->transliterate();

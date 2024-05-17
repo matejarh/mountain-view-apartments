@@ -10,6 +10,7 @@ use App\Filters\PropertyFilters;
 use App\Models\Like;
 use App\Models\Property;
 use App\Models\Review;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
@@ -83,5 +84,10 @@ class PropertiesController extends Controller
         $reviewer->review($property, $request->all());
 
         return app(PropertyReviewResponse::class);
+    }
+
+    public function fetch(Request $request, Property $property ) :JsonResponse
+    {
+        return response()->json($property->fetchListForDropdowns());
     }
 }

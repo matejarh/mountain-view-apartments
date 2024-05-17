@@ -9,12 +9,14 @@ use App\Contracts\ChangesImagesOrder;
 use App\Contracts\CreatesNewFacilities;
 use App\Contracts\CreatesNewGalleries;
 use App\Contracts\CreatesNewImages;
+use App\Contracts\CreatesNewInquiries;
 use App\Contracts\CreatesNewPages;
 use App\Contracts\CreatesNewProperties;
 use App\Contracts\CreatesNewSettings;
 use App\Contracts\DeletesFacilities;
 use App\Contracts\DeletesGalleries;
 use App\Contracts\DeletesImages;
+use App\Contracts\DeletesInquiries;
 use App\Contracts\DeletesPages;
 use App\Contracts\DetachesFacilitiesFromProperties;
 use App\Contracts\DetachesGalleriesFromImages;
@@ -23,9 +25,11 @@ use App\Contracts\DetachesGalleriesFromProperties;
 use App\Contracts\DetachesImagesFromGalleries;
 use App\Contracts\LikesProperties;
 use App\Contracts\ReviewsProperties;
+use App\Contracts\StoresGuestInquiry;
 use App\Contracts\UpdatesFacilities;
 use App\Contracts\UpdatesGalleries;
 use App\Contracts\UpdatesImages;
+use App\Contracts\UpdatesInquiries;
 use App\Contracts\UpdatesPages;
 use App\Contracts\UpdatesProperties;
 use App\Contracts\UpdatesSettings;
@@ -318,7 +322,7 @@ class Fortify
         app()->singleton(ReviewsProperties::class, $callback);
     }
 
-        /**
+    /**
      * Register a class / callback that should be used to create new galleries.
      *
      * @param  string  $callback
@@ -350,4 +354,49 @@ class Fortify
     {
         app()->singleton(DeletesFacilities::class, $callback);
     }
+
+    /**
+     * Register a class / callback that should be used to create new settings.
+     *
+     * @param  string  $callback
+     * @return void
+     */
+    public static function guestCreateInquiriesUsing(string $callback)
+    {
+        app()->singleton(StoresGuestInquiry::class, $callback);
+    }
+
+    /**
+     * Register a class / callback that should be used to create new inquiry.
+     *
+     * @param  string  $callback
+     * @return void
+     */
+    public static function createInquiriesUsing(string $callback)
+    {
+        app()->singleton(CreatesNewInquiries::class, $callback);
+    }
+
+    /**
+     * Register a class / callback that should be used to update given inquiry.
+     *
+     * @param  string  $callback
+     * @return void
+     */
+    public static function updateInquiriesUsing(string $callback)
+    {
+        app()->singleton(UpdatesInquiries::class, $callback);
+    }
+
+    /**
+     * Register a class / callback that should be used to destroyes given inquiry.
+     *
+     * @param  string  $callback
+     * @return void
+     */
+    public static function destroyInquiriesUsing(string $callback)
+    {
+        app()->singleton(DeletesInquiries::class, $callback);
+    }
+
 }
