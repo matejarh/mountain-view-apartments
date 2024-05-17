@@ -4,7 +4,7 @@
 @section('code', '500')
 @section('message', __('We are already working to solve the problem.'))
 @section('icon')
-    <svg class="mx-auto mb-4 w-10 h-10 text-gray-400" xmlns="http://www.w3.org/2000/svg"
+    <svg class="w-auto h-full" xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
         <path
         fill="currentColor"

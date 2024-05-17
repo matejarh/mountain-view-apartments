@@ -5,7 +5,7 @@
 @section('message', __('Building Dreams, One Brick at a Time.'))
 @section('icon')
 
-    <svg class="mx-auto mb-4 w-28 h-2w-28 text-gray-200 drop-shadow" xmlns="http://www.w3.org/2000/svg"
+    <svg class="w-auto h-full" xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 576 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
         <path
         fill="currentColor"

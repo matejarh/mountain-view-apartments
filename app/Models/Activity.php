@@ -55,6 +55,18 @@ class Activity extends Model
         'created_at_day',
     ];
 
+
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        static::creating(function ($activity) {
+           // auth()->user()->last_seen = $activity->created_at;
+            //auth()->user()->save();
+
+        });
+    }
+
     /**
      * Get the channels that model events should broadcast on.
      *
@@ -94,6 +106,7 @@ class Activity extends Model
         };
     }
 
+
     public function subject()
     {
         return $this->morphTo();
@@ -112,7 +125,7 @@ class Activity extends Model
 
     public function getCreatedAtDiffForHumansAttribute(): string
     {
-        $locale = request()->cookie('language') ?: app()->getLocale();
+        $locale = request()->session()->has('locale') ? request()->session()->get('locale')  : app()->getLocale();
         if ($locale === 'us')
             $locale = 'en';
         return $this->created_at->locale($locale)->diffForHumans();
@@ -124,7 +137,7 @@ class Activity extends Model
 
     public function getCreatedAtDayAttribute(): string
     {
-        return $this->created_at->locale(app()->currentLocale())->isoFormat('L');
+        return $this->createdAtDay();
     }
 
     /**
