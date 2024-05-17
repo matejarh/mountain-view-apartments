@@ -130,11 +130,15 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function lastSeenDiffForHumans(): string
     {
+/*         if ($this->activities->count() > 0) {
+            return $this->activities->first()->created_at->diffForHumans();
+        } */
         if ($this->last_seen) {
-            return $this->last_seem->diffForHumans();
+            return $this->last_seen->diffForHumans();
         }
 
         return $this->created_at->diffForHumans();
+        //return $this->activities->first()->created_at->diffForHumans();
     }
 
     public function getLastSeenDiffForHumansAttribute(): string
