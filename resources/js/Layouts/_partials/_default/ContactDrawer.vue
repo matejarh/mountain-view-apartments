@@ -123,7 +123,7 @@ onMounted(() => {
     </Drawer>
 </template>
 
-<style>
+<style scoped>
 :root {
     --dp-font-family: font-family: Figtree, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --dp-font-size: 0.875rem;

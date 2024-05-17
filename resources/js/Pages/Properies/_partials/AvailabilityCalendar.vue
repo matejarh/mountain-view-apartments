@@ -129,7 +129,7 @@ const book = () => {
     </ShapedSection>
 </template>
 
-<style>
+<style scoped>
 .not-available-marker {
     position: absolute;
     top: 0;

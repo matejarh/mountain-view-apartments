@@ -15,7 +15,7 @@ onBeforeMount(() => {
 </script>
 <template>
     <section class="bg-gray-50 dark:bg-gradient-to-tl dark:from-gray-950 dark:via-gray-950 dark:to-gray-900 relative">
-        <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 ">
+        <div class="flex flex-col items-center justify-center sm:justify-start lg:justify-center px-6 py-8 mx-auto h-screen overflow-y-auto lg:py-0 ">
             <div class="absolute top-0 w-full flex justify-between overflow-visible p-4">
                 <LangSwitch direction="down" />
                 <ThemeSwitch />

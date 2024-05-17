@@ -80,3 +80,71 @@ const options = ref({
             </svg> Pošlji</button>
     </form>
 </template>
+
+<style scoped>
+:root {
+    --dp-font-family: font-family: Figtree, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --dp-font-size: 0.875rem;
+    --dp-input-padding: 0.625rem;
+    --dp-border-radius: 0.5rem;
+
+}
+
+.dp__theme_dark {
+    --dp-background-color: rgb(79 79 79);
+    --dp-hover-color: #454545;
+    --dp-hover-text-color: #fff;
+    --dp-hover-icon-color: #848484;
+    --dp-primary-color: #0093c4;
+    --dp-primary-disabled-color: #61a8ea;
+    --dp-primary-text-color: #fff;
+    --dp-secondary-color: #b0b0b0;
+    --dp-border-color: rgb(93 93 93);
+    --dp-menu-border-color: rgb(93 93 93);
+    --dp-border-color-hover: #b0b0b0;
+    --dp-disabled-color: #6d6d6d;
+    --dp-disabled-color-text: #6d6d6d;
+    --dp-scroll-bar-background: rgb(93 93 93);
+    ;
+    --dp-scroll-bar-color: #4f4f4f;
+    --dp-success-color: #2f6c4b;
+    --dp-success-color-disabled: #63a47d;
+    --dp-icon-color: #848484;
+    --dp-danger-color: #e52f1d;
+    --dp-marker-color: #e52f1d;
+    --dp-tooltip-color: #454545;
+    --dp-highlight-color: rgb(0 123 167 / 20%);
+    --dp-range-between-dates-background-color: var(--dp-hover-color, #454545);
+    --dp-range-between-dates-text-color: var(--dp-hover-text-color, #fff);
+    --dp-range-between-border-color: var(--dp-hover-color, #fff);
+}
+
+.dp__theme_light {
+    --dp-background-color: rgb(246 246 246);
+    --dp-text-color: #262626;
+    --dp-hover-color: #e7e7e7;
+    --dp-hover-text-color: #262626;
+    --dp-hover-icon-color: #848484;
+    --dp-primary-color: #007ba7;
+    --dp-primary-disabled-color: #00bbea;
+    --dp-primary-text-color: #f6f6f6;
+    --dp-secondary-color: #b0b0b0;
+    --dp-border-color: rgb(176 176 176);
+    --dp-menu-border-color: rgb(176 176 176);
+    --dp-border-color-hover: #b0b0b0;
+    --dp-disabled-color: #e7e7e7;
+    --dp-scroll-bar-background: #e7e7e7;
+    --dp-scroll-bar-color: #b0b0b0;
+    --dp-success-color: #63a47d;
+    --dp-success-color-disabled: #bdddc7;
+    --dp-icon-color: #848484;
+    --dp-danger-color: #ff6f61;
+    --dp-marker-color: #ff6f61;
+    --dp-tooltip-color: #f6f6f6;
+    --dp-disabled-color-text: #848484;
+    --dp-highlight-color: rgb(0 123 167 / 10%);
+    --dp-range-between-dates-background-color: var(--dp-hover-color, #e7e7e7);
+    --dp-range-between-dates-text-color: var(--dp-hover-text-color, #262626);
+    --dp-range-between-border-color: var(--dp-hover-color, #e7e7e7);
+}
+</style>

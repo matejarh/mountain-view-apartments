@@ -100,7 +100,7 @@ onMounted(() => {
 <div :id="id" class="relative w-full">
     <!-- Carousel wrapper -->
     <div
-        class="relative overflow-hidden rounded-lg " @mouseenter="carousel.pause()" @mouseleave="carousel.cycle()" :class="fullScreenClasses"
+        class="relative overflow-visible rounded-lg " @mouseenter="carousel.pause()" @mouseleave="carousel.cycle()" :class="fullScreenClasses"
     >
         <slot />
         <!-- <div v-for="image, key in slides" :id="`carousel-item-${key}`" class="hidden duration-700 ease-in-out" >

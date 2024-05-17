@@ -5,34 +5,40 @@ import BookOpenIcon from '@/Icons/BookOpenIcon.vue'
 import LandmarkIcon from '@/Icons/LandmarkIcon.vue';
 import PaperPlane from '@/Icons/PaperPlane.vue';
 import { useHelperStore } from '@/stores/helpers';
-import ThemeSwitch from '@/Components/_default/ThemeSwitch.vue';
+import MobileThemeSwitch from '@/Components/_default/MobileThemeSwitch.vue';
+import HamburgerButton from '@/Components/_default/MobileNavigation/HamburgerButton.vue';
 import LanguageDropdown from '@/Components/_default/LanguageDropdown.vue';
 import CloseIcon from '@/Icons/CloseIcon.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ReservationInquiry from '@/Components/_default/ReservationInquiry.vue';
 import CalendarIcon from '@/Icons/CalendarIcon.vue';
+import AdjustmentsIcon from '@/Icons/AdjustmentsIcon.vue';
+import UserIcon from '@/Icons/UserIcon.vue';
+import SignOutIcon from '@/Icons/SignOutIcon.vue';
+import { useForm } from '@inertiajs/vue3';
 
 
 const helpers = useHelperStore()
+
+const logoutForm = useForm({})
+
+const logout = () => {
+    helpers.hideMobileDrawer()
+    logoutForm.post(route('logout'));
+};
 </script>
 
 <template>
 
 
     <div class=" lg:hidden fixed top-0 left-0 z-50 w-full p-4 bg-transparent flex justify-between">
-        <LanguageDropdown v-show="!helpers.mobileDrawer" align="left" :no-label="true" />
+        <LanguageDropdown  align="left" :no-label="true" />
 
-        <button v-show="!helpers.mobileDrawer" data-collapse-toggle="navbar-language" @click="helpers.showMobileDrawer"
-            type="button"
-            class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-200 hover:text-gray-50 focus:text-white transition-colors rounded-lg lg:hidden backdrop-blur bg-opacity-50"
-            aria-controls="navbar-language" aria-expanded="false">
-            <span class="sr-only">Open main menu</span>
-            <svg class="w-5 h-5 drop-shadow-lg" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                viewBox="0 0 17 14">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M1 1h15M1 7h15M1 13h15" />
-            </svg>
-        </button>
+        <div class="space-x-4">
+            <MobileThemeSwitch class="transition-all ease-out" />
+            <HamburgerButton v-show="!helpers.mobileDrawer" @click="helpers.showMobileDrawer" />
+
+        </div>
         <teleport to="body">
             <div v-if="helpers.mobileDrawer" @click="helpers.hideMobileDrawer"
                 class="transition-all duration-300 ease-out absolute top-0 left-0 z-40 w-screen h-screen bg-gray-950 bg-opacity-65 backdrop-blur inset-0">
@@ -60,7 +66,39 @@ const helpers = useHelperStore()
                         </button>
 
                         <div class="py-4  flex flex-col justify-between ">
-                            <ul class="space-y-2 font-medium flex-1">
+                            <div v-if="$page.props.auth.user" class="pt-4 mt-4 space-y-2 font-medium border-t border-gray-200 dark:border-gray-700">
+                                <div class="flex items-center gap-4">
+                                    <img class="w-10 h-10 rounded-full" :src="$page.props.auth.user.profile_photo_url" alt="">
+                                    <div class="font-medium dark:text-white">
+                                        <div>{{ $page.props.auth.user.name }}</div>
+                                        <div class="text-sm text-gray-500 dark:text-gray-400">{{ $page.props.auth.user.email }}</div>
+                                    </div>
+                                </div>
+
+                                <MobileNavigationItem as="div" v-if="$page.props.auth.user.is_admin" @clicked="helpers.hideMobileDrawer"
+                                    :active="`/admin/dashboard`" :href="route('admin.dashboard.show')">
+                                    <template #icon>
+                                        <AdjustmentsIcon />
+                                    </template>
+                                    {{ __("Home") }}
+                                </MobileNavigationItem>
+                                <MobileNavigationItem as="div"  @clicked="helpers.hideMobileDrawer"
+                                    :active="`/user/profile`" :href="route('profile.show')">
+                                    <template #icon>
+                                        <UserIcon />
+                                    </template>
+                                    {{ __("My Profile") }}
+                                </MobileNavigationItem>
+                                <MobileNavigationItem as="div"  @clicked="logout" >
+                                    <template #icon>
+                                        <SignOutIcon />
+                                    </template>
+                                    {{ __("Sign out") }}
+                                </MobileNavigationItem>
+                            </div>
+                            <!-- <div v-if="$page.props.auth" class="pt-1 mt-1 space-y-2 font-medium border-t border-gray-200 dark:border-gray-700">
+                            </div> -->
+                            <ul class="pt-4 mt-4 space-y-2 font-medium border-t border-gray-200 dark:border-gray-700">
                                 <MobileNavigationItem @clicked="helpers.hideMobileDrawer"
                                     :active="`/${$page.props.locale}`" :href="route('home', $page.props.locale)">
                                     <template #icon>
@@ -93,7 +131,7 @@ const helpers = useHelperStore()
                     </div>
 
                 </div>
-                <div class="py-4 px-4">
+                <div class="pt-4 mt-4 space-y-2 font-medium border-t border-gray-200 dark:border-gray-700 mx-4">
                     <h5
                         class="inline-flex items-center mb-6 text-base font-semibold text-gray-500 uppercase dark:text-gray-400">
                         <CalendarIcon class="w-3.5 h-3.5 me-2.5" />
@@ -139,70 +177,4 @@ const helpers = useHelperStore()
 
 </template>
 
-<style>
-:root {
-    --dp-font-family: font-family: Figtree, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-    --dp-font-size: 0.875rem;
-    --dp-input-padding: 0.625rem;
-    --dp-border-radius: 0.5rem;
 
-}
-
-.dp__theme_dark {
-    --dp-background-color: rgb(79 79 79);
-    --dp-hover-color: #454545;
-    --dp-hover-text-color: #fff;
-    --dp-hover-icon-color: #848484;
-    --dp-primary-color: #0093c4;
-    --dp-primary-disabled-color: #61a8ea;
-    --dp-primary-text-color: #fff;
-    --dp-secondary-color: #b0b0b0;
-    --dp-border-color: rgb(93 93 93);
-    --dp-menu-border-color: rgb(93 93 93);
-    --dp-border-color-hover: #b0b0b0;
-    --dp-disabled-color: #6d6d6d;
-    --dp-disabled-color-text: #6d6d6d;
-    --dp-scroll-bar-background: rgb(93 93 93);
-    ;
-    --dp-scroll-bar-color: #4f4f4f;
-    --dp-success-color: #2f6c4b;
-    --dp-success-color-disabled: #63a47d;
-    --dp-icon-color: #848484;
-    --dp-danger-color: #e52f1d;
-    --dp-marker-color: #e52f1d;
-    --dp-tooltip-color: #454545;
-    --dp-highlight-color: rgb(0 123 167 / 20%);
-    --dp-range-between-dates-background-color: var(--dp-hover-color, #454545);
-    --dp-range-between-dates-text-color: var(--dp-hover-text-color, #fff);
-    --dp-range-between-border-color: var(--dp-hover-color, #fff);
-}
-
-.dp__theme_light {
-    --dp-background-color: rgb(246 246 246);
-    --dp-text-color: #262626;
-    --dp-hover-color: #e7e7e7;
-    --dp-hover-text-color: #262626;
-    --dp-hover-icon-color: #848484;
-    --dp-primary-color: #007ba7;
-    --dp-primary-disabled-color: #00bbea;
-    --dp-primary-text-color: #f6f6f6;
-    --dp-secondary-color: #b0b0b0;
-    --dp-border-color: rgb(176 176 176);
-    --dp-menu-border-color: rgb(176 176 176);
-    --dp-border-color-hover: #b0b0b0;
-    --dp-disabled-color: #e7e7e7;
-    --dp-scroll-bar-background: #e7e7e7;
-    --dp-scroll-bar-color: #b0b0b0;
-    --dp-success-color: #63a47d;
-    --dp-success-color-disabled: #bdddc7;
-    --dp-icon-color: #848484;
-    --dp-danger-color: #ff6f61;
-    --dp-marker-color: #ff6f61;
-    --dp-tooltip-color: #f6f6f6;
-    --dp-disabled-color-text: #848484;
-    --dp-highlight-color: rgb(0 123 167 / 10%);
-    --dp-range-between-dates-background-color: var(--dp-hover-color, #e7e7e7);
-    --dp-range-between-dates-text-color: var(--dp-hover-text-color, #262626);
-    --dp-range-between-border-color: var(--dp-hover-color, #e7e7e7);
-}
-</style>

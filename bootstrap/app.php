@@ -18,8 +18,8 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->web(append: [
-            \App\Http\Middleware\setLanguageMiddleware::class,
             // \App\Http\Middleware\LanguageMiddleware::class,
+            \App\Http\Middleware\setLanguageMiddleware::class,
             \App\Http\Middleware\HandleInertiaRequests::class,
             \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
             // \App\Http\Middleware\XssSanitizationMiddleware::class,

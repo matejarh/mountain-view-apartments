@@ -423,8 +423,12 @@
     "Home": "Home",
     "Contact Us": "Contact Us",
     "Stories": "Stories",
-    "Reservation": "Reservation"
-
+    "Reservation": "Reservation",
+    "Select arrival & departure dates": "Select arrival & departure dates",
+    "Reservation Inquiry": "Reservation Inquiry",
+    "Subject": "Subject",
+    "Message": "Message",
+    "Date (from-to)": "Date (from-to)"
 }
 
 

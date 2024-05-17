@@ -3,6 +3,7 @@ import SunLogoIcon from '@/Icons/SunLogoIcon.vue';
 import LogoIcon from '@/Icons/LogoIcon.vue';
 import HribiLogoIcon from '@/Icons/HribiLogoIcon.vue';
 import NapisiLogoIcon from '@/Icons/NapisiLogoIcon.vue';
+import { computed } from 'vue';
 
 defineProps({
     scrollPosition: {
@@ -40,14 +41,14 @@ const sunSize = computed(() => {
 
         <LogoIcon v-if="showTitle"
             class="dark:text-gray-50 text-gray-950  drop-shadow transition-all duration-300 ease-out "
-            :class="scrollPosition > 100 ? 'w-24 h-24' : 'w-32 h-32'" />
+            :class="scrollPosition > 100 ? 'w-24 h-24' : 'w-24 md:w-32 h-24 md:h-32'" />
         <template v-else>
             <div class="flex items-center">
                 <HribiLogoIcon
                     class="dark:text-gray-50 text-gray-950 transform translate-x-4 transition-all duration-300 ease-out "
-                    :class="scrollPosition > 100 ? 'w-24 h-10' : 'w-28 h-28'" />
+                    :class="scrollPosition > 100 ? 'w-24 h-10' : 'w-24 md:w-28 h-10 md:h-28'" />
                 <NapisiLogoIcon class="dark:text-gray-50 text-gray-950   transition-all duration-300 ease-out translate-y-1"
-                    :class="scrollPosition > 100 ? 'w-32 h-10' : 'w-28 h-28'" />
+                    :class="scrollPosition > 100 ? 'w-32 h-10' : 'w-24 md:w-28 h-10 md:h-28'" />
 
             </div>
 

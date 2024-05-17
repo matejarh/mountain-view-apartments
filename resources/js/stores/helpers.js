@@ -12,6 +12,7 @@ export const useHelperStore = defineStore('helpers', () => {
     const showTheme = ref(false)
     const showUserDropdown = ref(false)
     const contactDrawer = ref(false)
+    const mobileDrawer = ref(false)
     const pageLoaded = ref(false)
     const showNavItems = []
     const isDark = ref(localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches))
@@ -23,9 +24,16 @@ export const useHelperStore = defineStore('helpers', () => {
         contactDrawer.value = true
     }
 
+    const hideMobileDrawer = () => {
+        mobileDrawer.value = false
+    }
+    const showMobileDrawer = () => {
+        mobileDrawer.value = true
+    }
+
     const delay = function (ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
 
-    return { show, contactDrawer, showContactDrawer, hideContactDrawer, delay, isDark, showFooter, showMain, showLogo, showNav, showIcons, showLang, showTheme, showUserDropdown, pageLoaded, showNavItems }
+    return { show, contactDrawer, showContactDrawer, hideContactDrawer, mobileDrawer, showMobileDrawer, hideMobileDrawer, delay, isDark, showFooter, showMain, showLogo, showNav, showIcons, showLang, showTheme, showUserDropdown, pageLoaded, showNavItems }
 })
