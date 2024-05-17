@@ -25,10 +25,10 @@ const groupArrayIntoThreeGroups = (array) => {
 </script>
 
 <template>
-    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+    <div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-3 gap-4">
         <div class="grid gap-4" v-for="group, key in groupedImages" :key="key">
             <div v-for="image in group" :key="image.id" @click="$emit('clicked', { image: image.image, key: image.key })" class="brightness-90 hover:brightness-105 transition-all ease-out duration-150">
-                <img class="h-auto max-w-full rounded-lg shadow-lg"
+                <img class="h-auto w-full rounded-lg shadow-lg"
                     :src="image.image.tile_url" :alt="image.image.name">
             </div>
         </div>
