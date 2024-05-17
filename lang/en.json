@@ -428,7 +428,14 @@
     "Reservation Inquiry": "Reservation Inquiry",
     "Subject": "Subject",
     "Message": "Message",
-    "Date (from-to)": "Date (from-to)"
+    "Date (from-to)": "Date (from-to)",
+    "Close menu": "Close menu",
+    "Datepicker range": "Datepicker range",
+    "Set up min and max days available for booking": "Set up min and max days available for booking",
+    "Max": "Max",
+    "Update": "Update",
+    "Updating": "Updating",
+    "Updated": "Updated"
 }
 
 
