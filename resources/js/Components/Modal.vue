@@ -19,6 +19,10 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
+    hasShadow: {
+        type: Boolean,
+        default: true,
+    }
 });
 
 const emit = defineEmits(['close']);
@@ -121,8 +125,8 @@ const fullScreenClasses = computed(() => {
                     leave-from-class="opacity-100 translate-y-0 sm:scale-100"
                     leave-to-class="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
 
-                    <div v-show="show" :class="[maxWidthClass,fullScreenClasses]"
-                        class="  text-gray-700 dark:text-gray-200 rounded-lg shadow-xl  scrollbar-thin transform transition-all  ">
+                    <div v-show="show" :class="[maxWidthClass,fullScreenClasses, {'shadow-xl': hasShadow}]"
+                        class="  text-gray-700 dark:text-gray-200 rounded-lg scrollbar-thin transform transition-all  ">
                         <slot v-if="showSlot" />
                     </div>
                 </transition>
