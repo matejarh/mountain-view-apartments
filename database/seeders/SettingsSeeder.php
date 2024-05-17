@@ -24,5 +24,14 @@ class SettingsSeeder extends Seeder
                 'winter' => '',
             ],
         ]);
+        Setting::factory()->create([
+            'name' => 'Datepicker range',
+            'slug' => str('Datepicker range')->slug(),
+            'description' => 'Set up min and max days available for booking',
+            'attributes' => [
+                'min' => 2,
+                'max' => 7,
+            ],
+        ]);
     }
 }
