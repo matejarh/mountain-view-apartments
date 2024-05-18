@@ -38,12 +38,22 @@ const classes = computed(() => {
                     {{ __("Dashboard") }}
                 </NavLink>
 
-                <NavLink v-if="$page.props.auth.user.is_admin" href="/admin/properties" @click="$emit('hide')">
+<!--                 <NavLink v-if="$page.props.auth.user.is_admin" href="/admin/properties" @click="$emit('hide')">
                     <template #icon>
                         <MountainCityIcon />
                     </template>
                     {{ __("Properties") }}
-                </NavLink>
+                </NavLink> -->
+
+                <NavDropdown v-if="$page.props.auth.user.is_admin" key="properties-dropdown" href="/admin/properties">
+                    <template #icon>
+                        <MountainCityIcon />
+                    </template>
+                    <template #title>{{ __("Properties") }}</template>
+                    <DropdownItem href="/admin/properties" @click="$emit('hide')">{{ __('Properties List') }}</DropdownItem>
+                    <DropdownItem href="/admin/properties/reviews" @click="$emit('hide')">{{ __('Review',10) }}</DropdownItem>
+                    <DropdownItem href="/admin/properties/reservations" @click="$emit('hide')">{{ __('Reservations') }}</DropdownItem>
+                </NavDropdown>
 
                 <NavLink v-if="$page.props.auth.user.is_admin" href="/admin/pages" @click="$emit('hide')">
                     <template #icon>
@@ -136,7 +146,7 @@ const classes = computed(() => {
                 <AdjustmentsIcon class="w-6 h-6" />
             </BottomItem>
 
-            <Tooltip v-if="$page.props.auth.user.is_admin" :text="__('Settings page')">
+            <Tooltip v-if="$page.props.auth.user.is_admin" :text="__('Settings Page')">
                 <BottomItem :href="route('admin.settings.index')" active="/admin/settings">
                     <CogIcon class="w-6 h-6" />
                 </BottomItem>

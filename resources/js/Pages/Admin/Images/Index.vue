@@ -43,6 +43,8 @@ const handleClicked = (image) => {
                                 </p>
                             </figure>
                         </li>
+                        <!-- <img class="rounded-lg" v-for="image, key in $page.props.images.data" :src="image.thumb_url" :alt="image.name"> -->
+
 
                         <ImageCard v-for="image, key in $page.props.images.data" :images-count="$page.props.images.total" :key="image.id" :image="image"
                             @clicked="handleClicked" :is-index="true" />
@@ -79,7 +81,9 @@ const handleClicked = (image) => {
                             @show-upload-photo-dialog="showUploadPhotoDialog = true" /> -->
 
         <UploadPhotoDialog :show="showUploadPhotoDialog" @close="showUploadPhotoDialog = false" />
-        <FullScreenImagesModal :show="!!showingImage" @close="showingImage = null" :image="showingImage" />
+
+        <FullScreenImagesModal :images="$page.props.images.data" :image="showingImage" :show="!!showingImage"
+            @close="showingImage = null" />
     </FullLayout>
 </template>
 

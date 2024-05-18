@@ -23,7 +23,7 @@ const properties = usePropertyStore()
                 <span v-if="selectedProperty"
                     class="inline-flex leading-tight w-full transition duration-300 ease-out  items-center font-medium  p-2.5 text-lg bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-800  text-gray-950 dark:text-gray-100 rounded-lg cursor-pointer hover:border-gray-300 dark:hover:border-gray-700 dark:hover:text-white">
 
-                    <img :src="selectedProperty?.avatar_url" class="w-10 rounded-sm me-3">
+                    <img :src="selectedProperty?.avatar_url" class="w-auto h-7 rounded-sm me-3">
                     {{ selectedProperty?.title[$page.props.locale] }}
                 </span>
                 <span v-else

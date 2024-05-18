@@ -12,7 +12,7 @@ defineEmits(['selected'])
             role="menuitem"
             @click="$emit('selected', accomodation)">
             <div class="inline-flex items-center justify-start">
-                <img :src="accomodation.avatar_url" class="h-auto w-10 rounded-sm me-2">
+                <img :src="accomodation.avatar_url" class="h-7 w-auto rounded-sm me-2">
                 <div class="leading-tight">
                     <p class="font-base">
                         {{ __(accomodation.type) }}

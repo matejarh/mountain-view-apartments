@@ -15,8 +15,7 @@ export const Translator = {
 
             // Parse the Laravel pluralization syntax
             const parts = translation.split('|');
-            if (parts.length > 1) {
-            }
+
             let pluralTranslation = null;
 
             parts.forEach(part => {
@@ -25,8 +24,8 @@ export const Translator = {
                 if (isNaN(start)) {
                     pluralTranslation = value;
                 } else {
-                    if ((isNaN(end) && count === start) || (count >= start && count <= end)) {
-                        pluralTranslation = value.replace(':count', count);
+                    if ((isNaN(end) && count >= start) || (count >= start && count <= end)) {
+                        pluralTranslation = value.replace('#count', count);
                     }
                 }
             });

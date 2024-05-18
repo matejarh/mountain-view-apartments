@@ -119,13 +119,13 @@ const book = () => {
                 <p class="flex mb-6 font-light text-gray-100 dark:text-gray-300 md:text-lg rounded-lg">
                     <span class="mx-auto flex items-center">
                         <InfoIcon class="w-6 h-6 me-2" />
-                        {{ __('Availabiliti calendar for') }} {{ $page.props.property?.title[$page.props.locale] }}
+                        {{ __('Availability calendar') }} {{ __('for') }} {{ $page.props.property?.title[$page.props.locale] }}
 
                     </span>
                 </p>
                 <a @click="book" href="#"
                     class="text-white bg-transparent hover:bg-primaty-700 border border-white focus:ring-4 focus:ring-white font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-transparent dark:hover:bg-primary-600 focus:outline-none dark:focus:ring-white">
-                    {{ __('Check Availability') }}</a>
+                    {{ __('Check availability') }}</a>
             </div>
         </div>
     </ShapedSection>

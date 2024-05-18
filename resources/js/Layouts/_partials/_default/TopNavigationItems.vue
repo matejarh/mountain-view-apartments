@@ -70,7 +70,7 @@ watchEffect(async () => {
                 <!-- <TopNavigationItem key="reservation" v-show="helpers.showNavItems[4]" :to="'/reservation'">
                     {{ __('Reservation') }}
                 </TopNavigationItem> -->
-                <TopNavigationItem key="reservation" v-show="helpers.showNavItems[4]" :to="'/reservation'">
+                <TopNavigationItem key="stories" v-show="helpers.showNavItems[4]" :to="`/${$page.props.locale}/stories`">
                     {{ __('Stories') }}
                 </TopNavigationItem>
 

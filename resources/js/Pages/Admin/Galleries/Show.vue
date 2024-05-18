@@ -129,7 +129,7 @@ onUnmounted(() => {
                                 class=" text-primary-700 dark:text-primary-200 w-6 h-6 transform hover:scale-105 active:scale-95" />
                         </Tooltip>
                     </button>
-                    <h2>{{ __(gallery.name) }}</h2>
+                    <h2>{{ $page.props.gallery.name }}</h2>
                 </div>
                 <div class="flex items-start space-x-2" v-if="editing">
                     <div class="">
@@ -161,7 +161,7 @@ onUnmounted(() => {
                 </div>
             </template>
             <template #description v-if="!editing">
-                <div v-if="!editing">{{ __(gallery.description) }}</div>
+                <div v-if="!editing">{{ $page.props.gallery.description }}</div>
             </template>
             <template #content>
                 <div class="relative" v-if="imagesProxy.length > 0">
@@ -231,7 +231,9 @@ onUnmounted(() => {
                 <p class="mb-4 text-gray-500 dark:text-gray-300 text-sm">{{ __('Images will not be deleted, and can be attached in other galleries.')}}</p>
             </template>
         </ConfirmationModal>
-        <FullScreenImagesModal :show="!!showingImage" @close="showingImage = null" :image="showingImage" />
+
+        <FullScreenImagesModal :images="imagesProxy" :image="showingImage" :show="!!showingImage"
+        @close="showingImage = null" />
     </FullLayout>
 </template>
 

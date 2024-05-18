@@ -4,6 +4,7 @@ import DialogModal from '@/Components/DialogModal.vue'
 import SpinnerIcon from '@/Icons/SpinnerIcon.vue';
 import ImageCard from './ImageCard.vue';
 import ImageIcon from '@/Icons/ImageIcon.vue';
+import Paginator from '@/Components/Paginator.vue';
 
 
 const props = defineProps({
@@ -52,7 +53,7 @@ const fetch = () => {
                     <SpinnerIcon class="w-6 h-6 animate-spin mx-auto" />
                 </div>
                 <div class="" v-else>
-                    {{ }}
+
                     <TransitionGroup v-if="$page.props.images_not_in_gallery.data.length > 0" name="list" tag="ul"
                         class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 4xl:grid-cols-6 gap-4 md:gap-4 lg:gap-6 2xl:gap-8">
                         <ImageCard :image="image" v-for="image, key in $page.props.images_not_in_gallery.data"
@@ -66,6 +67,7 @@ const fetch = () => {
                             </div>
                         </div>
                     </TransitionGroup>
+
 
                     <div v-else class="h-full flex flex-col justify-center">
                         <div class="w-full text-center cursor-pointer" @click="$emit('showUploadPhotoDialog')">

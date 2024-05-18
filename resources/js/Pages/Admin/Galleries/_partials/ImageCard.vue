@@ -195,8 +195,7 @@ const destroy = () => {
                 <TrashBinIcon class=" text-gray-400 dark:text-gray-500 w-11 h-11 mb-3.5 mx-auto" />
             </template>
             <template #content>
-                <p class="mb-4 text-gray-500 dark:text-gray-300 text-lg">{{ __('This will delete image and its all files and thumbs from server.')}}</p>
-                <p class="mb-4 text-gray-500 dark:text-gray-300 text-sm">{{ __('Image can not be restored after this action.')}}</p>
+                <p class="mb-4 text-gray-500 dark:text-gray-300 text-lg">{{ __('This will delete image and its all files action.')}}</p>
             </template>
         </ConfirmationModal>
 

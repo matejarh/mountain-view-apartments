@@ -27,7 +27,7 @@ class CreateNewImage implements CreatesNewImages
         $validator = Validator::make($input, [
             'name' => ['required', 'string', 'max:255', new SpamFree],
             'description' => ['nullable', 'string', new SpamFree],
-            'photo' => ['nullable', 'mimes:jpg,jpeg,png,svg', 'max:4096', 'dimensions:min_width=675,min_height=675'],
+            'photo' => ['nullable', 'mimes:jpg,jpeg,png,svg', 'max:4096', 'dimensions:min_width=600,min_height=600'],
         ],[
             'photo.dimensions' => __('Image dimensions must be at least 1280x720(HD)px'),
         ]);

@@ -5,6 +5,7 @@ use App\Http\Controllers\InquiriesController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\PropertiesController;
+use App\Http\Controllers\StoriesController;
 use App\Http\Controllers\UserProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -52,6 +53,10 @@ Route::group(['prefix' => '{lang}', 'middleware' => 'web'], function () {
     Route::name('properties.')->prefix('accomodations')->namespace('accomodations')->group(function () {
         Route::get('/', [PropertiesController::class, 'index'])->name('index');
         Route::get('/{property}', [PropertiesController::class, 'show'])->name('show');
+    });
+    Route::name('stories.')->prefix('stories')->namespace('stories')->group(function () {
+        Route::get('/', [StoriesController::class, 'index'])->name('index');
+        Route::get('/{story}', [StoriesController::class, 'show'])->name('show');
     });
 
     Route::get('/', [PagesController::class, 'home'])->name('home');

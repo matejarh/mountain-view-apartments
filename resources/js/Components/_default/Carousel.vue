@@ -121,7 +121,7 @@ onMounted(() => {
             :key="key"
             :id="`${id}-indicator-${key}`"
             type="button"
-            class="h-3 w-3 rounded-full drop-shadow-md bg-primary-200 hover:bg-primary-50"
+            class="h-3 w-3 rounded-full drop-shadow-md bg-primary-600 hover:bg-primary-50 active:bg-white"
             aria-current="true"
             :aria-label="`Slide ${key}`"
         ></button>

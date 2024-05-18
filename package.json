@@ -1,4 +1,10 @@
 {
+    "name": "mountain-view-apartments-app",
+    "author": {
+        "name": "Grower",
+        "email": "dev@web3-solutions.eu",
+        "url": "https://web3-solutions.eu"
+    },
     "private": true,
     "type": "module",
     "scripts": {

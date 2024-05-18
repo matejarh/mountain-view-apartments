@@ -24,8 +24,11 @@ const isArrival = ref(true)
 
 const disabledDates = ref(["2024-05-11", "2024-05-12", "2024-05-13", "2024-05-14"]);
 
+
+const propertyProxy = ref(null)
+
 const handleSelected = (accomodation) => {
-    form.accomodationId = accomodation.id
+    propertyProxy.value = accomodation
 }
 
 const datepickerRange = page.props.settings?.find(setting => setting.slug === 'datepicker-range')
@@ -45,15 +48,15 @@ watch(disabledDates, () => {
 </script>
 
 <template>
-    <section class="relative z-30 bg-primary-700 dark:bg-primary-900 pt-0 sm:pt-0 md:pt-0">
+    <section class="relative z-40 bg-primary-700 dark:bg-primary-900 pt-0 sm:pt-0 md:pt-0">
         <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
             <div class="mx-auto max-w-screen-xl text-center">
                 <h2 class="mb-4 text-4xl tracking-tight font-extrabold leading-tight text-white dark:text-white">
-                    {{ __('Check Availability') }}</h2>
+                    {{ __('Check availability') }}</h2>
 
                 <form action="" class="mb-6 w-full h-auto block" @submit.prevent="">
                     <div class="space-y-4 md:flex md:space-x-4 md:space-y-0">
-                        <AccomodationsDropdown class="w-full" direction="down" @selected="handleSelected" />
+                        <AccomodationsDropdown class="w-full" direction="down" :selected-property="propertyProxy" @selected="handleSelected" />
 
                         <VueDatePicker v-model="date"
                                 :range="options"
@@ -65,7 +68,7 @@ watch(disabledDates, () => {
                                 :format="$page.props.date_format_pattern"
                                 :dark="helpers.isDark"
                                 six-weeks="center"
-                                :placeholder="__('Select arrival & departure dates...')"
+                                :placeholder="__('Select arrival & departure dates') + '...'"
                                 ></VueDatePicker>
 
 
@@ -76,7 +79,7 @@ watch(disabledDates, () => {
                     days. No credit card required.</p> -->
                 <a href="#"
                     class="text-white bg-transparent hover:bg-primaty-700 border border-white focus:ring-4 focus:ring-white font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-transparent dark:hover:bg-primary-600 focus:outline-none dark:focus:ring-white">
-                    {{ __('Check Availability') }}</a>
+                    {{ __('Check availability') }}</a>
             </div>
         </div>
 <!--         <ShapeBottom
