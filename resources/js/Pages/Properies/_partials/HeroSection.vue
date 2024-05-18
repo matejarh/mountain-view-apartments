@@ -19,7 +19,8 @@ const initBgImageRotation = () => {
         return
     }
     //const gallery = _.filter(page.props.property?.galleries, ['name', page.props.property?.name])[0]
-    const gallery = page.props.property?.galleries.find('name', page.props.property?.name);
+    //const gallery = page.props.property?.galleries.find('name', page.props.property?.name);
+    const gallery = page.props.property?.galleries[0];
 
     bgImage.value = gallery.images[0].photo_url
     let current = 0
