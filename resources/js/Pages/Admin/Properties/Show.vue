@@ -1,7 +1,6 @@
 <script setup>
 import { computed, ref } from 'vue';
 import { router, useForm } from '@inertiajs/vue3'
-import _ from 'lodash';
 import FullLayout from '@/Layouts/FullLayout.vue';
 import ActionSection from '@/Components/ActionSection.vue';
 import MapCard from './_partials/MapCard.vue';

@@ -2,9 +2,7 @@
 import CalendarIcon from '@/Icons/CalendarIcon.vue';
 import CommentDotsIcon from '@/Icons/CommentDotsIcon.vue';
 import MapLocationIcon from '@/Icons/MapLocationIcon.vue';
-import { usePage } from '@inertiajs/vue3';
-import _ from 'lodash';
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 import SocialSharingDialog from './SocialSharingDialog.vue';
 import FullScreenImagesModal from '@/Pages/Admin/Images/_partials/FullScreenImagesModal.vue';
 import DinamicIcon from '@/Components/DinamicIcon.vue';

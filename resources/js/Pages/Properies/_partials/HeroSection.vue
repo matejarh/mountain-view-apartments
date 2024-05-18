@@ -2,7 +2,6 @@
 import ShapeBottom from '@/Components/_default/ShapeBottom.vue';
 import ShapeTop from '@/Components/_default/ShapeTop.vue';
 import { usePage } from '@inertiajs/vue3';
-import _ from 'lodash';
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 import LogoHero from '@/Components/LogoHero.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
@@ -15,11 +14,12 @@ const bgImage = ref(new URL('/resources/images/backgrounds/winter-sunrise.jpg', 
 const interval = ref(null)
 
 const initBgImageRotation = () => {
-    if (page.props.property.galleries.length <=0) {
+    if (page.props.property?.galleries.length <=0) {
         clearInterval(interval)
         return
     }
-    const gallery = _.filter(page.props.property.galleries, ['name', page.props.property.name])[0]
+    //const gallery = _.filter(page.props.property?.galleries, ['name', page.props.property?.name])[0]
+    const gallery = page.props.property?.galleries.find('name', page.props.property?.name);
 
     bgImage.value = gallery.images[0].photo_url
     let current = 0

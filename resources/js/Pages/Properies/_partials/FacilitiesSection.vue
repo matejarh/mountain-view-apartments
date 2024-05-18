@@ -3,7 +3,6 @@ import DinamicIcon from '@/Components/DinamicIcon.vue';
 import Badge from '@/Components/_default/Badge.vue';
 import ShapedSection from '@/Components/_default/ShapedSection.vue';
 import { usePage } from '@inertiajs/vue3';
-import _ from 'lodash';
 import { computed } from 'vue';
 
 const page = usePage()
