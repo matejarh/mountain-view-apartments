@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\ImagesController;
 use App\Http\Controllers\Admin\InquiriesController;
 use App\Http\Controllers\Admin\PagesController;
 use App\Http\Controllers\Admin\PropertiesController;
+use App\Http\Controllers\Admin\ReviewsController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\UsersController;
 use Laravel\Fortify\RoutePath;
@@ -105,11 +106,13 @@ Route::group(['middleware' => config('jetstream.middleware')], function () {
         });
 
         Route::name('reviews.')->prefix('reviews')->namespace('reviews')->group(function() {
-            Route::get('/', [InquiriesController::class, 'index'])->name('index');
-            Route::post('/', [InquiriesController::class, 'store'])->name('store');
-            Route::get('{rewiew}', [InquiriesController::class, 'show'])->name('show');
-            Route::put('{rewiew}', [InquiriesController::class, 'update'])->name('update');
-            Route::delete('{rewiew}', [InquiriesController::class, 'destroy'])->name('destroy');
+            Route::get('/', [ReviewsController::class, 'index'])->name('index');
+            Route::get('{rewiew}', [ReviewsController::class, 'show'])->name('show');
+            Route::put('{rewiew}', [ReviewsController::class, 'update'])->name('update');
+            Route::delete('{rewiew}', [ReviewsController::class, 'destroy'])->name('destroy');
+            Route::post('/property/{property}', [ReviewsController::class, 'store'])->name('store');
+            Route::put('/approve/{review}', [ReviewsController::class, 'approve'])->name('approve');
+            Route::put('/reject/{review}', [ReviewsController::class, 'reject'])->name('reject');
         });
     });
 

@@ -1,5 +1,6 @@
 <?php
 namespace App\Http;
+use App\Contracts\ApprovesReviews;
 use App\Contracts\AttachesFacilitiesToProperties;
 use App\Contracts\AttachesGalleriesToImages;
 use App\Contracts\AttachesGalleriesToPages;
@@ -12,18 +13,21 @@ use App\Contracts\CreatesNewImages;
 use App\Contracts\CreatesNewInquiries;
 use App\Contracts\CreatesNewPages;
 use App\Contracts\CreatesNewProperties;
+use App\Contracts\CreatesNewReviews;
 use App\Contracts\CreatesNewSettings;
 use App\Contracts\DeletesFacilities;
 use App\Contracts\DeletesGalleries;
 use App\Contracts\DeletesImages;
 use App\Contracts\DeletesInquiries;
 use App\Contracts\DeletesPages;
+use App\Contracts\DeletesReviews;
 use App\Contracts\DetachesFacilitiesFromProperties;
 use App\Contracts\DetachesGalleriesFromImages;
 use App\Contracts\DetachesGalleriesFromPages;
 use App\Contracts\DetachesGalleriesFromProperties;
 use App\Contracts\DetachesImagesFromGalleries;
 use App\Contracts\LikesProperties;
+use App\Contracts\RejectsReviews;
 use App\Contracts\ReviewsProperties;
 use App\Contracts\StoresGuestInquiry;
 use App\Contracts\UpdatesFacilities;
@@ -32,6 +36,7 @@ use App\Contracts\UpdatesImages;
 use App\Contracts\UpdatesInquiries;
 use App\Contracts\UpdatesPages;
 use App\Contracts\UpdatesProperties;
+use App\Contracts\UpdatesReviews;
 use App\Contracts\UpdatesSettings;
 
 class Fortify
@@ -397,6 +402,61 @@ class Fortify
     public static function destroyInquiriesUsing(string $callback)
     {
         app()->singleton(DeletesInquiries::class, $callback);
+    }
+
+    /**
+     * Register a class / callback that should be used to create new reviews.
+     *
+     * @param  string  $callback
+     * @return void
+     */
+    public static function createReviewsUsing(string $callback)
+    {
+        app()->singleton(CreatesNewReviews::class, $callback);
+    }
+
+    /**
+     * Register a class / callback that should be used to update given review.
+     *
+     * @param  string  $callback
+     * @return void
+     */
+    public static function updateReviewsUsing(string $callback)
+    {
+        app()->singleton(UpdatesReviews::class, $callback);
+    }
+
+    /**
+     * Register a class / callback that should be used to destroyes given review.
+     *
+     * @param  string  $callback
+     * @return void
+     */
+    public static function destroyReviewsUsing(string $callback)
+    {
+        app()->singleton(DeletesReviews::class, $callback);
+    }
+
+    /**
+     * Register a class / callback that should be used to approve given review.
+     *
+     * @param  string  $callback
+     * @return void
+     */
+    public static function approveReviewsUsing(string $callback)
+    {
+        app()->singleton(ApprovesReviews::class, $callback);
+    }
+
+    /**
+     * Register a class / callback that should be used to rejects given review.
+     *
+     * @param  string  $callback
+     * @return void
+     */
+    public static function rejectReviewsUsing(string $callback)
+    {
+        app()->singleton(RejectsReviews::class, $callback);
     }
 
 }

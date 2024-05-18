@@ -13,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('reviews', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->foreignIdFor(User::class, 'user_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedBigInteger('reviewed_id');
             $table->string('reviewed_type', 50);

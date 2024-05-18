@@ -39,21 +39,21 @@ trait Reviewable
     /**
      * Review current model.
      *
-     * @param int $rating
+     * @param int $score
      * @param string $text
      * @return void
      */
-    public function review(int $rating, string $text): void
+    public function review(int $score, string $text): void
     {
         if ($this->isReviewed()) {
-            session()->flash('flash.banner', 'You have already reviewed this accomodation');
+            session()->flash('flash.banner', __('You have already reviewed this accomodation'));
             session()->flash('flash.bannerStyle', 'danger');
             return;
         }
 
         $attributes = [
             'user_id' => auth()->id(),
-            'rating' => $rating,
+            'score' => $score,
             'text' => $text,
         ];
 
@@ -69,7 +69,6 @@ trait Reviewable
     {
         $this->reviews()->find($id)->delete();
     }
-
 
     /**
      * Check if the current user has reviewed the model.

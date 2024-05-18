@@ -129,6 +129,16 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Property::class)->latest();
     }
 
+    public function inquiries(): HasMany
+    {
+        return $this->hasMany(Inquiry::class)->latest();
+    }
+
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class)->latest();
+    }
+
     public function lastSeenDiffForHumans(): string
     {
 /*         if ($this->activities->count() > 0) {

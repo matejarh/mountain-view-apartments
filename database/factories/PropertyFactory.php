@@ -28,7 +28,7 @@ class PropertyFactory extends Factory
 
         foreach ($languages as $key => $language) {
             //array_push($titles, [$language => fake($language)->sentence]);
-            $titles[$language] = fake($language)->sentence;
+            $titles[$language] = fake($language)->sentence();
         }
 
         $descriptions = [];

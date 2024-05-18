@@ -19,14 +19,14 @@ class ReviewProperty implements ReviewsProperties
     public function review( Property $property, array $input): void
     {
         $rules = [
-            'rating' => ['required', 'integer', 'max:5', 'min:1'] ,
+            'score' => ['required', 'integer', 'max:5', 'min:1'] ,
             'text' => ['required', 'string', 'max:255', new SpamFree, 'unique:properties'],
         ];
         $validator = Validator::make($input, $rules);
 
         $validator->validateWithBag('reviewingProperty');
 
-        $property->review($input['rating'], $input['text']);
+        $property->review($input['score'], $input['text']);
 
         $locale = app()->currentLocale();
 

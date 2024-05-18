@@ -37,6 +37,11 @@ use App\Actions\Properties\DetachGallery as DetachPropertyGallery;
 use App\Actions\Properties\LikeProperty;
 use App\Actions\Properties\ReviewProperty;
 use App\Actions\Properties\UpdateProperty;
+use App\Actions\Reviews\ApprovesReview;
+use App\Actions\Reviews\CreateReview;
+use App\Actions\Reviews\DeleteReview;
+use App\Actions\Reviews\RejectsReview;
+use App\Actions\Reviews\UpdateReview;
 use App\Actions\Settings\CreateNewSetting;
 use App\Actions\Settings\UpdateSetting;
 use App\Contracts\FacilityAttacheResponse as FacilityAttacheResponseContract;
@@ -66,6 +71,11 @@ use App\Contracts\PropertyCreateResponse as PropertyCreateResponseContract;
 use App\Contracts\PropertyLikeResponse as PropertyLikeResponseContract;
 use App\Contracts\PropertyReviewResponse as PropertyReviewResponseContract;
 use App\Contracts\PropertyUpdateResponse as PropertyUpdateResponseContract;
+use App\Contracts\ReviewApproveResponse as ReviewApproveResponseContract;
+use App\Contracts\ReviewCreateResponse as ReviewCreateResponseContract;
+use App\Contracts\ReviewDeleteResponse as ReviewDeleteResponseContract;
+use App\Contracts\ReviewRejectResponse as ReviewRejectResponseContract;
+use App\Contracts\ReviewUpdateResponse as ReviewUpdateResponseContract;
 use App\Contracts\SettingCreateResponse as SettingCreateResponseContract;
 use App\Contracts\SettingUpdateResponse as SettingUpdateResponseContract;
 use App\Http\Responses\FacilityAttachedResponse;
@@ -95,6 +105,11 @@ use App\Http\Responses\PropertyCreatedResponse;
 use App\Http\Responses\PropertyLikedResponse;
 use App\Http\Responses\PropertyReviewedResponse;
 use App\Http\Responses\PropertyUpdatedResponse;
+use App\Http\Responses\ReviewApprovedResponse;
+use App\Http\Responses\ReviewCreatedResponse;
+use App\Http\Responses\ReviewDeletedResponse;
+use App\Http\Responses\ReviewRejectedResponse;
+use App\Http\Responses\ReviewUpdatedResponse;
 use App\Http\Responses\SettingCreatedResponse;
 use App\Http\Responses\SettingUpdatedResponse;
 use Illuminate\Cache\RateLimiting\Limit;
@@ -158,6 +173,12 @@ class FortifyServiceProvider extends ServiceProvider
         $this->app->singleton(InquiryDeleteResponseContract::class, InquiryDeletedResponse::class);
 
         $this->app->singleton(GuestInquiryStoreResponseContract::class, GuestInquiryStoredResponse::class);
+
+        $this->app->singleton(ReviewCreateResponseContract::class, ReviewCreatedResponse::class);
+        $this->app->singleton(ReviewUpdateResponseContract::class, ReviewUpdatedResponse::class);
+        $this->app->singleton(ReviewDeleteResponseContract::class, ReviewDeletedResponse::class);
+        $this->app->singleton(ReviewApproveResponseContract::class, ReviewApprovedResponse::class);
+        $this->app->singleton(ReviewRejectResponseContract::class, ReviewRejectedResponse::class);
     }
 
     /**
@@ -210,6 +231,12 @@ class FortifyServiceProvider extends ServiceProvider
         AppFortify::destroyInquiriesUsing(DeleteInquiry::class);
 
         AppFortify::guestCreateInquiriesUsing(CreateInquiry::class);
+
+        AppFortify::createReviewsUsing(CreateReview::class);
+        AppFortify::updateReviewsUsing(UpdateReview::class);
+        AppFortify::destroyReviewsUsing(DeleteReview::class);
+        AppFortify::approveReviewsUsing(ApprovesReview::class);
+        AppFortify::rejectReviewsUsing(RejectsReview::class);
 
         RateLimiter::for('login', function (Request $request) {
             $throttleKey = str(str($request->input(Fortify::username()))->lower().'|'.$request->ip())->transliterate();
