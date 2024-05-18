@@ -17,8 +17,9 @@ return new class extends Migration
             $table->foreignIdFor(User::class, 'user_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedBigInteger('reviewed_id');
             $table->string('reviewed_type', 50);
-            $table->integer('rating')->default(5);
+            $table->integer('score')->default(5);
             $table->text('text')->nullable();
+            $table->timestamp('approved_at')->nullable();
             $table->timestamps();
 
             $table->unique(['user_id', 'reviewed_id', 'reviewed_type']);
