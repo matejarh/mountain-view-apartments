@@ -39,7 +39,6 @@ class InvalidKeywords
         'Accordingly',
         'Act Now',
         // 'Action',
-        'Ad ',
         'Additional income',
         'Addresses on CD',
         'Affordable',
