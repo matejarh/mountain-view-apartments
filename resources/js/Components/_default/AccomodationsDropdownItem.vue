@@ -15,12 +15,12 @@ defineEmits(['selected'])
                 <img :src="accomodation.avatar_url" class="h-auto w-10 rounded-sm me-2">
                 <div class="leading-tight">
                     <p class="font-base">
-                        {{ accomodation.type }}
+                        {{ __(accomodation.type) }}
 
                     </p>
                     <p class="font-semibold">
 
-                        {{ accomodation.name }}
+                        {{ accomodation.title[$page.props.locale] }}
                     </p>
 
                 </div>

@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('inquiries', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->unsignedBigInteger('user_id')->nullable();
-            $table->foreignIdFor(Property::class, 'property_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignIdFor(Property::class, 'property_id')->nullable();
             $table->string('name');
             $table->string('slug');
             $table->string('email');
@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('subject');
             $table->text('message');
             $table->json('date');
+            $table->timestamp('read_at')->nullable();
             $table->timestamps();
         });
     }

@@ -8,14 +8,25 @@ import TextInput from '../TextInput.vue';
 import InputError from '../InputError.vue';
 import TextArea from '../TextArea.vue';
 import { useForm, usePage } from '@inertiajs/vue3';
+import PrimaryButton from '../PrimaryButton.vue';
+import SpinnerIcon from '@/Icons/SpinnerIcon.vue';
+import ConfirmationModal from '../ConfirmationModal.vue';
+import InfoIcon from '@/Icons/InfoIcon.vue';
+import AccomodationsDropdown from './AccomodationsDropdown.vue';
 
 const form = useForm({
+    name: '',
+    email: '',
+    phone: '',
+    adults: 1,
+    children: 0,
+    pets: false,
     subject: '',
     message: '',
     date: null,
 
 })
-
+const emit = defineEmits(['close'])
 const page = usePage()
 
 const datepickerRange = page.props.settings?.find(setting => setting.slug === 'datepicker-range')
@@ -30,34 +41,140 @@ const options = ref({
     partialRange: false,
     noDisabledRange: true,
 })
+const textInputOptions = {
+  format: 'MM.dd.yyyy'
+};
 
+const tomorrow = computed(() => {
+    const today = new Date()
+    const tomorrow = new Date(today)
+    tomorrow.setDate(today.getDate() + 1)
+    return tomorrow
+})
+const yearFromNow = computed(() => {
+    const today = new Date()
+    const yearfromnow = new Date(today)
+    yearfromnow.setDate(today.getDate() + 356)
+    return yearfromnow
+})
+
+const propertyProxy = ref(null)
+
+const handleSelected = (accomodation) => {
+    propertyProxy.value = accomodation
+}
+
+const showInquiryConfirmationModal = ref(false)
+
+const store = () => {
+    form.clearErrors()
+    showInquiryConfirmationModal.value = false
+    form.post(`/send-inquiry/${propertyProxy.value.slug}`, {
+        onSuccess: () => {
+            form.reset()
+            emit('close')
+            propertyProxy.value=null
+        }
+    })
+}
 </script>
 
 <template>
-    <form class=" ">
+
+    <form class=" pb-4 " @submit.prevent="showInquiryConfirmationModal = true">
         <div class="">
+            <InputLabel :value="__('Your name')" for="name" />
+            <TextInput id="name" v-model="form.name" type="text" class="mt-1 block w-full" required
+                autocomplete="name" :has-error="!!form.errors.name" :placeholder="__('Enter your name') + '...'" />
+            <InputError :message="form.errors.name" class="mt-2" />
+
+        </div>
+        <div class="mt-4">
+            <InputLabel :value="__('Email')" for="email" />
+            <TextInput id="email" v-model="form.email" type="email" class="mt-1 block w-full" required
+                autocomplete="email" :has-error="!!form.errors.email" :placeholder="__('Enter your email') + '...'" />
+            <InputError :message="form.errors.email" class="mt-2" />
+
+        </div>
+        <div class="mt-4">
+            <InputLabel :value="__('Phone')" for="phone" />
+            <TextInput id="phone" v-model="form.phone" type="phone" class="mt-1 block w-full" required
+                autocomplete="phone" :has-error="!!form.errors.phone" :placeholder="__('Enter your phone number') + '...'" />
+            <InputError :message="form.errors.phone" class="mt-2" />
+
+        </div>
+        <div class="mt-4">
             <InputLabel :value="__('Subject')" for="subject" />
             <TextInput id="subject" v-model="form.subject" type="text" class="mt-1 block w-full" required
-            autocomplete="subject" :has-error="!!form.errors.subject"
-            :placeholder="__('Enter subject') + '...'" />
+                autocomplete="subject" :has-error="!!form.errors.subject" :placeholder="__('Enter subject') + '...'" />
             <InputError :message="form.errors.subject" class="mt-2" />
 
         </div>
         <div class="mt-4">
             <InputLabel :value="__('Message')" for="message" />
 
-            <TextArea id="message" v-model="form.message" type="text" class="mt-1 block w-full"
-            required autocomplete="message" :has-error="!!form.errors.message"
-            :placeholder="__('Enter message') + '...'" />
+            <TextArea id="message" v-model="form.message" type="text" class="mt-1 block w-full" required
+                autocomplete="message" :has-error="!!form.errors.message" :placeholder="__('Enter message') + '...'" />
+            <InputError :message="form.errors.message" class="mt-2" />
+        </div>
+        <div class="grid grid-cols-3 gap-4">
+            <div class="mt-4">
+                <InputLabel :value="__('Adults')" for="adults" />
+
+                <TextInput id="adults" v-model="form.adults" type="number" min="1" max="4" step="1" class="mt-1 block w-full"
+                    :has-error="!!form.errors.adults"  />
+                <InputError :message="form.errors.description" class="mt-2" />
+            </div>
+            <div class="mt-4">
+                <InputLabel :value="__('Kids')" for="children" />
+
+                <TextInput id="children" v-model="form.children" type="number" min="0" max="4" step="1" class="mt-1 block w-full"
+                    :has-error="!!form.errors.children" />
+                <InputError :message="form.errors.children" class="mt-2" />
+            </div>
+            <div class="mt-4">
+                <InputLabel class="inline-flex items-center justify-center  cursor-pointer w-full">
+                    {{ __('Pets') }}
+                    <input type="checkbox" value="" class="sr-only peer" id="is_entire_apartment"
+                        v-model.checked="form.pets" :checked="form.pets">
+                    <div
+                        class="mx-auto mt-3 relative w-14 h-7 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-amazon-600 dark:peer-focus:ring-amazon-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all dark:border-gray-600 peer-checked:bg-amazon-600">
+                    </div>
+                </InputLabel>
+            </div>
+
+        </div>
+        <!-- <div class="mt-4">
+            <InputLabel :value="__('Message')" for="message" />
+
+            <TextArea id="message" v-model="form.message" type="text" class="mt-1 block w-full" required
+                autocomplete="message" :has-error="!!form.errors.message" :placeholder="__('Enter message') + '...'" />
             <InputError :message="form.errors.description" class="mt-2" />
+        </div> -->
+
+        <div class="mt-4">
+            <InputLabel :value="__('Apartmant')" for="Apartmant" />
+
+            <AccomodationsDropdown class="w-full" direction="down" :selected-property="propertyProxy" @selected="handleSelected" />
         </div>
 
         <div class="relative mt-4 ">
-            <InputLabel :value="__('Date (from-to)')" for="date" />
-            <VueDatePicker id="date" v-model="form.date" :range="options" :min-date="new Date()" prevent-min-max-navigation
-                :disabled-dates="disabledDates" :enable-time-picker="false" :locale="$page.props.locale"
-                :format="$page.props.date_format_pattern" :dark="helpers.isDark" six-weeks="center"
-                :placeholder="__('Select arrival & departure dates') + '...'"></VueDatePicker>
+            <InputLabel :value="__('Date (from-to)')" />
+            <VueDatePicker id="daterangepicker"
+                            v-model="form.date"
+
+                            :range="options"
+                            :min-date="tomorrow"
+                            :max-date="yearFromNow"
+                            prevent-min-max-navigation
+                            :disabled-dates="disabledDates"
+                            :enable-time-picker="false"
+                            :locale="$page.props.locale"
+                            :format="$page.props.date_format_pattern"
+                            :dark="helpers.isDark"
+                            six-weeks="center"
+                            :placeholder="__('Select arrival & departure dates') + '...'"
+                            ></VueDatePicker>
 
         </div>
         <!-- <div class="mb-4">
@@ -86,7 +203,21 @@ const options = ref({
             <img class="w-8 h-8 border-2 border-white rounded-full dark:border-gray-800"
                 src="/docs/images/people/profile-picture-4.jpg" alt="">
         </div> -->
+        <div class="mt-4">
 
+            <PrimaryButton type="submit"
+                :class="{ 'opacity-25': form.processing || form.recentlySuccessful || !form.isDirty || !propertyProxy || !form.date }"
+                :disabled="form.processing || form.recentlySuccessful || !form.isDirty || !propertyProxy || !form.date">
+                <div class="flex items-center">
+                    <SpinnerIcon v-show="form.processing"
+                        class="animate-spin -ml-1 mr-3 h-5 w-5 text-white dark:text-white" />
+                    {{ form.processing ? __('Submiting') + '...' : form.recentlySuccessful ? __('Submited') : __('Submit')
+                    }}
+
+                </div>
+            </PrimaryButton>
+        </div>
+        <!--
         <button type="submit"
             class="text-white mt-4 justify-center flex items-center bg-primary-700 hover:bg-primary-800 w-full focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"><svg
                 class="w-3.5 h-3.5 me-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
@@ -95,8 +226,30 @@ const options = ref({
                     d="M18 2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2ZM2 18V7h6.7l.4-.409A4.309 4.309 0 0 1 15.753 7H18v11H2Z" />
                 <path
                     d="M8.139 10.411 5.289 13.3A1 1 0 0 0 5 14v2a1 1 0 0 0 1 1h2a1 1 0 0 0 .7-.288l2.886-2.851-3.447-3.45ZM14 8a2.463 2.463 0 0 0-3.484 0l-.971.983 3.468 3.468.987-.971A2.463 2.463 0 0 0 14 8Z" />
-            </svg> {{__('Submit')}}</button>
+            </svg> {{__('Submit')}}</button> -->
     </form>
+    <ConfirmationModal :is-danger="false" :show="showInquiryConfirmationModal" @close="showInquiryConfirmationModal = false" @confirmed="store"
+            :form="form" busy-text="Sending inquiry" recently-successful-text="Inquiry sent" button-text="Send inquiry">
+            <template #icon>
+                <InfoIcon class=" text-gray-400 dark:text-gray-500 w-11 h-11 mb-3.5 mx-auto" />
+            </template>
+            <template #content>
+                <p class="mb-4 text-gray-500 dark:text-gray-300 text-lg">
+                    {{ __('Please review your inquiry and make sure that you include all needed information.')}}</p>
+                <ul class="mb-4 text-gray-500 dark:text-gray-300 text-sm">
+                    <li> <span class="font-semibold">{{ __('Name')}}:</span> {{ form.name }}</li>
+                    <li> <span class="font-semibold">{{ __('Email')}}:</span> {{ form.email }}</li>
+                    <li> <span class="font-semibold">{{ __('Subject')}}:</span> {{ form.subject }}</li>
+                    <li> <span class="font-semibold">{{ __('Message')}}:</span> {{ form.message }}</li>
+                    <li> <span class="font-semibold">{{ __('Selected apartma')}}:</span> {{ propertyProxy.title[$page.props.locale] }}</li>
+                    <li> <span class="font-semibold">{{ __('Number of adults')}}:</span> {{ form.adults }}</li>
+                    <li> <span class="font-semibold">{{ __('Number of kids')}}:</span> {{ form.children }}</li>
+                    <li> <span class="font-semibold">{{ __('Pets')}}:</span> {{ form.pets }}</li>
+                    <li> <span class="font-semibold">{{ __('Date from')}}:</span> {{ form.date[0].toLocaleDateString($page.props.locale) }}</li>
+                    <li> <span class="font-semibold">{{ __('Date to')}}:</span> {{ form.date[1].toLocaleDateString($page.props.locale) }}</li>
+                </ul>
+            </template>
+        </ConfirmationModal>
 </template>
 
 <style scoped>

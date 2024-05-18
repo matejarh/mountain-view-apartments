@@ -35,7 +35,7 @@
             (5.0)
         </p>
         <a href="#" class="text-sm font-medium leading-none text-gray-900 underline hover:no-underline dark:text-white">
-            345 Reviews
+            345 {{ __('Review', 2)}}
         </a>
     </div>
 </template>

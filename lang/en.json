@@ -333,7 +333,8 @@
     "Private beach area": "Private beach area",
     "Entire apartment": "Entire apartment",
     "Private kitchen": "Private kitchen",
-    "Attached bathroomBalcony": "Attached bathroomBalcony",
+    "Attached bathroom": "Attached bathroom",
+    "Balcony": "Balcony",
     "Garden view": "Garden view",
     "Mountain view": "Mountain view",
     "Inner courtyard view": "Inner courtyard view",
@@ -435,7 +436,34 @@
     "Max": "Max",
     "Update": "Update",
     "Updating": "Updating",
-    "Updated": "Updated"
+    "Updated": "Updated",
+    "Send inquiry": "Send inquiry",
+    "Sending inquiry": "Sending inquiry",
+    "Inquiry sent": "Inquiry sent",
+    "Please review your inquiry and make sure that you include all needed information.": "Please review your inquiry and make sure that you include all needed information.",
+    "Submit": "Submit",
+    "Submiting": "Submiting",
+    "Pets": "Pets",
+    "Adults": "Adults",
+    "Children": "Children",
+    "Kids": "Kids",
+    "Child": "Child",
+    "Enter your email": "Enter your email",
+    "Enter your name": "Enter your name",
+    "Enter subject": "Enter subject",
+    "Enter message": "Enter message",
+    "Select apartmant": "Select apartmant",
+    "Enter your phone number": "Enter your phone number",
+    "Learn more": "Learn more",
+    "Check availability": "Check availability",
+    "All apartmants include": "All apartmants include",
+    "Fully equiped kitchen": "Fully equiped kitchen",
+    "Review": "0:No Reviews|1:Review|2,*:Reviews",
+    "Post Review": "Post Review",
+    "Share": "Share"
+
+
+
 }
 
 

@@ -16,6 +16,7 @@ import AdjustmentsIcon from '@/Icons/AdjustmentsIcon.vue';
 import UserIcon from '@/Icons/UserIcon.vue';
 import SignOutIcon from '@/Icons/SignOutIcon.vue';
 import { useForm } from '@inertiajs/vue3';
+import Backdrop from '@/Components/_default/Backdrop.vue';
 
 
 const helpers = useHelperStore()
@@ -35,14 +36,13 @@ const logout = () => {
         <LanguageDropdown  align="left" :no-label="true" />
 
         <div class="space-x-4">
-            <MobileThemeSwitch class="transition-all ease-out" />
+            <MobileThemeSwitch class="transition-all ease-out backdrop-blur bg-opacity-50" />
             <HamburgerButton v-show="!helpers.mobileDrawer" @click="helpers.showMobileDrawer" />
 
         </div>
         <teleport to="body">
-            <div v-if="helpers.mobileDrawer" @click="helpers.hideMobileDrawer"
-                class="transition-all duration-300 ease-out absolute top-0 left-0 z-40 w-screen h-screen bg-gray-950 bg-opacity-65 backdrop-blur inset-0">
-            </div>
+            <Backdrop v-show="helpers.mobileDrawer" @close="helpers.hideMobileDrawer"/>
+
             <div id="drawer-mobile"
                 class="fixed top-0 right-0 z-50 h-screen overflow-y-auto flex flex-col justify-between transition-transform bg-white w-screen sm:w-80 dark:bg-gray-800"
                 :class="helpers.mobileDrawer ? 'translate-x-0' : 'translate-x-full'" tabindex="-1"
@@ -56,13 +56,7 @@ const logout = () => {
                             aria-controls="drawer-navigation"
                             class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 absolute top-2.5 end-2.5 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
                             <CloseIcon class="w-5 h-5" />
-                            <!-- <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd"
-                                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                                    clip-rule="evenodd"></path>
-                            </svg> -->
-                            <span class="sr-only">Close menu</span>
+                            <span class="sr-only">{{__('Close menu')}}</span>
                         </button>
 
                         <div class="py-4  flex flex-col justify-between ">
@@ -80,7 +74,7 @@ const logout = () => {
                                     <template #icon>
                                         <AdjustmentsIcon />
                                     </template>
-                                    {{ __("Home") }}
+                                    {{ __("Administration") }}
                                 </MobileNavigationItem>
                                 <MobileNavigationItem as="div"  @clicked="helpers.hideMobileDrawer"
                                     :active="`/user/profile`" :href="route('profile.show')">
@@ -89,7 +83,7 @@ const logout = () => {
                                     </template>
                                     {{ __("My Profile") }}
                                 </MobileNavigationItem>
-                                <MobileNavigationItem as="div"  @clicked="logout" >
+                                <MobileNavigationItem as="div" :href="null"  @clicked="logout" >
                                     <template #icon>
                                         <SignOutIcon />
                                     </template>
@@ -137,7 +131,7 @@ const logout = () => {
                         <CalendarIcon class="w-3.5 h-3.5 me-2.5" />
                         {{ __('Reservation Inquiry') }}
                     </h5>
-                    <ReservationInquiry />
+                    <ReservationInquiry @close="helpers.hideMobileDrawer" />
                 </div>
 
 

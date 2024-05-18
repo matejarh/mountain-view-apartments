@@ -1,10 +1,11 @@
 <script setup>
-import { ref, onMounted, onBeforeMount, computed, onBeforeUnmount } from 'vue';
+import { ref, onMounted, onBeforeMount, computed, onBeforeUnmount, watchEffect } from 'vue';
 import { Head, usePage } from '@inertiajs/vue3';
 import TopNavigation from './_partials/_default/TopNavigation.vue'
 import ScrollToTop from '@/Components/_default/ScrollToTop.vue'
+import ScrollForward from '@/Components/_default/ScrollForward.vue'
 
-
+import { router } from '@inertiajs/vue3'
 import MobileNavigation from './_partials/_default/MobileNavigation.vue';
 import PageFooter from './_partials/_default/PageFooter.vue';
 import ContactDrawer from './_partials/_default/ContactDrawer.vue';
@@ -12,6 +13,8 @@ import ContactDrawer from './_partials/_default/ContactDrawer.vue';
 import { useHelperStore } from '@/stores/helpers'
 import { useScrollStore } from '@/stores/scroll';
 import { useClientStore } from '@/stores/client';
+import { usePropertyStore } from '@/stores/property';
+import Banner from '@/Components/Banner.vue';
 
 defineProps({
     title: String,
@@ -31,6 +34,7 @@ const page = usePage()
 const showMain = ref(true)
 const showNav = ref(true)
 const showFooter = ref(true)
+const wrapper = ref(null)
 
 const defaultBackgroundImage = new URL('/resources/images/backgrounds/winter-sunrise.jpg', import.meta.url)
 
@@ -45,19 +49,43 @@ const backgroundImageUrl = computed(() => {
     }
 });
 
-const handleScroll = (e) => {
-    const scrollTop = e.target.scrollTop;
-    scroll.updateScrollPosition(scrollTop);
-    scroll.scrollPosition = scrollTop;
+watchEffect(() => {
 
+})
+
+const handleScroll = (e) => {
+
+    initScrollData(e.target.scrollTop)
     const parallaxElements = document.querySelectorAll('.bg-parallax');
     parallaxElements.forEach((element) => {
         element.style.transform = `translateY(${scroll.scrollPosition * 0.5}px)`;
     });
 }
 
+const initScrollData = (scrollTop = 0) => {
+    scroll.updateScrollPosition(scrollTop);
+    scroll.updateWrapperHeight(wrapper.value.offsetHeight);
+    scroll.updateWindowHeight(window.innerHeight);
+}
+
+const routerRemoveEventListener = router.on('success', (event) => {
+    initScrollData()
+    //console.log(`Starting a visit to ${event.detail.visit.url}`)
+})
+
+const properties = usePropertyStore()
+
+const fetchPropertiesListForDropdowns = async () => {
+    if (properties.list.length > 0) return
+    await axios.get(route('properties.fetch'))
+        .then(response => properties.storeList(response.data))
+
+
+}
 onMounted(() => {
     client.getLocation()
+    fetchPropertiesListForDropdowns()
+
     if (!helpers.pageLoaded) {
         helpers.delay(600)
             .then(() => {
@@ -72,12 +100,16 @@ onMounted(() => {
                 helpers.showFooter = true;
                 helpers.show = true;
                 helpers.pageLoaded = true;
+                initScrollData()
                 //return delay(3000);
             });
 
     }
-})
 
+})
+onBeforeUnmount(() => {
+    routerRemoveEventListener()
+})
 </script>
 
 <template>
@@ -89,6 +121,8 @@ onMounted(() => {
             <meta name="robots" content="noindex,nofollow" v-if="noindex">
             <!-- <link rel="icon" type="image/svg+xml" href="/favicon.svg" /> -->
         </Head>
+
+        <Banner />
 
         <Transition enter-active-class="animate__animated animate__fadeIn"
             leave-active-class="animate__animated animate__fadeOut">
@@ -107,7 +141,7 @@ onMounted(() => {
 
                         <main @scroll="handleScroll" id="main"
                             class="flex flex-col justify-between h-screen z-0  overflow-y-auto scrollbar-none scroll-smooth hover:scrollbar-thumb-gray-500 active:scrollbar-thumb-gray-400 scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-700 scrollbar-track-transparent">
-                            <div class="p-0 flex-grow flex flex-col justify-start">
+                            <div class="p-0 flex-grow flex flex-col justify-start" ref="wrapper">
                                 <slot />
                             </div>
                             <Transition enter-active-class="animate__animated animate__slideInUp"
@@ -117,6 +151,7 @@ onMounted(() => {
                             </Transition>
                         </main>
                         <ScrollToTop :scrollTop="scroll.scrollPosition" />
+                        <ScrollForward />
                     </div>
                 </Transition>
                 <ContactDrawer @close="helpers.hideContactDrawer" />

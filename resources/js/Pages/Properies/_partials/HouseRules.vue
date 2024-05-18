@@ -14,14 +14,17 @@ import ShapedSection from '@/Components/_default/ShapedSection.vue';
                 <!-- <p class="text-gray-500 sm:text-xl dark:text-gray-400">Here at Flowbite we focus on markets where
                     technology, innovation, and capital can unlock long-term value and drive economic growth.</p> -->
             </div>
-            <div class="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-12 md:space-y-0">
+            <div class="space-y-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 md:gap-12 md:space-y-0">
                 <div v-for="rule, key in $page.props.property.rules[$page.props.locale]" :key=key>
-                    <div
+                    <div class="flex items-center space-x-2">
+                        <div
                         class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-700 lg:h-12 lg:w-12 dark:bg-primary-900">
-                        <DinamicIcon :icon="rule.icon" class="w-5 h-5 text-primary-50 lg:w-6 lg:h-6 dark:text-primary-300" />
+                            <DinamicIcon :icon="rule.icon" class="w-5 h-5 text-primary-50 lg:w-6 lg:h-6 dark:text-primary-200" />
+
+                        </div>
+                        <h3 class="mb-2 text-xl font-bold dark:text-white">{{ rule.name }}</h3>
 
                     </div>
-                    <h3 class="mb-2 text-xl font-bold dark:text-white">{{ rule.name }}</h3>
                     <p class="text-gray-500 dark:text-gray-400 font-semibold text-lg">{{ rule.title }}</p>
                     <p class="text-gray-500 dark:text-gray-400" v-html="rule.description"></p>
                 </div>

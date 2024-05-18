@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FacilitiesController;
 use App\Http\Controllers\Admin\GalleriesController;
 use App\Http\Controllers\Admin\ImagesController;
+use App\Http\Controllers\Admin\InquiriesController;
 use App\Http\Controllers\Admin\PagesController;
 use App\Http\Controllers\Admin\PropertiesController;
 use App\Http\Controllers\Admin\SettingsController;
@@ -93,6 +94,22 @@ Route::group(['middleware' => config('jetstream.middleware')], function () {
             Route::delete('{page}', [PagesController::class, 'destroy'])->name('destroy');
             Route::put('attach-gallery/{page}/{gallery}', [PagesController::class, 'attachGallery'])->name('attach.gallery');
             Route::put('detach-gallery/{page}/{gallery}', [PagesController::class, 'detachGallery'])->name('detach.gallery');
+        });
+
+        Route::name('inquiries.')->prefix('inquiries')->namespace('inquiries')->group(function() {
+            Route::get('/', [InquiriesController::class, 'index'])->name('index');
+            Route::get('{inquiry}', [InquiriesController::class, 'show'])->name('show');
+            Route::put('{inquiry}', [InquiriesController::class, 'update'])->name('update');
+            Route::delete('{inquiry}', [InquiriesController::class, 'destroy'])->name('destroy');
+            Route::post('/store/{property}', [InquiriesController::class, 'store'])->name('store');
+        });
+
+        Route::name('reviews.')->prefix('reviews')->namespace('reviews')->group(function() {
+            Route::get('/', [InquiriesController::class, 'index'])->name('index');
+            Route::post('/', [InquiriesController::class, 'store'])->name('store');
+            Route::get('{rewiew}', [InquiriesController::class, 'show'])->name('show');
+            Route::put('{rewiew}', [InquiriesController::class, 'update'])->name('update');
+            Route::delete('{rewiew}', [InquiriesController::class, 'destroy'])->name('destroy');
         });
     });
 

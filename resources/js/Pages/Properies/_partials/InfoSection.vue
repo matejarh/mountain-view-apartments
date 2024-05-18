@@ -39,7 +39,7 @@ const handleFullScreenImage = (image) => {
     <ShapedSection class="py-8 md:py-16" :color="{ light: 'gray-50', dark: 'gray-900' }">
         <div class="max-w-screen-xl px-4 mx-auto 2xl:px-0">
             <div class="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16">
-                <div class="shrink-0 max-w-md lg:max-w-lg mx-auto">
+                <div class="shrink-0 max-w-full lg:max-w-lg mx-auto">
 
                     <!-- <PhotoGallery class="w-full" @clicked="handleFullScreenImage" /> -->
                     <!-- <FeaturedGallery :images="$page.props.property.galleries[0].images" class="w-full"

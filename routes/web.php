@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ActivitiesController;
+use App\Http\Controllers\InquiriesController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\PropertiesController;
@@ -14,6 +15,8 @@ Route::get('/', function() {
 });
 
 Route::post('/language-switch', [LanguageController::class, 'switch'])->name('switch.language');
+Route::post('/send-inquiry/{property}', [InquiriesController::class, 'create'])->name('inquiry.create');
+Route::get('/fetch-properties-for-dropdown', [PropertiesController::class, 'fetch'])->name('properties.fetch');
 
 Route::middleware([
     'auth:sanctum',

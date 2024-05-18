@@ -33,6 +33,10 @@ defineProps({
         default: 'Processed',
         type: String,
     },
+    buttonText: {
+        default: 'Yes, I\'m sure',
+        type: String,
+    },
     isDanger: {
         type: Boolean,
         default: true,
@@ -62,13 +66,13 @@ const close = () => {
                     :disabled="form.processing || form.recentlySuccessful"
                     :class="{ 'opacity-25': form.processing || form.recentlySuccessful }">
                     {{ form.processing ? __(busyText) + '...' : form.recentlySuccessful ? __(recentlySuccessfulText) :
-                        __('Yes, I\'m sure') }}
+                        __(buttonText) }}
                 </DangerButton>
                 <PrimaryButton v-else type="button" @click="$emit('confirmed')"
                     :disabled="form.processing || form.recentlySuccessful"
                     :class="{ 'opacity-25': form.processing || form.recentlySuccessful }">
                     {{ form.processing ? __(busyText) + '...' : form.recentlySuccessful ? __(recentlySuccessfulText) :
-                        __('Yes, I\'m sure') }}
+                        __(buttonText) }}
                 </PrimaryButton>
             </div>
         </div>
