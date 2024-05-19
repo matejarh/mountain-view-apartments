@@ -19,13 +19,13 @@ const form = useForm({
 
 const page = usePage()
 
-const { executeRecaptcha, recaptchaLoaded, recaptchaInstance } = useReCaptcha()
+const { executeRecaptcha, recaptchaLoaded, /* recaptchaInstance */ } = useReCaptcha()
 
-const hideRecaptchaBadge = () => {
+/* const hideRecaptchaBadge = () => {
   if (recaptchaInstance.value) {
     recaptchaInstance.value.hideBadge()
   }
-}
+} */
 
 const recaptcha = async () => {
     await recaptchaLoaded()
@@ -41,7 +41,7 @@ const store = () => {
 }
 
 onMounted(() => {
-  recaptchaLoaded().then(hideRecaptchaBadge)
+  // recaptchaLoaded().then(hideRecaptchaBadge)
 })
 
 
