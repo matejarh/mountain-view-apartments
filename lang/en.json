@@ -523,5 +523,8 @@
     "deleted_image": "Deleted picture",
     "created_gallery": "Posted gallery",
     "updated_gallery": "Updated gallery info",
-    "deleted_gallery": "Deleted gallery"
+    "deleted_gallery": "Deleted gallery",
+    "created_property": "Posted property",
+    "updated_property": "Updated property info",
+    "deleted_property": "Deleted property"
 }
