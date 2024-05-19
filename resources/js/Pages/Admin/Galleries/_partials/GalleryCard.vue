@@ -35,12 +35,12 @@ const carouselHeight = ref('h-56')
                 </div>
                 <!--  <img v-else :src="'https://via.placeholder.com/640x480.png/6d6d6d?text='+__('No%20images')" class="rounded-t-lg w-auto" :class="carouselHeight" /> -->
 
-                <div class="px-4 h-full max-h-44 overflow-y-auto scrollbar-none">
+                <div class="px-4 min-h-[5svh] max-h-44 overflow-y-auto scrollbar-none">
 
-                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ gallery.name }}
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white whitespace-nowrap overflow-y-auto scrollbar-thin scrollbar-thumb-gray-100  dark:scrollbar-thumb-gray-700">{{ gallery.name }}
                     </h5>
 
-                    <p
+                    <p v-show="gallery.description != null"
                         class="mb-3 font-normal text-gray-700 dark:text-gray-400 bg-gray-50 dark:bg-gray-700 leading-tight whitespace-pre-wrap p-2 rounded-lg h-14 overflow-y-auto scrollbar-none ">
                         {{ gallery.description }}</p>
                 </div>
