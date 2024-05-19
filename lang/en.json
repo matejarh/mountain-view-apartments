@@ -304,7 +304,7 @@
     "Gallery has been attached to the image.": "Gallery has been attached to the image.",
     "Image has been uploaded and saved.": "Image has been uploaded and saved.",
     "Image and all its files and thumbnails has been deleted.": "Image and all its files and thumbnails has been deleted.",
-    "Gallery has been detached from the image." : "Gallery has been detached from the image.",
+    "Gallery has been detached from the image.": "Gallery has been detached from the image.",
     "Image has been updated.": "Image has been updated.",
     "Upload And Attach Images": "Upload And Attach Images",
     "Attach to gallery": "Attach to gallery",
@@ -513,10 +513,6 @@
     "Joined on": "Joined on",
     "Write a review": "Write a review",
     "Menu": "Menu",
-    "Something goes wrong. Please contact us directly through the phone or email.": "Something goes wrong. Please contact us directly through the phone or email."
-
-
-
+    "Something goes wrong. Please contact us directly through the phone or email.": "Something goes wrong. Please contact us directly through the phone or email.",
+    "Reviewed": "Reviewed"
 }
-
-
