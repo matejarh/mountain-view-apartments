@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, watch, computed } from 'vue';
+import { ref, watch, computed, getCurrentInstance } from 'vue';
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css'
 import { useForm, usePage } from '@inertiajs/vue3';
@@ -16,6 +16,9 @@ const form = useForm({
     arrival: new Date(),
     departure: '',
 })
+const { appContext } = getCurrentInstance();
+
+const __ = appContext.config.globalProperties.__;
 
 const date = ref([]);
 
@@ -39,7 +42,7 @@ const notAvailableMarkers = computed(() => {
         markers.push({
             date: new Date(date),
             type: 'line',
-            tooltip: [{ text: 'Booked...', color: '#e52f1d' }],
+            tooltip: [{ text: __('Booked') + '...', color: '#e52f1d' }],
             color: 'bg-blue-900 dark:bg-blue-600',
         })
     });
