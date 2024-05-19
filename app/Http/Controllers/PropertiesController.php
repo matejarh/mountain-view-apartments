@@ -72,7 +72,7 @@ class PropertiesController extends Controller
     {
         Gate::authorize('create', Like::class);
 
-        $liker->like($property);
+        $liker->like($property, $request->all());
 
         return app(PropertyLikeResponse::class);
     }

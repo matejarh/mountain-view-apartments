@@ -87,9 +87,9 @@ const handleFullScreenImage = (image) => {
                         <a href="#availability" title=""
                             class="text-white mt-4 sm:mt-0 bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800 flex items-center justify-center"
                             role="button">
-                            <CalendarIcon class="w-5 h-5 -ms-2 me-2" />
+                            <CalendarIcon class="w-5 h-5 " />
 
-                            {{ __('Check availability') }}
+                            <!-- {{ __('Check availability') }} -->
                         </a>
 
                         <inertia-link
@@ -97,9 +97,9 @@ const handleFullScreenImage = (image) => {
                             title=""
                             class="text-white mt-4 sm:mt-0 bg-amazon-700 hover:bg-amazon-800 focus:ring-4 focus:ring-amazon-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-amazon-600 dark:hover:bg-amazon-700 focus:outline-none dark:focus:ring-amazon-800 flex items-center justify-center"
                             role="button">
-                            <CommentDotsIcon class="w-5 h-5 -ms-2 me-2" />
+                            <CommentDotsIcon class="w-5 h-5 " />
 
-                            {{ __('Post Review') }}
+                            <!-- {{ __('Post Review') }} -->
                         </inertia-link>
 
                         <a href="#" @click="showSocialSharingDialog = true" title=""

@@ -13,6 +13,12 @@ import SpinnerIcon from '@/Icons/SpinnerIcon.vue';
 import ConfirmationModal from '../ConfirmationModal.vue';
 import InfoIcon from '@/Icons/InfoIcon.vue';
 import AccomodationsDropdown from './AccomodationsDropdown.vue';
+import { useReCaptcha } from 'vue-recaptcha-v3';
+
+const emit = defineEmits(['close'])
+
+const { executeRecaptcha, recaptchaLoaded, /* recaptchaInstance */ } = useReCaptcha()
+const page = usePage()
 
 const form = useForm({
     name: '',
@@ -24,10 +30,9 @@ const form = useForm({
     subject: '',
     message: '',
     date: null,
+    captcha_token:''
 
 })
-const emit = defineEmits(['close'])
-const page = usePage()
 
 const datepickerRange = page.props.settings?.find(setting => setting.slug === 'datepicker-range')
 
@@ -57,6 +62,13 @@ const yearFromNow = computed(() => {
     yearfromnow.setDate(today.getDate() + 356)
     return yearfromnow
 })
+
+const recaptcha = async () => {
+    await recaptchaLoaded()
+    form.captcha_token = await executeRecaptcha('login')
+    store();
+}
+
 
 const propertyProxy = ref(null)
 
@@ -228,7 +240,7 @@ const store = () => {
                     d="M8.139 10.411 5.289 13.3A1 1 0 0 0 5 14v2a1 1 0 0 0 1 1h2a1 1 0 0 0 .7-.288l2.886-2.851-3.447-3.45ZM14 8a2.463 2.463 0 0 0-3.484 0l-.971.983 3.468 3.468.987-.971A2.463 2.463 0 0 0 14 8Z" />
             </svg> {{__('Submit')}}</button> -->
     </form>
-    <ConfirmationModal :is-danger="false" :show="showInquiryConfirmationModal" @close="showInquiryConfirmationModal = false" @confirmed="store"
+    <ConfirmationModal :is-danger="false" :show="showInquiryConfirmationModal" @close="showInquiryConfirmationModal = false" @confirmed="recaptcha"
             :form="form" busy-text="Sending inquiry" recently-successful-text="Inquiry sent" button-text="Send inquiry">
             <template #icon>
                 <InfoIcon class=" text-gray-400 dark:text-gray-500 w-11 h-11 mb-3.5 mx-auto" />

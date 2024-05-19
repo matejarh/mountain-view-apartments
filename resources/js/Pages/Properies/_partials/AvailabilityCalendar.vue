@@ -53,6 +53,19 @@ const highlightedDates = ref(["2024-05-11", "2024-05-12", "2024-05-13", "2024-05
 
 const datepickerRange = page.props.settings?.find(setting => setting.slug === 'datepicker-range')
 
+const tomorrow = computed(() => {
+    const today = new Date()
+    const tomorrow = new Date(today)
+    tomorrow.setDate(today.getDate() + 1)
+    return tomorrow
+})
+const yearFromNow = computed(() => {
+    const today = new Date()
+    const yearfromnow = new Date(today)
+    yearfromnow.setDate(today.getDate() + 356)
+    return yearfromnow
+})
+
 const options = ref({
     range: {
         minRange: datepickerRange.attributes?.min,
@@ -100,11 +113,11 @@ const book = () => {
                 <div class="flex justify-center w-full mb-2">
                     <div id="rangepicker">
                         <VueDatePicker v-model="date" :range="options.range" :multi-calendars="options.multi"
-                            :min-date="new Date()" prevent-min-max-navigation :markers="notAvailableMarkers"
-                            :disabled-dates="disabledDates" :highlight="highlightedDates" :enable-time-picker="false"
-                            :locale="$page.props.locale" :format="$page.props.date_format_pattern"
-                            :dark="helpers.isDark" :six-weeks="false" inline auto-apply
-                            :placeholder="__('Select arrival & departure dates...')">
+                            :min-date="tomorrow" :max-date="yearFromNow" prevent-min-max-navigation
+                            :markers="notAvailableMarkers" :disabled-dates="disabledDates" :highlight="highlightedDates"
+                            :enable-time-picker="false" :locale="$page.props.locale"
+                            :format="$page.props.date_format_pattern" :dark="helpers.isDark" :six-weeks="false" inline
+                            auto-apply :placeholder="__('Select arrival & departure dates...')">
 
                             <template #marker="{ marker, day, date }">
                                 <span class="not-available-marker"></span>
@@ -122,7 +135,8 @@ const book = () => {
                 <p class="flex mb-6 font-light text-gray-100 dark:text-gray-300 md:text-lg rounded-lg">
                     <span class="mx-auto flex items-center">
                         <InfoIcon class="w-6 h-6 me-2" />
-                        {{ __('Availability calendar') }} {{ __('for') }} {{ $page.props.property?.title[$page.props.locale] }}
+                        {{ __('Availability calendar') }} {{ __('for') }} {{
+                            $page.props.property?.title[$page.props.locale] }}
 
                     </span>
                 </p>

@@ -8,6 +8,7 @@ use App\Models\Property;
 use App\Models\User;
 use App\Notifications\InquiryReceivedNotification;
 use App\Rules\AllowedBookingRange;
+use App\Rules\Recaptcha;
 use App\Rules\SpamFree;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
@@ -46,6 +47,7 @@ class CreateInquiry implements StoresGuestInquiry
             'message' => ['required', 'string', 'min:10', 'max:1000', new SpamFree],
             'date' => ['required', 'array', 'min:2'],
             'date.*' => ['required', 'date', new AllowedBookingRange],
+            'captcha_token' => [new Recaptcha],
 
         ]);
 

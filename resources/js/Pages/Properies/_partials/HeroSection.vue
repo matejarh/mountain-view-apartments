@@ -65,9 +65,10 @@ onBeforeUnmount(() => {
 
                     <LogoHero  />
                 </div>
-
-                <inertia-link :href="route('properties.show', {lang:$page.props.locale, property:$page.props.property })" class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-white md:text-5xl lg:text-6xl">
-                    {{ $page.props.property.title[$page.props.locale] }}</inertia-link>
+                <h1  class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-white md:text-5xl lg:text-6xl">
+                    <inertia-link :href="route('properties.show', {lang:$page.props.locale, property:$page.props.property })">
+                        {{ $page.props.property.title[$page.props.locale] }}</inertia-link>
+                </h1>
 
                 <div class="mb-8 text-lg font-normal text-gray-300 lg:text-xl sm:px-16 lg:px-48" v-html="$page.props.property.quote[$page.props.locale]"></div>
 

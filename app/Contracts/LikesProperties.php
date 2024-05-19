@@ -10,5 +10,5 @@ interface LikesProperties
      *
      * @param  \App\Models\Property $property
      */
-    public function like(Property $property);
+    public function like(Property $property, array $input);
 }
