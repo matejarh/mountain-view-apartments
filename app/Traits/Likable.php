@@ -41,6 +41,7 @@ trait Likable
      */
     public function like()
     {
+        $locale = app()->currentLocale();
         if ($this->isLiked()) {
             $this->unlike();
         } else {
@@ -48,6 +49,7 @@ trait Likable
             $attributes = ['user_id' => auth()->id()];
             if ($this->likes()->forceCreate($attributes)) {
                 $this->increment('likes_count');
+                session()->flash('flash.banner', __('You like '.$this->title->$locale.'.'));
             }
         }
     }
@@ -59,11 +61,13 @@ trait Likable
      */
     public function unlike()
     {
+        $locale = app()->currentLocale();
         // Delete the like record associated with the current user
         $attributes = ['user_id' => auth()->id()];
         if ($this->likes()->where($attributes)->forceDelete()) {
             $this->decrement('likes_count');
-
+            session()->flash('flash.banner', __('You don\'t like '.$this->title->$locale.'.'));
+            session()->flash('flash.bannerStyle', 'danger');
         }
     }
 

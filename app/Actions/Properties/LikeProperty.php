@@ -15,7 +15,5 @@ class LikeProperty implements LikesProperties
     public function like( Property $property): void
     {
         $property->like();
-        $locale = app()->currentLocale();
-        session()->flash('flash.banner', __('You like '.$property->title->$locale.'.'));
     }
 }
