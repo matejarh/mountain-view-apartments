@@ -57,9 +57,8 @@ class AdminCreateInquiry implements CreatesNewInquiries
             $input['date'][$key] = \Carbon\Carbon::parse($value)->format('Y-m-d');
         }
 
-        $inquiry = Inquiry::forceCreate([
+        $inquiry = $property->inquiries()->forceCreate([
             'user_id' => auth()->check() ? auth()->id() : null,
-            'property_id' => $property->id,
             'name' => $input['name'],
             'email' => $input['email'],
             'phone' => $input['phone'],

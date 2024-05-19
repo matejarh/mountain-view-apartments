@@ -6,6 +6,7 @@ use App\Filters\PropertyFilters;
 use App\Traits\Likable;
 use App\Traits\RecordsActivity;
 use App\Traits\Reviewable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -98,6 +99,16 @@ class Property extends Model
     public function owner(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    /**
+     * Get the user who owns this property.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function inquiries(): HasMany
+    {
+        return $this->hasMany(Inquiry::class);
     }
 
     /**
