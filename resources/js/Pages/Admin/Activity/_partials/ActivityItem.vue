@@ -26,7 +26,8 @@ defineProps({
                     {{ item.owner.name }}
                     {{ __(item.type) }}
                     <a href="#" class="font-semibold text-gray-900 dark:text-white hover:underline">
-                        {{ item.subject.name }}</a>
+                        {{ item.subject?.name }}
+                        <span v-if="item.type === 'created_like'">{{ item.subject?.liked_trimed }}</span></a>
                 </div>
             </div>
             <div
