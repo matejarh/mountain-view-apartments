@@ -14,7 +14,6 @@ class PropertiesSeeder extends Seeder
      */
     public function run(): void
     {
-
         $properties = Property::all();
         foreach ($properties as $key => $property) {
             foreach (Facility::get() as $key => $facility) {

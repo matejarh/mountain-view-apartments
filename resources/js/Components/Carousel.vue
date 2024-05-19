@@ -62,10 +62,9 @@ const i18n = ref({
 
             <slide v-for="slide, key in items" :key="key" class="">
                 <div :class="[height, width]">
-
                     <img :src="slide.thumb_url"
                     :class="height"
-                        class="absolute block  w-auto -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" :alt="slide.slug">
+                        class="absolute block object-cover  w-auto -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" :alt="slide.slug">
                 </div>
             </slide>
 

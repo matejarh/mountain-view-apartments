@@ -68,7 +68,7 @@ onBeforeUnmount(() => {
                 <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-white md:text-5xl lg:text-6xl">
                     {{ $page.props.property.title[$page.props.locale] }}</h1>
 
-                <div class="mb-8 text-lg font-normal text-gray-300 lg:text-xl sm:px-16 lg:px-48" v-html="$page.props.property.description[$page.props.locale]"></div>
+                <div class="mb-8 text-lg font-normal text-gray-300 lg:text-xl sm:px-16 lg:px-48" v-html="$page.props.property.quote[$page.props.locale]"></div>
 
                 <div class="mb-8 flex flex-col space-y-4 sm:space-x-4 sm:flex-row sm:justify-center sm:space-y-0">
                     <PrimaryButton @click="scrollTo('availability')" class="py-3 px-5 " type="button">
