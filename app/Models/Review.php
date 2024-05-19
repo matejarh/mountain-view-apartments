@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class Review extends Model
@@ -19,7 +20,11 @@ class Review extends Model
         'approved_at' => 'datetime',
     ];
 
-    public function reviewed()
+    protected $appends=[
+        'created_at_human_readable',
+    ];
+
+    public function reviewed(): MorphTo
     {
         return $this->MorphTo();
     }
@@ -50,5 +55,15 @@ class Review extends Model
     {
         return $filters->apply($query);
 
+    }
+
+    public function createdAtHumanReadable( ) :string
+    {
+        return $this->created_at->diffForHumans();
+    }
+
+    public function getCreatedAtHumanReadableAttribute() :string
+    {
+        return $this->createdAtHumanReadable();
     }
 }

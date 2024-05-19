@@ -33,5 +33,19 @@ class SettingsSeeder extends Seeder
                 'max' => 7,
             ],
         ]);
+        Setting::factory()->create([
+            'name' => 'Company info',
+            'slug' => str('Company info')->slug(),
+            'description' => 'Set up company info that is shown in footers or headers',
+            'attributes' => [
+                'company_name' => 'Klemen Apartments',
+                'address' => 'Zgornje gorje 26/A',
+                'city' => '4247 Bled',
+                'country' => 'Slovenija',
+                'phone' => '+386 41 262 549',
+                'email' => 'oblikovanje.zvoka@gmail.com',
+                'extra_info' => '',
+            ],
+        ]);
     }
 }
