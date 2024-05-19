@@ -217,6 +217,8 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function recordLogin($ip): void
     {
+
+        $ip = (app()->environment() === 'local' && config('location.testing.enabled')) ? config('location.testing.ip') : $ip;
         $agent = $this->createAgent(request()->header('user-agent'));
         //$ip = "84.52.175.124";
         $login = Login::forceCreate([

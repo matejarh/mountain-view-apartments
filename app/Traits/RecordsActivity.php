@@ -32,8 +32,9 @@ trait RecordsActivity
     protected function recordActivity($event) :void
     {
         $agent = $this->createAgent(request()->header('user-agent'));
-        $ip=request()->ip();
-        //$ip = "84.52.175.124";
+
+        $ip = (app()->environment() === 'local' && config('location.testing.enabled')) ? config('location.testing.ip') : request()->ip();
+
         $this->activity()->forceCreate([
             'user_id' => auth()->id(),
             'type' => $this->getActivityType($event),

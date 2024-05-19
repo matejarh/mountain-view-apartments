@@ -25,8 +25,9 @@ class RecordUserLogout
         $agent = $this->createAgent(request()->header('user-agent'));
 
         \Log::debug('event', [request()->ip()]);
-        $ip=request()->ip();
-        // $ip = "84.52.175.124";
+
+        $ip = (app()->environment() === 'local' && config('location.testing.enabled')) ? config('location.testing.ip') : request()->ip();
+
         $event->user->activities()->create([
 
                 'user_id' => auth()->id(),
