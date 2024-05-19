@@ -33,8 +33,8 @@ const handleClicked = (image) => {
                 <FiltersSection v-show="$page.props.images.data.length > 0" id="images-filters" route="admin.images.index"  placeholder="Search for images" />
                 <div class="relative" v-if="$page.props.images.data.length > 0">
                     <TransitionGroup name="list" tag="ul"
-                        class=" relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 4xl:grid-cols-6 gap-4 md:gap-4 lg:gap-6 2xl:gap-8">
-                        <li key="0">
+                        class=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 4xl:grid-cols-6 gap-4 md:gap-4 lg:gap-6 2xl:gap-8">
+                        <li key="0" class="w-full">
 
                             <figure @click="showUploadPhotoDialog = true"
                                 class="flex flex-col items-center justify-center text-center select-none hover:scale-105 active:scale-95 rounded-lg min-h-full relative shadow-lg active:shadow hover:shadow-xl  transition-all duration-300 cursor-pointer overflow-visible">
@@ -43,15 +43,15 @@ const handleClicked = (image) => {
                                 </p>
                             </figure>
                         </li>
-                        <!-- <img class="rounded-lg" v-for="image, key in $page.props.images.data" :src="image.thumb_url" :alt="image.name"> -->
+                        <!-- <img class="rounded-lg w-auto h-full" v-for="image, key in $page.props.images.data" :src="image.thumb_url" :alt="image.name"> -->
 
 
                         <ImageCard v-for="image, key in $page.props.images.data" :images-count="$page.props.images.total" :key="image.id" :image="image"
                             @clicked="handleClicked" :is-index="true" />
 
 
+                        </TransitionGroup>
                         <Paginator key="paginator" class="col-span-8" :paginator="$page.props.images" />
-                    </TransitionGroup>
                 </div>
 
 
