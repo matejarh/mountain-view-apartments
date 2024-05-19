@@ -90,13 +90,13 @@ const handleFullScreenImage = (image) => {
                             {{__('Check availability')}}
                         </a>
 
-                        <a href="#" title=""
+                        <inertia-link :href="route('reviews.create', { property: $page.props.property, lang: $page.props.locale })" title=""
                             class="text-white mt-4 sm:mt-0 bg-amazon-700 hover:bg-amazon-800 focus:ring-4 focus:ring-amazon-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-amazon-600 dark:hover:bg-amazon-700 focus:outline-none dark:focus:ring-amazon-800 flex items-center justify-center"
                             role="button">
                             <CommentDotsIcon class="w-5 h-5 -ms-2 me-2" />
 
                             {{__('Post Review')}}
-                        </a>
+                        </inertia-link>
 
                         <a href="#" @click="showSocialSharingDialog = true" title=""
                             class="text-white mt-4 sm:mt-0 bg-amazon-700 hover:bg-amazon-800 focus:ring-4 focus:ring-amazon-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-amazon-600 dark:hover:bg-amazon-700 focus:outline-none dark:focus:ring-amazon-800 flex items-center justify-center"
