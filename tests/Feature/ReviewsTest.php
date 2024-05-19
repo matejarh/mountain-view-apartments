@@ -27,9 +27,10 @@ class ReviewsTest extends TestCase
         $response->assertStatus(302)->assertSessionHas(['status' => 'property-reviewed']);
 
         $response = $this->actingAs($this->user)->post(route('properties.review', $property), $review);
-        $response->assertStatus(302)->assertSessionMissing(['status' => 'property-reviewed'])->assertSessionHas(['flash.bannerStyle' => 'danger']);
+
+        //$response->ddSession();
+        $response->assertStatus(302)->assertSessionMissing(['status' => 'property-reviewed'])->assertSessionHasErrors(['text' => 'Already reviewed'],null,'reviewingProperty');
         $this->actingAs($this->user)->assertEquals($property->fresh()->isReviewed(), true);
-        //dd($response->ddSession());
     }
 
     public function test_guest_may_not_post_review_for_property(): void

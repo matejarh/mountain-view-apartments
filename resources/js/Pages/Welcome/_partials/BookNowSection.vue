@@ -7,6 +7,7 @@ import AccomodationsDropdown from '@/Components/_default/AccomodationsDropdown.v
 import { useHelperStore } from '@/stores/helpers';
 import ShapeTop from '@/Components/_default/ShapeTop.vue';
 import "/resources/css/datepicker.css"
+import ShapeBottom from '@/Components/_default/ShapeBottom.vue';
 
 const page = usePage()
 
@@ -82,8 +83,8 @@ watch(disabledDates, () => {
                     {{ __('Check availability') }}</a>
             </div>
         </div>
-<!--         <ShapeBottom
-            class="absolute inset-y-full z-10 left-0 right-0 w-full rotate-180 text-primary-700 dark:text-primary-900 " /> -->
+        <ShapeBottom
+            class="absolute inset-y-full z-10 left-0 right-0 w-full top-0 rotate-180 text-primary-700 dark:text-primary-900 " />
         <ShapeTop
             class="absolute inset-y-full z-10 left-0 right-0 w-full bottom-1/2 text-primary-700 dark:text-primary-900 " />
     </section>

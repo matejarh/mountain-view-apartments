@@ -44,9 +44,9 @@ class InquiriesTest extends TestCase
         $inquiry = $this->inquiry;
         $response = $this->post(route('inquiry.create', $property), $inquiry);
         //$this->assertCount(1, $this->admin->notifications);
-        $this->assertCount(1, Inquiry::all());
         $response->assertStatus(302);
         $response->assertSessionHas(["status" => "inquiry-created"]);
+        $this->assertCount(1, Inquiry::all());
 
     }
 

@@ -12,7 +12,7 @@ const accomodations = computed(() => {
 </script>
 
 <template>
-    <Carousel id="accomodations-carousel" :slides="accomodations">
+    <Carousel id="accomodations-carousel" :slides="accomodations" :interval="7000">
         <div v-for="accomodation, key in accomodations" :id="`accomodations-carousel-item-${key}`" class="hidden duration-700 ease-in-out" >
             <AccomodationCarouselItem :accomodation="accomodation" />
         </div>

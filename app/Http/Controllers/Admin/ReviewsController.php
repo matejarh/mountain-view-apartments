@@ -12,6 +12,7 @@ use App\Contracts\ReviewDeleteResponse;
 use App\Contracts\ReviewRejectResponse;
 use App\Contracts\ReviewUpdateResponse;
 use App\Contracts\UpdatesReviews;
+use App\Filters\ReviewFilters;
 use App\Http\Controllers\Controller;
 use App\Models\Property;
 use App\Models\Review;

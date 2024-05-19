@@ -131,8 +131,8 @@ onBeforeUnmount(() => {
         </div>
 
         <ShapeBottom
-            class="absolute inset-y-full z-10 left-0 right-0 w-full rotate-180 text-primary-700 dark:text-primary-900 " />
+            class="absolute inset-y-full z-10 left-0 right-0 w-full rotate-180 text-white dark:text-gray-900 " />
         <ShapeTop
-            class="absolute inset-y-full z-10 left-0 right-0 w-full bottom-1/2 text-primary-700 dark:text-primary-900 " />
+            class="absolute inset-y-full z-10 left-0 right-0 w-full bottom-1/2 text-white dark:text-gray-900 " />
     </section>
 </template>
