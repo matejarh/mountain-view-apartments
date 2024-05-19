@@ -16,14 +16,18 @@ defineProps({
             <img class="rounded-full shadow-lg" :src="item.owner.profile_photo_url"
                 :alt="`${item.owner.name}s avatar`" />
         </span>
-        <div v-if="item.type === 'updated_user'"
+        <div
             class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-700 dark:border-gray-600">
             <div class="items-center justify-between mb-3 sm:flex">
                 <time class="mb-1 text-xs font-normal text-gray-400 sm:order-last sm:mb-0">{{
-                    item.created_at_diff_for_humans }}</time>
-                <div class="text-sm font-normal text-gray-500 lex dark:text-gray-300">{{ item.owner.name }} {{ item.type
-                    }} <a href="#" class="font-semibold text-gray-900 dark:text-white hover:underline">{{
-                        item.subject.name }}</a></div>
+                    item.created_at_diff_for_humans }} from {{ item.location.cityName }}, {{ item.location.countryName }}</time>
+
+                <div class="text-sm font-normal text-gray-500 lex dark:text-gray-300">
+                    {{ item.owner.name }}
+                    {{ __(item.type) }}
+                    <a href="#" class="font-semibold text-gray-900 dark:text-white hover:underline">
+                        {{ item.subject.name }}</a>
+                </div>
             </div>
             <div
                 class="p-3 text-xs italic font-normal text-gray-500 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-600 dark:border-gray-500 dark:text-gray-300">

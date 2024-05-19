@@ -514,5 +514,14 @@
     "Write a review": "Write a review",
     "Menu": "Menu",
     "Something goes wrong. Please contact us directly through the phone or email.": "Something goes wrong. Please contact us directly through the phone or email.",
-    "Reviewed": "Reviewed"
+    "Reviewed": "Reviewed",
+    "created_review": "Posted review",
+    "updated_review": "Updated review",
+    "deleted_review": "Deleted review",
+    "created_image": "Posted picture",
+    "updated_image": "Updated picture info",
+    "deleted_image": "Deleted picture",
+    "created_gallery": "Posted gallery",
+    "updated_gallery": "Updated gallery info",
+    "deleted_gallery": "Deleted gallery"
 }

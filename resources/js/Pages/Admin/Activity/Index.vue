@@ -13,12 +13,16 @@ import ActivityList from './ActivityList.vue';
 
 <template>
     <FullLayout :title="__('Activities')">
-        <ActivityList />
-<!--         <ActionSection>
+        <ActionSection>
             <template #title>
                 {{ __("Activity Log") }}
             </template>
             <template #content>
+
+                <ActivityList />
+            </template>
+        </ActionSection>
+        <!--         <ActionSection>
 
                 <TableSection :paginator="$page.props.activities">
                     <template #header>
