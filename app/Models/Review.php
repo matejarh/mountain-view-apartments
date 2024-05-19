@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\Pivot;
+use Illuminate\Support\Collection;
 
 class Review extends Model
 {
@@ -22,6 +23,7 @@ class Review extends Model
 
     protected $appends=[
         'created_at_human_readable',
+        'reviewed_trimed',
     ];
 
     public function reviewed(): MorphTo
@@ -32,6 +34,21 @@ class Review extends Model
     public function owner() :BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+
+    public function reviewedTrimed(): Collection
+    {
+        return $this->reviewed()->get()->map(function($reviewed) {
+            return [
+                'name' => $reviewed->name ?: '',
+                'title' => $reviewed->title ?: '',
+            ];
+        });
+    }
+
+    function getReviewedTrimedAttribute() : Collection {
+        return $this->reviewedTrimed();
     }
 
     public function approve() :void
