@@ -8,8 +8,7 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
 import { Translator } from './translator';
 import { createPinia } from 'pinia';
-/* import VueSocialSharing from 'vue-social-sharing' */
-/* import Vue3SocialSharingPlugin from "vue3-social-sharing"; */
+import { VueReCaptcha } from 'vue-recaptcha-v3';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -40,6 +39,7 @@ createInertiaApp({
             .use(pinia)
             .component('InertiaLink', Link)
             .use(Translator, props.initialPage.props.translations)
+            .use(VueReCaptcha, { siteKey: props.initialPage.props.recaptcha_site_key })
             // .use(Vue3SocialSharingPlugin)
             // .use(Globals, )
             .mount(el);
