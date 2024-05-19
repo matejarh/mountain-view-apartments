@@ -61,7 +61,7 @@ const handleScroll = (e) => {
 
 const initScrollData = (scrollTop = 0) => {
     scroll.updateScrollPosition(scrollTop);
-    scroll.updateWrapperHeight(wrapper.value.offsetHeight);
+    scroll.updateWrapperHeight(wrapper.value?.offsetHeight);
     scroll.updateWindowHeight(window.innerHeight);
 }
 
