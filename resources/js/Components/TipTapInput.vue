@@ -4,28 +4,28 @@
             <div
                 class="w-full flex justify-between flex-wrap items-center divide-gray-200 sm:divide-x sm:rtl:divide-x-reverse dark:divide-gray-600">
                 <div class="left justify-self-stretch flex flex-wrap items-center space-x-1 rtl:space-x-reverse sm:pe-4">
-                    <button v-if="!isSmall" @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
+                    <button v-if="!isSmall && hasHeadings" @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
                         :class="[buttonClasses, editor?.isActive('heading', { level: 1 }) ? activeButtonClasses : '']">
                         <div class="flex">
                             <HeadingIcon :class="iconClasses" />
                             1
                         </div>
                     </button>
-                    <button v-if="!isSmall" @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
+                    <button v-if="!isSmall && hasHeadings" @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
                         :class="[buttonClasses, editor?.isActive('heading', { level: 2 }) ? activeButtonClasses : '']">
                         <div class="flex">
                             <HeadingIcon :class="iconClasses" />
                             2
                         </div>
                     </button>
-                    <button v-if="!isSmall" @click="editor.chain().focus().toggleHeading({ level: 3 }).run()"
+                    <button v-if="!isSmall && hasHeadings" @click="editor.chain().focus().toggleHeading({ level: 3 }).run()"
                         :class="[buttonClasses, editor?.isActive('heading', { level: 3 }) ? activeButtonClasses : '']">
                         <div class="flex">
                             <HeadingIcon :class="iconClasses" />
                             3
                         </div>
                     </button>
-                    <button v-if="!isSmall" @click="editor.chain().focus().setParagraph().run()"
+                    <button v-if="!isSmall && hasHeadings" @click="editor.chain().focus().setParagraph().run()"
                         :class="[buttonClasses, editor?.isActive('paragraph') ? activeButtonClasses : '']">
                         <ParagraphIcon :class="iconClasses" class="" />
                     </button>
@@ -45,21 +45,21 @@
                         :class="[buttonClasses, editor?.isActive('highlight') ? activeButtonClasses : '']">
                         <HighlightIcon :class="iconClasses" />
                     </button>
-                    <button  v-if="!isSmall" @click="editor.chain().focus().setTextAlign('left').run()"
+                    <button  v-if="!isSmall && hasHeadings" @click="editor.chain().focus().setTextAlign('left').run()"
                         :class="[buttonClasses, editor?.isActive({ textAlign: 'left' }) ? activeButtonClasses : '']">
                         <AlignLeftIcon :class="iconClasses" class="" />
                     </button>
-                    <button  v-if="!isSmall" @click="editor.chain().focus().setTextAlign('center').run()"
+                    <button  v-if="!isSmall && hasHeadings" @click="editor.chain().focus().setTextAlign('center').run()"
                         :class="[buttonClasses, editor?.isActive({ textAlign: 'center' }) ? activeButtonClasses : '']">
                         <AlignCenterIcon :class="iconClasses" class="" />
                     </button>
-                    <button  v-if="!isSmall" @click="editor.chain().focus().setTextAlign('right').run()"
+                    <button  v-if="!isSmall && hasHeadings" @click="editor.chain().focus().setTextAlign('right').run()"
                         :class="[buttonClasses, editor?.isActive({ textAlign: 'right' }) ? activeButtonClasses : '']">
 
 
                         <AlignRightIcon :class="iconClasses" class="" />
                     </button>
-                    <button  v-if="!isSmall" @click="editor.chain().focus().setTextAlign('justify').run()"
+                    <button  v-if="!isSmall && hasHeadings" @click="editor.chain().focus().setTextAlign('justify').run()"
                         :class="[buttonClasses, editor?.isActive({ textAlign: 'justify' }) ? activeButtonClasses : '']">
                         <AlignJustifyIcon :class="iconClasses" class="" />
                     </button>
@@ -109,6 +109,10 @@ const props = defineProps({
     },
     isSmall: {
         default: false,
+        type: Boolean,
+    },
+    hasHeadings: {
+        default: true,
         type: Boolean,
     },
 })

@@ -75,9 +75,25 @@ trait Reviewable
      *
      * @return bool
      */
-    public function isReviewed()
+    public function isReviewed(): bool
     {
         // Check if a like record exists for the current user
         return $this->reviews()->where('user_id', auth()->id())->exists();
+    }
+
+    public function getIsReviewedAttribute( ) :bool
+    {
+        return $this->isReviewed();
+    }
+
+    public function avarageReviewScore(): float
+    {
+        return $this->reviews->average('score');
+    }
+
+    public function getAverageReviewScoreAttribute(): float|null
+    {
+        // return 0.5;
+        return $this->reviews && $this->reviews->count() > 0 ? $this->reviews->average('score') : 0;
     }
 }

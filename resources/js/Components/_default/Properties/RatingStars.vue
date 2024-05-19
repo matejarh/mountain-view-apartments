@@ -1,41 +1,82 @@
 <script setup>
+import StarEmptyIcon from '@/Icons/StarEmptyIcon.vue';
+import StarFullIcon from '@/Icons/StarFullIcon.vue';
+import StarHalfFullIcon from '@/Icons/StarHalfFullIcon.vue';
+import { computed } from 'vue';
+
+const props = defineProps({
+    property: Object,
+    score: {
+        type: Number,
+        default: null,
+    },
+    size: {
+        default: 'normal',
+        type: String,
+    },
+    withoutText: {
+        default: false,
+        type: Boolean,
+    },
+    onDark: {
+        default: false,
+        type: Boolean,
+    },
+})
+
+const score = props.score ? props.score : props.property?.average_review_score
+const maxStars = 5
+
+const starComponents = computed(() => {
+    const components = [];
+    const fullStarsCount = Math.floor(score);
+    const hasHalfStar = score % 1 !== 0;
+    const emptyStarsCount = maxStars - Math.ceil(score);
+
+    for (let i = 0; i < fullStarsCount; i++) {
+        components.push(StarFullIcon);
+    }
+    if (hasHalfStar) {
+        components.push(StarHalfFullIcon);
+    }
+    for (let i = 0; i < emptyStarsCount; i++) {
+        components.push(StarEmptyIcon);
+    }
+
+    return components;
+});
+
+const sizeClasses = computed(() => {
+    return [
+        props.size === 'normal' ? 'w-4 h-4' :
+        props.size === 'large' ? 'w-8 h-8' : 'w-6 h-6'
+     ]
+})
+
+const onDarkLinkClasses = computed(() => {
+    return [
+        props.onDark ? 'text-gray-100 dark:text-white' : 'text-gray-900  dark:text-white'
+    ]
+})
+const onDarkTextClasses = computed(() => {
+    return [
+        props.onDark ? 'text-gray-300 dark:text-gray-200' : 'text-gray-500 dark:text-gray-400'
+    ]
+})
 
 </script>
 
 <template>
     <div class="flex items-center gap-2 mt-2 sm:mt-0">
         <div class="flex items-center gap-1">
-            <svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
-                height="24" fill="currentColor" viewBox="0 0 24 24">
-                <path
-                    d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z" />
-            </svg>
-            <svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
-                height="24" fill="currentColor" viewBox="0 0 24 24">
-                <path
-                    d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z" />
-            </svg>
-            <svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
-                height="24" fill="currentColor" viewBox="0 0 24 24">
-                <path
-                    d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z" />
-            </svg>
-            <svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
-                height="24" fill="currentColor" viewBox="0 0 24 24">
-                <path
-                    d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z" />
-            </svg>
-            <svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
-                height="24" fill="currentColor" viewBox="0 0 24 24">
-                <path
-                    d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z" />
-            </svg>
+            <component v-for="(icon, index) in starComponents" :is="icon" :key="index" class=""
+                :class="[(icon === StarEmptyIcon ? 'text-gray-100' : 'text-yellow-300'), sizeClasses]" />
         </div>
-        <p class="text-sm font-medium leading-none text-gray-500 dark:text-gray-400">
-            (5.0)
+        <p v-if="!withoutText" class="text-sm font-medium leading-none text-gray-500 dark:text-gray-400" :class="onDarkTextClasses" >
+            ({{ property?.average_review_score }})
         </p>
-        <a href="#" class="text-sm font-medium leading-none text-gray-900 underline hover:no-underline dark:text-white">
-            345 {{ __('Review', 2)}}
-        </a>
+        <inertia-link v-if="!withoutText" :href="route('reviews.index', { property: property, lang: $page.props?.locale })" :class="onDarkLinkClasses" class="text-sm font-medium leading-none  underline hover:no-underline ">
+            {{ property?.reviews.length }} {{ __('Review', property?.reviews.length) }}
+        </inertia-link>
     </div>
 </template>

@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Filters\ReviewFilters;
 use App\Traits\HasUUidAsPrimary;
 use App\Traits\RecordsActivity;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -11,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class Review extends Model
 {
-    use HasFactory, HasUUidAsPrimary;
+    use HasFactory, RecordsActivity;
 
     protected $casts = [
         'approved_at' => 'datetime',
@@ -37,5 +39,16 @@ class Review extends Model
     {
         $this->approved_at = null;
         $this->save();
+    }
+
+        /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param \App\Filters\ReviewFilters $filters
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeFilter(Builder $query, ReviewFilters $filters): Builder
+    {
+        return $filters->apply($query);
+
     }
 }

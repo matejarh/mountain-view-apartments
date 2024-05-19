@@ -53,6 +53,8 @@ class Property extends Model
         'avatar_url',
         'seo_description',
         'is_liked',
+        'is_reviewed',
+        'average_review_score',
     ];
 
     /**
@@ -203,6 +205,7 @@ class Property extends Model
     {
         return $this->seoDescription();
     }
+
     /**
      * Filters given query by given filters
      *

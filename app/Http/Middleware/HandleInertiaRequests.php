@@ -38,7 +38,7 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request): array
     {
         return array_merge(parent::share($request), [
-            'language' => session('language') ?: app()->currentLocale(),
+            // 'language' => session('language') ?: app()->currentLocale(),
             'locale' => function () {
                 return session('language') ?: app()->currentLocale();
             },
@@ -54,6 +54,7 @@ class HandleInertiaRequests extends Middleware
                 return Setting::all();
             }),
             'current_season' => $this->getSeason(),
+            'recaptcha_site_key' => config('services.google_recaptcha.site_key'),
         ]);
     }
 

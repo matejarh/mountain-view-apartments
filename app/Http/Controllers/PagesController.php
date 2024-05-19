@@ -22,7 +22,7 @@ class PagesController extends Controller
     {
         return Inertia::render('Welcome', [
             'page' => Page::with('galleries')->where('name', 'Home')->first(),
-            'accomodations' => Property::with('galleries')->get(),
+            'accomodations' => Property::with('galleries', 'reviews')->get(),
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
         ]);

@@ -22,7 +22,7 @@ class ReviewFactory extends Factory
             'user_id' => User::factory()->create(),
             'reviewed_id' => Property::factory()->create(),
             'reviewed_type' => 'App\Models\Property',
-            'score' => 5,
+            'score' => fake()->randomElement([1,2,3,4,5]),
             'text' => fake()->sentence(),
         ];
     }
