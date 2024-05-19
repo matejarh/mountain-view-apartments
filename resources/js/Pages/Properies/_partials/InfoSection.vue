@@ -49,12 +49,12 @@ const handleFullScreenImage = (image) => {
                             {{ __($page.props.property?.type) }}
                         </p>
 
-                        <RatingStars />
+                        <RatingStars :property="$page.props.property" :size="'normal'" :without-text="false" :on-dark="false" />
 
                     </div>
 
-                    <div class="mt-4 sm:flex sm:space-x-4">
-                        <div class="flex space-x-2 items-center" v-for="type, key in $page.props.property?.bed_types"
+                    <div class="mt-4 grid grid-cols-2 gap-2">
+                        <div class="flex space-x-2 items-center " v-for="type, key in $page.props.property?.bed_types"
                             :key="key">
 
                             <DinamicIcon :icon="type.icon" class="w-8 h-8" />
@@ -64,7 +64,7 @@ const handleFullScreenImage = (image) => {
                         <!-- {{ $page.props.property.bed_types }} -->
                     </div>
 
-                    <div class="mt-2">
+                    <div class="mt-4 ">
                         <a :href="$page.props.property?.google_maps_link" target="_blank"
                             class="text-md font-semibold text-gray-900 sm:text-md dark:text-gray-300 hover:font-bold transition">
                             <div class="flex items-center w-fit">

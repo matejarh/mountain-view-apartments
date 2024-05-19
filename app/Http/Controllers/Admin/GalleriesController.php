@@ -62,7 +62,7 @@ class GalleriesController extends Controller
         return Inertia::render('Admin/Galleries/Show', [
             'gallery' => Gallery::with('images')->find($gallery->id),
             'images_not_in_gallery' => Image::all()->intersect(Image::whereNotIn('id', $gallery->images->pluck('id')->toArray())->get())
-                                        ->paginate(100, null,null, __('page'))->onEachSide(2)->withQueryString(),
+                                        /* ->paginate(100, null,null, __('page'))->onEachSide(2)->withQueryString() */,
             'total_images_count' => \DB::table('images')->count(),
             'can' => [
                 'view_gallery' => auth()->user()->can('view', $gallery),

@@ -64,6 +64,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'profile_photo_url',
         'last_seen_diff_for_humans',
         'has_sessions',
+        'joined_on',
     ];
 
     /**
@@ -165,6 +166,16 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getHasSessionsAttribute(): bool
     {
         return $this->hasSessions();
+    }
+
+    public function joinedOn( ) :string
+    {
+        return $this->created_at->diffForHumans();
+    }
+
+    public function getJoinedOnAttribute() :string
+    {
+        return $this->joinedOn();
     }
 
     /**

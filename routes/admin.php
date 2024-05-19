@@ -107,9 +107,9 @@ Route::group(['middleware' => config('jetstream.middleware')], function () {
 
         Route::name('reviews.')->prefix('reviews')->namespace('reviews')->group(function() {
             Route::get('/', [ReviewsController::class, 'index'])->name('index');
-            Route::get('{rewiew}', [ReviewsController::class, 'show'])->name('show');
-            Route::put('{rewiew}', [ReviewsController::class, 'update'])->name('update');
-            Route::delete('{rewiew}', [ReviewsController::class, 'destroy'])->name('destroy');
+            Route::get('{review}', [ReviewsController::class, 'show'])->name('show');
+            Route::put('{review}', [ReviewsController::class, 'update'])->name('update');
+            Route::delete('{review}', [ReviewsController::class, 'destroy'])->name('destroy');
             Route::post('/property/{property}', [ReviewsController::class, 'store'])->name('store');
             Route::put('/approve/{review}', [ReviewsController::class, 'approve'])->name('approve');
             Route::put('/reject/{review}', [ReviewsController::class, 'reject'])->name('reject');

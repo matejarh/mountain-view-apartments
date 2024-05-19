@@ -16,9 +16,10 @@ class ThrottleTest extends TestCase
     {
 /*         for ($i=0; $i < 1000; $i++) {
             # code...
-            $response = $this->get('/');
-            $response->assertStatus(200);
-        } */
+            $response = $this->actingAs($this->user)->get('/user/profile');
+        }
+        $response->assertStatus(429); */
+        //dd($response->status());
 
         $response = $this->get('/');
         $response->assertRedirect('/en');

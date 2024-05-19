@@ -415,7 +415,11 @@
     "Move Back": "Move Back",
     "One-Bedroom Apartment": "One-Bedroom Apartment",
     "bedroom": "Bedroom",
+    "bedroom_1": "Bedroom 1",
+    "bedroom_2": "Bedroom 2",
+    "bathroom": "Bedroom",
     "1 queen bed": "1 Queen Bed",
+    "1 very large queen bed": "1 Queen Bed",
     "living_room": "Living room",
     "1 sofa bed": "1 Sofa Bed",
     "About Us": "About Us",
@@ -505,7 +509,11 @@
     "Extras": "Extras",
     "This will remove gallery from the server.": "This will remove the gallery from the server.",
     "Images will not be deleted, and can be attached in other galleries.": "Images will not be deleted, and may be attached to other galleries.",
-    "You have already reviewed this accomodation": "You have already reviewed this accomodation"
+    "You have already reviewed this accomodation": "You have already reviewed this accomodation",
+    "Joined on": "Joined on",
+    "Write a review": "Write a review",
+    "Menu": "Menu",
+    "Something goes wrong. Please contact us directly through the phone or email.": "Something goes wrong. Please contact us directly through the phone or email."
 
 
 
