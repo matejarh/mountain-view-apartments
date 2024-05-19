@@ -3,6 +3,7 @@ import GridSection from '@/Components/GridSection.vue';
 import FullLayout from '@/Layouts/FullLayout.vue';
 import SiteBackgroundSetting from './_partials/SiteBackgroundSetting.vue';
 import DatepickerRangeSetting from './_partials/DatepickerRangeSetting.vue';
+import CompanyInfoSetting from './_partials/CompanyInfoSetting.vue';
 </script>
 
 <template>
@@ -10,6 +11,7 @@ import DatepickerRangeSetting from './_partials/DatepickerRangeSetting.vue';
         <GridSection>
             <SiteBackgroundSetting :setting="$page.props.settings.find(setting => setting.slug === 'site-backgrounds')"/>
             <DatepickerRangeSetting :setting="$page.props.settings.find(setting => setting.slug === 'datepicker-range')"/>
+            <CompanyInfoSetting :setting="$page.props.settings.find(setting => setting.slug === 'company-info')"/>
         </GridSection>
     </FullLayout>
 
