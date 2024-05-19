@@ -51,7 +51,7 @@ const classes = computed(() => {
                     </template>
                     <template #title>{{ __("Properties") }}</template>
                     <DropdownItem href="/admin/properties" @click="$emit('hide')">{{ __('Properties List') }}</DropdownItem>
-                    <DropdownItem href="/admin/properties/reviews" @click="$emit('hide')">{{ __('Review',10) }}</DropdownItem>
+                    <DropdownItem href="/admin/properties/reviews" @click="$emit('hide')">{{ __('Reviews') }}</DropdownItem>
                     <DropdownItem href="/admin/properties/reservations" @click="$emit('hide')">{{ __('Reservations') }}</DropdownItem>
                 </NavDropdown>
 
