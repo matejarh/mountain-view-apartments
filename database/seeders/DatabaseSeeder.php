@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         User::factory()->create([
-            'name' => 'Test Admin',
+            'name' => 'Administrator',
             'email' => 'admin@example.com',
             'is_admin' => true,
         ]);
@@ -29,9 +29,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
             SettingsSeeder::class,
             FacilitiesSeeder::class,
-            PropertiesSeeder::class,
+/*             PropertiesSeeder::class,
             PagesSeeder::class,
-            GalleriesSeeder::class,
+            GalleriesSeeder::class, */
         ]);
 
         $this->call(ExportImagesTableSeeder::class);
