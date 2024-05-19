@@ -88,12 +88,12 @@ trait Reviewable
 
     public function avarageReviewScore(): float
     {
-        return $this->reviews->average('score');
+        return round($this->reviews && $this->reviews->count() > 0 ? $this->reviews->average('score') : 0 ,1);
     }
 
     public function getAverageReviewScoreAttribute(): float|null
     {
         // return 0.5;
-        return $this->reviews && $this->reviews->count() > 0 ? $this->reviews->average('score') : 0;
+        return $this->avarageReviewScore();
     }
 }
