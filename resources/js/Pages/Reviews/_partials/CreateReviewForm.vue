@@ -7,6 +7,7 @@ import TipTapInput from '@/Components/TipTapInput.vue';
 import PaperPlane from '@/Icons/PaperPlane.vue';
 import SpinnerIcon from '@/Icons/SpinnerIcon.vue';
 import { useForm, usePage } from '@inertiajs/vue3';
+import { onMounted } from 'vue';
 import { useReCaptcha  } from "vue-recaptcha-v3";
 
 
