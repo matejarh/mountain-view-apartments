@@ -7,7 +7,7 @@ import { initCarousels } from 'flowbite';
 import { onBeforeUnmount, onMounted, ref } from 'vue';
 import LogoHero from '@/Components/LogoHero.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
-import SecondaryButton from '@/Components/SecondaryButton.vue';
+import TransparentButton from '@/Components/_default/TransparentButton.vue';
 
 const page = usePage()
 
@@ -92,9 +92,9 @@ onBeforeUnmount(() => {
                         </svg>
                     </PrimaryButton class="py-3 px-5 ">
 
-                    <SecondaryButton type="button" @click="scrollTo('accomodations')">
+                    <TransparentButton type="button" @click="scrollTo('accomodations')">
                         {{ __('Learn more') }}
-                    </SecondaryButton>
+                    </TransparentButton>
                     <!-- <a href="#" @click="initBgImageRotation"
                         class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
                     </a> -->

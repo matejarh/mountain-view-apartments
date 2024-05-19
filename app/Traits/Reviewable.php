@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use App\Models\Review;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 trait Reviewable
@@ -34,6 +35,11 @@ trait Reviewable
     public function reviews(): MorphMany
     {
         return $this->morphMany(Review::class, 'reviewed');
+    }
+
+    public function latestReviews() :Collection
+    {
+        return $this->reviews()->latest()->take(5)->get();
     }
 
     /**

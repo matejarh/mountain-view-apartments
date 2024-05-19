@@ -156,6 +156,4 @@ const links = computed(() => {
             </div>
         </div>
     </nav>
-
-
 </template>

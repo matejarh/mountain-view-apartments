@@ -2,7 +2,7 @@
 import LikeButton from '@/Components/_default/Reviews/LikeButton.vue';
 import RatingStars from '@/Components/_default/Properties/RatingStars.vue';
 import { usePage } from '@inertiajs/vue3';
-import {  onBeforeUnmount, onMounted, ref } from 'vue';
+import { onBeforeUnmount, onMounted, ref } from 'vue';
 
 defineEmits(['create'])
 
@@ -54,13 +54,16 @@ onBeforeUnmount(() => {
 <template>
 
 
-    <section
-        :style="`background-image: url(${bgImage});`"
+    <section :style="`background-image: url(${bgImage});`"
         class="bg-center bg-cover bg-no-repeat  bg-gray-700 bg-blend-multiply transition-all duration-[2000ms] ease-in-out bg-paralax">
         <div class="px-4 mx-auto max-w-screen-xl text-center py-24 lg:py-56">
             <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-white md:text-5xl lg:text-6xl">
-                {{ $page.props.property.title[$page.props.locale] }}
+                <inertia-link
+                    :href="route('properties.show', { lang: $page.props.locale, property: $page.props.property })">
+                    {{ $page.props.property.title[$page.props.locale] }}
+                </inertia-link>
             </h1>
+
             <div class="mb-8 text-lg font-normal text-gray-300 lg:text-xl sm:px-16 lg:px-48">
                 {{ $page.props.property.quote[$page.props.locale] }}
             </div>
@@ -70,7 +73,8 @@ onBeforeUnmount(() => {
             </div>
 
             <div class="mt-8 flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0">
-                <inertia-link :href="route('reviews.create', { property: $page.props.property, lang: $page.props.locale })"
+                <inertia-link
+                    :href="route('reviews.create', { property: $page.props.property, lang: $page.props.locale })"
                     class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-0 focus:ring-primary-300 dark:focus:ring-primary-900">
                     Post Review
                     <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"

@@ -11,18 +11,18 @@ defineProps({
 
     <article class="bg-gray-50 dark:bg-gray-900 rounded-lg mb-4 p-4 shadow-lg">
         <div class="flex items-center mb-4">
-            <img class="w-10 h-10 me-4 rounded-full" :src="review.owner.profile_photo_url" alt="">
+            <img class="w-10 h-10 me-4 rounded-full" :src="review?.owner.profile_photo_url" alt="">
             <div class="font-medium dark:text-white">
-                <p>{{ review.owner.name }} <time datetime="2014-08-16 19:00"
-                        class="block text-sm text-gray-500 dark:text-gray-400">{{__('Joined on')}} {{ review.owner.joined_on }}</time></p>
+                <p>{{ review?.owner.name }} <time datetime="2014-08-16 19:00"
+                        class="block text-sm text-gray-500 dark:text-gray-400">{{__('Joined on')}} {{ review?.owner.joined_on }}</time></p>
             </div>
         </div>
-        <RatingStars :property="$page.props.property" :score="review.score" :size="'small'" :without-text="true" :on-dark="true" />
+        <RatingStars :property="$page.props?.property" :score="review?.score" :size="'small'" :without-text="true" :on-dark="true" />
 
         <footer class="mb-5 text-sm text-gray-500 dark:text-gray-400">
-            <p>{{__('Reviewed')}} <!-- in the --> <!-- {{ review.activity }} --> <time :datetime="review.created_at">{{ review.created_at_human_readable }}</time></p>
+            <p>{{__('Reviewed')}} <!-- in the --> <!-- {{ review.activity }} --> <time :datetime="review?.created_at">{{ review?.created_at_human_readable }}</time></p>
         </footer>
-        <div class="mb-2 text-gray-500 dark:text-gray-400" v-html="review.text">
+        <div class="mb-2 text-gray-500 dark:text-gray-400" v-html="review?.text">
 
         </div>
 

@@ -57,7 +57,8 @@ class PropertiesController extends Controller
         // Render the property details page using Inertia.js
         return Inertia::render('Properies/Show', [
             // Pass the property details along with its galleries and facilities
-            'property' => $property->with('galleries', 'facilities', 'reviews')->find($property->id),
+            'property' => $property->with('galleries', 'facilities')->find($property->id),
+            'latest_reviews' => $property->latestReviews(),
             // Determine the user's permissions for this property
             'can' => [
                 'view_property' => auth()->check() ? auth()->user()->can('view', $property) : false,

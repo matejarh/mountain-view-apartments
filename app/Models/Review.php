@@ -26,6 +26,10 @@ class Review extends Model
         'reviewed_trimed',
     ];
 
+    protected $with=[
+        'owner',
+    ];
+
     public function reviewed(): MorphTo
     {
         return $this->MorphTo();

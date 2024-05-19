@@ -2,7 +2,7 @@
 import Drawer from '@/Components/Drawer.vue';
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css'
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useHelperStore } from '@/stores/helpers';
 import { usePage } from '@inertiajs/vue3';
 import ReservationInquiry from '@/Components/_default/ReservationInquiry.vue';
@@ -12,6 +12,10 @@ const page = usePage()
 const date = ref(null)
 const disabledDates = ref([])
 const helpers = useHelperStore()
+
+const companyData = computed(() => {
+    return page.props.settings.find(setting => setting.slug === 'company-info')
+})
 
 const datepickerRange = page.props.settings?.find(setting => setting.slug === 'datepicker-range')
 
@@ -35,6 +39,7 @@ const options = ref({
         </template>
 
         <ReservationInquiry @close="helpers.hideContactDrawer" />
+
         <template #bottom>
             <div id="dropdown-cta" class="p-4 mt-6 rounded-lg bg-primary-50 dark:bg-primary-900" role="alert">
                 <div class="flex items-center mb-3">
@@ -42,12 +47,26 @@ const options = ref({
                         class="bg-bittersweet-100 text-bittersweet-800 text-sm font-semibold me-2 px-2.5 py-0.5 rounded dark:bg-bittersweet-200 dark:text-bittersweet-900">Beta</span>
 
                 </div>
-                <p class="mb-3 text-sm text-primary-800 dark:text-primary-400">
-                    Preview the new Flowbite dashboard navigation! You can turn the new navigation off for a limited
-                    time in your profile.
+                <h3 class="mb-3 text-lg font-semibold text-primary-800 dark:text-primary-400">
+                    {{ companyData.attributes.company_name }}
+                </h3>
+                <p class=" text-sm text-primary-800 dark:text-primary-400">
+                    {{ companyData.attributes.address }}
                 </p>
-                <a class="text-sm text-primary-800 underline font-medium hover:text-primary-900 dark:text-primary-400 dark:hover:text-primary-300"
-                    href="#">Turn new navigation off</a>
+                <p class=" text-sm text-primary-800 dark:text-primary-400">
+                    {{ companyData.attributes.city }}
+                </p>
+                <p class=" text-sm text-primary-800 dark:text-primary-400">
+                    {{ companyData.attributes.country }}
+                </p>
+                <p class=" text-sm text-primary-800 dark:text-primary-400">
+                    {{ companyData.attributes.phone }}
+                </p>
+                <p class=" text-sm text-primary-800 dark:text-primary-400">
+                    {{ companyData.attributes.email }}
+                </p>
+               <!--  <a class="text-sm text-primary-800 underline font-medium hover:text-primary-900 dark:text-primary-400 dark:hover:text-primary-300"
+                    href="#">Turn new navigation off</a> -->
             </div>
         </template>
 

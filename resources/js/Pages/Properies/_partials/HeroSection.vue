@@ -6,6 +6,7 @@ import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 import LogoHero from '@/Components/LogoHero.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
+import TransparentButton from '@/Components/_default/TransparentButton.vue';
 
 const page = usePage()
 
@@ -65,8 +66,8 @@ onBeforeUnmount(() => {
                     <LogoHero  />
                 </div>
 
-                <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-white md:text-5xl lg:text-6xl">
-                    {{ $page.props.property.title[$page.props.locale] }}</h1>
+                <inertia-link :href="route('properties.show', {lang:$page.props.locale, property:$page.props.property })" class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-white md:text-5xl lg:text-6xl">
+                    {{ $page.props.property.title[$page.props.locale] }}</inertia-link>
 
                 <div class="mb-8 text-lg font-normal text-gray-300 lg:text-xl sm:px-16 lg:px-48" v-html="$page.props.property.quote[$page.props.locale]"></div>
 
@@ -81,9 +82,9 @@ onBeforeUnmount(() => {
                         </svg>
                     </PrimaryButton class="py-3 px-5 ">
 
-                    <SecondaryButton type="button" @click="scrollTo('info')">
+                    <TransparentButton type="button" @click="scrollTo('info')">
                         {{__('Learn more')}}
-                    </SecondaryButton>
+                    </TransparentButton>
                     <!-- <a href="#" @click="initBgImageRotation"
                         class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
                     </a> -->

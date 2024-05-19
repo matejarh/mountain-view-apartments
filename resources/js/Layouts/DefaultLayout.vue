@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, onBeforeMount, computed, onBeforeUnmount, watchEffect } from 'vue';
+import { ref, onMounted, computed, onBeforeUnmount} from 'vue';
 import { Head, usePage } from '@inertiajs/vue3';
 import TopNavigation from './_partials/_default/TopNavigation.vue'
 import ScrollToTop from '@/Components/_default/ScrollToTop.vue'
@@ -31,9 +31,7 @@ const client = useClientStore()
 
 const page = usePage()
 
-const showMain = ref(true)
 const showNav = ref(true)
-const showFooter = ref(true)
 const wrapper = ref(null)
 
 const defaultBackgroundImage = new URL('/resources/images/backgrounds/winter-sunrise.jpg', import.meta.url)
@@ -49,12 +47,11 @@ const backgroundImageUrl = computed(() => {
     }
 });
 
-watchEffect(() => {
-
+const inProduction = computed(() => {
+    return import.meta.env.MODE === 'production'
 })
 
 const handleScroll = (e) => {
-
     initScrollData(e.target.scrollTop)
     const parallaxElements = document.querySelectorAll('.bg-parallax');
     parallaxElements.forEach((element) => {
@@ -118,7 +115,7 @@ onBeforeUnmount(() => {
         <Head :title="title">
             <meta head-key="description" name="description" :content="description" />
             <meta head-key="keywords" name="keywords" :content="keywords" />
-            <meta name="robots" content="noindex,nofollow" v-if="noindex">
+            <meta name="robots" content="noindex,nofollow" v-if="noindex || !inProduction">
             <!-- <link rel="icon" type="image/svg+xml" href="/favicon.svg" /> -->
         </Head>
 
