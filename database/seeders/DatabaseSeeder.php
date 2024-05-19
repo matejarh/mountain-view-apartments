@@ -34,5 +34,12 @@ class DatabaseSeeder extends Seeder
             GalleriesSeeder::class,
         ]);
 
+        $this->call(ExportImagesTableSeeder::class);
+        $this->call(ExportGalleriesTableSeeder::class);
+        $this->call(ExportGalleriesImagesTableSeeder::class);
+        $this->call(ExportPropertiesTableSeeder::class);
+        $this->call(ExportPropertiesGalleriesTableSeeder::class);
+        $this->call(ExportPagesTableSeeder::class);
+        $this->call(ExportPagesGalleriesTableSeeder::class);
     }
 }
