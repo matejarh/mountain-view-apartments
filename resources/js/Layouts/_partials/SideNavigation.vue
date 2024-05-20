@@ -38,19 +38,12 @@ const classes = computed(() => {
                     {{ __("Dashboard") }}
                 </NavLink>
 
-<!--                 <NavLink v-if="$page.props.auth.user.is_admin" href="/admin/properties" @click="$emit('hide')">
-                    <template #icon>
-                        <MountainCityIcon />
-                    </template>
-                    {{ __("Properties") }}
-                </NavLink> -->
-
                 <NavDropdown v-if="$page.props.auth.user.is_admin" key="properties-dropdown" href="/admin/properties">
                     <template #icon>
                         <MountainCityIcon />
                     </template>
-                    <template #title>{{ __("Properties") }}</template>
-                    <DropdownItem href="/admin/properties" @click="$emit('hide')">{{ __('Properties List') }}</DropdownItem>
+                    <template #title>{{ __("Accomodations") }}</template>
+                    <DropdownItem href="/admin/properties" @click="$emit('hide')">{{ __('List') }}</DropdownItem>
                     <DropdownItem href="/admin/properties/reviews" @click="$emit('hide')">{{ __('Reviews') }}</DropdownItem>
                     <DropdownItem href="/admin/properties/reservations" @click="$emit('hide')">{{ __('Reservations') }}</DropdownItem>
                 </NavDropdown>
@@ -78,30 +71,9 @@ const classes = computed(() => {
                     </template>
                     <template #title>{{ __("Users") }}</template>
                     <DropdownItem href="/admin/users/all" @click="$emit('hide')">{{ __('All Users') }}</DropdownItem>
-                    <DropdownItem href="/admin/users/activity-log" @click="$emit('hide')">{{ __('Activity Log') }}
-                    </DropdownItem>
-
-
+                    <DropdownItem href="/admin/users/activity-log" @click="$emit('hide')">{{ __('Activity Log') }}</DropdownItem>
 
                 </NavDropdown>
-
-                <!-- <NavDropdown key="sales-dropdown">
-                    <template #icon>
-                        <svg aria-hidden="true"
-                            class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
-                            fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                                d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z"
-                                clip-rule="evenodd"></path>
-                        </svg>
-                    </template>
-                    <template #title>Sales</template>
-                    <DropdownItem :href="route('dashboard')">Products</DropdownItem>
-                    <DropdownItem :href="route('dashboard')">Billing</DropdownItem>
-                    <DropdownItem :href="route('dashboard')">Invoice</DropdownItem>
-
-                </NavDropdown> -->
-
             </ul>
             <ul class="transition-all pt-5 mt-5 space-y-2 border-t border-gray-200 dark:border-gray-700">
                 <NavLink v-if="$page.props.auth.user.is_admin" :href="route('dashboard.show')">
@@ -116,7 +88,7 @@ const classes = computed(() => {
                     </template>
                     Docs
                 </NavLink>
-                <NavLink v-if="$page.props.auth.user.is_admin" :href="route('dashboard.show')">
+<!--                 <NavLink v-if="$page.props.auth.user.is_admin" :href="route('dashboard.show')">
                     <template #icon>
                         <svg aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg">
@@ -126,7 +98,7 @@ const classes = computed(() => {
                         </svg>
                     </template>
                     Components
-                </NavLink>
+                </NavLink> -->
                 <NavLink v-if="$page.props.auth.user.is_admin" :href="route('dashboard.show')">
                     <template #icon>
                         <svg aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
