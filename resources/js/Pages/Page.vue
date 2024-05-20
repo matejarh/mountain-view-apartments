@@ -15,7 +15,7 @@ import ContentSection from '@/Pages/Page/_partials/ContentSection.vue';
         <div class="space-y-0">
             <HeroSection />
            <!--  <div class="spacer h-48 w-full"></div> -->
-            <ContentSection />
+            <ContentSection id="content-section" />
         </div>
     </DefaultLayout>
 </template>

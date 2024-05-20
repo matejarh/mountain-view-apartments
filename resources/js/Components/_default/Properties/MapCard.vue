@@ -67,7 +67,7 @@ const resetBounds = () => {
                 <l-icon :popup-anchor="[0, -30]" :icon-url="propertyIcon.url" :icon-size="propertyIcon.size" />
                 <l-popup class="">
                     <div class="content py-2">
-                        <img v-if="page.props.property.galleries.length>0" :src="page.props.property.galleries[0].images[0].thumb_url" class="w-24 h-16 float-left pr-2" />
+                        <img v-if="page.props.property.galleries.length>0" :src="page.props.property.galleries[0].images[0].thumb_url" class="rounded w-24 h-16 float-left pr-2" />
                         <div class="item-body  ">
                             <h3 class="font-bold text-base leading-tight">{{ page.props.property.title[$page.props.locale] }}</h3>
                             {{ page.props.property.seo_description[$page.props.locale] }}

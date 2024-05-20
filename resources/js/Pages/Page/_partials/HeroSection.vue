@@ -50,6 +50,10 @@ onMounted(() => {
     initBgImageRotation()
 })
 
+const scrollTo = (view) => {
+    document.getElementById(view).scrollIntoView(true);
+}
+
 onBeforeUnmount(() => {
     clearInterval(interval)
 })
@@ -84,7 +88,7 @@ onBeforeUnmount(() => {
                         </svg>
                     </PrimaryButton class="py-3 px-5 "> -->
 
-                    <SecondaryButton type="button">
+                    <SecondaryButton type="button" @click="scrollTo('content-section')">
                         {{__('Learn more')}}
                     </SecondaryButton>
                     <!-- <a href="#" @click="initBgImageRotation"
