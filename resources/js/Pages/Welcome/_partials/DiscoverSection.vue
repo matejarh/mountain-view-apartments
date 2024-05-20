@@ -6,7 +6,7 @@ import ShapedSection from '@/Components/_default/ShapedSection.vue';
 
 <template>
     <section class="relative " :color="{ light: 'primary-700', dark: 'primary-900' }">
-        <div class="py-10 lg:py-24 mx-auto md:max-w-screen-2xl px-4 lg:px-0">
+        <div class="py-10 lg:py-24 mx-auto md:max-w-screen-2xl px-4 xl:px-0">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-4 xl:gap-8">
 
                 <div v-for="item,key in $page.props.discover" :key="key"
