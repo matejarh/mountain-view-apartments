@@ -357,7 +357,6 @@ class InvalidKeywords
         // 'Problem',
         'Produced and sent out',
         'Profits',
-        'Promise',
         'Promise you',
         'Purchase',
         'Pure Profits',

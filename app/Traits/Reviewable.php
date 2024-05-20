@@ -18,12 +18,12 @@ trait Reviewable
             $model->reviews()->delete();
 
             // Decrement the reviews count when the model is deleted
-            $model->decrement('reviews_count');
+            //$model->decrement('reviews_count');
         });
 
         static::created(function ($model) {
             // Increment the reviews count when a new model instance is created
-            $model->increment('reviews_count');
+           // $model->increment('reviews_count');
         });
     }
 
@@ -64,6 +64,8 @@ trait Reviewable
         ];
 
         $this->reviews()->forceCreate($attributes);
+
+        $this->increment('reviews_count');
     }
 
     /**
@@ -74,6 +76,7 @@ trait Reviewable
     public function unreview(int $id): void
     {
         $this->reviews()->find($id)->delete();
+        $this->decrement('reviews_count');
     }
 
     /**

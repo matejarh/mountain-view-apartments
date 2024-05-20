@@ -21,7 +21,7 @@ import FacilitiesSection from './_partials/FacilitiesSection.vue';
             <HeroSection />
             <!-- <div class="spacer h-48 w-full"></div> -->
             <InfoSection id="info" class="z-20" />
-            <MapSection class="mt-6 h-[28rem]" />
+            <MapSection class="mt-6 h-[28rem] z-0" />
             <AvailabilityCalendar id="availability" class="pb-20" />
             <HouseRules id="rules" class="z-20" />
             <div class="spacer h-48 w-full"></div>

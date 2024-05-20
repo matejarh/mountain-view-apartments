@@ -80,7 +80,19 @@ class Property extends Model
             }
         });
 
+        foreach (static::deleteItems() as $item) {
+            static::deleting(function ($user) use ($item) {
+                $i = $item;
+                $user->$i->each->delete();
+            });
+        }
 
+
+    }
+
+    protected static function deleteItems(): array
+    {
+        return ['inquiries'];
     }
 
     /**

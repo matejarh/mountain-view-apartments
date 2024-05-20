@@ -23,6 +23,38 @@ Route::post('/language-switch', [LanguageController::class, 'switch'])->name('sw
 Route::post('/send-inquiry/{property}', [InquiriesController::class, 'create'])->name('inquiry.create');
 Route::get('/fetch-properties-for-dropdown', [PropertiesController::class, 'fetch'])->name('properties.fetch');
 
+
+/**
+ * Public routes with $lang prefix
+ */
+
+Route::group(['prefix' => '{lang}', 'middleware' => 'web'], function () {
+    Route::get('/', [PagesController::class, 'home'])->name('home');
+
+    Route::get('/about-us', [PagesController::class, 'aboutUs'])->name('aboutus');
+
+    Route::name('properties.')->prefix('accomodations')->namespace('accomodations')->group(function () {
+        Route::get('/', [PropertiesController::class, 'index'])->name('index');
+        Route::get('/{property}', [PropertiesController::class, 'show'])->name('show');
+    });
+
+    Route::name('reviews.')->prefix('reviews')->namespace('reviews')->group(function () {
+        Route::get('/for/{property}', [ReviewsController::class, 'index'])->name('index');
+
+    });
+    Route::get('/offers', [PagesController::class, 'offers'])->name('offers');
+    Route::get('/contact', [PagesController::class, 'contact'])->name('contact.show');
+    Route::get('/explore/bled', [PagesController::class, 'bled'])->name('explore.bled');
+    Route::get('/discover/nassfeld', [PagesController::class, 'nassfeld'])->name('discover.nassfeld');
+
+    Route::name('stories.')->prefix('stories')->namespace('stories')->group(function () {
+        Route::get('/', [StoriesController::class, 'index'])->name('index');
+        Route::get('/{story}', [StoriesController::class, 'show'])->name('show');
+    });
+
+});
+
+
 /**
  * Authentucated user routes
  */
@@ -57,30 +89,4 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
         });
 
     });
-});
-
-/**
- * Public routes with $lang prefix
- */
-
-Route::group(['prefix' => '{lang}', 'middleware' => 'web'], function () {
-    Route::get('/', [PagesController::class, 'home'])->name('home');
-
-    Route::get('/about-us', [PagesController::class, 'aboutUs'])->name('aboutus');
-
-    Route::name('properties.')->prefix('accomodations')->namespace('accomodations')->group(function () {
-        Route::get('/', [PropertiesController::class, 'index'])->name('index');
-        Route::get('/{property}', [PropertiesController::class, 'show'])->name('show');
-    });
-
-    Route::name('reviews.')->prefix('reviews')->namespace('reviews')->group(function () {
-        Route::get('/for/{property}', [ReviewsController::class, 'index'])->name('index');
-
-    });
-
-    Route::name('stories.')->prefix('stories')->namespace('stories')->group(function () {
-        Route::get('/', [StoriesController::class, 'index'])->name('index');
-        Route::get('/{story}', [StoriesController::class, 'show'])->name('show');
-    });
-
 });

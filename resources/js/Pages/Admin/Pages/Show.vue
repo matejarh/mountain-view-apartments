@@ -24,7 +24,7 @@ const showAttachGalleryDialog = ref(false)
             <template #title>
                 {{ $page.props.page.name }}
                 -
-                {{ $page.props.page.title[$page.props.locale] }}
+                {{ $page.props.page?.title[$page.props.locale] }}
             </template>
 
             <template #content>

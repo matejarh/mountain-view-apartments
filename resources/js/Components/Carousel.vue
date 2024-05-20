@@ -35,6 +35,34 @@ defineProps({
     }
 })
 
+const breakpoints = ref({
+      // 700px and up
+      640: {
+        itemsToShow: 1,
+        snapAlign: 'center',
+      },
+      // 700px and up
+      768: {
+        itemsToShow: 1.5,
+        snapAlign: 'center',
+      },
+      // 1024 and up
+      1024: {
+        itemsToShow: 2.5,
+        snapAlign: 'start',
+      },
+      1180: {
+        itemsToShow: 1,
+        snapAlign: 'start',
+      },
+      // 1024 and up
+      1280: {
+        itemsToShow: 1,
+        snapAlign: 'start',
+      },
+
+})
+
 const i18n = ref({
     ariaNextSlide: "Navigate to next slide",
     ariaPreviousSlide: "Navigate to previous slide",
@@ -50,21 +78,21 @@ const i18n = ref({
 </script>
 
 <template>
-    <div id="default-carousel" class="relative">
+    <div id="default-carousel" class="flex flex-col">
         <carousel :items-to-show="1"
                     :autoplay="autoplay"
                     :wrap-around="true"
                     :transition="transition"
+                    snapAlign="center"
                     :i18n="i18n"
+                    :breakpoints="breakpoints"
                     :pause-autoplay-on-hover="true"
-                    class="relative  overflow-hidden  "
-                    :class="[height, rounded]">
+                    class="h-full overflow-hidden"
+                    :class="[rounded]">
 
             <slide v-for="slide, key in items" :key="key" class="">
-                <div :class="[height, width]">
-                    <img :src="slide.thumb_url"
-                    :class="height"
-                        class="absolute block object-cover  w-auto -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" :alt="slide.slug">
+                <div class="overflow-hidden w-full h-full">
+                    <img :src="slide.thumb_url" class=" object-cover w-full h-full" :alt="slide.slug">
                 </div>
             </slide>
 

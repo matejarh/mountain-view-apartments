@@ -13,7 +13,7 @@ trait Likable
     {
         static::deleting(function ($model) {
             //\Log::debug('deleting');
-            //$model->likes()->delete();
+            $model->likes()->delete();
             // $model->decrement('likes_count');
         });
 

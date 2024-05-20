@@ -43,7 +43,7 @@ const makeIndicators = () => {
 
 const fullScreenClasses = computed(() => {
     return [
-        props.isFullScreen ? 'min-h-screen sm:min-h-screen  overflow-hidden' : ' overflow-visible h-[100vh] sm:min-h-[55rem] md:h-64 lg:min-h-[56vh] xl:min-h-[45vh] 2xl:min-h-[50vh]'
+        props.isFullScreen ? 'min-h-screen sm:min-h-screen  overflow-hidden' : ' overflow-hidden object-cover h-screen'
     ]
 })
 
@@ -100,7 +100,7 @@ onMounted(() => {
 <div :id="id" class="relative w-full">
     <!-- Carousel wrapper -->
     <div
-        class="relative overflow-hidden rounded-lg" @mouseenter="carousel.pause()" @mouseleave="carousel.cycle()" :class="fullScreenClasses"
+        class="relative overflow-hidden w-full h-full rounded-lg" @mouseenter="carousel.pause()" @mouseleave="carousel.cycle()" :class="fullScreenClasses"
     >
         <slot />
         <!-- <div v-for="image, key in slides" :id="`carousel-item-${key}`" class="hidden duration-700 ease-in-out" >
@@ -114,7 +114,7 @@ onMounted(() => {
     </div>
     <!-- Slider indicators -->
     <div
-        class="absolute bottom-4 left-1/2 z-30 flex -translate-x-1/2 space-x-3 rtl:space-x-reverse"
+        class="hidden bottom-4 left-1/2 z-30 -translate-x-1/2 space-x-3 rtl:space-x-reverse"
     >
         <button
             v-for="item, key in slides"

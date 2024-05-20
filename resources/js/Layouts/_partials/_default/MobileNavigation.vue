@@ -96,7 +96,7 @@ const logout = () => {
                                 <MobileNavigationItem @clicked="helpers.hideMobileDrawer"
                                     :active="`/${$page.props.locale}`" :href="route('home', $page.props.locale)">
                                     <template #icon>
-                                        <HomeIcon />
+                                        <HomeIcon class="w-5 h-5" />
                                     </template>
                                     {{ __("Home") }}
                                 </MobileNavigationItem>
@@ -104,17 +104,49 @@ const logout = () => {
                                     :active="`/${$page.props.locale}/accomodations`"
                                     :href="route('properties.index', $page.props.locale)">
                                     <template #icon>
-                                        <LandmarkIcon />
+                                        <LandmarkIcon class="w-5 h-5" />
                                     </template>
-                                    {{ __("Accomodations") }}
+                                    {{ __("Apartments") }}
                                 </MobileNavigationItem>
                                 <MobileNavigationItem @clicked="helpers.hideMobileDrawer"
-                                    :active="`/${$page.props.locale}/stories`"
-                                    :href="route('properties.index', $page.props.locale)">
+                                    :active="`/${$page.props.locale}/explore/bled`"
+                                    :href="route('explore.bled', $page.props.locale)">
                                     <template #icon>
-                                        <BookOpenIcon />
+                                        <LandmarkIcon class="w-5 h-5" />
                                     </template>
-                                    {{ __("Stories") }}
+                                    {{ __("Explore Bled") }}
+                                </MobileNavigationItem>
+                                <MobileNavigationItem @clicked="helpers.hideMobileDrawer"
+                                    :active="`/${$page.props.locale}/discover/nassfeld`"
+                                    :href="route('discover.nassfeld', $page.props.locale)">
+                                    <template #icon>
+                                        <LandmarkIcon class="w-5 h-5" />
+                                    </template>
+                                    {{ __("Explore Nassfeld") }}
+                                </MobileNavigationItem>
+<!--                                 <MobileNavigationItem @clicked="helpers.hideMobileDrawer"
+                                    :active="`/${$page.props.locale}/offers`"
+                                    :href="route('offers', $page.props.locale)">
+                                    <template #icon>
+                                        <LandmarkIcon class="w-5 h-5" />
+                                    </template>
+                                    {{ __("Offers") }}
+                                </MobileNavigationItem> -->
+                                <MobileNavigationItem @clicked="helpers.hideMobileDrawer"
+                                    :active="`/${$page.props.locale}/about-us`"
+                                    :href="route('aboutus', $page.props.locale)">
+                                    <template #icon>
+                                        <LandmarkIcon class="w-5 h-5" />
+                                    </template>
+                                    {{ __("About Us") }}
+                                </MobileNavigationItem>
+                                <MobileNavigationItem @clicked="helpers.hideMobileDrawer"
+                                    :active="`/${$page.props.locale}/contact`"
+                                    :href="route('contact.show', $page.props.locale)">
+                                    <template #icon>
+                                        <BookOpenIcon class="w-5 h-5" />
+                                    </template>
+                                    {{ __("Contact") }}
                                 </MobileNavigationItem>
 
 

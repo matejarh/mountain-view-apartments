@@ -4,9 +4,13 @@ namespace Tests\Feature;
 
 use App\Models\Facility;
 use App\Models\Gallery;
+use App\Models\Inquiry;
+use App\Models\Like;
 use App\Models\Property;
+use App\Models\Review;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use SebastianBergmann\Type\VoidType;
 use Tests\TestCase;
 
 class PropertiesAdminTest extends TestCase
@@ -318,5 +322,45 @@ class PropertiesAdminTest extends TestCase
             ->assertSessionHas(["status" => "gallery-detached"]);
 
         $this->assertDatabaseCount('properties_galleries', 0);
+    }
+
+    public function test_on_property_destroy_delete_likes_reviews_inquitries() :void
+    {
+        $property = Property::factory()->create();
+
+        $response = $this->actingAs($this->user)->post(route('properties.like', ['property' => $property, 'lang' => app()->currentLocale()]))
+        ->assertStatus(302)->assertSessionHas(['status' => 'property-like-toggled']);
+
+        $this->assertCount(1, Like::all());
+
+        $inquiry =  [
+            'name' => 'Janez',
+            'email' => 'janez@jaez.si',
+            'phone' => '040481181',
+            'adults' => fake()->randomElement([1,2,3,4]),
+            'children' => fake()->randomElement([1,2,3,4]),
+            'pets' => fake()->randomElement([1,0]),
+            'subject' => 'Nekej za subjekt',
+            'message' => 'Nekeja za besedilo bla bla bla',
+            'date' => [now()->addDay(), now()->addWeek()],
+        ];
+
+        $response = $this->post(route('inquiry.create', $property), $inquiry);
+
+        $this->assertCount(1, Inquiry::all());
+
+        $review = [
+            'score' => 5,
+            'text' => 'Some test review',
+        ];
+        $response = $this->actingAs($this->user)->post(route('properties.review', $property), $review)
+            ->assertStatus(302)->assertSessionHas(['status' => 'property-reviewed']);
+
+        $this->assertCount(1, Review::all());
+
+        $property->delete();
+        $this->assertCount(0, Like::all());
+        $this->assertCount(0, Review::all());
+        $this->assertCount(0, Inquiry::all());
     }
 }

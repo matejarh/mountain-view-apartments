@@ -13,6 +13,7 @@ import ShapedSection from '@/Components/_default/ShapedSection.vue';
 import TileGallery from '@/Components/_default/TileGallery.vue';
 import LikeButton from '@/Components/_default/Properties/LikeButton.vue';
 import ReviewCard from '@/Components/_default/Reviews/ReviewCard.vue';
+import formatNumber from '@/mixins/numberToKilo';
 
 const showFullScreenImageModal = ref(false)
 const showSocialSharingDialog = ref(false)
@@ -85,10 +86,13 @@ const handleFullScreenImage = (image) => {
                         <LikeButton :item="$page.props.property" />
 
                         <a href="#availability" title=""
-                            class="text-white mt-4 sm:mt-0 bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800 flex items-center justify-center"
+                            class="text-white relative mt-4 sm:mt-0 bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800 flex items-center justify-center"
                             role="button">
                             <CalendarIcon class="w-5 h-5 " />
-
+                            <div
+                    class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-primary-700 border-2 border-white rounded-full -top-2 -end-2 dark:border-gray-50">
+                        {{ formatNumber($page.props.property.reviews_count) }}
+                </div>
                             <!-- {{ __('Check availability') }} -->
                         </a>
 

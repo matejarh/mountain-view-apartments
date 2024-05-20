@@ -5,6 +5,7 @@ import RatingStars from '@/Components/_default/Properties/RatingStars.vue';
 import ArrowRightIcon from '@/Icons/ArrowRightIcon.vue';
 import { useHelperStore } from '@/stores/helpers';
 import { getCurrentInstance, onMounted, ref } from 'vue';
+import CarouselGallery from './CarouselGallery.vue';
 
 const props = defineProps({
     property: Object,
@@ -31,7 +32,11 @@ onMounted(() => {
             <div class="flex flex-col justify-center p-8">
                 <h1
                     class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
-                    {{ property.title[$page.props.locale] }}</h1>
+                    <inertia-link :href="route('properties.show', { property: property, lang: $page.props.locale })">
+                        {{ property.title[$page.props.locale] }}
+
+                    </inertia-link>
+                </h1>
                 <div class="mt-0 sm:items-center sm:gap-4 sm:flex">
                     <p class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">
                         {{ __(property.type) }}
@@ -67,8 +72,9 @@ onMounted(() => {
                 </div>
             </div>
             <div v-if="property.galleries.length > 0">
-                <Carousel rounded="" :items="property.galleries[0].images"
-                    height="h-64 sm:h-[34rem] md:h-[33rem] lg:h-[20rem] xl:h-[27rem]" width="" class="shadow-lg" />
+                <!-- <Carousel rounded="" :items="property.galleries[0].images"
+                    height="h-64 sm:h-[34rem] md:h-[33rem] lg:h-[20rem] xl:h-[27rem]" width="" class="shadow-lg" /> -->
+                    <CarouselGallery class=""  :items="property.galleries[0].images" />
 
             </div>
         </div>

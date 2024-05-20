@@ -36,7 +36,7 @@ export default {
                 },
                 'reverse-spin': {
                     from: {
-                      transform: 'rotate(360deg)'
+                        transform: 'rotate(360deg)'
                     },
                 }
 
@@ -101,5 +101,5 @@ export default {
         },
     },
 
-    plugins: [forms, typography, require('tailwind-scrollbar'),require('flowbite/plugin'),],
+    plugins: [forms, typography, require('tailwind-scrollbar'), require('flowbite/plugin'), require('flowbite-typography'),],
 };

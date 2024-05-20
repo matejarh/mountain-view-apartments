@@ -61,8 +61,20 @@ watchEffect(async () => {
                 </TopNavigationItem>
                 <TopNavigationItem key="accomodations" v-show="helpers.showNavItems[2]"
                     :to="`/${$page.props.locale}/accomodations`">
-                    {{ __('Our Apartments') }}
+                    {{ __('Apartments') }}
                 </TopNavigationItem>
+                <TopNavigationItem key="bled" v-show="helpers.showNavItems[3]"
+                    :to="`/${$page.props.locale}/explore/bled`">
+                    {{ __('Explore Bled') }}
+                </TopNavigationItem>
+                <TopNavigationItem key="nassfeld" v-show="helpers.showNavItems[3]"
+                    :to="`/${$page.props.locale}/discover/nassfeld`">
+                    {{ __('Discover Nassfeld') }}
+                </TopNavigationItem>
+<!--                 <TopNavigationItem key="offers" v-show="helpers.showNavItems[3]"
+                    :to="`/${$page.props.locale}/offers`">
+                    {{ __('Offers') }}
+                </TopNavigationItem> -->
                 <TopNavigationItem key="aboutus" v-show="helpers.showNavItems[3]"
                     :to="`/${$page.props.locale}/about-us`">
                     {{ __('About Us') }}
@@ -70,9 +82,9 @@ watchEffect(async () => {
                 <!-- <TopNavigationItem key="reservation" v-show="helpers.showNavItems[4]" :to="'/reservation'">
                     {{ __('Reservation') }}
                 </TopNavigationItem> -->
-                <TopNavigationItem key="stories" v-show="helpers.showNavItems[4]" :to="`/${$page.props.locale}/stories`">
+<!--                 <TopNavigationItem key="stories" v-show="helpers.showNavItems[4]" :to="`/${$page.props.locale}/stories`">
                     {{ __('Stories') }}
-                </TopNavigationItem>
+                </TopNavigationItem> -->
 
                 <TopNavigationItem as="button" key="contact" v-show="helpers.showNavItems[5]"
                     @click="helpers.showContactDrawer">

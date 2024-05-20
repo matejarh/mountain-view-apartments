@@ -1,52 +1,52 @@
 <script setup>
 import ShapeBottom from '@/Components/_default/ShapeBottom.vue';
 import ShapeTop from '@/Components/_default/ShapeTop.vue';
-import HeroTitlesCarousel from '@/Components/_default/Welcome/HeroTitlesCarousel.vue';
-import { router, usePage } from '@inertiajs/vue3';
-import { initCarousels } from 'flowbite';
-import { onBeforeUnmount, onMounted, ref } from 'vue';
+import { usePage } from '@inertiajs/vue3';
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 import LogoHero from '@/Components/LogoHero.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TransparentButton from '@/Components/_default/TransparentButton.vue';
+import SecondaryButton from '@/Components/SecondaryButton.vue';
 
 const page = usePage()
 
 const bgImage = ref(new URL('/resources/images/backgrounds/winter-sunrise.jpg', import.meta.url))
 
-let interval
+let interval;
 
 const initBgImageRotation = () => {
-    if (page.props.page.galleries.length <= 0) {
-        clearInterval(interval)
-        return
+    const galleries = page.props.page.galleries;
+
+    if (galleries.length <= 0) {
+        clearInterval(interval);
+        return;
     }
-    const gallery = page.props.page.galleries.find(gallery => gallery.name === 'Home Page Hero');
 
+    const gallery = galleries.find(g => g.name === page.props.page.name);
 
-    bgImage.value = gallery.images[0].photo_url
-    let current = 1
+    if (!gallery || !gallery.images || gallery.images.length === 0) {
+        clearInterval(interval);
+        return;
+    }
+
+    let current = 0;
+
+    bgImage.value = gallery.images[current].photo_url;
 
     interval = setInterval(() => {
-        bgImage.value = gallery.images[current].photo_url
-
-        if (current + 1 >= gallery.images.length) {
-            current = 0
-        } else {
-            current++
-        }
+        current = (current + 1) % gallery.images.length;
+        bgImage.value = gallery.images[current].photo_url;
     }, 5000);
-}
+};
 
-const scrollTo = (element) => {
-    document.getElementById(element).scrollIntoView(false);
+const gotoBookNow = () => {
+    document.getElementById("booknow").scrollIntoView();
 }
 
 const stopBgRotation = () => {
-    clearInterval(interval)
+    clearInterval(interval.value)
 }
 
 onMounted(() => {
-    initCarousels()
     initBgImageRotation()
 })
 
@@ -57,44 +57,36 @@ onBeforeUnmount(() => {
 
 <template>
     <section
-        class="bg-center z-0 bg-no-repeat bg-cover bg-fixed min-h-screen flex flex-col justify-center bg-gray-500  dark:bg-gray-700 bg-blend-multiply transition-all duration-[2000ms] ease-in-out bg-paralax relative"
+        class="bg-center bg-no-repeat bg-cover bg-fixed min-h-screen flex flex-col justify-center  bg-gray-500 bg-blend-multiply transition-all duration-[2000ms] ease-in-out bg-paralax relative"
         :style="`background-image: url(${bgImage});`">
 
-        <div class="px-4 mx-auto max-w-screen-xl text-center pt-24 md:pt-10 lg:pt-56">
-            <div class="flex flex-col min-w-full">
+        <div class="px-4 mx-auto max-w-screen-xl text-center py-24 md:py-56 lg:py-56">
+            <div class="">
                 <div class="flex justify-center mx-auto">
 
-                    <LogoHero />
+                    <LogoHero  />
                 </div>
-                <!-- <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-white md:text-5xl lg:text-6xl">
-                    {{ page.props?.page.title[$page.props.locale] }}</h1>
 
-                <div class="mb-8 text-lg font-normal text-gray-300 lg:text-xl sm:px-16 lg:px-48"
-                    v-html="page.props?.page.description[$page.props.locale]"></div> -->
-            </div>
-        </div>
-        <div class="mx-auto max-w-screen text-center">
-            <div class="flex flex-col min-w-full">
+                <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-white md:text-5xl lg:text-6xl">
+                    {{ $page.props.page.title[$page.props.locale] }}</h1>
 
-                <HeroTitlesCarousel class="w-screen" />
-            </div>
-        </div>
-        <div class="px-4 mx-auto max-w-screen-xl text-center pb-24 md:pb-56 lg:pb-56">
-            <div class="flex flex-col min-w-full">
+                <p class="mb-8 text-lg font-normal text-gray-300 whitespace-pre-wrap lg:text-xl sm:px-16 lg:px-48">{{
+                    $page.props.page.description[$page.props.locale] }}</p>
+
                 <div class="mb-8 flex flex-col space-y-4 sm:space-x-4 sm:flex-row sm:justify-center sm:space-y-0">
-                    <PrimaryButton @click="$inertia.get(route('properties.index', {lang:$page.props.locale}))" class="py-3 px-5 " type="button">
+                    <!-- <PrimaryButton @click="gotoBookNow" class="py-3 px-5 " type="button">
 
-                        {{ __('Check our apartments') }}
+                        {{__('Check availability')}}
                         <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M1 5h12m0 0L9 1m4 4L9 9" />
                         </svg>
-                    </PrimaryButton class="py-3 px-5 ">
+                    </PrimaryButton class="py-3 px-5 "> -->
 
-                    <TransparentButton type="button" @click="scrollTo('discover')">
-                        {{ __('Learn more') }}
-                    </TransparentButton>
+                    <SecondaryButton type="button">
+                        {{__('Learn more')}}
+                    </SecondaryButton>
                     <!-- <a href="#" @click="initBgImageRotation"
                         class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
                     </a> -->
@@ -104,7 +96,7 @@ onBeforeUnmount(() => {
                     </a> -->
 
                 </div>
-                <!--                 <form class="w-full max-w-md mx-auto">
+                <!-- <form class="w-full max-w-md mx-auto">
                     <label for="default-email"
                         class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Email sign-up</label>
                     <div class="relative">
@@ -131,8 +123,8 @@ onBeforeUnmount(() => {
         </div>
 
         <ShapeBottom
-            class="absolute inset-y-full z-10 left-0 right-0 w-full rotate-180 text-white dark:text-gray-900 " />
+            class="absolute inset-y-full z-10 left-0 right-0 w-full rotate-180 text-primary-700 dark:text-primary-900 " />
         <ShapeTop
-            class="absolute inset-y-full z-10 left-0 right-0 w-full bottom-1/2 text-white dark:text-gray-900 " />
+            class="absolute inset-y-full z-10 left-0 right-0 w-full bottom-1/2 text-primary-700 dark:text-primary-900 " />
     </section>
 </template>

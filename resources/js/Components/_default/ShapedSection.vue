@@ -21,9 +21,12 @@ defineProps({
 <template>
     <section :class="`bg-${color.light} dark:bg-${color.dark} relative antialiased`">
         <ShapeBottom
-            :class="`absolute inset-y-full z-10 left-0 right-0 w-full top-0 rotate-180 text-${color.light} dark:text-${color.dark}` " />
+            :class="`absolute inset-y-full z-10 left-0 right-0 w-full drop-shadow-up-lg top-0 rotate-180 text-${color.light} dark:text-${color.dark}`" />
         <ShapeTop
-            :class="`absolute inset-y-full z-0 left-0 right-0 w-full bottom-1/2 text-${color.light} dark:text-${color.dark}` " />
-        <slot />
+            :class="`absolute inset-y-full z-10 left-0 right-0 w-full drop-shadow-lg bottom-1/2 text-${color.light} dark:text-${color.dark}`" />
+        <div class="z-0">
+
+            <slot />
+        </div>
     </section>
 </template>

@@ -49,7 +49,7 @@ watch(disabledDates, () => {
 </script>
 
 <template>
-    <section class="relative z-40 bg-primary-700 dark:bg-primary-900 pt-0 sm:pt-0 md:pt-0">
+    <section class="relative z-20 bg-primary-700 dark:bg-primary-900 pt-0 sm:pt-0 md:pt-0">
         <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
             <div class="mx-auto max-w-screen-xl text-center">
                 <h2 class="mb-4 text-4xl tracking-tight font-extrabold leading-tight text-white dark:text-white">
