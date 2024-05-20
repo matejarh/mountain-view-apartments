@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col ">
-        <Carousel class="w-full" id="gallery" :items-to-show="1" :wrap-around="false" v-model="currentSlide">
+        <Carousel class="w-full" :autoplay="5000" id="gallery" :items-to-show="1" :wrap-around="false" v-model="currentSlide">
             <Slide v-for="slide, key in items" :key="key">
                 <div class="carousel__item relative overflow-hidden w-full pt-[56.25%];" >
                     <img :src="slide.thumb_url" class=" object-cover w-full h-full  top-0 left-0" >
