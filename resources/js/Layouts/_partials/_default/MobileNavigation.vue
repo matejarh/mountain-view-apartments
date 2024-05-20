@@ -32,7 +32,7 @@ const logout = () => {
 <template>
 
 
-    <div class=" lg:hidden fixed top-0 left-0 z-50 w-full p-4 bg-transparent flex justify-between">
+    <div class=" xl:hidden fixed top-0 left-0 z-50 w-full p-4 bg-transparent flex justify-between">
         <LanguageDropdown  align="left" :no-label="true" />
 
         <div class="space-x-4">
