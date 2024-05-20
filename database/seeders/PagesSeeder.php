@@ -118,7 +118,7 @@ class PagesSeeder extends Seeder
                 'cs' => 'Bled, Slovinsko, jezero Bled, hrad Bled, soutěska Vintgar, turistika v Bled, cyklistika v Bled, vodní sporty Bled, blejská smetanová roláda, tradiční slovinská kuchyně, festivaly Bled, akce v Bled, prozkoumat Bled, atrakce v Bled, aktivity v Bled, Julské Alpy, průvodce Bled',
             ],
             'extras' => [
-                'discover_bled' => [
+                'explore_bled' => [
                     'title' => [
                         'sl' => 'Razišči Bled',
                         'en' => 'Explore Bled',
