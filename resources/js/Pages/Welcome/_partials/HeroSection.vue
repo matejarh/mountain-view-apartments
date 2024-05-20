@@ -60,23 +60,13 @@ onBeforeUnmount(() => {
         class="bg-center z-0 bg-no-repeat bg-cover bg-fixed min-h-screen flex flex-col justify-center bg-gray-500  dark:bg-gray-700 bg-blend-multiply transition-all duration-[2000ms] ease-in-out bg-paralax relative"
         :style="`background-image: url(${bgImage});`">
 
-        <div class="px-4 mx-auto max-w-screen-xl text-center py-24 md:py-24 xl:py-56">
-            <div class="flex flex-col min-w-full">
-                <div class="flex justify-center mx-auto">
-
-                    <LogoHero />
-                </div>
-                <!-- <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-white md:text-5xl lg:text-6xl">
-                    {{ page.props?.page.title[$page.props.locale] }}</h1>
-
-                <div class="mb-8 text-lg font-normal text-gray-300 lg:text-xl sm:px-16 lg:px-48"
-                    v-html="page.props?.page.description[$page.props.locale]"></div> -->
-            </div>
+        <div class="px-4 mx-auto max-w-screen-xl text-center pt-24 md:pt-24 xl:pt-56">
+            <LogoHero />
         </div>
         <div class="mx-auto max-w-screen text-center">
             <div class="flex flex-col min-w-full">
 
-                <HeroTitlesCarousel class="w-screen" />
+                <HeroTitlesCarousel class="w-screen overflow-hidden" />
             </div>
         </div>
         <div class="px-4 mx-auto max-w-screen-xl text-center pb-24 md:pb-56 lg:pb-56">
