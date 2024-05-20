@@ -43,10 +43,13 @@ const likedClasses = computed(() => {
         <Tooltip :text="__(likeButtonText)">
             {{ }}
             <button @click="recaptcha" title="" :class="likedClasses"
-                class="flex relative items-center justify-center py-2.5 px-5 text-sm font-medium focus:outline-none border focus:z-10 focus:ring-4 rounded-lg "
+                class="flex w-full relative items-center justify-center py-2.5 px-5 text-sm font-medium focus:outline-none border focus:z-10 focus:ring-4 rounded-lg "
                 role="button">
-                <HeartIcon class="w-5 h-5 -ms-2 me-2" />
-                {{ item?.is_liked ? __('Liked') : __('Like') }}
+                <HeartIcon class="w-5 h-5 -ms-2 me-2 sm:ms-0 sm:me-0" />
+                <span class="sm:hidden">
+
+                    {{ item?.is_liked ? __('Liked') : __('Like') }}
+                </span>
 
                 <div
                     class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-bittersweet-500 border-2 border-white rounded-full -top-2 -end-2 dark:border-gray-50">

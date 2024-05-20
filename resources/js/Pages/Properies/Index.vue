@@ -28,7 +28,7 @@ const items = ref([
         :keywords="$page.props.seo?.keywords">
 
         <div class="space-y-0">
-            <div class="spacer h-[10svh] w-full"></div>
+            <div class="spacer hidden xl:block h-[10svh] w-full"></div>
             <Wrapper>
                 <ul
                     class="flex flex-wrap text-sm font-medium text-center bg-gray-50 dark:bg-gray-900 rounded-lg p-2  text-gray-500 dark:text-gray-400 mb-4">
