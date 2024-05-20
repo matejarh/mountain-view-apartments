@@ -112,6 +112,15 @@ const resetBounds = () => {
     display: none;
 }
 
+html.dark .leaflet-popup-content-wrapper {
+    background-color: rgb(79 79 79 );
+    color: #ffffff
+}
+html.dark .leaflet-popup-tip {
+    background-color: rgb(79 79 79 );
+}
+
+
 .leaflet-top {
     top: 24px;
 }
