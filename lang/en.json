@@ -532,5 +532,19 @@
     "Booked": "Booked",
     "Find Us On The Map": "Find us on the map",
     "Share to Social media": "Share to Social media",
-    "Reset map": "Reset map"
+    "Reset map": "Reset map",
+    "No accomodations yet!": "No accomodations yet!",
+    "Search for accomodations": "Search for accomodations",
+    "Company info": "Company info",
+    "Set up company info that is shown in footers or headers":"Set up company info that is shown in footers or headers",
+    "address": "Address",
+    "city": "City",
+    "country": "Country",
+    "phone": "Phone",
+    "email": "Email",
+    "extra_info": "Extra info",
+    "company_name": "Company name",
+    "Intervals": "Intervals",
+    "hero_background_interval": "Background interval in seconds"
+
 }
