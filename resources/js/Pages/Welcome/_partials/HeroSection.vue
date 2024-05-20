@@ -60,7 +60,7 @@ onBeforeUnmount(() => {
         class="bg-center z-0 bg-no-repeat bg-cover bg-fixed min-h-screen flex flex-col justify-center bg-gray-500  dark:bg-gray-700 bg-blend-multiply transition-all duration-[2000ms] ease-in-out bg-paralax relative"
         :style="`background-image: url(${bgImage});`">
 
-        <div class="px-4 mx-auto max-w-screen-xl text-center pt-24 md:pt-10 lg:pt-56">
+        <div class="px-4 mx-auto max-w-screen-xl text-center py-24 md:py-24 xl:py-56">
             <div class="flex flex-col min-w-full">
                 <div class="flex justify-center mx-auto">
 

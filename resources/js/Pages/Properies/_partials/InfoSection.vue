@@ -14,6 +14,7 @@ import TileGallery from '@/Components/_default/TileGallery.vue';
 import LikeButton from '@/Components/_default/Properties/LikeButton.vue';
 import ReviewCard from '@/Components/_default/Reviews/ReviewCard.vue';
 import formatNumber from '@/mixins/numberToKilo';
+import CarouselGallery from '@/Components/_default/CarouselGallery.vue';
 
 const showFullScreenImageModal = ref(false)
 const showSocialSharingDialog = ref(false)
@@ -34,7 +35,8 @@ const handleFullScreenImage = (image) => {
                     <!-- <PhotoGallery class="w-full" @clicked="handleFullScreenImage" /> -->
                     <!-- <FeaturedGallery :images="$page.props.property.galleries[0].images" class="w-full"
                         @clicked="handleFullScreenImage" /> -->
-                    <TileGallery :images="$page.props.property?.galleries[0].images" @clicked="handleFullScreenImage" />
+                    <CarouselGallery :items="$page.props.property?.galleries[0].images" />
+                    <!-- <TileGallery :images="$page.props.property?.galleries[0].images" @clicked="handleFullScreenImage" /> -->
                     <!-- <MapCard :property="$page.props.property" class="mt-6" /> -->
                     <!-- <p class="mt-4 font-lg font-semibold">Spread the word</p> -->
 
@@ -83,36 +85,48 @@ const handleFullScreenImage = (image) => {
 
 
                     <div class="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
-                        <LikeButton :item="$page.props.property" />
+                        <Tooltip :text="$page.props.property.is_liked ? __('Don\'t like') : __('Like')">
+                            <LikeButton :item="$page.props.property" />
+                        </Tooltip>
 
-                        <a href="#availability" title=""
-                            class="text-white relative mt-4 sm:mt-0 bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800 flex items-center justify-center"
-                            role="button">
-                            <CalendarIcon class="w-5 h-5 " />
-                            <div
-                    class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-primary-700 border-2 border-white rounded-full -top-2 -end-2 dark:border-gray-50">
-                        {{ formatNumber($page.props.property.reviews_count) }}
-                </div>
-                            <!-- {{ __('Check availability') }} -->
-                        </a>
+                        <Tooltip :text="__('Check Availability')">
+                            <a href="#availability" title=""
+                                class="text-white relative mt-4 sm:mt-0 bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800 flex items-center justify-center"
+                                role="button">
+                                <CalendarIcon class="w-5 h-5 -ms-2 me-2 sm:ms-0 sm:me-0" />
+                                <span class="sm:hidden">
+                                {{ __('Check availability') }}
+                                </span>
+                            </a>
+                        </Tooltip>
+                        <Tooltip :text="__('Post Review')">
+                            <inertia-link
+                                :href="route('reviews.create', { property: $page.props.property, lang: $page.props.locale })"
+                                title=""
+                                class="text-white relative mt-4 sm:mt-0 bg-amazon-700 hover:bg-amazon-800 focus:ring-4 focus:ring-amazon-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-amazon-600 dark:hover:bg-amazon-700 focus:outline-none dark:focus:ring-amazon-800 flex items-center justify-center"
+                                role="button">
+                                <CommentDotsIcon class="w-5 h-5 -ms-2 me-2 sm:ms-0 sm:me-0" />
+                                <div
+                                    class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-amazon-700 border-2 border-white rounded-full -top-2 -end-2 dark:border-gray-50">
+                                    {{ formatNumber($page.props.property.reviews_count) }}
+                                </div>
+                                <span class="sm:hidden">
+                                    {{ __('Post Review') }}
 
-                        <inertia-link
-                            :href="route('reviews.create', { property: $page.props.property, lang: $page.props.locale })"
-                            title=""
-                            class="text-white mt-4 sm:mt-0 bg-amazon-700 hover:bg-amazon-800 focus:ring-4 focus:ring-amazon-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-amazon-600 dark:hover:bg-amazon-700 focus:outline-none dark:focus:ring-amazon-800 flex items-center justify-center"
-                            role="button">
-                            <CommentDotsIcon class="w-5 h-5 " />
+                                </span>
+                            </inertia-link>
+                        </Tooltip>
+                        <Tooltip :text="__('Share to Social media')">
+                            <a href="#" @click="showSocialSharingDialog = true" title=""
+                                class="text-white mt-4 sm:mt-0 bg-amazon-700 hover:bg-amazon-800 focus:ring-4 focus:ring-amazon-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-amazon-600 dark:hover:bg-amazon-700 focus:outline-none dark:focus:ring-amazon-800 flex items-center justify-center"
+                                role="button">
+                                <ShareNodesIcon class="w-5 h-5 -ms-2 me-2 sm:ms-0 sm:me-0" />
+                                <span class="sm:hidden">
+                                    {{ __('Share') }}
 
-                            <!-- {{ __('Post Review') }} -->
-                        </inertia-link>
-
-                        <a href="#" @click="showSocialSharingDialog = true" title=""
-                            class="text-white mt-4 sm:mt-0 bg-amazon-700 hover:bg-amazon-800 focus:ring-4 focus:ring-amazon-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-amazon-600 dark:hover:bg-amazon-700 focus:outline-none dark:focus:ring-amazon-800 flex items-center justify-center"
-                            role="button">
-                            <ShareNodesIcon class="w-5 h-5 -ms-2 me-2" />
-
-                            {{ __('Share') }}
-                        </a>
+                                </span>
+                            </a>
+                        </Tooltip>
                     </div>
 
                     <!-- <SocialSharing class="mt-2 w-full" /> -->
@@ -126,7 +140,8 @@ const handleFullScreenImage = (image) => {
                         v-html="$page.props.property?.long_description[$page.props.locale]"></div>
 
                     <div class="">
-                        <h3 class="text-strong text-lg mb-4">{{ __('Latest reviews from our satisfied customers') }}</h3>
+                        <h3 class="text-strong text-lg mb-4">{{ __('Latest reviews from our satisfied customers') }}
+                        </h3>
                         <!-- {{ $page.props?.latest_reviews.length }} -->
                         <ReviewCard v-for="review in $page.props?.latest_reviews" :key="review.id" :review="review" />
                     </div>

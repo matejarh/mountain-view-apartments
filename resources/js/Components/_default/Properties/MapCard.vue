@@ -64,7 +64,7 @@ const resetBounds = () => {
                 name="OpenStreetMap"></l-tile-layer>
 
             <l-marker :lat-lng="[page.props.property.coordinates.lat, page.props.property.coordinates.lng]" class="">
-                <l-icon :icon-url="propertyIcon.url" :icon-size="propertyIcon.size" />
+                <l-icon :popup-anchor="[0, -30]" :icon-url="propertyIcon.url" :icon-size="propertyIcon.size" />
                 <l-popup class="">
                     <div class="content py-2">
                         <img v-if="page.props.property.galleries.length>0" :src="page.props.property.galleries[0].images[0].thumb_url" class="w-24 h-16 float-left pr-2" />
@@ -77,7 +77,7 @@ const resetBounds = () => {
             </l-marker>
 
             <l-marker v-if="client.location" :lat-lng="clientCoordinates" class="">
-                <l-icon :icon-url="$page.props.auth.user ? $page.props.auth.user.profile_photo_url : clientIcon.url" :icon-size="clientIcon.size" />
+                <l-icon :popup-anchor="[0, -30]" :icon-url="$page.props.auth.user ? $page.props.auth.user.profile_photo_url : clientIcon.url" :icon-size="clientIcon.size" />
                 <l-popup class="">
                     <div class="content py-2">
                         <div class="item-body  ">

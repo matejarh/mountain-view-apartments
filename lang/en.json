@@ -466,13 +466,14 @@
     "Share": "Share",
     "Show more": "Show more",
     "Free Wi-Fi": "Free Wi-Fi",
-    "Like": "Like",
+    "Like": "0: Likes|1: Like|2,*: Likes",
+    "Don't like": "Don't like",
     "Liked": "Liked",
     "Likes": "Likes",
     "Get Travel Directions": "Get Travel Directions",
     "Availability Calendar": "Availability Calendar",
     "House Rules": "House Rules",
-    "Guest": "0: Guests|1: Guest|2,*:Guests",
+    "Guest": "0: Guests|1: Guest|2,*: Guests",
     "Your name": "Your name",
     "Properties": "Properties",
     "Settings Page": "Settings Page",
@@ -529,5 +530,7 @@
     "deleted_property": "Deleted property",
     "created_like": "Liked",
     "Booked": "Booked",
-    "Find Us On The Map": "Find us on the map"
+    "Find Us On The Map": "Find us on the map",
+    "Share to Social media": "Share to Social media",
+    "Reset map": "Reset map"
 }
