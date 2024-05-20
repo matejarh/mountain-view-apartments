@@ -34,6 +34,14 @@ class SettingsSeeder extends Seeder
             ],
         ]);
         Setting::factory()->create([
+            'name' => 'Intervals',
+            'slug' => str('intervals')->slug(),
+            'description' => 'Set up intervals for automatic background image switch in seconds',
+            'attributes' => [
+                'hero_background_interval' => 10,
+            ],
+        ]);
+        Setting::factory()->create([
             'name' => 'Company info',
             'slug' => str('Company info')->slug(),
             'description' => 'Set up company info that is shown in footers or headers',

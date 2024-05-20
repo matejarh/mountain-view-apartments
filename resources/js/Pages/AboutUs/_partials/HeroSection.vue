@@ -35,7 +35,7 @@ const initBgImageRotation = () => {
     interval = setInterval(() => {
         current = (current + 1) % gallery.images.length;
         bgImage.value = gallery.images[current].photo_url;
-    }, 5000);
+    }, 10000);
 };
 
 const gotoBookNow = () => {

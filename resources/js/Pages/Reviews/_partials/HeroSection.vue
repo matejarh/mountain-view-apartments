@@ -9,7 +9,7 @@ defineEmits(['create'])
 const page = usePage()
 const bgImage = ref(new URL('/resources/images/backgrounds/winter-sunrise.jpg', import.meta.url))
 
-
+const int = ref(page.props.settings.find(setting => setting.slug === 'intervals'))
 const interval = ref(null)
 const initBgImageRotation = () => {
     if (page.props.property?.galleries.length <= 0) {
@@ -31,7 +31,7 @@ const initBgImageRotation = () => {
         } else {
             current++
         }
-    }, 5000);
+    }, int.value.attributes.hero_background_interval * 1000);
 }
 
 const handleInitialImage = () => {

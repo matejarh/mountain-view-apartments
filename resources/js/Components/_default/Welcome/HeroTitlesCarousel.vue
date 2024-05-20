@@ -10,7 +10,7 @@ const page = usePage()
     { id: 2, },
     { id: 3, },
 ]) */
-
+const int = ref(page.props.settings.find(setting => setting.slug === 'intervals'))
 const slidesProxy = ref([
     {
         text: page.props?.page.description,
@@ -44,7 +44,7 @@ const slidesProxy = ref([
 
 <template>
 
-    <HeroCarousel id="home-page-hero-titles-carousel" :slides="slidesProxy" :interval="5000">
+    <HeroCarousel id="home-page-hero-titles-carousel" :slides="slidesProxy" :interval="int.attributes.hero_background_interval * 1000">
         <div v-for="slide, key in slidesProxy" :key="key" :id="`home-page-hero-titles-carousel-item-${key}`"
             class="hidden duration-700 ease-in-out">
             <div class="w-full md:max-w-screen-2xl mx-auto">
