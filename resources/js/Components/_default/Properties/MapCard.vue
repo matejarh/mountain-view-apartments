@@ -22,11 +22,11 @@ const ready = ref(false)
 
 const clientIcon = ref({
     size: [40,40],
-    url: new URL('/resources/images/map-markers/marker-blue.svg', import.meta.url).href
+    url: new URL('/resources/images/map-markers/marker-red.svg', import.meta.url).href
 })
 const propertyIcon = ref({
     size: [40,40],
-    url: new URL('/resources/images/map-markers/map-marker-red.png', import.meta.url).href
+    url: new URL('/resources/images/map-markers/marker-blue.svg', import.meta.url).href
 })
 
 watch(ready, () => {
@@ -77,7 +77,7 @@ const resetBounds = () => {
             </l-marker>
 
             <l-marker v-if="client.location" :lat-lng="clientCoordinates" class="">
-                <l-icon :icon-url="clientIcon.url" :icon-size="clientIcon.size" />
+                <l-icon :icon-url="$page.props.auth.user ? $page.props.auth.user.profile_photo_url : clientIcon.url" :icon-size="clientIcon.size" />
                 <l-popup class="">
                     <div class="content py-2">
                         <div class="item-body  ">

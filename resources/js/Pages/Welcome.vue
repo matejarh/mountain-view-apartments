@@ -2,9 +2,6 @@
 import { Head, Link } from '@inertiajs/vue3';
 import DefaultLayout from '@/Layouts/DefaultLayout.vue';
 import { ref } from 'vue';
-import PetsIcon from '@/Icons/PetsIcon.vue';
-/* import MapCard from '@/Components/MapCard.vue'; */
-import MapCard from './Welcome/_partials/MapCard.vue';
 import HeroSection from './Welcome/_partials/HeroSection.vue';
 import BookNowSection from './Welcome/_partials/BookNowSection.vue';
 import OurAccomodationsSection from './Welcome/_partials/OurAccomodationsSection.vue';
@@ -13,7 +10,6 @@ import VideoSection from './Welcome/_partials/VideoSection.vue';
 import SpecialOfferSection from './Welcome/_partials/SpecialOfferSection.vue';
 import MapSection from './Welcome/_partials/MapSection.vue';
 import DiscoverSection from './Welcome/_partials/DiscoverSection.vue';
-import MapTest from '@/Components/_default/Welcome/MapTest.vue';
 import ShapedSection from '@/Components/_default/ShapedSection.vue';
 import ReviewsSection from './Welcome/_partials/ReviewsSection.vue';
 

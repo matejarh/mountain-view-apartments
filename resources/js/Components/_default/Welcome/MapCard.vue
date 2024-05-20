@@ -1,9 +1,7 @@
 <script setup>
 import "leaflet/dist/leaflet.css";
 import { LMap, LTileLayer, LMarker, LPopup, LPolygon, LControl, LIcon } from "@vue-leaflet/vue-leaflet";
-import { ref, computed, onMounted, onBeforeMount, watch } from 'vue';
-import MapLocationIcon from "@/Icons/MapLocationIcon.vue";
-import Tooltip from "../Tooltip.vue";
+import { ref, computed, watch } from 'vue';
 import { useClientStore } from "@/stores/client";
 import { usePage } from "@inertiajs/vue3";
 
@@ -21,11 +19,11 @@ const ready = ref(false)
 
 const clientIcon = ref({
     size: [40,40],
-    url: new URL('/resources/images/map-markers/map-marker-green.png', import.meta.url).href
+    url: new URL('/resources/images/map-markers/marker-red.svg', import.meta.url).href
 })
 const propertyIcon = ref({
     size: [40,40],
-    url: new URL('/resources/images/map-markers/map-marker-red.png', import.meta.url).href
+    url: new URL('/resources/images/map-markers/marker-blue.svg', import.meta.url).href
 })
 
 watch(ready, () => {
@@ -60,10 +58,6 @@ const showBled = () => {
 
 <template>
     <div class="w-full  ">
-<!--         <div class="float-right flex">
-            <button class="bg-primary-700 text-white p-4 " @click="resetBounds">reset bounds</button>
-            <button class="bg-primary-700 text-white p-4 " @click="showBled">Bled</button>
-        </div> -->
         <l-map ref="map" :useGlobalLeaflet="false" v-model:zoom="zoom" :min-zoom="5" :max-zoom="20" v-model:bounds="bounds" @ready="ready = true" v-model:center="center">
             <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" layer-type="base"
                 name="OpenStreetMap"></l-tile-layer>
@@ -82,7 +76,7 @@ const showBled = () => {
             </l-marker>
 
             <l-marker v-if="client.location" :lat-lng="clientCoordinates" class="">
-                <l-icon :icon-url="clientIcon.url" :icon-size="clientIcon.size" />
+                <l-icon class="drop-shadow-lg" :icon-url="$page.props.auth.user ? $page.props.auth.user.profile_photo_url : clientIcon.url" :icon-size="clientIcon.size" />
                 <l-popup class="">
                     <div class="content py-2">
                         <div class="item-body  ">
@@ -93,7 +87,7 @@ const showBled = () => {
 
             </l-marker>
 
-            <l-control class="leaflet-control top-5 bg-white dark:bg-gray-700 border-primary-600 rounded-lg p-[1em] text-lg" position="topright">
+            <l-control class="leaflet-control top-5 bg-white dark:bg-gray-700 border-primary-700 rounded-lg p-[1em] text-lg" position="topright">
                 <button @click="resetBounds">{{ __('Reset map') }}</button>
             </l-control>
         </l-map>
@@ -118,4 +112,5 @@ const showBled = () => {
     font-size: large;
     font-style: italic;
 }
+
 </style>
