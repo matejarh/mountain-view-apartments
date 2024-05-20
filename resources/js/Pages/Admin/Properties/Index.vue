@@ -19,14 +19,14 @@ const handleEdit = (gallery) => {
 </script>
 
 <template>
-    <FullLayout :title="__('Properties')">
+    <FullLayout :title="__('Accomodations')">
         <ActionSection :fullwidth="true">
             <template #title>
-                {{ __('Properties') }}
+                {{ __('Accomodations') }}
             </template>
 
             <template #content>
-                <FiltersSection v-show="$page.props.properties.data.length > 0 || $page.props.filters?.search" id="properties-filters" route="admin.properties.index" placeholder="Search for properties" />
+                <FiltersSection v-show="$page.props.properties.data.length > 0 || $page.props.filters?.search" id="properties-filters" route="admin.properties.index" placeholder="Search for accomodations" />
 
                 <div class="relative" v-if="$page.props.properties.data.length > 0">
                     <TransitionGroup name="list" tag="ul"
@@ -41,7 +41,7 @@ const handleEdit = (gallery) => {
                     <div class="w-full text-center cursor-pointer" @click="showCreateDialog = true">
                         <ImageIcon class="text-gray-300 dark:text-gray-400 w-32 h-32 mx-auto" />
 
-                        <p class="text-gray-300 dark:text-gray-400 font-semibold ">{{ __('No properties yet!') }}</p>
+                        <p class="text-gray-300 dark:text-gray-400 font-semibold ">{{ __('No accomodations yet!') }}</p>
                         <p class="text-gray-300 dark:text-gray-400 text-sm">{{ __('To create one, click here') }}</p>
                     </div>
                 </div>
