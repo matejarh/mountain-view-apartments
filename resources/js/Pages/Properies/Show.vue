@@ -15,7 +15,7 @@ import FacilitiesSection from './_partials/FacilitiesSection.vue';
 <template>
     <DefaultLayout :title="$page.props.property?.title[$page.props.locale]"
         :description="$page.props.property?.seo_description[$page.props.locale]"
-        :keywords="$page.props.property?.keywords[$page.props.locale]">
+        :keywords="$page.props.property?.keywords[$page.props.locale]" :noindex="false">
 
         <div class="space-y-0">
             <HeroSection />
