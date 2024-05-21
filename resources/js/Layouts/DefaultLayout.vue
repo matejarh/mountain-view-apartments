@@ -1,12 +1,12 @@
 <script setup>
 import { ref, onMounted, computed, onBeforeUnmount} from 'vue';
 import { Head, usePage } from '@inertiajs/vue3';
+import { router } from '@inertiajs/vue3'
+
 import TopNavigation from './_partials/_default/TopNavigation.vue'
+import MobileNavigation from './_partials/_default/MobileNavigation.vue';
 import ScrollToTop from '@/Components/_default/ScrollToTop.vue'
 import ScrollForward from '@/Components/_default/ScrollForward.vue'
-
-import { router } from '@inertiajs/vue3'
-import MobileNavigation from './_partials/_default/MobileNavigation.vue';
 import PageFooter from './_partials/_default/PageFooter.vue';
 import ContactDrawer from './_partials/_default/ContactDrawer.vue';
 
@@ -54,6 +54,7 @@ const inProduction = computed(() => {
 const handleScroll = (e) => {
     initScrollData(e.target.scrollTop)
     const parallaxElements = document.querySelectorAll('.bg-parallax');
+    // console.log(parallaxElements)
     parallaxElements.forEach((element) => {
         element.style.transform = `translateY(${scroll.scrollPosition * 0.5}px)`;
     });
@@ -79,7 +80,8 @@ const fetchPropertiesListForDropdowns = async () => {
 
 
 }
-onMounted(() => {
+
+const init = () => {
     client.getLocation()
     fetchPropertiesListForDropdowns()
 
@@ -103,6 +105,10 @@ onMounted(() => {
 
     }
 
+}
+
+onMounted(() => {
+    init()
 })
 onBeforeUnmount(() => {
     routerRemoveEventListener()
@@ -110,14 +116,14 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
+    <Head :title="title">
+        <meta head-key="description" name="description" :content="description" />
+        <meta head-key="keywords" name="keywords" :content="keywords" />
+        <meta name="robots" content="noindex,nofollow" v-if="noindex || !inProduction">
+        <!-- <link rel="icon" type="image/svg+xml" href="/favicon.svg" /> -->
+    </Head>
     <div class="">
 
-        <Head :title="title">
-            <meta head-key="description" name="description" :content="description" />
-            <meta head-key="keywords" name="keywords" :content="keywords" />
-            <meta name="robots" content="noindex,nofollow" v-if="noindex || !inProduction">
-            <!-- <link rel="icon" type="image/svg+xml" href="/favicon.svg" /> -->
-        </Head>
 
         <Banner />
 

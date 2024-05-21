@@ -7,66 +7,37 @@ import LogoHero from '@/Components/LogoHero.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import TransparentButton from '@/Components/_default/TransparentButton.vue';
+import HeroParallax from '@/Components/_default/HeroParallax.vue';
 
 const page = usePage()
 
-const bgImage = ref(new URL('/resources/images/backgrounds/winter-sunrise.jpg', import.meta.url))
+const images = computed(() => {
+    const galleries = page.props?.property.galleries;
 
-const interval = ref(null)
-
-const int = ref(page.props.settings.find(setting => setting.slug === 'intervals'))
-
-const initBgImageRotation = () => {
-    if (page.props.property?.galleries.length <=0) {
-        clearInterval(interval)
-        return
+    if (galleries.length <= 0) {
+        return [];
     }
-    //const gallery = _.filter(page.props.property?.galleries, ['name', page.props.property?.name])[0]
-    //const gallery = page.props.property?.galleries.find('name', page.props.property?.name);
-    const gallery = page.props.property?.galleries[0];
+    const gallery = galleries.find(gallery => gallery.name === page.props?.property.name);
 
-    bgImage.value = gallery.images[0].photo_url
-    let current = 0
+    if (!gallery || !gallery.images || gallery.images.length === 0) {
+        return [];
+    }
 
-    interval.value = setInterval(() => {
-        bgImage.value = gallery.images[current].photo_url
+    return gallery.images
+})
 
-        if (current + 1 >= gallery.images.length) {
-            current = 0
-        } else {
-            current++
-        }
-    }, int.value.attributes.hero_background_interval * 1000);
-}
 
 const scrollTo = (view) => {
     document.getElementById(view).scrollIntoView(false);
 }
 
-const stopBgRotation = () => {
-    clearInterval(interval.value)
-}
-
-onMounted(() => {
-    initBgImageRotation()
-})
-
-onBeforeUnmount(() => {
-    clearInterval(interval.value)
-})
 </script>
 
 <template>
-    <section
-        class="bg-center bg-no-repeat bg-cover bg-fixed min-h-screen flex flex-col justify-center  bg-gray-500 bg-blend-multiply transition-all duration-[2000ms] ease-in-out bg-paralax relative"
-        :style="`background-image: url(${bgImage});`">
+<HeroParallax :images="images" >
 
-        <div class="px-4 mx-auto max-w-screen-xl text-center py-24 md:py-24 xl:py-56">
+        <div class="px-4 mx-auto max-w-screen-xl text-center pb-24 md:pb-24 xl:pb-56 z-0">
             <div class="">
-                <div class="flex justify-center mx-auto">
-
-                    <LogoHero  />
-                </div>
                 <h1  class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-white md:text-5xl lg:text-6xl">
                     <inertia-link :href="route('properties.show', {lang:$page.props.locale, property:$page.props.property })">
                         {{ $page.props.property.title[$page.props.locale] }}</inertia-link>
@@ -88,44 +59,10 @@ onBeforeUnmount(() => {
                     <TransparentButton type="button" @click="scrollTo('info')">
                         {{__('Learn more')}}
                     </TransparentButton>
-                    <!-- <a href="#" @click="initBgImageRotation"
-                        class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
-                    </a> -->
-                    <!-- <a href="#" @click="stopBgRotation"
-                        class="inline-flex justify-center hover:text-gray-900 items-center py-3 px-5 sm:ms-4 text-base font-medium text-center text-white rounded-lg border border-white hover:bg-gray-100 focus:ring-4 focus:ring-gray-400">
-                        Learn more
-                    </a> -->
 
                 </div>
-                <!-- <form class="w-full max-w-md mx-auto">
-                    <label for="default-email"
-                        class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Email sign-up</label>
-                    <div class="relative">
-                        <div
-                            class="absolute inset-y-0 rtl:inset-x-0 start-0 flex items-center ps-3.5 pointer-events-none">
-                            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 16">
-                                <path
-                                    d="m10.036 8.278 9.258-7.79A1.979 1.979 0 0 0 18 0H2A1.987 1.987 0 0 0 .641.541l9.395 7.737Z" />
-                                <path
-                                    d="M11.241 9.817c-.36.275-.801.425-1.255.427-.428 0-.845-.138-1.187-.395L0 2.6V14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2.5l-8.759 7.317Z" />
-                            </svg>
-                        </div>
-                        <input type="email" id="default-email"
-                            class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-white focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-800 dark:border-gray-700 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                            placeholder="Enter your email here..." required />
-                        <button type="submit"
-                            class="text-white absolute end-2.5 bottom-2.5 bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Sign
-                            up</button>
-                    </div>
-                </form> -->
-
             </div>
         </div>
 
-        <ShapeBottom
-            class="absolute inset-y-full z-10 left-0 right-0 w-full rotate-180 text-primary-700 dark:text-primary-900 " />
-        <ShapeTop
-            class="absolute inset-y-full z-10 left-0 right-0 w-full bottom-1/2 text-primary-700 dark:text-primary-900 " />
-    </section>
+</HeroParallax>
 </template>
