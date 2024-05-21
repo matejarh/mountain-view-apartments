@@ -4,6 +4,7 @@ import { router } from '@inertiajs/vue3'
 import Carousel from '@/Components/Carousel.vue';
 import ImageIcon from '@/Icons/ImageIcon.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
+import ActiveCarousel from '@/Components/_default/ActiveCarousel.vue';
 
 const props = defineProps({
     property: Object
@@ -22,8 +23,9 @@ const carouselHeight = 'h-56'
             class="w-full bg-white border border-gray-200 overflow-hidden rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700  transition duration-150 ease-out">
             <div class="flex flex-col justify-between pb-4 h-full space-y-4 select-none">
 
-                <Carousel v-if="property.galleries.length > 0" :items="property.galleries[0].images" class="shadow-lg"
-                    :height="carouselHeight" />
+                <!-- <Carousel v-if="property.galleries.length > 0" :items="property.galleries[0].images" class="shadow-lg"
+                    :height="carouselHeight" /> -->
+                <ActiveCarousel v-if="property.galleries.length > 0" :items="property.galleries[0].images" />
                 <div class="w-full flex items-center justify-center shadow-lg" :class="carouselHeight" v-else>
 
                     <ImageIcon class="w-56 h-56 text-gray-300 dark:text-gray-400" />
@@ -32,15 +34,19 @@ const carouselHeight = 'h-56'
 
                 <div class="px-4 h-full max-h-44 overflow-y-auto scrollbar-none">
 
-                    <h2 class="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white">{{ property.type }}</h2>
-                    <h3 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white whitespace-pre overflow-x-scroll scrollbar-none">{{ property.title[$page.props.locale] }}</h3>
+                    <h2 class="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white">{{ property.type }}
+                    </h2>
+                    <h3
+                        class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white whitespace-pre overflow-x-scroll scrollbar-none">
+                        {{ property.title[$page.props.locale] }}</h3>
 
                     <p
                         class="mb-3 font-normal text-gray-700 dark:text-gray-400 bg-gray-50 dark:bg-gray-700 leading-tight whitespace-pre-wrap p-2 rounded-lg h-14 overflow-y-auto scrollbar-none ">
                         {{ property.description[$page.props.locale] }}</p>
                 </div>
 
-                <PrimaryButton type="button" @click="router.visit(route('admin.properties.show', property))" class="mx-4">
+                <PrimaryButton type="button" @click="router.visit(route('admin.properties.show', property))"
+                    class="mx-4">
                     <div class="flex items-center">
                         {{ __('Edit Property') }}
                         <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true"
@@ -55,7 +61,7 @@ const carouselHeight = 'h-56'
     </li>
 
 
-<!--     <div class="space-y-4">
+    <!--     <div class="space-y-4">
         <h2 class="text-lg font-bold">
             {{ property.type }}
 

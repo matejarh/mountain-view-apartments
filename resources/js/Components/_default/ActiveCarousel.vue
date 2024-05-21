@@ -1,16 +1,20 @@
 <template>
-    <Carousel :itemsToShow="3.95" :wrapAround="true" :transition="500">
-        <Slide v-for="slide,key in items" :key="key">
-            <div class="carousel__item">
+    <Carousel :itemsToShow="1.95" :autoplay="5000" :wrapAround="true" :transition="500">
+        <Slide v-for="slide, key in items" :key="key">
+            <div class="carousel__item" @click="">
                 <img :src="slide.thumb_url" class="w-auto h-full">
                 <!--    {{ slide.thumb_url }} -->
             </div>
         </Slide>
+        <template #addons>
+          <!--   <Pagination /> -->
+            <Navigation />
+        </template>
     </Carousel>
 </template>
 
 <script setup>
-import { Carousel, Pagination, Slide } from 'vue3-carousel'
+import { Carousel, Navigation, Pagination, Slide } from 'vue3-carousel'
 
 import 'vue3-carousel/dist/carousel.css'
 

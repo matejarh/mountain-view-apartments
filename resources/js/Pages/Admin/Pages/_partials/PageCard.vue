@@ -1,6 +1,7 @@
 <script setup>
 import Carousel from '@/Components/Carousel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
+import ActiveCarousel from '@/Components/_default/ActiveCarousel.vue';
 import PagesIcon from '@/Icons/PagesIcon.vue';
 import { router } from '@inertiajs/vue3'
 import { ref } from 'vue';
@@ -25,11 +26,13 @@ const carouselHeight = ref('h-56')
             >
             <div class="flex flex-col justify-between pb-4 h-full space-y-4">
 
-                <Carousel v-if="page.galleries.length > 0" :items="page.galleries[0].images" class="shadow-lg"
-                    :height="carouselHeight" />
+               <!--  <Carousel v-if="page.galleries.length > 0" :items="page.galleries[0].images" class="shadow-lg"
+                    :height="carouselHeight" /> -->
 
-                <div class="w-full flex items-center justify-center shadow-lg" :class="carouselHeight" v-else>
-                    <PagesIcon class="w-56 h-56 text-gray-300 dark:text-gray-400" />
+                <ActiveCarousel v-if="page.galleries.length > 0" :items="page.galleries[0].images" />
+
+                <div class="w-full flex items-center justify-center"  v-else>
+                    <PagesIcon class="w-24 h-[8vh] text-gray-300 dark:text-gray-400" />
                 </div>
                 <!--  <img v-else :src="'https://via.placeholder.com/640x480.png/6d6d6d?text='+__('No%20images')" class="rounded-t-lg w-auto" :class="carouselHeight" /> -->
 
@@ -37,7 +40,7 @@ const carouselHeight = ref('h-56')
 
                     <h3 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">{{ __(page.name) }}
                     </h3>
-                    <h2 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ page.title[$page.props.locale] }}
+                    <h2 class="mb-2 text-2xl font-bold tracking-tight overflow-y-auto whitespace-nowrap scrollbar-thin text-gray-900 dark:text-white">{{ page.title[$page.props.locale] }}
                     </h2>
 
 
