@@ -43,7 +43,7 @@ const items = ref([
                     </PropertyCard>
                 </TransitionGroup>
 
-                <FaqSection />
+                <!-- <FaqSection /> -->
             </Wrapper>
         </div>
     </DefaultLayout>
