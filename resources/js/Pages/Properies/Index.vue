@@ -5,6 +5,8 @@ import Wrapper from '@/Components/_default/Wrapper.vue';
 import { computed, ref } from 'vue';
 import { usePage } from '@inertiajs/vue3';
 import PillItem from '@/Components/_default/Properties/PillItem.vue';
+import AccordianComponent from '@/Components/_default/AccordianComponent.vue';
+import FaqSection from './_partials/FaqSection.vue';
 
 const filter = ref('.')
 
@@ -25,7 +27,7 @@ const items = ref([
 
 <template>
     <DefaultLayout :title="$page.props.seo?.title" :description="$page.props.seo?.description"
-        :keywords="$page.props.seo?.keywords">
+        :keywords="$page.props.seo?.keywords" :noindex="false">
 
         <div class="space-y-0">
             <div class="spacer hidden xl:block h-[10svh] w-full"></div>
@@ -40,6 +42,8 @@ const items = ref([
                     <PropertyCard class="mx-auto" :property="property" v-for="property, key in filtered" :key="key">
                     </PropertyCard>
                 </TransitionGroup>
+
+                <FaqSection />
             </Wrapper>
         </div>
     </DefaultLayout>
