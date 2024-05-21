@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function() {
-    return redirect(app()->currentLocale());
+    return redirect(app()->currentLocale()."/home");
 });
 
 /**
@@ -29,7 +29,7 @@ Route::get('/fetch-properties-for-dropdown', [PropertiesController::class, 'fetc
  */
 
 Route::group(['prefix' => '{lang}', 'middleware' => 'web'], function () {
-    Route::get('/', [PagesController::class, 'home'])->name('home');
+    Route::get('/home', [PagesController::class, 'home'])->name('home');
 
     Route::get('/about-us', [PagesController::class, 'aboutUs'])->name('aboutus');
 
