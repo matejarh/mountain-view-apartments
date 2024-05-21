@@ -12,7 +12,7 @@ const extractedContent = computed(() => {
     return extractContentFromText(page.props?.page.extras[extrasKey.value]?.text[page.props?.locale])
 })
 
-const extractContentFromText = (text) => {
+/* const extractContentFromText = (text) => {
     const result = [];
     const parser = new DOMParser();
     const doc = parser.parseFromString(text, 'text/html');
@@ -26,6 +26,57 @@ const extractContentFromText = (text) => {
         while (nextElement && nextElement.tagName !== 'H3') {
             content += nextElement.outerHTML;
             nextElement = nextElement.nextElementSibling;
+        }
+
+        result.push({ title, content });
+    });
+
+    return result;
+} */
+
+const extractContentFromText = (text) => {
+    const result = [];
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(text, 'text/html');
+    const headings = doc.querySelectorAll('h3');
+
+    headings.forEach((heading, index) => {
+        const title = heading.textContent;
+        const content = [];
+        let nextElement = heading.nextElementSibling;
+        let currentContent = '';
+
+        while (nextElement && nextElement.tagName !== 'H3') {
+            if (nextElement.tagName === 'H4') {
+                // If we already have some currentContent, push it to content array
+                if (currentContent.trim()) {
+                    content.push({ content: currentContent });
+                    currentContent = '';
+                }
+
+                // Create new subtitle object
+                let subtitleContent = '';
+                const subtitle = nextElement.textContent;
+                nextElement = nextElement.nextElementSibling;
+
+                // Collect all content under the subtitle until next subtitle or h3
+                while (nextElement && nextElement.tagName !== 'H3' && nextElement.tagName !== 'H4') {
+                    subtitleContent += nextElement.outerHTML;
+                    nextElement = nextElement.nextElementSibling;
+                }
+
+                // Push subtitle and its content to the content array
+                content.push({ subtitle, content: subtitleContent });
+            } else {
+                // Collect all content under the current h3 until next h3 or h4
+                currentContent += nextElement.outerHTML;
+                nextElement = nextElement.nextElementSibling;
+            }
+        }
+
+        // Push remaining content if any
+        if (currentContent.trim()) {
+            content.push({ content: currentContent });
         }
 
         result.push({ title, content });
@@ -47,9 +98,15 @@ const extractContentFromText = (text) => {
                         <h3 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                             {{ paragraph.title }}
                         </h3>
-                        <article
-                            class="mb-3 md:max-w-screen-lg mx-auto format format-h4:text-gray-600 dark:format-h4:text-gray-100 p-4 font-normal text-gray-700 dark:text-gray-400"
-                            v-html="paragraph.content"></article>
+
+                        <div class="" v-for="content, key in paragraph.content" :key="key">
+                            <h4 v-if="content.subtitle" class="text-lg font-semibold">{{ content.subtitle }}</h4>
+
+                            <article
+                            v-if="content.content"
+                                class="mb-3 md:max-w-screen-lg mx-auto format format-h4:text-gray-600 dark:format-h4:text-gray-100 p-4 font-normal text-gray-700 dark:text-gray-400"
+                                v-html="content.content"></article>
+                        </div>
                     </div>
                 </div>
             </div>
