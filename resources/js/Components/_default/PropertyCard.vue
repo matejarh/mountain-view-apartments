@@ -47,7 +47,7 @@ onMounted(() => {
                 </div>
 
                 <div class="mt-0 grid grid-cols-1 sm:grid-cols-2 gap-2">
-                    <div class="flex space-x-2 items-center" v-for="type, key in property.bed_types" :key="key">
+                    <div class="flex space-x-2 items-center" v-for="type, key in property.bed_types" :key="type.name">
 
                         <DinamicIcon :icon="type.icon"
                             :class="type.name === '1 queen bed' ? 'w-10 h-6' : (type.name === '2 single beds' ? 'w-4 h-4' : 'w-8 h-8')" />
