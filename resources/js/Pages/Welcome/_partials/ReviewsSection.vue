@@ -9,7 +9,7 @@ import 'vue3-carousel/dist/carousel.css'
 <template>
     <section class="bg-white dark:bg-gray-900 relative">
         <div class="max-w-screen-xl px-4 py-20 mx-auto text-center lg:py-16 lg:pt-24 lg:px-6">
-            <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">{{ __('What did our guest say') }}</h2>
+            <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">{{ __('What did our guests say') }}</h2>
             <Carousel :autoplay="5000" :wrap-around="true">
                 <Slide v-for="review, key in $page.props?.reviews" :key="key">
                     <div class="carousel__item">
