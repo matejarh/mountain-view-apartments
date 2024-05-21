@@ -76,6 +76,14 @@ onMounted(() => {
         </form>
     </div>
     <div class="" v-else>
-        <Alert>You have already reviewed {{ $page.props.property.title[$page.props.locale] }}</Alert>
+        <Alert>
+            <p>
+                You have already reviewed {{ $page.props.property.title[$page.props.locale] }}.
+            </p>
+            <p>
+                You can go to <inertia-link :href="route('reviews.index', { property: property, lang: $page.props?.locale })" class="font-semibold underline hover:no-underline">reviews</inertia-link> for {{ $page.props.property.title[$page.props.locale] }}
+
+            </p>
+        </Alert>
     </div>
 </template>
