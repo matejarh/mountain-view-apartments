@@ -14,18 +14,13 @@ const props = defineProps({
 })
 
 const helpers = useHelperStore()
-/* const showLogo = ref(false)
-const showNav = ref(false)
-const showIcons = ref(false)
-const showLang = ref(false)
-const showTheme = ref(false)
-const showUserDropdown = ref(false) */
 
 const headerClasses = computed(() => {
     return [
         props.scrollPosition > 100 ? 'text-lg' : 'text-xl'
     ]
 })
+
 watchEffect(async () => {
     if (props.show && !helpers.pageLoaded) {
         helpers.delay(0)
@@ -67,7 +62,7 @@ watchEffect(async () => {
                 </Transition>
 
                 <div
-                    class="flex items-center justify-end md:order-2 space-x-1 md:space-x-0 rtl:space-x-reverse md:min-w-[192px] ">
+                    class="flex items-center justify-end md:order-2 space-x-1 md:space-x-0 rtl:space-x-reverse md:w-[220px] overflow-y-visible">
                     <Transition enter-active-class="animate__animated animate__bounceInDown"
                         leave-active-class="animate__animated animate__bounceOutUp">
 
