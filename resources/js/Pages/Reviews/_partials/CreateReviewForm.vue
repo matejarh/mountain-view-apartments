@@ -81,7 +81,7 @@ onMounted(() => {
                 You have already reviewed {{ $page.props.property.title[$page.props.locale] }}.
             </p>
             <p>
-                You can go to <inertia-link :href="route('reviews.index', { property: property, lang: $page.props?.locale })" class="font-semibold underline hover:no-underline">reviews</inertia-link> for {{ $page.props.property.title[$page.props.locale] }}
+                You can go to <inertia-link :href="route('reviews.index', { property: $page.props.property, lang: $page.props?.locale })" class="font-semibold underline hover:no-underline">reviews</inertia-link> for {{ $page.props.property.title[$page.props.locale] }}
 
             </p>
         </Alert>
