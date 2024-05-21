@@ -121,7 +121,7 @@ const clearPhotoFileInput = () => {
 
         <template #form>
             <!-- Profile Photo -->
-            <div v-if="$page.props.jetstream.managesProfilePhotos" class="col-span-6 md:col-span-4">
+            <div v-if="$page.props?.jetstream.managesProfilePhotos" class="col-span-6 md:col-span-4">
                 <!-- Profile Photo File Input -->
                 <input
                     id="photo"
@@ -194,7 +194,7 @@ const clearPhotoFileInput = () => {
                 />
                 <InputError :message="form.errors.email" class="mt-2" />
 
-                <div v-if="$page.props.jetstream.hasEmailVerification && user.email_verified_at === null">
+                <div v-if="$page.props?.jetstream.hasEmailVerification && user.email_verified_at === null">
                     <p class="text-sm mt-2">
                         {{__('Your email address is unverified.')}}
 

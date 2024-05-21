@@ -11,12 +11,12 @@ import HeroParallax from '@/Components/_default/HeroParallax.vue';
 const page = usePage()
 
 const images = computed(() => {
-    const galleries = page.props.page.galleries;
+    const galleries = page.props?.page.galleries;
 
     if (galleries.length <= 0) {
         return [];
     }
-    const gallery = page.props.page.galleries.find(gallery => gallery.name === 'Home Page Hero');
+    const gallery = page.props?.page.galleries.find(gallery => gallery.name === 'Home Page Hero');
 
     if (!gallery || !gallery.images || gallery.images.length === 0) {
         return [];
@@ -43,8 +43,8 @@ onMounted(() => {
     <div class="px-4 mx-auto max-w-screen-xl text-center pb-24 md:pb-56 lg:pb-56  z-0">
         <div class="flex flex-col min-w-full">
             <div class="mb-8 flex flex-col space-y-4 sm:space-x-4 sm:flex-row sm:justify-center sm:space-y-0">
-                    {{ page.props.page.name }}
-                    <PrimaryButton @click="$inertia.get(route('properties.index', {lang:$page.props.locale}))" class="py-3 px-5 " type="button">
+                    {{ page.props?.page.name }}
+                    <PrimaryButton @click="$inertia.get(route('properties.index', {lang:$page.props?.locale}))" class="py-3 px-5 " type="button">
 
                         {{ __('Check our apartments') }}
 

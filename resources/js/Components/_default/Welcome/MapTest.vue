@@ -28,7 +28,7 @@ watch(ready, () => {
 
 const propertiesCoordinates = () => {
     let bounds = []
-    page.props.accomodations?.forEach(property => {
+    page.props?.accomodations?.forEach(property => {
         bounds.push([parseFloat(property.coordinates.lat), parseFloat(property.coordinates.lng)])
     });
     bounds.push([client.location.coords?.latitude, client.location.coords?.longitude])
@@ -64,8 +64,8 @@ onMounted(() => {
                     <div class="content py-2">
                         <img v-if="property.galleries.length>0" :src="property.galleries[0].images[0].thumb_url" class="w-24 h-16 float-left pr-2" />
                         <div class="item-body  ">
-                            <h3 class="font-bold text-base leading-tight">{{ property.title[$page.props.locale] }}</h3>
-                            {{ property.seo_description[$page.props.locale] }}
+                            <h3 class="font-bold text-base leading-tight">{{ property.title[$page.props?.locale] }}</h3>
+                            {{ property.seo_description[$page.props?.locale] }}
                         </div>
                     </div>
                 </l-popup>

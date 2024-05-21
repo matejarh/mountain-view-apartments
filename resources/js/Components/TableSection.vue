@@ -24,7 +24,7 @@ defineProps({
                 <slot />
             </tbody>
         </table>
-        <!-- <div class="" v-html="$page.props.links" v-if="$page.props.links" ></div> -->
+        <!-- <div class="" v-html="$page.props?.links" v-if="$page.props?.links" ></div> -->
         <Paginator :paginator="paginator" v-if="paginator" class="mx-4" />
     </div>
 </template>

@@ -13,18 +13,18 @@ const logout = () => {
     <NavDropdown align="right">
         <template #trigger>
             <span class="sr-only">{{__('Open user menu')}}</span>
-            <img class="w-8 h-8 rounded-full" :src="$page.props.auth.user.profile_photo_url" alt="user photo" />
+            <img class="w-8 h-8 rounded-full" :src="$page.props?.auth.user.profile_photo_url" alt="user photo" />
         </template>
         <div class="py-3 px-4 ">
-            <span class="block text-sm font-semibold text-gray-900 dark:text-white">{{ $page.props.auth.user.name
+            <span class="block text-sm font-semibold text-gray-900 dark:text-white">{{ $page.props?.auth.user.name
                 }}</span>
-            <span class="block text-sm text-gray-900 truncate dark:text-white">{{ $page.props.auth.user.email }}</span>
+            <span class="block text-sm text-gray-900 truncate dark:text-white">{{ $page.props?.auth.user.email }}</span>
         </div>
         <ul class="py-1 text-gray-700 dark:text-gray-300">
-            <DropdownItem :href="$page.props.auth.user.is_admin ? route('profile.show') : route('profile.show')">
+            <DropdownItem :href="$page.props?.auth.user.is_admin ? route('profile.show') : route('profile.show')">
                 {{ __("My Profile") }}
             </DropdownItem>
-            <DropdownItem v-if="$page.props.auth.user.is_admin":href="route('admin.dashboard.show')">
+            <DropdownItem v-if="$page.props?.auth.user.is_admin":href="route('admin.dashboard.show')">
                 {{__("Administration")}}
             </DropdownItem>
 

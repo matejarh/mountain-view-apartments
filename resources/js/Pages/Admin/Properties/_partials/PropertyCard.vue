@@ -38,11 +38,11 @@ const carouselHeight = 'h-56'
                     </h2>
                     <h3
                         class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white whitespace-pre overflow-x-scroll scrollbar-none">
-                        {{ property.title[$page.props.locale] }}</h3>
+                        {{ property.title[$page.props?.locale] }}</h3>
 
                     <p
                         class="mb-3 font-normal text-gray-700 dark:text-gray-400 bg-gray-50 dark:bg-gray-700 leading-tight whitespace-pre-wrap p-2 rounded-lg h-14 overflow-y-auto scrollbar-none ">
-                        {{ property.description[$page.props.locale] }}</p>
+                        {{ property.description[$page.props?.locale] }}</p>
                 </div>
 
                 <PrimaryButton type="button" @click="router.visit(route('admin.properties.show', property))"

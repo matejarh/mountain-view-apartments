@@ -13,7 +13,7 @@ const store = useTranslationsStore()
 
 const selectedLanguage = computed(() => {
 
-    return store.languages.find(language => language.code === page.props.locale);
+    return store.languages.find(language => language.code === page.props?.locale);
 })
 
 const switchLanguage = (lang) => {
@@ -25,7 +25,7 @@ onMounted(() => {
         const lang = navigator.language.split('-')[0]
         switchLanguage(lang)
     } else {
-        store.updateTranslations(page.props.translations)
+        store.updateTranslations(page.props?.translations)
     }
 })
 

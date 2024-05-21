@@ -33,7 +33,7 @@ const handleAttach = (gallery) => {
             <TransitionGroup name="list" tag="ul"
                 class=" relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 4xl:grid-cols-6 gap-4 md:gap-4 lg:gap-6 2xl:gap-8">
 
-                <GalleryCard v-for="gallery in $page.props.galleries_not_in_page" :gallery="gallery"
+                <GalleryCard v-for="gallery in $page.props?.galleries_not_in_page" :gallery="gallery"
                     :key="gallery.id" @attach="handleAttach" />
             </TransitionGroup>
 

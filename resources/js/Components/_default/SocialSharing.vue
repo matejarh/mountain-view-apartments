@@ -23,11 +23,11 @@ const networks = reactive([
 ])
 
 const shareData = ref({
-    title: page.props.property?.title[page.props.locale],
-    description: page.props?.property.description[page.props.locale],
-    quote: page.props.property?.quote[page.props.locale],
-    hashtags: page.props.property?.keywords[page.props.locale],
-    media: page.props.property?.galleries[0]?.images[0].photo_url,
+    title: page.props?.property?.title[page.props?.locale],
+    description: page.props?.property.description[page.props?.locale],
+    quote: page.props?.property?.quote[page.props?.locale],
+    hashtags: page.props?.property?.keywords[page.props?.locale],
+    media: page.props?.property?.galleries[0]?.images[0].photo_url,
 })
 
 const { shareLink } = useShareLink();
@@ -43,7 +43,7 @@ const share = (network, url) => {
     <div class="grid grid-cols-3 gap-4 sm:grid-cols-4">
         <div class="" v-for="network, key in networks" :key="key">
             <button
-                @click="share(network.name, route('properties.show', { property: $page.props.property, lang: $page.props.locale }))">
+                @click="share(network.name, route('properties.show', { property: $page.props?.property, lang: $page.props?.locale }))">
                 <Tooltip :text="__('Share on ') + network.title" :key="'tooltip-' + key">
                     <DinamicIcon class="w-20 h-20" :icon="network.icon" />
                 </Tooltip>

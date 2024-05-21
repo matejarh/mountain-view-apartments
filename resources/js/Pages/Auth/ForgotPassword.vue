@@ -48,7 +48,7 @@ const submit = () => {
                     autocomplete="email" :placeholder="__('name@company.com')" />
                 <InputError class="mt-2" :message="form.errors.email" />
               </div>
-              <div class="flex items-start" v-if="$page.props.jetstream.hasTermsAndPrivacyPolicyFeature">
+              <div class="flex items-start" v-if="$page.props?.jetstream.hasTermsAndPrivacyPolicyFeature">
                   <div class="flex items-center h-5">
                     <Checkbox id="terms" v-model:checked="form.terms" name="terms" />
 

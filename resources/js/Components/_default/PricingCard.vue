@@ -25,7 +25,7 @@ defineProps({
         </div>
         <!-- List -->
 <!--         <ul role="list" class="mb-8 space-y-4 text-left">
-            <li class="flex items-center space-x-3" v-for="rule, key in rules[$page.props.locale]" :key="key">
+            <li class="flex items-center space-x-3" v-for="rule, key in rules[$page.props?.locale]" :key="key">
 
                 <CheckSoloIcon class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400" />
 

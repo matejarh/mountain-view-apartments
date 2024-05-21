@@ -26,8 +26,8 @@ const items = ref([
 </script>
 
 <template>
-    <DefaultLayout :title="$page.props.seo?.title" :description="$page.props.seo?.description"
-        :keywords="$page.props.seo?.keywords" :noindex="false">
+    <DefaultLayout :title="$page.props?.seo?.title" :description="$page.props?.seo?.description"
+        :keywords="$page.props?.seo?.keywords" :noindex="false">
 
         <div class="space-y-0">
             <div class="spacer hidden xl:block h-[10svh] w-full"></div>

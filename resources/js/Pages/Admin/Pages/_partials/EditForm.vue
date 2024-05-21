@@ -24,20 +24,20 @@ const page = usePage()
 const emit = defineEmits(['success'])
 
 const form = useForm({
-    name: page.props.page ? page.props.page?.name : '',
-    title: page.props.page ? page.props.page?.title : {},
-    description: page.props.page ? page.props.page?.description : {},
-    keywords: page.props.page ? page.props.page?.keywords : {},
-    extras: page.props.page ? page.props.page?.extras : {},
+    name: page.props?.page ? page.props?.page?.name : '',
+    title: page.props?.page ? page.props?.page?.title : {},
+    description: page.props?.page ? page.props?.page?.description : {},
+    keywords: page.props?.page ? page.props?.page?.keywords : {},
+    extras: page.props?.page ? page.props?.page?.extras : {},
 })
 
-const selectedTab = ref(page.props.locale)
+const selectedTab = ref(page.props?.locale)
 
 const showNewExtraDialog = ref(false)
 
 const update = () => {
     form.clearErrors()
-    form.put(route('admin.pages.update', page.props.page), {
+    form.put(route('admin.pages.update', page.props?.page), {
         errorBag: 'updatingPage'
     })
 }
@@ -53,7 +53,7 @@ const store = () => {
 }
 
 const handleSubmit = () => {
-    page.props.page ? update() : store();
+    page.props?.page ? update() : store();
 }
 
 const handleCreateExtra = (extra) => {
@@ -67,7 +67,7 @@ const saveOnCtrlS = (e) => {
 
     if (isCtrlS && canSave) {
         e.preventDefault();
-        page.props.page ? update() : store();
+        page.props?.page ? update() : store();
     }
 };
 

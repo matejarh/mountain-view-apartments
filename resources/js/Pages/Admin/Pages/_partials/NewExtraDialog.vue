@@ -21,7 +21,7 @@ const extra = computed(() => {
     const key = slugify(form.name).replace('-', '_');
     const e = {};
 
-    page.props.supported_locales.forEach(locale => {
+    page.props?.supported_locales.forEach(locale => {
         e[key] = {
             title: {
                 ...e[key]?.title,

@@ -14,10 +14,10 @@ const disabledDates = ref([])
 const helpers = useHelperStore()
 
 const companyData = computed(() => {
-    return page.props.settings.find(setting => setting.slug === 'company-info')
+    return page.props?.settings.find(setting => setting.slug === 'company-info')
 })
 
-const datepickerRange = page.props.settings?.find(setting => setting.slug === 'datepicker-range')
+const datepickerRange = page.props?.settings?.find(setting => setting.slug === 'datepicker-range')
 
 const options = ref({
     minRange: datepickerRange.attributes?.min,

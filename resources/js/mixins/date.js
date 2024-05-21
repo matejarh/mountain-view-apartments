@@ -218,7 +218,7 @@ export default () => {
             "es-US": "M/d/yyyy"
         };
 
-        return formats[page.props.locale] || 'dd/MM/yyyy';
+        return formats[page.props?.locale] || 'dd/MM/yyyy';
 
     }
 

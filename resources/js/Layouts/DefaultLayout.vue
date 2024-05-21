@@ -37,10 +37,10 @@ const wrapper = ref(null)
 const defaultBackgroundImage = new URL('/resources/images/backgrounds/winter-sunrise.jpg', import.meta.url)
 
 const backgroundImageUrl = computed(() => {
-    const setting = page.props.settings.find(setting => setting.slug === 'site-backgrounds');
+    const setting = page.props?.settings.find(setting => setting.slug === 'site-backgrounds');
 
     if (setting) {
-        const backgroundImage = setting.attributes[page.props.current_season];
+        const backgroundImage = setting.attributes[page.props?.current_season];
         return backgroundImage !== '' ? backgroundImage.photo_url : defaultBackgroundImage;
     } else {
         return defaultBackgroundImage;

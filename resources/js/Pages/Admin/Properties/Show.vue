@@ -48,15 +48,15 @@ const detach = (gallery) => {
             <template #title>
                 <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
                     <span>
-                        {{ $page.props.property.title[$page.props.locale] }}
+                        {{ $page.props?.property.title[$page.props?.locale] }}
                     </span>
                     <span class="text-base">
-                        {{ $page.props.property.type }}
+                        {{ $page.props?.property.type }}
                     </span>
                 </div>
             </template>
 <!--             <template #description>
-                <div class="whitespace-pre-wrap" v-html="$page.props.property.description[$page.props.locale]">
+                <div class="whitespace-pre-wrap" v-html="$page.props?.property.description[$page.props?.locale]">
                 </div>
 
             </template> -->
@@ -65,14 +65,14 @@ const detach = (gallery) => {
                 <div class="lg:grid lg:grid-cols-1 xl:grid-cols-3 lg:gap-8 xl:gap-16">
                     <div class=" mx-auto flex flex-col space-y-4">
                         <PrimaryButton @click="showAttachGalleryDialog = true"
-                            v-if="$page.props.property.galleries.length <= 0">{{__('attach gallery')}}</PrimaryButton>
+                            v-if="$page.props?.property.galleries.length <= 0">{{__('attach gallery')}}</PrimaryButton>
 
-                        <div class="" v-if="$page.props.property.galleries.length > 0">
-                            <div class="grid grid-cols-3" v-for="gallery in $page.props.property.galleries"
+                        <div class="" v-if="$page.props?.property.galleries.length > 0">
+                            <div class="grid grid-cols-3" v-for="gallery in $page.props?.property.galleries"
                                 :key="gallery.id">
                                 <div class="flex justify-between space-x-2 mb-2 col-span-3">
                                     <PrimaryButton type="button"
-                                        v-if="$page.props.property.galleries.length > 0"
+                                        v-if="$page.props?.property.galleries.length > 0"
                                         class="w-full"
                                         :class="{ 'opacity-25': detachForm.processing || detachForm.recentlySuccessful }"
                                         :disabled="detachForm.processing || detachForm.recentlySuccessful" @click="detach(gallery)">
@@ -87,7 +87,7 @@ const detach = (gallery) => {
 
                                     <PrimaryButton class="w-full"
                                         @click="router.visit(route('admin.galleries.show', gallery))"
-                                        v-if="$page.props.property.galleries.length > 0">{{__('Edit Gallery')}}</PrimaryButton>
+                                        v-if="$page.props?.property.galleries.length > 0">{{__('Edit Gallery')}}</PrimaryButton>
                                 </div>
                                 <div class="" v-for="image in gallery.images" :key="image.id">
                                     <img :src="image.thumb_url" class="w-full h-auto" :alt="image.name" />
@@ -119,7 +119,7 @@ const detach = (gallery) => {
                             <a :href="property.google_maps_link" target="_blank" >{{__('Travel directions')}}</a>
                             <PinIcon class="w-5 h-5 "/>
                         </div>
-                        <MapCard :property="$page.props.property" />
+                        <MapCard :property="$page.props?.property" />
 
                         <!-- <AvailabilityCalendar /> -->
 

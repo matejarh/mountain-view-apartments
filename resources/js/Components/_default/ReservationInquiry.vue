@@ -34,7 +34,7 @@ const form = useForm({
 
 })
 
-const datepickerRange = page.props.settings?.find(setting => setting.slug === 'datepicker-range')
+const datepickerRange = page.props?.settings?.find(setting => setting.slug === 'datepicker-range')
 
 
 // const date = ref(null)
@@ -181,8 +181,8 @@ const store = () => {
                             prevent-min-max-navigation
                             :disabled-dates="disabledDates"
                             :enable-time-picker="false"
-                            :locale="$page.props.locale"
-                            :format="$page.props.date_format_pattern"
+                            :locale="$page.props?.locale"
+                            :format="$page.props?.date_format_pattern"
                             :dark="helpers.isDark"
                             six-weeks="center"
                             :placeholder="__('Select arrival & departure dates') + '...'"
@@ -253,12 +253,12 @@ const store = () => {
                     <li> <span class="font-semibold">{{ __('Email')}}:</span> {{ form.email }}</li>
                     <li> <span class="font-semibold">{{ __('Subject')}}:</span> {{ form.subject }}</li>
                     <li> <span class="font-semibold">{{ __('Message')}}:</span> {{ form.message }}</li>
-                    <li> <span class="font-semibold">{{ __('Selected apartma')}}:</span> {{ propertyProxy.title[$page.props.locale] }}</li>
+                    <li> <span class="font-semibold">{{ __('Selected apartma')}}:</span> {{ propertyProxy.title[$page.props?.locale] }}</li>
                     <li> <span class="font-semibold">{{ __('Number of adults')}}:</span> {{ form.adults }}</li>
                     <li> <span class="font-semibold">{{ __('Number of kids')}}:</span> {{ form.children }}</li>
                     <li> <span class="font-semibold">{{ __('Pets')}}:</span> {{ form.pets }}</li>
-                    <li> <span class="font-semibold">{{ __('Date from')}}:</span> {{ form.date[0].toLocaleDateString($page.props.locale) }}</li>
-                    <li> <span class="font-semibold">{{ __('Date to')}}:</span> {{ form.date[1].toLocaleDateString($page.props.locale) }}</li>
+                    <li> <span class="font-semibold">{{ __('Date from')}}:</span> {{ form.date[0].toLocaleDateString($page.props?.locale) }}</li>
+                    <li> <span class="font-semibold">{{ __('Date to')}}:</span> {{ form.date[1].toLocaleDateString($page.props?.locale) }}</li>
                 </ul>
             </template>
         </ConfirmationModal>

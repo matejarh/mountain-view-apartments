@@ -10,10 +10,10 @@ import CompanyInfoSetting from './_partials/CompanyInfoSetting.vue';
 <template>
     <FullLayout :title="__('Settings')">
         <GridSection>
-            <SiteBackgroundSetting :setting="$page.props.settings.find(setting => setting.slug === 'site-backgrounds')"/>
-            <DatepickerRangeSetting :setting="$page.props.settings.find(setting => setting.slug === 'datepicker-range')"/>
-            <CompanyInfoSetting :setting="$page.props.settings.find(setting => setting.slug === 'company-info')"/>
-            <IntervalsSetting :setting="$page.props.settings.find(setting => setting.slug === 'intervals')"/>
+            <SiteBackgroundSetting :setting="$page.props?.settings.find(setting => setting.slug === 'site-backgrounds')"/>
+            <DatepickerRangeSetting :setting="$page.props?.settings.find(setting => setting.slug === 'datepicker-range')"/>
+            <CompanyInfoSetting :setting="$page.props?.settings.find(setting => setting.slug === 'company-info')"/>
+            <IntervalsSetting :setting="$page.props?.settings.find(setting => setting.slug === 'intervals')"/>
         </GridSection>
     </FullLayout>
 

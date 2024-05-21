@@ -10,7 +10,7 @@ const page = usePage()
 const store = useTranslationsStore()
 
 onBeforeMount(() => {
-    store.updateTranslations(page.props.translations)
+    store.updateTranslations(page.props?.translations)
 })
 </script>
 <template>

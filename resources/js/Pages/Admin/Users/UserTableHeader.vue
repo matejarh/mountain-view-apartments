@@ -9,9 +9,9 @@ import { trim } from 'lodash';
 const page = usePage()
 
 const form = ref({
-    search: page.props.filters.search,
-    sortBy: page.props.filters.sortBy,
-    sortDirection: page.props.filters.sortDirection,
+    search: page.props?.filters.search,
+    sortBy: page.props?.filters.sortBy,
+    sortDirection: page.props?.filters.sortDirection,
 })
 
 const debouncedHandler = debounce(() => {

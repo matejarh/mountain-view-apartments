@@ -22,9 +22,9 @@ const showAttachGalleryDialog = ref(false)
 
         <ActionSection :fullwidth="true" back="admin.pages.index">
             <template #title>
-                {{ $page.props.page.name }}
+                {{ $page.props?.page.name }}
                 -
-                {{ $page.props.page?.title[$page.props.locale] }}
+                {{ $page.props?.page?.title[$page.props?.locale] }}
             </template>
 
             <template #content>
@@ -43,6 +43,6 @@ const showAttachGalleryDialog = ref(false)
         </ActionSection>
 
         <ManageGalleriesDialog :show="showAttachGalleryDialog" @close="showAttachGalleryDialog = false"
-            :page="$page.props.page" />
+            :page="$page.props?.page" />
     </FullLayout>
 </template>

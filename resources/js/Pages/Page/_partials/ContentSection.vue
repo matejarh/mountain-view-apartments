@@ -9,7 +9,7 @@ const extrasKey = computed(() => {
 })
 
 const extractedContent = computed(() => {
-    return extractContentFromText(page.props?.page.extras[extrasKey.value]?.text[page.props.locale])
+    return extractContentFromText(page.props?.page.extras[extrasKey.value]?.text[page.props?.locale])
 })
 
 const extractContentFromText = (text) => {
@@ -42,7 +42,7 @@ const extractContentFromText = (text) => {
                 <div v-for="paragraph, key in extractedContent" :key="key"
                     class="flex flex-col items-start bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-full hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
                     <img class="object-cover w-full rounded-t-lg h-auto md:w-1/2 md:rounded-none md:rounded-s-lg"
-                        :src="$page.props.page.galleries[0]?.images[key].thumb_url" alt="">
+                        :src="$page.props?.page.galleries[0]?.images[key].thumb_url" alt="">
                     <div class="flex flex-col justify-between p-4 leading-normal">
                         <h3 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                             {{ paragraph.title }}

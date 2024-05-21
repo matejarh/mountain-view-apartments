@@ -71,13 +71,13 @@ const handleSelect = (attribute) => {
                     <div class="" v-for="attribute, key in setting.attributes">
                         <div class="flex justify-between items-center">
                             <h3>{{__('image')}} {{__('for')}} {{ __(key) }}</h3>
-                            <div class="relative" v-if="key === $page.props.current_season">
+                            <div class="relative" v-if="key === $page.props?.current_season">
                                 <LightbulbIcon class="absolute animate-ping h-6 w-6 text-yellow-400" />
                                 <LightbulbIcon class="h-6 w-6 text-yellow-300" />
 
                             </div>
                         </div>
-                        <div :class="{ 'rounded-lg shadow-2xl shadow-amazon-300': key === $page.props.current_season }"
+                        <div :class="{ 'rounded-lg shadow-2xl shadow-amazon-300': key === $page.props?.current_season }"
                             class="" v-if="attribute">
                             <img :src="attribute.thumb_url" class="w-full h-auto rounded-lg" />
 

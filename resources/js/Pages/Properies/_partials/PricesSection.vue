@@ -19,7 +19,7 @@ import ShapeTop from '@/Components/_default/ShapeTop.vue';
             </div>
             <div class="space-y-8 grid sm:grid-cols-2 lg:grid-cols-4 sm:gap-4 xl:gap-10 sm:space-y-0">
 
-                <PricingCard v-for="price, key in $page.props.property.prices " :rules="$page.props.property.rules" :price="price" :key="key" />
+                <PricingCard v-for="price, key in $page.props?.property.prices " :rules="$page.props?.property.rules" :price="price" :key="key" />
 
             </div>
         </div>

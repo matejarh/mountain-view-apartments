@@ -23,10 +23,10 @@ const destroyForm = useForm({})
 const showDestroyConfirm = ref(false)
 
 const detach = () => {
-    detachForm.put(route('admin.properties.detach.facility', { facility: props.facility, property: page.props.property }))
+    detachForm.put(route('admin.properties.detach.facility', { facility: props.facility, property: page.props?.property }))
 }
 const attach = () => {
-    attachForm.put(route('admin.properties.attach.facility', { facility: props.facility, property: page.props.property }))
+    attachForm.put(route('admin.properties.attach.facility', { facility: props.facility, property: page.props?.property }))
 }
 
 const destroy = () => {

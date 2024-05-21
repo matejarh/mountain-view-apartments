@@ -97,7 +97,7 @@ const submit = () => {
                 <InputError :message="form.errors.password_confirmation" />
             </div>
 
-            <div class="flex items-start" v-if="$page.props.jetstream.hasTermsAndPrivacyPolicyFeature">
+            <div class="flex items-start" v-if="$page.props?.jetstream.hasTermsAndPrivacyPolicyFeature">
                 <div class="flex items-center h-5">
                     <Checkbox id="terms" v-model:checked="form.terms" name="terms" required />
                 </div>
@@ -122,7 +122,7 @@ const submit = () => {
             </p>
 
 
-            <!-- <div v-if="$page.props.jetstream.hasTermsAndPrivacyPolicyFeature" class="mt-4">
+            <!-- <div v-if="$page.props?.jetstream.hasTermsAndPrivacyPolicyFeature" class="mt-4">
                 <InputLabel for="terms">
                     <div class="flex items-center">
                         <Checkbox id="terms" v-model:checked="form.terms" name="terms" required />

@@ -32,8 +32,8 @@ onMounted(() => {
             <div class="flex flex-col justify-center p-8">
                 <h1
                     class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
-                    <inertia-link :href="route('properties.show', { property: property, lang: $page.props.locale })">
-                        {{ property.title[$page.props.locale] }}
+                    <inertia-link :href="route('properties.show', { property: property, lang: $page.props?.locale })">
+                        {{ property.title[$page.props?.locale] }}
 
                     </inertia-link>
                 </h1>
@@ -55,14 +55,14 @@ onMounted(() => {
                         <p class="">{{ __(type.title) }}</p>
                         <p class="">{{ __(type.name) }}</p>
                     </div>
-                    <!-- {{ $page.props.property.bed_types }} -->
+                    <!-- {{ $page.props?.property.bed_types }} -->
                 </div>
 
                 <div class="mb-8 mt-4 text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400"
-                    v-html="property.description[$page.props.locale]"></div>
+                    v-html="property.description[$page.props?.locale]"></div>
 
                 <div class="flex flex-col space-y-4 sm:flex-row sm:space-y-0">
-                    <inertia-link :href="route('properties.show', { property: property, lang: $page.props.locale })"
+                    <inertia-link :href="route('properties.show', { property: property, lang: $page.props?.locale })"
                         class="inline-flex hover:scale-105 active:scale-95 items-center justify-center px-4 py-2 bg-primary-700 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-primary-500 active:bg-primary-700 focus:outline-none focus:ring-0 active:shadow hover:shadow-xl shadow-lg   transition ease-in-out duration-150">
                         {{ __('Learn more') }}
                         <ArrowRightIcon class="w-3.5 h-3.5 ms-2" />
@@ -93,12 +93,12 @@ onMounted(() => {
                 <div class="px-4 h-full max-h-44 overflow-y-auto scrollbar-none">
 
                     <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{
-                        property.title[$page.props.locale] }}
+                        property.title[$page.props?.locale] }}
                     </h5>
 
                     <p
                         class="mb-3 font-normal text-gray-700 dark:text-gray-400 bg-gray-50 dark:bg-gray-700 leading-tight whitespace-pre-wrap p-2 rounded-lg h-14 overflow-y-auto scrollbar-none ">
-                        {{ property.description[$page.props.locale] }}</p>
+                        {{ property.description[$page.props?.locale] }}</p>
                 </div>
 
                 <PrimaryButton type="button" class="mx-4" @click="">

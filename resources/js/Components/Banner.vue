@@ -8,8 +8,8 @@ const style = ref('success');
 const message = ref('');
 let timeout
 watchEffect(async () => {
-    style.value = page.props.jetstream.flash?.bannerStyle || 'success';
-    message.value = page.props.jetstream.flash?.banner || '';
+    style.value = page.props?.jetstream.flash?.bannerStyle || 'success';
+    message.value = page.props?.jetstream.flash?.banner || '';
     show.value = true;
 
     timeout = setTimeout(() => { show.value = false; }, 5000);

@@ -15,7 +15,7 @@ defineProps({
             <div class="h-full flex flex-col justify-center">
                 <h1
                     class="mb-4 text-4xl font-extrabold tracking-tight  leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
-                    {{ accomodation.title[$page.props.locale] }}</h1>
+                    {{ accomodation.title[$page.props?.locale] }}</h1>
                     <div class="mt-0 sm:items-center sm:gap-4 sm:flex">
                             <p class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">
                                 {{ __(accomodation.type) }}
@@ -34,12 +34,12 @@ defineProps({
                                 <p class="">{{ __(type.title) }}</p>
                                 <p class="">{{ __(type.name) }}</p>
                             </div>
-                            <!-- {{ $page.props.property.bed_types }} -->
+                            <!-- {{ $page.props?.property.bed_types }} -->
                         </div>
-                <div class="mb-8 mt-4 text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400" v-html="accomodation.description[$page.props.locale]"></div>
+                <div class="mb-8 mt-4 text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400" v-html="accomodation.description[$page.props?.locale]"></div>
 
                 <div class="flex flex-col space-y-4 sm:flex-row sm:space-y-0 mb-4">
-                    <inertia-link :href="route('properties.show', {property:accomodation, lang:$page.props.locale})"
+                    <inertia-link :href="route('properties.show', {property:accomodation, lang:$page.props?.locale})"
                         class="inline-flex hover:scale-105 active:scale-95 items-center justify-center px-4 py-2 bg-primary-700 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-primary-500 active:bg-primary-700 focus:outline-none focus:ring-0 active:shadow hover:shadow-xl shadow-lg   transition ease-in-out duration-150">
                         {{__('Learn more')}}
                         <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"

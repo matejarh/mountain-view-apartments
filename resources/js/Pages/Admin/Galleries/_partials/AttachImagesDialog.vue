@@ -31,12 +31,12 @@ const filter = ref({
 })
 const filteredImages = computed(() => {
     if (!form.value.search) {
-        return page.props.images_not_in_gallery;
+        return page.props?.images_not_in_gallery;
     }
 
     const searchPattern = new RegExp(filter.value.search, 'i'); // 'i' flag for case-insensitive search
-    return page.props.images_not_in_gallery.filter(image => searchPattern.test(image.name));
-    // return form.value.search ? page.props.images_not_in_gallery.filter(image => image.name.match(/form.value.search.*/)) : page.props.images_not_in_gallery
+    return page.props?.images_not_in_gallery.filter(image => searchPattern.test(image.name));
+    // return form.value.search ? page.props?.images_not_in_gallery.filter(image => image.name.match(/form.value.search.*/)) : page.props?.images_not_in_gallery
 })
 
 const fetch = () => {
@@ -114,7 +114,7 @@ const reset = () => {
                         <div class="w-full text-center cursor-pointer" @click="$emit('showUploadPhotoDialog')">
                             <ImageIcon class="text-gray-300 dark:text-gray-400 w-32 h-32 mx-auto" />
 
-                            <p class="text-gray-300 dark:text-gray-400 font-semibold ">{{ $page.props.total_images_count
+                            <p class="text-gray-300 dark:text-gray-400 font-semibold ">{{ $page.props?.total_images_count
                                 > 0 ? __('All uploaded images are attached to gallery!') : __('No images uploaded yet!')
                                 }}</p>
                             <p class="text-gray-300 dark:text-gray-400 text-sm">{{ __('Click here to upload some') }}

@@ -19,7 +19,7 @@ const fetch = () => {
 }
 
 watchEffect(async () => {
-    // console.log(page.props.locale)
+    // console.log(page.props?.locale)
     fetch()
 
 })

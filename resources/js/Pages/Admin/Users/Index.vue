@@ -26,7 +26,7 @@ const handleEditUser = (user) => {
         {{ __("Users List") }}
     </template>
     <template #content>
-        <TableSection :paginator="$page.props.users">
+        <TableSection :paginator="$page.props?.users">
             <template #header>
                 <!-- <UserTableHeader /> -->
                 <FiltersSection id="users-filters" route="admin.users.index" placeholder="Search for users" />
@@ -43,16 +43,16 @@ const handleEditUser = (user) => {
                         <th scope="col" class="px-6 py-3 flex space-x-2">
                             <div class="flex items-center cursor-pointer" @click="">
                                 {{__('Name')}}
-                                <ArrowDownIcon v-if="$page.props.filters.sortBy === 'name'"
-                                :class="{'rotate-180' : $page.props.filters.sortBy === 'name' && $page.props.filters.sortDirection === 'desc'}"
+                                <ArrowDownIcon v-if="$page.props?.filters.sortBy === 'name'"
+                                :class="{'rotate-180' : $page.props?.filters.sortBy === 'name' && $page.props?.filters.sortDirection === 'desc'}"
                                 class="w-4 h-4" />
 
                             </div>
                             <span>/</span>
                             <div class="flex items-center">
                                 {{__('Email')}}
-                                <ArrowDownIcon v-if="$page.props.filters.sortBy === 'email'"
-                                :class="{'rotate-180' : $page.props.filters.sortBy === 'email' && $page.props.filters.sortDirection === 'desc'}"
+                                <ArrowDownIcon v-if="$page.props?.filters.sortBy === 'email'"
+                                :class="{'rotate-180' : $page.props?.filters.sortBy === 'email' && $page.props?.filters.sortDirection === 'desc'}"
                                 class="w-4 h-4" />
 
                             </div>
@@ -60,8 +60,8 @@ const handleEditUser = (user) => {
                         <th scope="col" class="px-6 py-3">
                             <div class="flex items-center">
                             {{__('Phone')}}
-                            <ArrowDownIcon v-if="$page.props.filters.sortBy === 'phone'"
-                                                :class="{'rotate-180' : $page.props.filters.sortBy === 'phone' && $page.props.filters.sortDirection === 'desc'}"
+                            <ArrowDownIcon v-if="$page.props?.filters.sortBy === 'phone'"
+                                                :class="{'rotate-180' : $page.props?.filters.sortBy === 'phone' && $page.props?.filters.sortDirection === 'desc'}"
                                                 class="w-4 h-4" />
                             </div>
                         </th>
@@ -78,7 +78,7 @@ const handleEditUser = (user) => {
                             {{__('Action')}}
                         </th>
             </template>
-            <UserTableRow v-for="user in $page.props.users.data" :key="user.id" :user="user" @edit-user="handleEditUser" />
+            <UserTableRow v-for="user in $page.props?.users.data" :key="user.id" :user="user" @edit-user="handleEditUser" />
 
         </TableSection>
 

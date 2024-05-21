@@ -96,7 +96,7 @@ watchEffect(async () => {
                             <Transition enter-active-class="animate__animated animate__bounceInDown"
                                 leave-active-class="animate__animated animate__bounceOutUp">
 
-                                <UserDropdown v-if="$page.props.auth.user" v-show="helpers.showUserDropdown" />
+                                <UserDropdown v-if="$page.props?.auth.user" v-show="helpers.showUserDropdown" />
                             </Transition>
                         </div>
                     </Transition>

@@ -15,7 +15,7 @@ const store = useTranslationsStore()
 const selectedLanguage = computed(() => {
 
     return store.languages.filter((language) => {
-        return language.code === page.props.locale
+        return language.code === page.props?.locale
     })[0]
 })
 
@@ -28,11 +28,11 @@ const switchLanguage = (lang) => {
         preserveState: true,
         // resetOnSuccess: false,
         onSuccess: () => {
-            // selectLanguage(page.props.locale)
+            // selectLanguage(page.props?.locale)
 
-            store.updateTranslations(page.props.translations)
+            store.updateTranslations(page.props?.translations)
 
-            localStorage.setItem('language', page.props.locale)
+            localStorage.setItem('language', page.props?.locale)
         }
     })
 }
@@ -42,7 +42,7 @@ onBeforeMount(() => {
         const lang = navigator.language.split('-')[0]
         switchLanguage(lang)
     } else {
-        store.updateTranslations(page.props.translations)
+        store.updateTranslations(page.props?.translations)
     }
 })
 

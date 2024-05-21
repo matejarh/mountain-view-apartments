@@ -26,13 +26,13 @@ const handleEdit = (gallery) => {
             </template>
 
             <template #content>
-                <FiltersSection v-show="$page.props.galleries.data.length > 0" id="galleries-filters" route="admin.galleries.index" placeholder="Search for galleries" />
+                <FiltersSection v-show="$page.props?.galleries.data.length > 0" id="galleries-filters" route="admin.galleries.index" placeholder="Search for galleries" />
 
-                <div class="relative" v-if="$page.props.galleries.data.length > 0">
+                <div class="relative" v-if="$page.props?.galleries.data.length > 0">
                     <TransitionGroup name="list" tag="ul"
                         class=" relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 4xl:grid-cols-6 gap-4 md:gap-4 lg:gap-6 2xl:gap-8">
 
-                        <GalleryCard v-for="gallery, key in $page.props.galleries.data" :key="gallery.id" :gallery="gallery"
+                        <GalleryCard v-for="gallery, key in $page.props?.galleries.data" :key="gallery.id" :gallery="gallery"
                             @edit="handleEdit" />
                     </TransitionGroup>
                 </div>

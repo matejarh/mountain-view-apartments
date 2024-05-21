@@ -51,7 +51,7 @@ const notAvailableMarkers = computed(() => {
 
 const highlightedDates = ref(["2024-05-11", "2024-05-12", "2024-05-13", "2024-05-14"])
 
-const datepickerRange = page.props.settings?.find(setting => setting.slug === 'datepicker-range')
+const datepickerRange = page.props?.settings?.find(setting => setting.slug === 'datepicker-range')
 
 const tomorrow = computed(() => {
     const today = new Date()
@@ -92,7 +92,7 @@ const book = () => {
 
     if (date.value.length > 0) {
         picker.classList.remove('animate-shake')
-        alert('You selected from ' + date.value[0].toLocaleDateString(page.props.locale) + ' to ' + date.value[1].toLocaleDateString(page.props.locale));
+        alert('You selected from ' + date.value[0].toLocaleDateString(page.props?.locale) + ' to ' + date.value[1].toLocaleDateString(page.props?.locale));
     } else {
         picker.classList.add('animate-shake')
 
@@ -115,8 +115,8 @@ const book = () => {
                         <VueDatePicker v-model="date" :range="options.range" :multi-calendars="options.multi"
                             :min-date="tomorrow" :max-date="yearFromNow" prevent-min-max-navigation
                             :markers="notAvailableMarkers" :disabled-dates="disabledDates" :highlight="highlightedDates"
-                            :enable-time-picker="false" :locale="$page.props.locale"
-                            :format="$page.props.date_format_pattern" :dark="helpers.isDark" :six-weeks="false" inline
+                            :enable-time-picker="false" :locale="$page.props?.locale"
+                            :format="$page.props?.date_format_pattern" :dark="helpers.isDark" :six-weeks="false" inline
                             auto-apply :placeholder="__('Select arrival & departure dates...')">
 
                             <template #marker="{ marker, day, date }">
@@ -136,7 +136,7 @@ const book = () => {
                     <span class="mx-auto flex items-center">
                         <InfoIcon class="w-6 h-6 me-2" />
                         {{ __('Availability calendar') }} {{ __('for') }} {{
-                            $page.props.property?.title[$page.props.locale] }}
+                            $page.props?.property?.title[$page.props?.locale] }}
 
                     </span>
                 </p>

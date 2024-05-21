@@ -7,7 +7,7 @@ import ActivityItem from './_partials/ActivityItem.vue';
 <template>
 
 <ol class="relative border-s border-gray-200 dark:border-gray-700">
-    <ActivityItem v-for="activity, key in $page.props.activities.data" :item="activity" />
+    <ActivityItem v-for="activity, key in $page.props?.activities.data" :item="activity" />
 <!--     <li class="mb-10 ms-6">
         <span class="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
             <img class="rounded-full shadow-lg" src="/docs/images/people/profile-picture-3.jpg" alt="Bonnie image"/>

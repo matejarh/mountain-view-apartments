@@ -7,15 +7,15 @@ import Wrapper from '@/Components/_default/Wrapper.vue';
 </script>
 
 <template>
-    <DefaultLayout :title="$page.props.seo?.title" :description="$page.props.seo?.description"
-        :keywords="$page.props.seo?.keywords">
+    <DefaultLayout :title="$page.props?.seo?.title" :description="$page.props?.seo?.description"
+        :keywords="$page.props?.seo?.keywords">
 
         <div class="space-y-0">
             <HeroSection />
             <ShapedSection :color="{dark:'primary-900', light:'primary-700'}">
                 <div class="py-8 lg:py-16 mx-auto max-w-screen-md px-4">
 
-                    <ReviewCard v-for="review in $page.props.reviews.data" :key="review.id" :review="review"></ReviewCard>
+                    <ReviewCard v-for="review in $page.props?.reviews.data" :key="review.id" :review="review"></ReviewCard>
                 </div>
 
             </ShapedSection>

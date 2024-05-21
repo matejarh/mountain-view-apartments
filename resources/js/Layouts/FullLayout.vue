@@ -37,7 +37,7 @@ const headerClasses = computed(() => {
 const showSidebar = ref(false)
 
 onBeforeMount(() => {
-    translations.updateTranslations(page.props.translations)
+    translations.updateTranslations(page.props?.translations)
 })
 </script>
 

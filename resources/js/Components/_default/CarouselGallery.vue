@@ -35,7 +35,7 @@ const currentSlide = ref(0)
 
 const currentItem = ref(props?.items[0])
 const page = usePage()
-const int = ref(page.props.settings.find(setting => setting.slug === 'intervals'))
+const int = ref(page.props?.settings.find(setting => setting.slug === 'intervals'))
 
 const slideTo = (val) => {
     currentSlide.value = val

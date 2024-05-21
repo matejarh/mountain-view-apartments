@@ -32,7 +32,7 @@ const handleSelected = (accomodation) => {
     propertyProxy.value = accomodation
 }
 
-const datepickerRange = page.props.settings?.find(setting => setting.slug === 'datepicker-range')
+const datepickerRange = page.props?.settings?.find(setting => setting.slug === 'datepicker-range')
 
 const options = ref({
     minRange: datepickerRange.attributes?.min,
@@ -65,8 +65,8 @@ watch(disabledDates, () => {
                                 prevent-min-max-navigation
                                 :disabled-dates="disabledDates"
                                 :enable-time-picker="false"
-                                :locale="$page.props.locale"
-                                :format="$page.props.date_format_pattern"
+                                :locale="$page.props?.locale"
+                                :format="$page.props?.date_format_pattern"
                                 :dark="helpers.isDark"
                                 six-weeks="center"
                                 :placeholder="__('Select arrival & departure dates') + '...'"

@@ -14,7 +14,7 @@ const bgImage = ref(new URL('/resources/images/backgrounds/winter-sunrise.jpg', 
 
 let interval;
 
-const int = ref(page.props.settings.find(setting => setting.slug === 'intervals'))
+const int = ref(page.props?.settings.find(setting => setting.slug === 'intervals'))
 
 const initBgImageRotation = () => {
 

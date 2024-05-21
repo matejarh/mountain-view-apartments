@@ -15,7 +15,7 @@ import ShapedSection from '@/Components/_default/ShapedSection.vue';
                     technology, innovation, and capital can unlock long-term value and drive economic growth.</p> -->
             </div>
             <div class="space-y-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 md:gap-12 md:space-y-0">
-                <div v-for="rule, key in $page.props.property.rules[$page.props.locale]" :key=key>
+                <div v-for="rule, key in $page.props?.property.rules[$page.props?.locale]" :key=key>
                     <div class="flex items-center space-x-2">
                         <div
                         class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-700 lg:h-12 lg:w-12 dark:bg-primary-900">

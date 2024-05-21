@@ -21,14 +21,14 @@ const showCreateDialog = ref(false)
             </template>
 
             <template #content>
-                <FiltersSection v-show="$page.props.pages.data.length > 0" id="pages-filters" route="admin.pages.index"
+                <FiltersSection v-show="$page.props?.pages.data.length > 0" id="pages-filters" route="admin.pages.index"
                     placeholder="Search for pages" />
 
-                <div class="relative" v-if="$page.props.pages.data.length > 0">
+                <div class="relative" v-if="$page.props?.pages.data.length > 0">
                     <TransitionGroup name="list" tag="ul"
                         class=" relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 4xl:grid-cols-6 gap-4 md:gap-4 lg:gap-6 2xl:gap-8">
 
-                        <PageCard v-for="page, key in $page.props.pages.data" :key="page.id" :page="page" />
+                        <PageCard v-for="page, key in $page.props?.pages.data" :key="page.id" :page="page" />
                     </TransitionGroup>
                 </div>
 

@@ -31,14 +31,14 @@ const classes = computed(() => {
         aria-label="Sidenav" id="sidebar-navigation">
         <div class="overflow-y-auto py-5 px-3 md:pr-0 h-full bg-white dark:bg-gray-900">
             <ul class="space-y-2">
-                <NavLink :href="$page.props.auth.user.is_admin ? '/admin/dashboard': '/dashboard'" @click="$emit('hide')">
+                <NavLink :href="$page.props?.auth.user.is_admin ? '/admin/dashboard': '/dashboard'" @click="$emit('hide')">
                     <template #icon>
                         <AdjustmentsIcon class="" />
                     </template>
                     {{ __("Dashboard") }}
                 </NavLink>
 
-                <NavDropdown v-if="$page.props.auth.user.is_admin" key="properties-dropdown" href="/admin/properties">
+                <NavDropdown v-if="$page.props?.auth.user.is_admin" key="properties-dropdown" href="/admin/properties">
                     <template #icon>
                         <MountainCityIcon />
                     </template>
@@ -48,14 +48,14 @@ const classes = computed(() => {
                     <DropdownItem href="/admin/properties/reservations" @click="$emit('hide')">{{ __('Reservations') }}</DropdownItem>
                 </NavDropdown>
 
-                <NavLink v-if="$page.props.auth.user.is_admin" href="/admin/pages" @click="$emit('hide')">
+                <NavLink v-if="$page.props?.auth.user.is_admin" href="/admin/pages" @click="$emit('hide')">
                     <template #icon>
                         <PagesIcon />
                     </template>
                     {{ __("Pages") }}
                 </NavLink>
 
-                <NavDropdown v-if="$page.props.auth.user.is_admin" key="galleries-dropdown" href="/admin/galleries">
+                <NavDropdown v-if="$page.props?.auth.user.is_admin" key="galleries-dropdown" href="/admin/galleries">
                     <template #icon>
                         <ImageIcon />
                     </template>
@@ -65,7 +65,7 @@ const classes = computed(() => {
                     <!-- <DropdownItem :href="'/admin/galeries/create'" @click="$emit('hide')">Create</DropdownItem> -->
 
                 </NavDropdown>
-                <NavDropdown v-if="$page.props.auth.user.is_admin" key="users-dropdown" href="/admin/users">
+                <NavDropdown v-if="$page.props?.auth.user.is_admin" key="users-dropdown" href="/admin/users">
                     <template #icon>
                         <UsersIcon />
                     </template>
@@ -76,7 +76,7 @@ const classes = computed(() => {
                 </NavDropdown>
             </ul>
             <ul class="transition-all pt-5 mt-5 space-y-2 border-t border-gray-200 dark:border-gray-700">
-                <NavLink v-if="$page.props.auth.user.is_admin" :href="route('dashboard.show')">
+                <NavLink v-if="$page.props?.auth.user.is_admin" :href="route('dashboard.show')">
                     <template #icon>
                         <svg aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg">
@@ -88,7 +88,7 @@ const classes = computed(() => {
                     </template>
                     Docs
                 </NavLink>
-<!--                 <NavLink v-if="$page.props.auth.user.is_admin" :href="route('dashboard.show')">
+<!--                 <NavLink v-if="$page.props?.auth.user.is_admin" :href="route('dashboard.show')">
                     <template #icon>
                         <svg aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg">
@@ -99,7 +99,7 @@ const classes = computed(() => {
                     </template>
                     Components
                 </NavLink> -->
-                <NavLink v-if="$page.props.auth.user.is_admin" :href="route('dashboard.show')">
+                <NavLink v-if="$page.props?.auth.user.is_admin" :href="route('dashboard.show')">
                     <template #icon>
                         <svg aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg">
@@ -114,11 +114,11 @@ const classes = computed(() => {
         </div>
         <div
             class="hidden absolute bottom-0 left-0 justify-center p-4 space-x-4 w-full lg:flex bg-gray-50 dark:bg-gray-800 z-20">
-            <BottomItem v-if="$page.props.auth.user.is_admin" :href="'/'">
+            <BottomItem v-if="$page.props?.auth.user.is_admin" :href="'/'">
                 <AdjustmentsIcon class="w-6 h-6" />
             </BottomItem>
 
-            <Tooltip v-if="$page.props.auth.user.is_admin" :text="__('Settings Page')">
+            <Tooltip v-if="$page.props?.auth.user.is_admin" :text="__('Settings Page')">
                 <BottomItem :href="route('admin.settings.index')" active="/admin/settings">
                     <CogIcon class="w-6 h-6" />
                 </BottomItem>

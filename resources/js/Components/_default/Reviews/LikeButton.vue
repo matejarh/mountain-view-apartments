@@ -12,7 +12,7 @@ const props = defineProps({
 const page = usePage()
 
 const likeButtonText = computed(() => {
-    return (!props.item.is_liked ? 'Like ' : 'Unlike ') + props.item?.title[page.props.locale]
+    return (!props.item.is_liked ? 'Like ' : 'Unlike ') + props.item?.title[page.props?.locale]
 })
 
 const likeForm = useForm({

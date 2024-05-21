@@ -56,33 +56,33 @@ watchEffect(async () => {
             <TransitionGroup enter-active-class="animate__animated animate__bounceInDown"
                 leave-active-class="animate__animated animate__bounceOutUp">
 
-                <TopNavigationItem key="home" v-show="helpers.showNavItems[1]" :to="'/' + $page.props.locale">
+                <TopNavigationItem key="home" v-show="helpers.showNavItems[1]" :to="'/' + $page.props?.locale">
                     {{ __('Home') }}
                 </TopNavigationItem>
                 <TopNavigationItem key="accomodations" v-show="helpers.showNavItems[2]"
-                    :to="`/${$page.props.locale}/accomodations`">
+                    :to="`/${$page.props?.locale}/accomodations`">
                     {{ __('Apartments') }}
                 </TopNavigationItem>
                 <TopNavigationItem key="bled" v-show="helpers.showNavItems[3]"
-                    :to="`/${$page.props.locale}/explore/bled`">
+                    :to="`/${$page.props?.locale}/explore/bled`">
                     {{ __('Explore Bled') }}
                 </TopNavigationItem>
                 <TopNavigationItem key="nassfeld" v-show="helpers.showNavItems[3]"
-                    :to="`/${$page.props.locale}/discover/nassfeld`">
+                    :to="`/${$page.props?.locale}/discover/nassfeld`">
                     {{ __('Discover Nassfeld') }}
                 </TopNavigationItem>
 <!--                 <TopNavigationItem key="offers" v-show="helpers.showNavItems[3]"
-                    :to="`/${$page.props.locale}/offers`">
+                    :to="`/${$page.props?.locale}/offers`">
                     {{ __('Offers') }}
                 </TopNavigationItem> -->
                 <TopNavigationItem key="aboutus" v-show="helpers.showNavItems[3]"
-                    :to="`/${$page.props.locale}/about-us`">
+                    :to="`/${$page.props?.locale}/about-us`">
                     {{ __('About Us') }}
                 </TopNavigationItem>
                 <!-- <TopNavigationItem key="reservation" v-show="helpers.showNavItems[4]" :to="'/reservation'">
                     {{ __('Reservation') }}
                 </TopNavigationItem> -->
-<!--                 <TopNavigationItem key="stories" v-show="helpers.showNavItems[4]" :to="`/${$page.props.locale}/stories`">
+<!--                 <TopNavigationItem key="stories" v-show="helpers.showNavItems[4]" :to="`/${$page.props?.locale}/stories`">
                     {{ __('Stories') }}
                 </TopNavigationItem> -->
 

@@ -21,24 +21,24 @@ const page = usePage()
 const store = useTranslationsStore()
 
 const form = useForm({
-    type: page.props.property?.type,
-    name: page.props.property?.name,
-    title: page.props.property?.title,
-    quote: page.props.property?.quote,
-    description: page.props.property?.description,
-    long_description: page.props.property?.long_description,
-    address: page.props.property?.address,
-    keywords: page.props.property?.keywords,
-    size: page.props.property?.size,
-    is_entire_apartment: page.props.property?.is_entire_apartment,
-    coordinates: page.props.property?.coordinates,
-    bed_types: page.props.property?.bed_types,
-    recomended: page.props.property?.recomended,
-    prices: page.props.property?.prices,
-    rules: page.props.property?.rules,
+    type: page.props?.property?.type,
+    name: page.props?.property?.name,
+    title: page.props?.property?.title,
+    quote: page.props?.property?.quote,
+    description: page.props?.property?.description,
+    long_description: page.props?.property?.long_description,
+    address: page.props?.property?.address,
+    keywords: page.props?.property?.keywords,
+    size: page.props?.property?.size,
+    is_entire_apartment: page.props?.property?.is_entire_apartment,
+    coordinates: page.props?.property?.coordinates,
+    bed_types: page.props?.property?.bed_types,
+    recomended: page.props?.property?.recomended,
+    prices: page.props?.property?.prices,
+    rules: page.props?.property?.rules,
 })
 
-const selectedTab = ref(page.props.locale)
+const selectedTab = ref(page.props?.locale)
 
 const newBedType = useForm({
     name: '',
@@ -62,7 +62,7 @@ const newRecomended = reactive({
 
 const update = () => {
     form.clearErrors()
-    form.put(route('admin.properties.update', page.props.property), {
+    form.put(route('admin.properties.update', page.props?.property), {
         preserveScroll: true,
         preserveState: true,
         errorBag: 'updatingProperty',
@@ -295,7 +295,7 @@ onBeforeUnmount(() => document.removeEventListener('keydown', saveOnCtrlS));
 
                     <SelectInput v-model="form.bed_types[key].icon" :id="`bed_type_${key}_icon`">
                         <option disabled value="">- {{ __('select icon') }} -</option>
-                        <option v-for="icon, key in $page.props.icon_list" :key="key" :value="icon.name">{{
+                        <option v-for="icon, key in $page.props?.icon_list" :key="key" :value="icon.name">{{
                             __(icon.label) }}
                         </option>
                     </SelectInput>
@@ -325,7 +325,7 @@ onBeforeUnmount(() => document.removeEventListener('keydown', saveOnCtrlS));
 
                     <SelectInput v-model="newBedType.icon" id="bed_type_new_icon">
                         <option disabled value="none">- {{ __('select icon') }} -</option>
-                        <option v-for="icon, key in $page.props.icon_list" :key="key" :value="icon.name">{{
+                        <option v-for="icon, key in $page.props?.icon_list" :key="key" :value="icon.name">{{
                             __(icon.label) }}
                         </option>
                     </SelectInput>
@@ -477,7 +477,7 @@ onBeforeUnmount(() => document.removeEventListener('keydown', saveOnCtrlS));
                                 <SelectInput v-model="form.rules[selectedTab][key].icon"
                                     :id="`bed_type_${key}_new_icon`">
                                     <option disabled value="none">- {{ __('select icon') }} -</option>
-                                    <option v-for="icon, key in $page.props.icon_list" :key="key" :value="icon.name">{{
+                                    <option v-for="icon, key in $page.props?.icon_list" :key="key" :value="icon.name">{{
                                         __(icon.label) }}
                                     </option>
                                 </SelectInput>
@@ -521,7 +521,7 @@ onBeforeUnmount(() => document.removeEventListener('keydown', saveOnCtrlS));
                             <div class="w-full">
                                 <SelectInput v-model="newRule.icon" id="rule_new_icon">
                                     <option disabled value="none">- {{ __('select icon') }} -</option>
-                                    <option v-for="icon, key in $page.props.icon_list" :key="key" :value="icon.name">{{
+                                    <option v-for="icon, key in $page.props?.icon_list" :key="key" :value="icon.name">{{
                                         __(icon.label) }}
                                     </option>
                                 </SelectInput>

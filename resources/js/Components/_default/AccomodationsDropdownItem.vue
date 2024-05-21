@@ -20,7 +20,7 @@ defineEmits(['selected'])
                     </p>
                     <p class="font-semibold">
 
-                        {{ accomodation.title[$page.props.locale] }}
+                        {{ accomodation.title[$page.props?.locale] }}
                     </p>
 
                 </div>

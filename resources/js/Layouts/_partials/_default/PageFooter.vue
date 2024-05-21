@@ -25,10 +25,10 @@ const helpers = useHelperStore()
                         <h2 class="mb-6 text-sm font-semibold  uppercase text-gray-700  dark:text-white drop-shadow">{{__('Accomodations')}}</h2>
                         <ul class="text-gray-500 dark:text-gray-400 font-medium">
                             <li class="mb-4">
-                                <inertia-link :href="`${$page.props.locale}/discover/bled`" class="hover:underline ">{{__('Explore Bled')}}</inertia-link>
+                                <inertia-link :href="`${$page.props?.locale}/discover/bled`" class="hover:underline ">{{__('Explore Bled')}}</inertia-link>
                             </li>
                             <li>
-                                <inertia-link :href="`${$page.props.locale}/explore/nassfeld`" class="hover:underline  ">{{__('Discover Nassfeld')}}</inertia-link>
+                                <inertia-link :href="`${$page.props?.locale}/explore/nassfeld`" class="hover:underline  ">{{__('Discover Nassfeld')}}</inertia-link>
                             </li>
                         </ul>
                     </div>
@@ -50,7 +50,7 @@ const helpers = useHelperStore()
                                 <button @click="helpers.showContactDrawer" class="hover:underline">{{__('Reservation')}}</button >
                             </li>
                             <li>
-                                <inertia-link :href="`/${$page.props.locale}/contact-us`" class="hover:underline">{{__('Contact Us')}}</inertia-link >
+                                <inertia-link :href="`/${$page.props?.locale}/contact-us`" class="hover:underline">{{__('Contact Us')}}</inertia-link >
                             </li>
                         </ul>
                     </div>

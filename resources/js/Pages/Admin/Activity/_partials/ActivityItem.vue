@@ -27,8 +27,8 @@ defineProps({
                     {{ __(item.type) }}
                     <a href="#" class="font-semibold text-gray-900 dark:text-white hover:underline">
                         {{ item.subject?.name }}
-                        <span v-if="item.type === 'created_like'">{{ item.subject?.liked_trimed[0].title[$page.props.locale] }}</span>
-                        <span v-if="item.type === 'created_review'">{{ item.subject.reviewed_trimed[0].title[$page.props.locale] }}</span></a>
+                        <span v-if="item.type === 'created_like'">{{ item.subject?.liked_trimed[0].title[$page.props?.locale] }}</span>
+                        <span v-if="item.type === 'created_review'">{{ item.subject.reviewed_trimed[0].title[$page.props?.locale] }}</span></a>
                 </div>
             </div>
             <div

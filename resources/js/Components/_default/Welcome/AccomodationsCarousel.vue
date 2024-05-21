@@ -8,7 +8,7 @@ import PropertyCard from '../PropertyCard.vue';
 const page = usePage()
 
 const accomodations = computed(() => {
-    return page.props.accomodations
+    return page.props?.accomodations
 })
 </script>
 

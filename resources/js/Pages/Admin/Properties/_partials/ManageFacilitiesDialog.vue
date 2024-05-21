@@ -56,13 +56,13 @@ const store = () => {
 
                     </h5>
                     <TransitionGroup name="list-attach" tag="ul" class="flex flex-wrap ">
-                        <li class="left-0 block mb-2" v-for="facility, key in $page.props.facilities_not_in_property"
+                        <li class="left-0 block mb-2" v-for="facility, key in $page.props?.facilities_not_in_property"
                             :key="facility.id">
                             <FacilityComponent :key="facility.id" :facility="facility" direction="attach" />
                         </li>
                     </TransitionGroup>
 
-                    <div class="" v-if="$page.props.facilities_not_in_property.length <= 0">
+                    <div class="" v-if="$page.props?.facilities_not_in_property.length <= 0">
                         {{ __('All facilities are attached to property') }}
                     </div>
 

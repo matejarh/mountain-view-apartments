@@ -7,10 +7,10 @@ import { computed } from 'vue';
 
 const page = usePage()
 const facilitiesWithIcons = computed(() => {
-    return page.props.property?.facilities.filter(facility => facility.has_icon_file)
+    return page.props?.property?.facilities.filter(facility => facility.has_icon_file)
 })
 const facilitiesWithoutIcons = computed(() => {
-    return page.props.property?.facilities.filter(facility => !facility.has_icon_file)
+    return page.props?.property?.facilities.filter(facility => !facility.has_icon_file)
 })
 </script>
 

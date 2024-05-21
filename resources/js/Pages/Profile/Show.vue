@@ -23,8 +23,8 @@ defineProps({
 const page = usePage()
 
 const layout = computed(() => {
-    if (page.props.auth.user) {
-        return page.props.auth.user.is_admin ? FullLayout : DefaultLayout
+    if (page.props?.auth.user) {
+        return page.props?.auth.user.is_admin ? FullLayout : DefaultLayout
     }
     return DefaultLayout
 })
@@ -36,8 +36,8 @@ const show = ref('profile')
 const slots = useSlots()
 
 const component = computed(() => {
-    if (page.props.auth.user) {
-        return page.props.auth.user.is_admin ? EmptyDiv : Wrapper
+    if (page.props?.auth.user) {
+        return page.props?.auth.user.is_admin ? EmptyDiv : Wrapper
     }
     return EmptyDiv
 })
@@ -51,7 +51,7 @@ const component = computed(() => {
 
         </template>
 
-        <component :is="component" :class="{'sm:pt-36':!$page.props.auth.user.is_admin}">
+        <component :is="component" :class="{'sm:pt-36':!$page.props?.auth.user.is_admin}">
             <TabsSection :confirms-two-factor-authentication="confirmsTwoFactorAuthentication" :sessions="sessions">
                 <template #buttons>
                     <TabButton for="profile" @clicked="show = 'profile'" :show="show">
@@ -133,13 +133,13 @@ const component = computed(() => {
                     </TabButton>
                 </template>
                 <template #content>
-                    <div v-if="$page.props.jetstream.canUpdateProfileInformation && show === 'profile'">
-                        <UpdateProfileInformationForm :user="$page.props.auth.user" />
+                    <div v-if="$page.props?.jetstream.canUpdateProfileInformation && show === 'profile'">
+                        <UpdateProfileInformationForm :user="$page.props?.auth.user" />
                     </div>
-                    <div v-if="$page.props.jetstream.canUpdatePassword && show === 'password'">
+                    <div v-if="$page.props?.jetstream.canUpdatePassword && show === 'password'">
                         <UpdatePasswordForm />
                     </div>
-                    <div v-if="$page.props.jetstream.canManageTwoFactorAuthentication && show === 'two_factor'">
+                    <div v-if="$page.props?.jetstream.canManageTwoFactorAuthentication && show === 'two_factor'">
                         <TwoFactorAuthenticationForm :requires-confirmation="confirmsTwoFactorAuthentication" />
                     </div>
                     <div v-if="show === 'sessions'">
@@ -148,7 +148,7 @@ const component = computed(() => {
                     <div v-if="show === 'activity'">
                         <ActivityTable />
                     </div>
-                    <div v-if="$page.props.jetstream.hasAccountDeletionFeatures && show === 'delete_account'">
+                    <div v-if="$page.props?.jetstream.hasAccountDeletionFeatures && show === 'delete_account'">
                         <DeleteUserForm />
                     </div>
                 </template>

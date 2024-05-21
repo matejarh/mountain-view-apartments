@@ -30,7 +30,7 @@ import 'vue3-carousel/dist/carousel.css'
                                     alt="profile picture">
                                 <div class="flex items-center divide-x-2 divide-gray-500 dark:divide-gray-700">
                                     <div class="pr-3 font-medium text-gray-900 dark:text-white">{{ review.owner.name }}</div>
-                                    <div class="pl-3 text-sm font-light text-gray-500 dark:text-gray-400">{{__('Stayed in')}} {{ review.reviewed.title[$page.props.locale] }}</div>
+                                    <div class="pl-3 text-sm font-light text-gray-500 dark:text-gray-400">{{__('Stayed in')}} {{ review.reviewed.title[$page.props?.locale] }}</div>
                                 </div>
                             </figcaption>
                         </figure>

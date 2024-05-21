@@ -26,15 +26,15 @@ const handleEdit = (gallery) => {
             </template>
 
             <template #content>
-                <FiltersSection v-show="$page.props.properties.data.length > 0 || $page.props.filters?.search" id="properties-filters" route="admin.properties.index" placeholder="Search for accomodations" />
+                <FiltersSection v-show="$page.props?.properties.data.length > 0 || $page.props?.filters?.search" id="properties-filters" route="admin.properties.index" placeholder="Search for accomodations" />
 
-                <div class="relative" v-if="$page.props.properties.data.length > 0">
+                <div class="relative" v-if="$page.props?.properties.data.length > 0">
                     <TransitionGroup name="list" tag="ul"
                         class=" relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-5 3xl:grid-cols-6 gap-4 md:gap-4 lg:gap-6 2xl:gap-8">
-                        <PropertyCard v-for="property, key in $page.props.properties.data" :key="property.id" :property="property"
+                        <PropertyCard v-for="property, key in $page.props?.properties.data" :key="property.id" :property="property"
                             @edit="handleEdit" />
                     </TransitionGroup>
-                    <Paginator :paginator="$page.props.properties" />
+                    <Paginator :paginator="$page.props?.properties" />
                 </div>
 
                 <div v-else class="">

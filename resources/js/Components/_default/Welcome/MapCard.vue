@@ -35,7 +35,7 @@ watch(ready, () => {
 
 const propertiesCoordinates = () => {
     let bounds = []
-    page.props.accomodations?.forEach(property => {
+    page.props?.accomodations?.forEach(property => {
         bounds.push([parseFloat(property.coordinates.lat), parseFloat(property.coordinates.lng)])
     });
     bounds.push([client.location.coords?.latitude, client.location.coords?.longitude])
@@ -51,7 +51,7 @@ const resetBounds = () => {
     bounds.value = propertiesCoordinates()
 }
 const showBled = () => {
-    bounds.value = [[parseFloat(page.props.properties.find(property => property.name === 'Apartment Two Angels')[0].coordinates.lat), parseFloat(page.props.properties.find(property => property.name === 'Apartment Two Angels')[0].coordinates.lng)]]
+    bounds.value = [[parseFloat(page.props?.properties.find(property => property.name === 'Apartment Two Angels')[0].coordinates.lat), parseFloat(page.props?.properties.find(property => property.name === 'Apartment Two Angels')[0].coordinates.lng)]]
 }
 
 </script>
@@ -62,21 +62,21 @@ const showBled = () => {
             <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" layer-type="base"
                 name="OpenStreetMap"></l-tile-layer>
 
-            <l-marker :lat-lng="[property.coordinates.lat, property.coordinates.lng]" class="" v-for="property, key in $page.props.accomodations" :key="key">
+            <l-marker :lat-lng="[property.coordinates.lat, property.coordinates.lng]" class="" v-for="property, key in $page.props?.accomodations" :key="key">
                 <l-icon :popup-anchor="[0, -30]" :icon-url="propertyIcon.url" :icon-size="propertyIcon.size" />
                 <l-popup>
                     <div class="content py-2">
                         <img v-if="property.galleries.length>0" :src="property.galleries[0].images[0].thumb_url" class="rounded w-24 h-16 float-left pr-2" />
                         <div class="item-body  ">
-                            <h3 class="font-bold text-base leading-tight">{{ property.title[$page.props.locale] }}</h3>
-                            {{ property.seo_description[$page.props.locale] }}
+                            <h3 class="font-bold text-base leading-tight">{{ property.title[$page.props?.locale] }}</h3>
+                            {{ property.seo_description[$page.props?.locale] }}
                         </div>
                     </div>
                 </l-popup>
             </l-marker>
 
             <l-marker v-if="client.location" :lat-lng="clientCoordinates" class="">
-                <l-icon :popup-anchor="[0, -30]" class="drop-shadow-lg" :icon-url="$page.props.auth.user ? $page.props.auth.user.profile_photo_url : clientIcon.url" :icon-size="clientIcon.size" />
+                <l-icon :popup-anchor="[0, -30]" class="drop-shadow-lg" :icon-url="$page.props?.auth.user ? $page.props?.auth.user.profile_photo_url : clientIcon.url" :icon-size="clientIcon.size" />
                 <l-popup class="">
                     <div class="content py-2">
                         <div class="item-body  ">

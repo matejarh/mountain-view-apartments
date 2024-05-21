@@ -60,16 +60,16 @@ const logout = () => {
                         </button>
 
                         <div class="py-4  flex flex-col justify-between ">
-                            <div v-if="$page.props.auth.user" class="pt-4 mt-4 space-y-2 font-medium border-t border-gray-200 dark:border-gray-700">
+                            <div v-if="$page.props?.auth.user" class="pt-4 mt-4 space-y-2 font-medium border-t border-gray-200 dark:border-gray-700">
                                 <div class="flex items-center gap-4">
-                                    <img class="w-10 h-10 rounded-full" :src="$page.props.auth.user.profile_photo_url" alt="">
+                                    <img class="w-10 h-10 rounded-full" :src="$page.props?.auth.user.profile_photo_url" alt="">
                                     <div class="font-medium dark:text-white">
-                                        <div>{{ $page.props.auth.user.name }}</div>
-                                        <div class="text-sm text-gray-500 dark:text-gray-400">{{ $page.props.auth.user.email }}</div>
+                                        <div>{{ $page.props?.auth.user.name }}</div>
+                                        <div class="text-sm text-gray-500 dark:text-gray-400">{{ $page.props?.auth.user.email }}</div>
                                     </div>
                                 </div>
 
-                                <MobileNavigationItem as="div" v-if="$page.props.auth.user.is_admin" @clicked="helpers.hideMobileDrawer"
+                                <MobileNavigationItem as="div" v-if="$page.props?.auth.user.is_admin" @clicked="helpers.hideMobileDrawer"
                                     :active="`/admin/dashboard`" :href="route('admin.dashboard.show')">
                                     <template #icon>
                                         <AdjustmentsIcon />
@@ -90,59 +90,59 @@ const logout = () => {
                                     {{ __("Sign out") }}
                                 </MobileNavigationItem>
                             </div>
-                            <!-- <div v-if="$page.props.auth" class="pt-1 mt-1 space-y-2 font-medium border-t border-gray-200 dark:border-gray-700">
+                            <!-- <div v-if="$page.props?.auth" class="pt-1 mt-1 space-y-2 font-medium border-t border-gray-200 dark:border-gray-700">
                             </div> -->
                             <ul class="pt-4 mt-4 space-y-2 font-medium border-t border-gray-200 dark:border-gray-700">
                                 <MobileNavigationItem @clicked="helpers.hideMobileDrawer"
-                                    :active="`/${$page.props.locale}`" :href="route('home', $page.props.locale)">
+                                    :active="`/${$page.props?.locale}`" :href="route('home', $page.props?.locale)">
                                     <template #icon>
                                         <HomeIcon class="w-5 h-5" />
                                     </template>
                                     {{ __("Home") }}
                                 </MobileNavigationItem>
                                 <MobileNavigationItem @clicked="helpers.hideMobileDrawer"
-                                    :active="`/${$page.props.locale}/accomodations`"
-                                    :href="route('properties.index', $page.props.locale)">
+                                    :active="`/${$page.props?.locale}/accomodations`"
+                                    :href="route('properties.index', $page.props?.locale)">
                                     <template #icon>
                                         <LandmarkIcon class="w-5 h-5" />
                                     </template>
                                     {{ __("Apartments") }}
                                 </MobileNavigationItem>
                                 <MobileNavigationItem @clicked="helpers.hideMobileDrawer"
-                                    :active="`/${$page.props.locale}/explore/bled`"
-                                    :href="route('explore.bled', $page.props.locale)">
+                                    :active="`/${$page.props?.locale}/explore/bled`"
+                                    :href="route('explore.bled', $page.props?.locale)">
                                     <template #icon>
                                         <LandmarkIcon class="w-5 h-5" />
                                     </template>
                                     {{ __("Explore Bled") }}
                                 </MobileNavigationItem>
                                 <MobileNavigationItem @clicked="helpers.hideMobileDrawer"
-                                    :active="`/${$page.props.locale}/discover/nassfeld`"
-                                    :href="route('discover.nassfeld', $page.props.locale)">
+                                    :active="`/${$page.props?.locale}/discover/nassfeld`"
+                                    :href="route('discover.nassfeld', $page.props?.locale)">
                                     <template #icon>
                                         <LandmarkIcon class="w-5 h-5" />
                                     </template>
                                     {{ __("Explore Nassfeld") }}
                                 </MobileNavigationItem>
 <!--                                 <MobileNavigationItem @clicked="helpers.hideMobileDrawer"
-                                    :active="`/${$page.props.locale}/offers`"
-                                    :href="route('offers', $page.props.locale)">
+                                    :active="`/${$page.props?.locale}/offers`"
+                                    :href="route('offers', $page.props?.locale)">
                                     <template #icon>
                                         <LandmarkIcon class="w-5 h-5" />
                                     </template>
                                     {{ __("Offers") }}
                                 </MobileNavigationItem> -->
                                 <MobileNavigationItem @clicked="helpers.hideMobileDrawer"
-                                    :active="`/${$page.props.locale}/about-us`"
-                                    :href="route('aboutus', $page.props.locale)">
+                                    :active="`/${$page.props?.locale}/about-us`"
+                                    :href="route('aboutus', $page.props?.locale)">
                                     <template #icon>
                                         <LandmarkIcon class="w-5 h-5" />
                                     </template>
                                     {{ __("About Us") }}
                                 </MobileNavigationItem>
                                 <MobileNavigationItem @clicked="helpers.hideMobileDrawer"
-                                    :active="`/${$page.props.locale}/contact`"
-                                    :href="route('contact.show', $page.props.locale)">
+                                    :active="`/${$page.props?.locale}/contact`"
+                                    :href="route('contact.show', $page.props?.locale)">
                                     <template #icon>
                                         <BookOpenIcon class="w-5 h-5" />
                                     </template>
@@ -171,21 +171,21 @@ const logout = () => {
         </teleport>
 
         <!--         <div class="grid h-full max-w-lg grid-cols-4 md:grid-cols-1 mx-auto font-medium">
-            <MobileNavigationItem :active="`/${$page.props.locale}`" :href="route('home', $page.props.locale)">
+            <MobileNavigationItem :active="`/${$page.props?.locale}`" :href="route('home', $page.props?.locale)">
                 <template #icon>
                     <HomeIcon />
                 </template>
 {{ __('Home') }}
 </MobileNavigationItem>
-<MobileNavigationItem :active="`/${$page.props.locale}/accomodations`"
-    :href="route('properties.index', $page.props.locale)">
+<MobileNavigationItem :active="`/${$page.props?.locale}/accomodations`"
+    :href="route('properties.index', $page.props?.locale)">
     <template #icon>
                     <LandmarkIcon />
                 </template>
     {{ __('Apartments') }}
 </MobileNavigationItem>
 
-<MobileNavigationItem :active="`/${$page.props.locale}/stories`" :href="route('properties.index', $page.props.locale)">
+<MobileNavigationItem :active="`/${$page.props?.locale}/stories`" :href="route('properties.index', $page.props?.locale)">
     <template #icon>
                     <BookOpenIcon />
                 </template>

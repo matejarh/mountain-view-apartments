@@ -15,7 +15,7 @@ const props = defineProps({
 const page = usePage()
 
 const form = ref({
-    search: page.props.filters.search,
+    search: page.props?.filters.search,
 })
 
 const debouncedHandler = debounce(() => {

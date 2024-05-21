@@ -48,7 +48,7 @@ const showDestroyConfirm = ref(false)
 const showEditDialog = ref(false)
 
 const detach = () => {
-    detachForm.put(route('admin.galleries.detach', { image: props.image, gallery: page.props.gallery }), {
+    detachForm.put(route('admin.galleries.detach', { image: props.image, gallery: page.props?.gallery }), {
         preserveScroll: true,
         preserveState: true,
         onSuccess: () => {
@@ -58,7 +58,7 @@ const detach = () => {
 }
 
 const attach = () => {
-    attachForm.put(route('admin.galleries.attach', { image: props.image, gallery: page.props.gallery }), {
+    attachForm.put(route('admin.galleries.attach', { image: props.image, gallery: page.props?.gallery }), {
         preserveScroll: true,
         preserveState: true,
         errorBag: 'attachingToGallery',

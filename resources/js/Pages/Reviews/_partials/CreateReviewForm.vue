@@ -35,7 +35,7 @@ const recaptcha = async () => {
 
 const store = () => {
     form.clearErrors()
-    form.post(route('properties.review', page.props.property), {
+    form.post(route('properties.review', page.props?.property), {
         errorBag: 'reviewingProperty'
     })
 }
@@ -48,7 +48,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <div size="md" v-if="!$page.props.property.is_reviewed">
+    <div size="md" v-if="!$page.props?.property.is_reviewed">
         <h2 class="text-4xl font-extrabold text-white dark:text-white">{{ __('Write a review') }}</h2>
         <form method="POST" @submit.prevent="recaptcha">
             <div class="mt-4">
@@ -78,10 +78,10 @@ onMounted(() => {
     <div class="" v-else>
         <Alert>
             <p>
-                You have already reviewed {{ $page.props.property.title[$page.props.locale] }}.
+                You have already reviewed {{ $page.props?.property.title[$page.props?.locale] }}.
             </p>
             <p>
-                You can go to <inertia-link :href="route('reviews.index', { property: $page.props.property, lang: $page.props?.locale })" class="font-semibold underline hover:no-underline">reviews</inertia-link> for {{ $page.props.property.title[$page.props.locale] }}
+                You can go to <inertia-link :href="route('reviews.index', { property: $page.props?.property, lang: $page.props?.locale })" class="font-semibold underline hover:no-underline">reviews</inertia-link> for {{ $page.props?.property.title[$page.props?.locale] }}
 
             </p>
         </Alert>
