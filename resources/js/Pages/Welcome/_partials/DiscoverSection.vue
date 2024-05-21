@@ -11,8 +11,8 @@ import ShapedSection from '@/Components/_default/ShapedSection.vue';
 
                 <div v-for="item,key in $page.props?.discover" :key="key"
                     class="max-w-full bg-white border border-gray-200 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700">
-                    <inertia-link :href="item.link" class="w-full h-full">
-                        <img class="rounded-t-lg object-cover w-full h-auto" :src="item.image.thumb_url" :alt="item.image.name  " />
+                    <inertia-link :href="item.link" class="w-full h-full bg-gray-300 dark:bg-gray-500">
+                        <img class="rounded-t-lg  mix-blend-multiply transition-all ease-out duration-1000 object-cover w-full h-auto" :src="item.image.thumb_url" :alt="item.image.name  " />
                     </inertia-link>
                     <div class="p-5">
                         <a href="#">
