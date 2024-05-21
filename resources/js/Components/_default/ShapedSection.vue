@@ -6,7 +6,7 @@ defineProps({
     color: {
         type: Object,
         default: {
-            dark: 'white',
+            dark: 'gray-700',
             light: 'white'
         }
     },
