@@ -54,7 +54,7 @@ onBeforeUnmount(() => {
     <section class="min-h-screen flex flex-col justify-center overflow-hidden relative">
 
         <div class="bg-parallax absolute top-0 left-0 z-0 h-full w-full ">
-            <div class="bg-center bg-no-repeat bg-cover bg-fixed h-full w-full bg-gray-500 bg-blend-multiply transition-all duration-[2000ms] ease-in-out"
+            <div class="bg-center bg-no-repeat bg-cover bg-fixed h-full w-full bg-gray-500 dark:bg-gray-800 bg-blend-multiply transition-all duration-[2000ms] ease-in-out"
                 :style="`background-image: url(${bgImage});`"></div>
         </div>
         <div class="px-4 mx-auto max-w-screen-xl text-center pt-24 md:pt-24 xl:pt-56  z-0">
