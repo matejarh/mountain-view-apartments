@@ -17,9 +17,19 @@ import UserIcon from '@/Icons/UserIcon.vue';
 import SignOutIcon from '@/Icons/SignOutIcon.vue';
 import { useForm } from '@inertiajs/vue3';
 import Backdrop from '@/Components/_default/Backdrop.vue';
+import { useScrollStore } from '@/stores/scroll';
+import { computed } from 'vue';
 
 
 const helpers = useHelperStore()
+const scroll = useScrollStore()
+
+const showBackgrounds = computed(() => {
+    if (scroll.windowHeight > 0 && scroll.scrollPosition > 10) {
+        return scroll.windowHeight <= scroll.scrollPosition
+    }
+    return false
+})
 
 const logoutForm = useForm({})
 
@@ -33,15 +43,16 @@ const logout = () => {
 
 
     <div class=" xl:hidden fixed top-0 left-0 z-50 w-full p-4 bg-transparent flex justify-between">
-        <LanguageDropdown  align="left" :no-label="true" />
+        <LanguageDropdown align="left" :no-label="true" />
 
         <div class="space-x-4">
-            <MobileThemeSwitch class="transition-all ease-out backdrop-blur bg-opacity-50" />
-            <HamburgerButton v-show="!helpers.mobileDrawer" @click="helpers.showMobileDrawer" />
+            <MobileThemeSwitch class="transition-all ease-out backdrop-blur bg-opacity-50 rounded-lg"
+                :class="{ 'bg-gray-400 dark:bg-gray-700 drop-shadow-lg': showBackgrounds }" />
+            <HamburgerButton v-show="!helpers.mobileDrawer" :show-backgrounds="showBackgrounds" @click="helpers.showMobileDrawer" />
 
         </div>
         <teleport to="body">
-            <Backdrop v-show="helpers.mobileDrawer" @close="helpers.hideMobileDrawer"/>
+            <Backdrop v-show="helpers.mobileDrawer" @close="helpers.hideMobileDrawer" />
 
             <div id="drawer-mobile"
                 class="fixed top-0 right-0 z-50 h-screen overflow-y-auto flex flex-col justify-between transition-transform bg-white w-screen sm:w-80 dark:bg-gray-800"
@@ -51,39 +62,43 @@ const logout = () => {
                 <div class="p-4 relative">
                     <div class="">
                         <h5 id="drawer-navigation-label"
-                            class="text-base font-semibold text-gray-500 uppercase dark:text-gray-400">{{__('Menu')}}</h5>
+                            class="text-base font-semibold text-gray-500 uppercase dark:text-gray-400">{{ __('Menu') }}
+                        </h5>
                         <button @click="helpers.hideMobileDrawer" type="button"
-
                             class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 absolute top-2.5 end-2.5 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
                             <CloseIcon class="w-5 h-5" />
-                            <span class="sr-only">{{__('Close menu')}}</span>
+                            <span class="sr-only">{{ __('Close menu') }}</span>
                         </button>
 
                         <div class="py-4  flex flex-col justify-between ">
-                            <div v-if="$page.props?.auth.user" class="pt-4 mt-4 space-y-2 font-medium border-t border-gray-200 dark:border-gray-700">
+                            <div v-if="$page.props?.auth.user"
+                                class="pt-4 mt-4 space-y-2 font-medium border-t border-gray-200 dark:border-gray-700">
                                 <div class="flex items-center gap-4">
-                                    <img class="w-10 h-10 rounded-full" :src="$page.props?.auth.user.profile_photo_url" alt="">
+                                    <img class="w-10 h-10 rounded-full" :src="$page.props?.auth.user.profile_photo_url"
+                                        alt="">
                                     <div class="font-medium dark:text-white">
                                         <div>{{ $page.props?.auth.user.name }}</div>
-                                        <div class="text-sm text-gray-500 dark:text-gray-400">{{ $page.props?.auth.user.email }}</div>
+                                        <div class="text-sm text-gray-500 dark:text-gray-400">{{
+                                            $page.props?.auth.user.email }}</div>
                                     </div>
                                 </div>
 
-                                <MobileNavigationItem as="div" v-if="$page.props?.auth.user.is_admin" @clicked="helpers.hideMobileDrawer"
-                                    :active="`/admin/dashboard`" :href="route('admin.dashboard.show')">
+                                <MobileNavigationItem as="div" v-if="$page.props?.auth.user.is_admin"
+                                    @clicked="helpers.hideMobileDrawer" :active="`/admin/dashboard`"
+                                    :href="route('admin.dashboard.show')">
                                     <template #icon>
                                         <AdjustmentsIcon />
                                     </template>
                                     {{ __("Administration") }}
                                 </MobileNavigationItem>
-                                <MobileNavigationItem as="div"  @clicked="helpers.hideMobileDrawer"
+                                <MobileNavigationItem as="div" @clicked="helpers.hideMobileDrawer"
                                     :active="`/user/profile`" :href="route('profile.show')">
                                     <template #icon>
                                         <UserIcon />
                                     </template>
                                     {{ __("My Profile") }}
                                 </MobileNavigationItem>
-                                <MobileNavigationItem as="div" :href="null"  @clicked="logout" >
+                                <MobileNavigationItem as="div" :href="null" @clicked="logout">
                                     <template #icon>
                                         <SignOutIcon />
                                     </template>
@@ -124,7 +139,7 @@ const logout = () => {
                                     </template>
                                     {{ __("Explore Nassfeld") }}
                                 </MobileNavigationItem>
-<!--                                 <MobileNavigationItem @clicked="helpers.hideMobileDrawer"
+                                <!--                                 <MobileNavigationItem @clicked="helpers.hideMobileDrawer"
                                     :active="`/${$page.props?.locale}/offers`"
                                     :href="route('offers', $page.props?.locale)">
                                     <template #icon>
@@ -202,5 +217,3 @@ const logout = () => {
     </div>
 
 </template>
-
-
