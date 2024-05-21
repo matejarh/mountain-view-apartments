@@ -32,13 +32,15 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="">
-        <Dropdown align="left">
+    <div class="transition-opacity ease-out duration-150">
+        <Dropdown :align="'left'">
             <template #trigger>
                 <span
-                    class="inline-flex items-center font-medium justify-center px-4 py-2 text-sm text-gray-900 dark:text-white rounded-lg cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
+                    class="inline-flex items-center font-medium justify-center px-4 py-2 text-sm text-gray-900 dark:text-white rounded-lg cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
+                    :class="{ 'hover:bg-transparent dark:hover:bg-transparent dark:hover:text-white': noLabel }">
 
-                    <img :src="selectedLanguage?.flag_url" class="w-5 h-5 rounded-full me-3">
+                    <img :src="selectedLanguage?.flag_url" class="w-5 h-5 rounded-full me-3"
+                        :class="{ 'me-0': noLabel }">
                     <span v-if="!noLabel">
                         {{ selectedLanguage?.name }}
                     </span>
@@ -51,20 +53,5 @@ onMounted(() => {
                 </ul>
             </template>
         </Dropdown>
-        <!--         <button type="button" @click="show = !show" data-dropdown-toggle="language-dropdown-menu"
-            class="inline-flex items-center font-medium justify-center px-4 py-2 text-sm text-gray-900 dark:text-white rounded-lg cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
-
-            <img :src="selectedLanguage.flag_url" class="w-5 h-5 rounded-full me-3" aria-hidden="true">
-            {{ selectedLanguage.name }}
-        </button>
-
-        <div v-show="show"
-            class="z-50 my-4  text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700"
-            id="language-dropdown-menu">
-            <ul class="py-2 font-medium" role="none">
-                <LanguageDropdownItem v-for="language, key in languages" :key="key" :language="language"
-                    @click="selectedLanguage = language" @selected="handleSelected" />
-            </ul>
-        </div> -->
     </div>
 </template>
