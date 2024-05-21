@@ -1,9 +1,10 @@
 <script setup>
 import "leaflet/dist/leaflet.css";
-import { LMap, LTileLayer, LMarker, LPopup, LPolygon, LControl, LIcon } from "@vue-leaflet/vue-leaflet";
-import { ref, computed, watch } from 'vue';
+import { LMap, LTileLayer, LMarker, LPopup, LControl, LIcon } from "@vue-leaflet/vue-leaflet";
+import { ref, computed, watchEffect } from 'vue';
 import { useClientStore } from "@/stores/client";
 import { usePage } from "@inertiajs/vue3";
+import { useHelperStore } from "@/stores/helpers";
 
 const props = defineProps({
     properties: Array
@@ -11,6 +12,7 @@ const props = defineProps({
 
 const client = useClientStore()
 const page = usePage()
+const helpers = useHelperStore()
 
 const zoom = ref(2)
 const center = ref([0, 0])
@@ -26,10 +28,9 @@ const propertyIcon = ref({
     url: new URL('/resources/images/map-markers/marker-blue.svg', import.meta.url).href
 })
 
-watch(ready, () => {
+watchEffect(() => {
     if (ready.value) {
-        bounds.value = propertiesCoordinates()
-        zoom.value = 10
+        resetBounds()
     }
 })
 
@@ -49,6 +50,7 @@ const clientCoordinates = computed(() => {
 
 const resetBounds = () => {
     bounds.value = propertiesCoordinates()
+    helpers.delay(200).then(() => zoom.value -= 1)
 }
 const showBled = () => {
     bounds.value = [[parseFloat(page.props?.properties.find(property => property.name === 'Apartment Two Angels')[0].coordinates.lat), parseFloat(page.props?.properties.find(property => property.name === 'Apartment Two Angels')[0].coordinates.lng)]]

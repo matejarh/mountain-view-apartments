@@ -1,16 +1,18 @@
 <script setup>
 import "leaflet/dist/leaflet.css";
-import { LMap, LTileLayer, LMarker, LPopup, LPolygon, LControl, LIcon } from "@vue-leaflet/vue-leaflet";
-import { ref, computed, onMounted, watch } from 'vue';
+import { LMap, LTileLayer, LMarker, LPopup, LControl, LIcon } from "@vue-leaflet/vue-leaflet";
+import { ref, computed, watchEffect } from 'vue';
 import MapLocationIcon from "@/Icons/MapLocationIcon.vue";
 import Tooltip from "../Tooltip.vue";
 import { useClientStore } from "@/stores/client";
-import { latLngBounds } from "leaflet";
 import { usePage } from "@inertiajs/vue3";
+import { useHelperStore } from "@/stores/helpers";
 
 const props = defineProps({
     property: Object
 })
+
+const helpers = useHelperStore()
 
 const client = useClientStore()
 const page = usePage()
@@ -29,18 +31,15 @@ const propertyIcon = ref({
     url: new URL('/resources/images/map-markers/marker-blue.svg', import.meta.url).href
 })
 
-watch(ready, () => {
+watchEffect(() => {
     if (ready.value) {
-        bounds.value = propertiesCoordinates()
-        zoom.value = 10
+        resetBounds()
     }
 })
 
 const propertiesCoordinates = () => {
     let bounds = []
-/*     page.props?.accomodations?.forEach(property => {
-        bounds.push([parseFloat(property.coordinates.lat), parseFloat(property.coordinates.lng)])
-    }); */
+
     bounds.push([parseFloat(page.props?.property.coordinates.lat), parseFloat(page.props?.property.coordinates.lng)])
     bounds.push([client.location.coords?.latitude, client.location.coords?.longitude])
 
@@ -53,12 +52,14 @@ const clientCoordinates = computed(() => {
 
 const resetBounds = () => {
     bounds.value = propertiesCoordinates()
+    helpers.delay(200).then(() => zoom.value -= 1)
+
 }
 
 </script>
 
 <template>
-    <div class="w-full  z-0">
+    <div class=" z-0">
         <l-map ref="map" :useGlobalLeaflet="false" v-model:zoom="zoom" :min-zoom="5" :max-zoom="20" v-model:bounds="bounds" @ready="ready = true" v-model:center="center">
             <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" layer-type="base"
                 name="OpenStreetMap"></l-tile-layer>
@@ -85,7 +86,6 @@ const resetBounds = () => {
                         </div>
                     </div>
                 </l-popup>
-
             </l-marker>
 
             <l-control class="leaflet-control top-5 bg-white dark:bg-gray-700 border-primary-600 rounded-lg p-[1em] text-lg" position="topright">
