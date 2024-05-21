@@ -545,6 +545,8 @@
     "extra_info": "Extra info",
     "company_name": "Company name",
     "Intervals": "Intervals",
-    "hero_background_interval": "Background interval in seconds"
+    "hero_background_interval": "Background interval in seconds",
+    "What did our guests say": "What did our guests say",
+    "Stayed in": "Stayed in"
 
 }
