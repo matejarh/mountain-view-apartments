@@ -20,12 +20,13 @@ class Review extends Model
         'approved_at' => 'datetime',
     ];
 
-    protected $appends=[
+    protected $appends = [
         'created_at_human_readable',
         'reviewed_trimed',
+        'excerpt',
     ];
 
-    protected $with=[
+    protected $with = [
         'owner',
     ];
 
@@ -34,7 +35,7 @@ class Review extends Model
         return $this->MorphTo();
     }
 
-    public function owner() :BelongsTo
+    public function owner(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
     }
@@ -42,31 +43,43 @@ class Review extends Model
 
     public function reviewedTrimed(): Collection
     {
-        return $this->reviewed()->get()->map(function($reviewed) {
+        return $this->reviewed()->get()->map(function ($reviewed) {
             return [
                 'name' => $reviewed->name ?: '',
                 'title' => $reviewed->title ?: '',
+                'avatar_url' => $reviewed->avatar_url ?: '',
             ];
         });
     }
 
-    function getReviewedTrimedAttribute() : Collection {
+    public function excerpt(): string
+    {
+        return str(strip_tags($this->text))->limit(15);
+    }
+
+    public function getExcerptAttribute(): string
+    {
+        return $this->excerpt();
+    }
+
+    function getReviewedTrimedAttribute(): Collection
+    {
         return $this->reviewedTrimed();
     }
 
-    public function approve() :void
+    public function approve(): void
     {
         $this->approved_at = now();
         $this->save();
     }
 
-    public function reject() :void
+    public function reject(): void
     {
         $this->approved_at = null;
         $this->save();
     }
 
-        /**
+    /**
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @param \App\Filters\ReviewFilters $filters
      * @return \Illuminate\Database\Eloquent\Builder
@@ -77,12 +90,12 @@ class Review extends Model
 
     }
 
-    public function createdAtHumanReadable( ) :string
+    public function createdAtHumanReadable(): string
     {
         return $this->created_at->diffForHumans();
     }
 
-    public function getCreatedAtHumanReadableAttribute() :string
+    public function getCreatedAtHumanReadableAttribute(): string
     {
         return $this->createdAtHumanReadable();
     }
