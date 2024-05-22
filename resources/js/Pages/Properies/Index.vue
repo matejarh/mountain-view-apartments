@@ -16,7 +16,7 @@ const filtered = computed(() => {
     return page.props?.properties.data.filter(property => searchPattern.test(property.address))
 })
 
-const items = ref([
+const navItems = ref([
     { name: 'All', value: '.' },
     { name: 'Bled', value: 'bled' },
     { name: 'Nassfeld', value: 'hermagor' },
@@ -34,7 +34,7 @@ const items = ref([
             <Wrapper>
                 <ul
                     class="flex flex-wrap text-sm font-medium text-center bg-gray-50 dark:bg-gray-900 rounded-lg p-2  text-gray-500 dark:text-gray-400 mb-4">
-                    <PillItem v-for="item, key in items" :key="key" :item="item" :filter="filter"
+                    <PillItem v-for="item, key in navItems" :key="key" :item="item" :filter="filter"
                         @clicked="item => filter = item.value" />
                 </ul>
 
