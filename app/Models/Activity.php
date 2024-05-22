@@ -127,10 +127,10 @@ class Activity extends Model
 
     public function getCreatedAtDiffForHumansAttribute(): string
     {
-        $locale = request()->session()->has('locale') ? request()->session()->get('locale')  : app()->getLocale();
-        if ($locale === 'us')
-            $locale = 'en';
-        return $this->created_at->locale($locale)->diffForHumans();
+        //$locale = request()->session()->has('locale') ? request()->session()->get('locale')  : app()->getLocale();
+        /* if ($locale === 'us')
+            $locale = 'en'; */
+        return $this->created_at->locale(app()->currentLocale())->diffForHumans();
     }
     public function createdAtDay(): string
     {
