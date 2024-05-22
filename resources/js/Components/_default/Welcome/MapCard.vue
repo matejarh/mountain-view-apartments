@@ -36,10 +36,32 @@ watchEffect(() => {
     }
 })
 
+const groupedByCoordinates = computed(() => {
+    const grouped = {};
+
+    page.props?.accomodations?.forEach(property => {
+        const lat = parseFloat(property.coordinates.lat).toFixed(6);
+        const lng = parseFloat(property.coordinates.lng).toFixed(6);
+        const key = `${lat},${lng}`;
+
+        if (!grouped[key]) {
+            grouped[key] = [];
+        }
+
+        grouped[key].push(property);
+    });
+
+    return grouped;
+});
+
 const propertiesCoordinates = () => {
     let bounds = []
-    page.props?.accomodations?.forEach(property => {
+    /* page.props?.accomodations?.forEach(property => {
         bounds.push([parseFloat(property.coordinates.lat), parseFloat(property.coordinates.lng)])
+    }); */
+    Object.keys(groupedByCoordinates.value).forEach(coordinate => {
+        const [lat, lng] = coordinate.split(',').map(parseFloat);
+        bounds.push([lat, lng]);
     });
     if (client.location) {
         bounds.push(clientCoordinates)
@@ -69,16 +91,28 @@ const showBled = () => {
             <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" layer-type="base"
                 name="OpenStreetMap"></l-tile-layer>
 
-            <l-marker :lat-lng="[property.coordinates.lat, property.coordinates.lng]" class=""
-                v-for="property, key in $page.props?.accomodations" :key="key">
+            <l-marker :lat-lng="[key.split(',').map(parseFloat)[0], key.split(',').map(parseFloat)[1]]" class=""
+                v-for="properties, key in groupedByCoordinates" :key="key">
                 <l-icon :popup-anchor="[0, -30]" :icon-url="propertyIcon.url" :icon-size="propertyIcon.size" />
                 <l-popup>
-                    <div class="content py-2">
-                        <img v-if="property.galleries.length > 0" :src="property.galleries[0].images[0].thumb_url"
-                            class="rounded w-24 h-16 float-left pr-2" />
-                        <div class="item-body  ">
-                            <h3 class="font-bold text-base leading-tight">{{ property.title[$page.props?.locale] }}</h3>
-                            {{ property.seo_description[$page.props?.locale] }}
+                    <div class="content">
+
+
+                        <div :class="{ 'border-t': key !== 0 }" class="property-card py-2"
+                            v-for="property, key in properties" :key="property.id">
+                            <inertia-link
+                                :href="route('properties.show', { property: property, lang: $page.props?.locale })">
+                                <img v-if="property.galleries.length > 0"
+                                    :src="property.galleries[0].images[0].thumb_url"
+                                    class="rounded w-24 h-16 float-left pr-2" />
+                                <div class="item-body text-gray-600 dark:text-gray-400">
+                                    <h3 class="font-bold text-base leading-tight text-gray-900 dark:text-gray-200">
+                                        {{ property.title[$page.props?.locale] }}
+                                    </h3>
+                                    {{ property.seo_description[$page.props?.locale] }}
+                                </div>
+                            </inertia-link>
+
                         </div>
                     </div>
                 </l-popup>
