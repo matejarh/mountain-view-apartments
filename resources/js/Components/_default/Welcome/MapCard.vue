@@ -5,6 +5,8 @@ import { ref, computed, watchEffect } from 'vue';
 import { useClientStore } from "@/stores/client";
 import { usePage } from "@inertiajs/vue3";
 import { useHelperStore } from "@/stores/helpers";
+import CompressIcon from "@/Icons/CompressIcon.vue";
+import Tooltip from "../Tooltip.vue";
 
 const props = defineProps({
     properties: Array
@@ -20,11 +22,11 @@ const bounds = ref([])
 const ready = ref(false)
 
 const clientIcon = ref({
-    size: [40,40],
+    size: [40, 40],
     url: new URL('/resources/images/map-markers/marker-red.svg', import.meta.url).href
 })
 const propertyIcon = ref({
-    size: [40,40],
+    size: [40, 40],
     url: new URL('/resources/images/map-markers/marker-blue.svg', import.meta.url).href
 })
 
@@ -62,15 +64,18 @@ const showBled = () => {
 
 <template>
     <div class="w-full  ">
-        <l-map ref="map" :useGlobalLeaflet="false" v-model:zoom="zoom" :min-zoom="5" :max-zoom="20" v-model:bounds="bounds" @ready="ready = true" v-model:center="center">
+        <l-map ref="map" :useGlobalLeaflet="false" v-model:zoom="zoom" :min-zoom="5" :max-zoom="20"
+            v-model:bounds="bounds" @ready="ready = true" v-model:center="center">
             <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" layer-type="base"
                 name="OpenStreetMap"></l-tile-layer>
 
-            <l-marker :lat-lng="[property.coordinates.lat, property.coordinates.lng]" class="" v-for="property, key in $page.props?.accomodations" :key="key">
+            <l-marker :lat-lng="[property.coordinates.lat, property.coordinates.lng]" class=""
+                v-for="property, key in $page.props?.accomodations" :key="key">
                 <l-icon :popup-anchor="[0, -30]" :icon-url="propertyIcon.url" :icon-size="propertyIcon.size" />
                 <l-popup>
                     <div class="content py-2">
-                        <img v-if="property.galleries.length>0" :src="property.galleries[0].images[0].thumb_url" class="rounded w-24 h-16 float-left pr-2" />
+                        <img v-if="property.galleries.length > 0" :src="property.galleries[0].images[0].thumb_url"
+                            class="rounded w-24 h-16 float-left pr-2" />
                         <div class="item-body  ">
                             <h3 class="font-bold text-base leading-tight">{{ property.title[$page.props?.locale] }}</h3>
                             {{ property.seo_description[$page.props?.locale] }}
@@ -80,7 +85,9 @@ const showBled = () => {
             </l-marker>
 
             <l-marker v-if="client.location" :lat-lng="clientCoordinates" class="">
-                <l-icon :popup-anchor="[0, -30]" class="drop-shadow-lg" :icon-url="$page.props?.auth.user ? $page.props?.auth.user.profile_photo_url : clientIcon.url" :icon-size="clientIcon.size" />
+                <l-icon :popup-anchor="[0, -30]" class="drop-shadow-lg"
+                    :icon-url="$page.props?.auth.user ? $page.props?.auth.user.profile_photo_url : clientIcon.url"
+                    :icon-size="clientIcon.size" />
                 <l-popup class="">
                     <div class="content py-2">
                         <div class="item-body  ">
@@ -91,8 +98,16 @@ const showBled = () => {
 
             </l-marker>
 
-            <l-control class="leaflet-control top-5 bg-white dark:bg-gray-700 border-primary-700 rounded-lg p-[1em] text-lg" position="topright">
-                <button @click="resetBounds">{{ __('Reset map') }}</button>
+            <l-control
+                class="leaflet-control top-5 bg-white dark:bg-gray-700 border-primary-700 rounded-lg p-[1em] text-lg flex"
+                position="topright">
+
+                <button @click="resetBounds">
+                    <Tooltip :text="__('Reset map')">
+                        <CompressIcon class="w-6 h-6" />
+                        <!-- {{ __('Reset map') }} -->
+                    </Tooltip>
+                </button>
             </l-control>
         </l-map>
 
@@ -105,11 +120,12 @@ const showBled = () => {
 }
 
 html.dark .leaflet-popup-content-wrapper {
-    background-color: rgb(79 79 79 );
+    background-color: rgb(79 79 79);
     color: #ffffff
 }
+
 html.dark .leaflet-popup-tip {
-    background-color: rgb(79 79 79 );
+    background-color: rgb(79 79 79);
 }
 
 .leaflet-top {
@@ -124,5 +140,4 @@ html.dark .leaflet-popup-tip {
     font-size: large;
     font-style: italic;
 }
-
 </style>
