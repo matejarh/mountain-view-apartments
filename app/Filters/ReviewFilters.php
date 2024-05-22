@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 class ReviewFilters extends Filters
 {
-    protected $filters = ['search'];
+    protected $filters = ['search', 'approved', 'notApproved'];
 
     /**
      * Filter the query
@@ -21,9 +21,23 @@ class ReviewFilters extends Filters
                         ->orWhereHas('owner', function ($q) use ($search) {
                             $q->where('name', 'like', '%' . $search . '%')
                                 ->orWhere('email', 'like', '%' . $search . '%');
+                        })
+                        ->orWhereHas('reviewed', function($q) use ($search) {
+                            $q->where('name', 'like', '%' . $search . '%');
                         });
         });
 
+
     }
 
+    public function approved() :Builder
+    {
+        return  $this->builder->whereNotNull('approved_at');
+
+    }
+
+    public function notApproved($query) :Builder
+    {
+        return $this->builder->whereNotNull('approved_at');
+    }
 }
