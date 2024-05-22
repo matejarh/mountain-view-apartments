@@ -15,10 +15,12 @@ use App\Contracts\CreatesNewPages;
 use App\Contracts\CreatesNewProperties;
 use App\Contracts\CreatesNewReviews;
 use App\Contracts\CreatesNewSettings;
+use App\Contracts\DeletesAllNotifications;
 use App\Contracts\DeletesFacilities;
 use App\Contracts\DeletesGalleries;
 use App\Contracts\DeletesImages;
 use App\Contracts\DeletesInquiries;
+use App\Contracts\DeletesNotifications;
 use App\Contracts\DeletesPages;
 use App\Contracts\DeletesReviews;
 use App\Contracts\DetachesFacilitiesFromProperties;
@@ -27,6 +29,8 @@ use App\Contracts\DetachesGalleriesFromPages;
 use App\Contracts\DetachesGalleriesFromProperties;
 use App\Contracts\DetachesImagesFromGalleries;
 use App\Contracts\LikesProperties;
+use App\Contracts\ReadsAllNotifications;
+use App\Contracts\ReadsNotifications;
 use App\Contracts\RejectsReviews;
 use App\Contracts\ReviewsProperties;
 use App\Contracts\StoresGuestInquiry;
@@ -457,6 +461,50 @@ class Fortify
     public static function rejectReviewsUsing(string $callback)
     {
         app()->singleton(RejectsReviews::class, $callback);
+    }
+
+    /**
+     * Register a class / callback that should be used to read given notification.
+     *
+     * @param  string  $callback
+     * @return void
+     */
+    public static function readNotificationsUsing(string $callback)
+    {
+        app()->singleton(ReadsNotifications::class, $callback);
+    }
+
+    /**
+     * Register a class / callback that should be used to read all notification.
+     *
+     * @param  string  $callback
+     * @return void
+     */
+    public static function readAllNotificationsUsing(string $callback)
+    {
+        app()->singleton(ReadsAllNotifications::class, $callback);
+    }
+
+    /**
+     * Register a class / callback that should be used to delete given notification.
+     *
+     * @param  string  $callback
+     * @return void
+     */
+    public static function destroyNotificationsUsing(string $callback)
+    {
+        app()->singleton(DeletesNotifications::class, $callback);
+    }
+
+    /**
+     * Register a class / callback that should be used to delete all notification.
+     *
+     * @param  string  $callback
+     * @return void
+     */
+    public static function destroyAllNotificationsUsing(string $callback)
+    {
+        app()->singleton(DeletesAllNotifications::class, $callback);
     }
 
 }

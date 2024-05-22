@@ -55,6 +55,7 @@ class HandleInertiaRequests extends Middleware
             }),
             'current_season' => $this->getSeason(),
             'recaptcha_site_key' => config('services.google_recaptcha.site_key'),
+            'notifications' => auth()->check() ? auth()->user()->unreadNotifications : null,
         ]);
     }
 

@@ -24,6 +24,10 @@ use App\Actions\Inquiries\AdminCreateInquiry;
 use App\Actions\Inquiries\CreateInquiry;
 use App\Actions\Inquiries\DeleteInquiry;
 use App\Actions\Inquiries\UpdateInquiry;
+use App\Actions\Notifications\DeleteAllNotifications;
+use App\Actions\Notifications\DeleteNotification;
+use App\Actions\Notifications\ReadAllNotifications;
+use App\Actions\Notifications\ReadNotification;
 use App\Actions\Pages\AttachGallery as AttachPageGallery;
 use App\Actions\Pages\CreateNewPage;
 use App\Actions\Pages\DeletePage;
@@ -64,6 +68,10 @@ use App\Contracts\ImageUpdateResponse as ImageUpdateResponseContract;
 use App\Contracts\InquiryCreateResponse as InquiryCreateResponseContract;
 use App\Contracts\InquiryDeleteResponse as InquiryDeleteResponseContract;
 use App\Contracts\InquiryUpdateResponse as InquiryUpdateResponseContract;
+use App\Contracts\NotificationDeleteAllResponse as NotificationDeleteAllResponseContract;
+use App\Contracts\NotificationDeleteResponse as NotificationDeleteResponseContract;
+use App\Contracts\NotificationReadAllResponse as NotificationReadAllResponseContract;
+use App\Contracts\NotificationReadResponse as NotificationReadResponseContract;
 use App\Contracts\PageCreateResponse as PageCreateResponseContract;
 use App\Contracts\PageDeleteResponse as PageDeleteResponseContract;
 use App\Contracts\PageUpdateResponse as PageUpdateResponseContract;
@@ -98,6 +106,10 @@ use App\Http\Responses\ImageUpdatedResponse;
 use App\Http\Responses\InquiryCreatedResponse;
 use App\Http\Responses\InquiryDeletedResponse;
 use App\Http\Responses\InquiryUpdatedResponse;
+use App\Http\Responses\NotificationDeletedAllResponse;
+use App\Http\Responses\NotificationDeletedResponse;
+use App\Http\Responses\NotificationReadedAllResponse;
+use App\Http\Responses\NotificationReadedResponse;
 use App\Http\Responses\PageCreatedResponse;
 use App\Http\Responses\PageDeletedResponse;
 use App\Http\Responses\PageUpdatedResponse;
@@ -179,6 +191,11 @@ class FortifyServiceProvider extends ServiceProvider
         $this->app->singleton(ReviewDeleteResponseContract::class, ReviewDeletedResponse::class);
         $this->app->singleton(ReviewApproveResponseContract::class, ReviewApprovedResponse::class);
         $this->app->singleton(ReviewRejectResponseContract::class, ReviewRejectedResponse::class);
+
+        $this->app->singleton(NotificationReadResponseContract::class, NotificationReadedResponse::class);
+        $this->app->singleton(NotificationReadAllResponseContract::class, NotificationReadedAllResponse::class);
+        $this->app->singleton(NotificationDeleteResponseContract::class, NotificationDeletedResponse::class);
+        $this->app->singleton(NotificationDeleteAllResponseContract::class, NotificationDeletedAllResponse::class);
     }
 
     /**
@@ -237,6 +254,11 @@ class FortifyServiceProvider extends ServiceProvider
         AppFortify::destroyReviewsUsing(DeleteReview::class);
         AppFortify::approveReviewsUsing(ApprovesReview::class);
         AppFortify::rejectReviewsUsing(RejectsReview::class);
+
+        AppFortify::readNotificationsUsing(ReadNotification::class);
+        AppFortify::readAllNotificationsUsing(ReadAllNotifications::class);
+        AppFortify::destroyNotificationsUsing(DeleteNotification::class);
+        AppFortify::destroyAllNotificationsUsing(DeleteAllNotifications::class);
 
         RateLimiter::for('login', function (Request $request) {
             $throttleKey = str(str($request->input(Fortify::username()))->lower().'|'.$request->ip())->transliterate();

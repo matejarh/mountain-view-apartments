@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\FacilitiesController;
 use App\Http\Controllers\Admin\GalleriesController;
 use App\Http\Controllers\Admin\ImagesController;
 use App\Http\Controllers\Admin\InquiriesController;
+use App\Http\Controllers\Admin\NotificationsController;
 use App\Http\Controllers\Admin\PagesController;
 use App\Http\Controllers\Admin\PropertiesController;
 use App\Http\Controllers\Admin\ReviewsController;
@@ -113,6 +114,16 @@ Route::group(['middleware' => config('jetstream.middleware')], function () {
             Route::post('/property/{property}', [ReviewsController::class, 'store'])->name('store');
             Route::put('/approve/{review}', [ReviewsController::class, 'approve'])->name('approve');
             Route::put('/reject/{review}', [ReviewsController::class, 'reject'])->name('reject');
+        });
+        Route::name('notifications.')->prefix('notifications')->namespace('notifications')->group(function() {
+            Route::get('/', [NotificationsController::class, 'index'])->name('index');
+            Route::get('{notification}', [NotificationsController::class, 'show'])->name('show');
+            //Route::put('{notification}', [NotificationsController::class, 'update'])->name('update');
+            // Route::delete('{notification}', [NotificationsController::class, 'destroy'])->name('destroy');
+            Route::put('/read-all', [NotificationsController::class, 'readAll'])->name('read.all');
+            Route::put('/read', [NotificationsController::class, 'read'])->name('read');
+            Route::delete('/destroy-all', [NotificationsController::class, 'destroyAll'])->name('destroy.all');
+            Route::delete('/destroy', [NotificationsController::class, 'destroy'])->name('destroy');
         });
     });
 

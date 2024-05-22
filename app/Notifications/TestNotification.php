@@ -2,23 +2,21 @@
 
 namespace App\Notifications;
 
-use App\Models\Inquiry;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class InquiryReceivedNotification extends Notification implements ShouldQueue
+class TestNotification extends Notification
 {
     use Queueable;
 
-    public $inquiry;
     /**
      * Create a new notification instance.
      */
-    public function __construct(Inquiry $inquiry)
+    public function __construct()
     {
-        $this->inquiry = $inquiry;
+        //
     }
 
     /**
@@ -28,7 +26,7 @@ class InquiryReceivedNotification extends Notification implements ShouldQueue
      */
     public function via(object $notifiable): array
     {
-        return ['mail', 'database'];
+        return ['mail'];
     }
 
     /**
@@ -37,11 +35,9 @@ class InquiryReceivedNotification extends Notification implements ShouldQueue
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-                    ->subject('New inquiry received')
-                    ->line('New inquiry from ' . $this->inquiry->name . '')
-                    ->line('for ' . $this->inquiry->property->name . ' received.')
-                    ->action('Show', route('admin.inquiries.show', $this->inquiry))
-                    ->line('Thank you for using '.config('app.name').'!');
+                    ->line('The introduction to the notification.')
+                    ->action('Notification Action', url('/'))
+                    ->line('Thank you for using our application!');
     }
 
     /**
@@ -52,9 +48,7 @@ class InquiryReceivedNotification extends Notification implements ShouldQueue
     public function toArray(object $notifiable): array
     {
         return [
-            'title' => 'New Inquiry Received',
-            'message' => 'New inquiry for ' . $this->inquiry->property->name . ' received',
-            'link' => route('admin.inquiries.show', $this->inquiry)
+            //
         ];
     }
 }
