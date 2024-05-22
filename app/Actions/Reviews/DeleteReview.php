@@ -14,6 +14,9 @@ class DeleteReview implements DeletesReviews
      */
     public function destroy(Review $review): void
     {
+        if ($review->approved_at) {
+            $review->reviewed()->decrement('reviews_count');
+        }
         $review->delete();
 
         session()->flash('flash.banner', __('Review has been deleted.'));

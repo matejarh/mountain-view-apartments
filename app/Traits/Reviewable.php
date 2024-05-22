@@ -69,8 +69,6 @@ trait Reviewable
         ];
 
         $this->reviews()->forceCreate($attributes);
-
-        $this->increment('reviews_count');
     }
 
     /**
@@ -80,8 +78,13 @@ trait Reviewable
      */
     public function unreview(int $id): void
     {
-        $this->reviews()->find($id)->delete();
-        $this->decrement('reviews_count');
+        $review = $this->reviews()->find($id);
+
+        if ($review->approved_at) {
+            $this->decrement('reviews_count');
+        }
+
+        $review->delete();
     }
 
     /**

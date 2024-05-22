@@ -70,12 +70,14 @@ class Review extends Model
     public function approve(): void
     {
         $this->approved_at = now();
+        $this->reviewed()->increment('reviews_count');
         $this->save();
     }
 
     public function reject(): void
     {
         $this->approved_at = null;
+        $this->reviewed()->decrement('reviews_count');
         $this->save();
     }
 
