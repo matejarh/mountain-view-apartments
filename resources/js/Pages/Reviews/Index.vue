@@ -12,10 +12,14 @@ import Wrapper from '@/Components/_default/Wrapper.vue';
 
         <div class="space-y-0">
             <HeroSection />
-            <ShapedSection :color="{dark:'primary-900', light:'primary-700'}">
+            <ShapedSection :color="{ dark: 'primary-900', light: 'primary-700' }">
                 <div class="py-8 lg:py-16 mx-auto max-w-screen-md px-4">
-
-                    <ReviewCard v-for="review in $page.props?.reviews.data" :key="review.id" :review="review"></ReviewCard>
+                    <h2
+                        class="mb-4 text-2xl font-extrabold tracking-tight leading-none text-white md:text-3xl lg:text-4xl">
+                        {{ __('Reviews') }}
+                    </h2>
+                    <ReviewCard v-for="review in $page.props?.reviews.data" :key="review.id" :review="review">
+                    </ReviewCard>
                 </div>
 
             </ShapedSection>

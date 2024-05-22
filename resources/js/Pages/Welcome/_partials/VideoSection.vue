@@ -10,7 +10,7 @@ const videoCoverImage = ref(new URL('/resources/images/backgrounds/Bled.jpg', im
    <section class="bg-gray-50 dark:bg-gray-800 py-6 md:py-12">
         <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 grid lg:grid-cols-2 gap-8 lg:gap-16">
             <div class="flex flex-col justify-center">
-                <h4 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Take a Virtual Tour</h4>
+                <h2 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Take a Virtual Tour</h2>
                 <p class="mb-8 text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">With immense natural beauty, Bled, together with its surroundings, ranks among the most beautiful alpine resorts, renowned for its mild, healing climate and thermal lake water. The beauty of the mountains reflected on the lake, the sun, the serenity and the fresh air arouse pleasant feelings in visitors throughout the year, guaranteeing an ideal base or a relaxing break or an active holiday. </p>
                 <!-- <div class="flex flex-col space-y-4 sm:flex-row sm:space-y-0">
                     <a href="#" class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-deep-cerulean-700 hover:bg-deep-cerulean-800 focus:ring-4 focus:ring-deep-cerulean-300 dark:focus:ring-deep-cerulean-900">

@@ -12,13 +12,13 @@ import ShapedSection from '@/Components/_default/ShapedSection.vue';
 
                 <div v-for="item,key in $page.props?.discover" :key="key"
                     class="max-w-full bg-white border border-gray-200 pt-4 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700 ">
-                    <ActiveCarousel :to-show="3.95" :items="item.images" class="w-full h-auto" />
+                    <ActiveCarousel  :items="item.images" class="w-full h-auto" />
 
                         <!-- <img class="rounded-t-lg  mix-blend-multiply transition-all ease-out duration-1000 object-cover w-full h-auto" :src="item.image.thumb_url" :alt="item.image.name  " /> -->
 
                     <div class="p-5">
                         <a href="#">
-                            <h5 class="mb-2 text-4xl font-bold tracking-tight text-gray-900 dark:text-white">{{ __(item.title[$page.props?.locale]) }}</h5>
+                            <h2 class="mb-2 text-4xl font-bold tracking-tight text-gray-900 dark:text-white">{{ __(item.title[$page.props?.locale]) }}</h2>
                         </a>
                         <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
                             {{ item.description[$page.props?.locale] }}

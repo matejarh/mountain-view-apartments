@@ -12,6 +12,7 @@ import MapSection from './Welcome/_partials/MapSection.vue';
 import DiscoverSection from './Welcome/_partials/DiscoverSection.vue';
 import ShapedSection from '@/Components/_default/ShapedSection.vue';
 import ReviewsSection from './Welcome/_partials/ReviewsSection.vue';
+import { useTranslationsStore } from '@/stores/translations';
 
 defineProps({
     canLogin: {
@@ -21,6 +22,8 @@ defineProps({
         type: Boolean,
     },
 });
+
+const store = useTranslationsStore()
 
 const disabled = ref(false)
 
@@ -41,13 +44,22 @@ function warnDisabled() {
         <div class="space-y-0">
             <HeroSection id="hero" class="z-10" />
             <!-- <div class="spacer h-48 w-full"></div> -->
-            <ShapedSection :color="{light:'white', dark: 'gray-900'}" class="z-20" ><h3 class="mb-4 text-3xl text-center font-extrabold tracking-tight leading-none text-gray-900 md:text-4xl lg:text-5xl dark:text-white">{{ __('Find Us On The Map') }}</h3></ShapedSection>
+            <ShapedSection :color="{light:'white', dark: 'gray-900'}" class="z-20" ><h2 class="mb-4 text-3xl text-center font-extrabold tracking-tight leading-none text-gray-900 md:text-4xl lg:text-5xl dark:text-white">{{ __('Find Us On The Map') }}</h2></ShapedSection>
             <MapSection id="map" :properties="$page.props?.accomodations" class="z-0" />
             <ShapedSection :color="{light:'primary-700', dark: 'primary-900'}" ></ShapedSection>
             <DiscoverSection id="discover" />
             <SpecialOfferSection id="offers" />
             <ReviewsSection id="reviews" />
             <VideoSection id="video" />
+<!--             <div class="spacer h-48 w-full"></div>
+            <section>
+                <div class="max-w-screen-lg">
+                    <code>
+                        {{ store.missingKeys }}
+                    </code>
+                </div>
+            </section>
+            <div class="spacer h-48 w-full"></div> -->
             <!-- <MapTest :properties="$page.props?.accomodations" /> -->
 <!--             <OurAccomodationsSection id="accomodations"  />
             <FacilitiesBlock /> -->
