@@ -25,17 +25,6 @@ const showReviewEditDialog = ref(false)
 
 defineEmits(['edit-review'])
 
-const countryFlag = computed(() => {
-    if (hasFlag(props.item?.owner.country.toUpperCase()) === true) {
-
-        return new URL(`/resources/images/flags/4x3/${props.item?.owner.country}.svg`, import.meta.url)
-    }
-
-    return '#'
-
-    //return loadFlag()
-
-})
 const form = useForm({
 
 })
@@ -114,7 +103,7 @@ const destroy = () => {
             <RatingStars :score="item?.score" :without-text="true" />
         </td>
         <td class="px-6 py-4 relative overflow-visible">
-            <Popover :key="item.id" :title="__('Review Content')">
+            <Popover :key="`reviewContentPopover${item.id}`" :title="__('Review Content')">
                 {{ item?.excerpt }}
                 <template #content>
                     <div class="" v-html="item?.text"></div>
@@ -141,17 +130,17 @@ const destroy = () => {
         </td>
         <td class="px-6 py-4">
             <div class="flex space-x-2 items-center">
-                <Tooltip :key="`reject-${item.id}`" :text="__('Reject')" v-if="item.approved_at">
+                <Tooltip :key="`rejectReviewTooltip${item.id}`" :text="__('Reject')" v-if="item.approved_at">
                     <button class="text-bittersweet-700 dark:text-bittersweet-800" @click="reject">
                         <CloseCircleIcon class="w-5 h-5" />
                     </button>
                 </Tooltip>
-                <Tooltip :key="`approve-${item.id}`" :text="__('Approve')" v-else>
+                <Tooltip :key="`approveReviewTooltip${item.id}`" :text="__('Approve')" v-else>
                     <button class="text-amazon-600 dark:text-amazon-700" @click="approve">
                         <CheckIcon class="w-5 h-5" />
                     </button>
                 </Tooltip>
-                <Tooltip :key="`delete-${item.id}`" :text="__('Delete')">
+                <Tooltip :key="`deleteReviewTooltip${item.id}`" :text="__('Delete')">
                     <button class="text-bittersweet-700 dark:text-bittersweet-800" @click="showDestroyConfirm = true">
                         <TrashBinIcon class="w-5 h-5" />
                     </button>

@@ -17,6 +17,7 @@ const props = defineProps({
 })
 
 const component = getCurrentInstance()
+const helpers = useHelperStore()
 
 const popoverButton = ref(null)
 const popoverContent = ref(null)
@@ -42,20 +43,21 @@ const initialize = () => {
              //console.log('popover is hidden');
         }
     };
-
     if ($targetEl) {
+        //console.log($targetEl)
         /*
         * targetEl: required
         * triggerEl: required
         * options: optional
         */
         const popover = new Popover($targetEl, $triggerEl, options);
-        //console.log(popover)
+        // console.log(popover)
         // popover.show();
     }
 }
-const helpers = useHelperStore()
+
 onMounted(() => {
+
     helpers.delay(100).then(() => {
 
         initialize()
@@ -65,10 +67,10 @@ onMounted(() => {
 
 <template>
     <div class="relative overflow-visible">
-        <span :id="`popoverButton-${component.vnode.key}`" :ref="`popoverButton`" class="cursor-pointer block" type="button">
+        <span ref="popoverButton" class="cursor-pointer block" type="button">
             <slot />
         </span>
-        <div data-popover :id="`popoverContent-${component.vnode.key}`" :ref="`popoverContent`" role="tooltip"
+        <div data-popover ref="popoverContent" role="tooltip"
             class="absolute z-10 invisible inline-block w-64 text-sm font-light text-gray-500 transition-opacity duration-300 bg-white border-0 border-primary-700 rounded-lg shadow-lg opacity-0 dark:text-gray-400 dark:border-gray-950 dark:bg-gray-800">
             <div
                 class="px-3 py-2 bg-primary-600 border-b border-primary-600 rounded-t-lg dark:border-primary-800 dark:bg-primary-800 flex items-center justify-between">
