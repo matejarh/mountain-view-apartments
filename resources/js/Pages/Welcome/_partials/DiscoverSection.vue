@@ -1,4 +1,5 @@
 <script setup>
+import ActiveCarousel from '@/Components/_default/ActiveCarousel.vue';
 import ShapedSection from '@/Components/_default/ShapedSection.vue';
 
 
@@ -10,10 +11,11 @@ import ShapedSection from '@/Components/_default/ShapedSection.vue';
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-4 xl:gap-8">
 
                 <div v-for="item,key in $page.props?.discover" :key="key"
-                    class="max-w-full bg-white border border-gray-200 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700">
-                    <inertia-link :href="item.link" class="w-full h-full bg-gray-300 dark:bg-gray-500">
-                        <img class="rounded-t-lg  mix-blend-multiply transition-all ease-out duration-1000 object-cover w-full h-auto" :src="item.image.thumb_url" :alt="item.image.name  " />
-                    </inertia-link>
+                    class="max-w-full bg-white border border-gray-200 pt-4 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700 ">
+                    <ActiveCarousel :to-show="3.95" :items="item.images" class="w-full h-auto" />
+
+                        <!-- <img class="rounded-t-lg  mix-blend-multiply transition-all ease-out duration-1000 object-cover w-full h-auto" :src="item.image.thumb_url" :alt="item.image.name  " /> -->
+
                     <div class="p-5">
                         <a href="#">
                             <h5 class="mb-2 text-4xl font-bold tracking-tight text-gray-900 dark:text-white">{{ __(item.title[$page.props?.locale]) }}</h5>
