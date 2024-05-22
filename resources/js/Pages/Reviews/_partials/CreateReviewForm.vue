@@ -50,16 +50,16 @@ onMounted(() => {
 <template>
     <div size="md" v-if="!$page.props?.property.is_reviewed">
         <h2 class="text-4xl font-extrabold text-white dark:text-white">{{ __('Write a review') }}</h2>
-        <form method="POST" @submit.prevent="recaptcha">
+        <form method="POST" @submit.prevent>
             <div class="mt-4">
                 <StarInput v-model="form.score" class="mx-auto w-full mb-4" />
                 <TipTapInput v-model="form.text" :has-error="!!form.errors.text" :has-headings="false" />
                 <InputError :message="form.errors.text" />
             </div>
             <div class="mt-4">
-                <SecondaryButton type="submit"
+                <SecondaryButton type="button"
                     :class="{ 'opacity-25': form.processing || form.recentlySuccessful || !form.isDirty || !form.text || form.score === 0 | form.text === '' }"
-                    :disabled="form.processing || form.recentlySuccessful || !form.isDirty || !form.text || form.score === 0 | form.text === ''">
+                    :disabled="form.processing || form.recentlySuccessful || !form.isDirty || !form.text || form.score === 0 | form.text === ''" @click="recaptcha">
                     <div class="flex items-center">
                         <SpinnerIcon v-if="form.processing"
                             class="animate-spin -ml-1 mr-3 h-5 w-5 text-gray-800 dark:text-gray-400"></SpinnerIcon>

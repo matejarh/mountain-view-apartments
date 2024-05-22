@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Filters\ReviewFilters;
 use App\Models\Property;
 use App\Models\Review;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -31,7 +34,7 @@ class ReviewsController extends Controller
                 'view_properties' => auth()->check() ? auth()->user()->can('viewAny', Review::class) : false,
             ],
             'seo' => [
-                'title' => __('Mountain View Apartments'),
+                'title' => __('Reviews'),
                 'description' => '',
                 'keywords' => ''
             ]
@@ -47,9 +50,17 @@ class ReviewsController extends Controller
      * @param \App\Models\Property
      * @return \Inertia\Response
      */
-    public function create(string $lang, Property $property): Response
+    public function create(string $lang, Property $property): Response | RedirectResponse
     {
-        // Gate::authorize('viewAny', Review::class);
+
+        if ($property->is_reviewed) {
+            session()->flash('flash.banner', __("You have already reviewed " . $property->title->$lang));
+            session()->flash('flash.bannerStyle', 'danger');
+
+            return redirect(route('reviews.index', ['lang' => $lang, 'property' => $property]));
+        }
+
+        Gate::authorize('create', Review::class);
 
         return Inertia::render('Reviews/Create', [
             'property' => $property,
