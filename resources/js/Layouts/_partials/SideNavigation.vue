@@ -1,28 +1,92 @@
 <script setup>
-import SearchForm from '@/Components/SideNavigation/SearchForm.vue';
-import { computed, onMounted } from 'vue';
-import NavLink from '@/Components/SideNavigation/NavLink.vue';
-import NavDropdown from '@/Components/SideNavigation/NavDropdown.vue';
-import DropdownItem from '@/Components/SideNavigation/DropdownItem.vue';
+import { computed } from 'vue';
+import NavItems from '@/Components/SideNavigation/NavItems.vue';
 import Tooltip from '@/Components/Tooltip.vue';
 import BottomItem from '@/Components/SideNavigation/BottomItem.vue';
 import LangSwitch from '@/Components/SideNavigation/LangSwitch.vue';
-import ImageIcon from '@/Icons/ImageIcon.vue';
-import UsersIcon from '@/Icons/UsersIcon.vue';
-import CogIcon from '@/Icons/CogIcon.vue';
-import MountainCityIcon from '@/Icons/MountainCityIcon.vue';
-import AdjustmentsIcon from '@/Icons/AdjustmentsIcon.vue';
-import PagesIcon from '@/Icons/PagesIcon.vue';
+import { icons } from '@/icons';
+import { usePage } from '@inertiajs/vue3';
 
 const props = defineProps({
     show: Boolean,
-})
+});
 
-defineEmits(['hide'])
+const page = usePage()
+
+defineEmits(['hide']);
 
 const classes = computed(() => {
-    return !props.show ? '-translate-x-full' : '-translate-x-0'
-})
+    return !props.show ? '-translate-x-full' : '-translate-x-0';
+});
+
+const navItems = computed(() => [
+    {
+        type: 'link',
+        href: page.props?.auth.user.is_admin ? '/admin/dashboard' : '/dashboard',
+        icon: icons.AdjustmentsIcon,
+        title: 'Dashboard',
+    },
+    {
+        type: 'dropdown',
+        condition: page.props?.auth.user.is_admin,
+        icon: icons.MountainCityIcon,
+        title: 'Accommodations',
+        active: ['/admin/properties', '/admin/reviews', '/admin/reservations'],
+        children: [
+            { href: '/admin/properties', title: 'List' },
+            { href: '/admin/reviews', title: 'Reviews' },
+            { href: '/admin/reservations', title: 'Reservations' },
+        ],
+    },
+    {
+        type: 'link',
+        condition: page.props?.auth.user.is_admin,
+        href: '/admin/pages',
+        icon: icons.PagesIcon,
+        title: 'Pages',
+    },
+    {
+        type: 'dropdown',
+        condition: page.props?.auth.user.is_admin,
+        icon: icons.ImageIcon,
+        title: 'Galleries',
+        active: ['/admin/galleries', '/admin/images'],
+        children: [
+            { href: '/admin/galleries', title: 'Galleries' },
+            { href: '/admin/images', title: 'Images' },
+        ],
+    },
+    {
+        type: 'dropdown',
+        condition: page.props?.auth.user.is_admin,
+        icon: icons.UsersIcon,
+        title: 'Users',
+        active: '/admin/users',
+        children: [
+            { href: '/admin/users/all', title: 'All Users' },
+            { href: '/admin/users/activity-log', title: 'Activity Log' },
+        ],
+    },
+]);
+
+const bottomNavItems = computed(() => [
+    {
+        type: 'link',
+        condition: page.props?.auth.user.is_admin,
+        href: route('dashboard.show'),
+        icon: icons.AdjustmentsIcon,
+        title: 'Docs',
+        customIcon: true,
+    },
+    {
+        type: 'link',
+        condition: page.props?.auth.user.is_admin,
+        href: route('dashboard.show'),
+        icon: icons.CogIcon,
+        title: 'Help',
+        customIcon: true,
+    },
+]);
 </script>
 
 <template>
@@ -31,86 +95,21 @@ const classes = computed(() => {
         aria-label="Sidenav" id="sidebar-navigation">
         <div class="overflow-y-auto py-5 px-3 md:pr-0 h-full bg-white dark:bg-gray-900">
             <ul class="space-y-2">
-                <NavLink :href="$page.props?.auth.user.is_admin ? '/admin/dashboard': '/dashboard'" @click="$emit('hide')">
-                    <template #icon>
-                        <AdjustmentsIcon class="" />
-                    </template>
-                    {{ __("Dashboard") }}
-                </NavLink>
-
-                <NavDropdown v-if="$page.props?.auth.user.is_admin" key="properties-dropdown" :active="['/admin/properties', '/admin/reviews', '/admin/reservations']">
-                    <template #icon>
-                        <MountainCityIcon />
-                    </template>
-                    <template #title>{{ __("Accomodations") }}</template>
-                    <DropdownItem href="/admin/properties" @click="$emit('hide')">{{ __('List') }}</DropdownItem>
-                    <DropdownItem href="/admin/reviews" @click="$emit('hide')">{{ __('Reviews') }}</DropdownItem>
-                    <DropdownItem href="/admin/reservations" @click="$emit('hide')">{{ __('Reservations') }}</DropdownItem>
-                </NavDropdown>
-
-                <NavLink v-if="$page.props?.auth.user.is_admin" href="/admin/pages" @click="$emit('hide')">
-                    <template #icon>
-                        <PagesIcon />
-                    </template>
-                    {{ __("Pages") }}
-                </NavLink>
-
-                <NavDropdown v-if="$page.props?.auth.user.is_admin" key="galleries-dropdown" :active="['/admin/galleries', '/admin/images']">
-                    <template #icon>
-                        <ImageIcon />
-                    </template>
-                    <template #title>{{ __('Galleries') }}</template>
-                    <DropdownItem :href="'/admin/galleries'" @click="$emit('hide')">{{ __('Galleries') }}</DropdownItem>
-                    <DropdownItem :href="'/admin/images'" @click="$emit('hide')">{{ __('Images') }}</DropdownItem>
-                    <!-- <DropdownItem :href="'/admin/galeries/create'" @click="$emit('hide')">Create</DropdownItem> -->
-
-                </NavDropdown>
-                <NavDropdown v-if="$page.props?.auth.user.is_admin" key="users-dropdown" active="/admin/users">
-                    <template #icon>
-                        <UsersIcon />
-                    </template>
-                    <template #title>{{ __("Users") }}</template>
-                    <DropdownItem href="/admin/users/all" @click="$emit('hide')">{{ __('All Users') }}</DropdownItem>
-                    <DropdownItem href="/admin/users/activity-log" @click="$emit('hide')">{{ __('Activity Log') }}</DropdownItem>
-
-                </NavDropdown>
+                <NavItems :items="navItems" @hide="$emit('hide')" />
             </ul>
             <ul class="transition-all pt-5 mt-5 space-y-2 border-t border-gray-200 dark:border-gray-700">
-                <NavLink v-if="$page.props?.auth.user.is_admin" :href="route('dashboard.show')">
-                    <template #icon>
-                        <svg aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path>
-                            <path fill-rule="evenodd"
-                                d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z"
-                                clip-rule="evenodd"></path>
-                        </svg>
-                    </template>
-                    Docs
-                </NavLink>
-
-                <NavLink v-if="$page.props?.auth.user.is_admin" :href="route('dashboard.show')">
-                    <template #icon>
-                        <svg aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-2 0c0 .993-.241 1.929-.668 2.754l-1.524-1.525a3.997 3.997 0 00.078-2.183l1.562-1.562C15.802 8.249 16 9.1 16 10zm-5.165 3.913l1.58 1.58A5.98 5.98 0 0110 16a5.976 5.976 0 01-2.516-.552l1.562-1.562a4.006 4.006 0 001.789.027zm-4.677-2.796a4.002 4.002 0 01-.041-2.08l-.08.08-1.53-1.533A5.98 5.98 0 004 10c0 .954.223 1.856.619 2.657l1.54-1.54zm1.088-6.45A5.974 5.974 0 0110 4c.954 0 1.856.223 2.657.619l-1.54 1.54a4.002 4.002 0 00-2.346.033L7.246 4.668zM12 10a2 2 0 11-4 0 2 2 0 014 0z"
-                                clip-rule="evenodd"></path>
-                        </svg>
-                    </template>
-                    Help
-                </NavLink>
+                <NavItems :items="bottomNavItems" @hide="$emit('hide')" />
             </ul>
         </div>
         <div
             class="hidden absolute bottom-0 left-0 justify-center p-4 space-x-4 w-full lg:flex bg-gray-50 dark:bg-gray-800 z-20">
             <BottomItem v-if="$page.props?.auth.user.is_admin" :href="'/'">
-                <AdjustmentsIcon class="w-6 h-6" />
+                <icons.AdjustmentsIcon class="w-6 h-6" />
             </BottomItem>
 
             <Tooltip v-if="$page.props?.auth.user.is_admin" :text="__('Settings Page')">
                 <BottomItem :href="route('admin.settings.index')" active="/admin/settings">
-                    <CogIcon class="w-6 h-6" />
+                    <icons.CogIcon class="w-6 h-6" />
                 </BottomItem>
             </Tooltip>
 
