@@ -1,5 +1,6 @@
 <script setup>
 import FullLayout from '@/Layouts/FullLayout.vue';
+import ReviewsTable from './_partials/ReviewsTable.vue'
 
 const props = defineProps({
     users: Object,
@@ -10,7 +11,7 @@ const props = defineProps({
 
 <template>
     <FullLayout :title="__('Reviews')">
-
+        <ReviewsTable />
 
     </FullLayout>
 </template>
