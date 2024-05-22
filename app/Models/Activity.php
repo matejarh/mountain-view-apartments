@@ -74,7 +74,7 @@ class Activity extends Model
      *
      * @return array<string, array<int, \Illuminate\Broadcasting\Channel|\Illuminate\Database\Eloquent\Model>>
      */
-    public function broadcastOn($event)
+/*     public function broadcastOn($event)
     {
         // return [new EncryptedPrivateChannel('App.Models.Wallet.'.$this->id)];
         //return [$this, $this->user];
@@ -82,18 +82,18 @@ class Activity extends Model
             'created' => [new EncryptedPrivateChannel('App.Models.Activity.')],
             default => [new EncryptedPrivateChannel('App.Models.Activity.' . $this->id)],
         };
-    }
+    } */
 
     /**
      * The model event's broadcast name.
      */
-    public function broadcastAs(string $event): string|null
+/*     public function broadcastAs(string $event): string|null
     {
         return match ($event) {
             'created' => 'activity.created',
             default => null,
         };
-    }
+    } */
 
     /**
      * Get the data to broadcast for the model.
