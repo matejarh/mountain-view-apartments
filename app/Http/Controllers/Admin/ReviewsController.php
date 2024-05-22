@@ -38,7 +38,7 @@ class ReviewsController extends Controller
 
         return Inertia::render('Admin/Reviews/Index', [
             'reviews' => Review::filter($filters)->latest()->paginate(24, ['*'], __('page'))->onEachSide(2)->withQueryString(),
-            'filters' => $request->only(['search']),
+            'filters' => $request->only(['search', 'approved', 'not-approved']),
             'can' => [
                 'view_reviews' => auth()->user()->can('viewAny', Review::class),
             ],
