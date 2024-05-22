@@ -44,7 +44,7 @@ trait Reviewable
 
     public function approvedReviews() :Collection
     {
-        return $this->reviews()->approved()->latest()->get();
+        return $this->reviews()->approved()->get();
     }
 
     /**
@@ -102,12 +102,17 @@ trait Reviewable
 
     public function avarageReviewScore(): float
     {
-        return round($this->reviews && $this->reviews->count() > 0 ? $this->reviews->average('score') : 0 ,1);
+        return round($this->approvedReviews()->average('score') | 0);
     }
 
     public function getAverageReviewScoreAttribute(): float|null
     {
         // return 0.5;
         return $this->avarageReviewScore();
+    }
+
+    public function getApprovedReviewsAttribute() :Collection
+    {
+        return $this->approvedReviews();
     }
 }

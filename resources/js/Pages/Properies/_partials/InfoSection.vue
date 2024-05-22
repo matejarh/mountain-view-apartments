@@ -139,7 +139,7 @@ const handleFullScreenImage = (image) => {
                     <div class="mb-6 text-gray-500 dark:text-gray-400 space-y-2 text-justify"
                         v-html="$page.props?.property?.long_description[$page.props?.locale]"></div>
 
-                    <div class="">
+                    <div class="" v-if="$page.props?.latest_reviews.length > 0">
                         <h3 class="text-strong text-lg mb-4">{{ __('Latest reviews from our satisfied customers') }}
                         </h3>
                         <!-- {{ $page.props?.latest_reviews.length }} -->

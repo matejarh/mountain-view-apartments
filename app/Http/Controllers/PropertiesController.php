@@ -31,7 +31,9 @@ class PropertiesController extends Controller
         // Gate::authorize('viewAny', Property::class);
 
         return Inertia::render('Properies/Index', [
-            'properties' => Property::with('galleries')->latest()->filter($filters)->paginate(10, ['*'], __('page'))->onEachSide(2)->withQueryString(),
+            'properties' => Property::with('galleries')->with('reviews', function($review) {
+                return $review->approved()->get();
+            })->latest()->filter($filters)->paginate(10, ['*'], __('page'))->onEachSide(2)->withQueryString(),
             'filters' => $request->only(['search']),
             'can' => [
                 'view_properties' => auth()->check() ? auth()->user()->can('viewAny', Property::class) : false,
@@ -57,7 +59,9 @@ class PropertiesController extends Controller
         // Render the property details page using Inertia.js
         return Inertia::render('Properies/Show', [
             // Pass the property details along with its galleries and facilities
-            'property' => $property->with('galleries', 'facilities')->find($property->id),
+            'property' => $property->with('galleries', 'facilities')->with('reviews', function($review) {
+                return $review->approved()->get();
+            })->find($property->id),
             'latest_reviews' => $property->latestReviews(),
             // Determine the user's permissions for this property
             'can' => [
