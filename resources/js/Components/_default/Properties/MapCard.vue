@@ -41,7 +41,10 @@ const propertiesCoordinates = () => {
     let bounds = []
 
     bounds.push([parseFloat(page.props?.property.coordinates.lat), parseFloat(page.props?.property.coordinates.lng)])
-    bounds.push([client.location.coords?.latitude, client.location.coords?.longitude])
+
+    if (clientCoordinates) {
+        bounds.push([client.location.coords?.latitude, client.location.coords?.longitude])
+    }
 
     return bounds
 }

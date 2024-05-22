@@ -39,13 +39,15 @@ const propertiesCoordinates = () => {
     page.props?.accomodations?.forEach(property => {
         bounds.push([parseFloat(property.coordinates.lat), parseFloat(property.coordinates.lng)])
     });
-    bounds.push([client.location.coords?.latitude, client.location.coords?.longitude])
+    if (client.location) {
+        bounds.push(clientCoordinates)
+    }
 
     return bounds
 }
 
 const clientCoordinates = computed(() => {
-    return [client.location.coords?.latitude, client.location.coords?.longitude]
+    return [client.location?.coords.latitude, client.location?.coords.longitude]
 })
 
 const resetBounds = () => {
