@@ -76,7 +76,7 @@ const onDarkTextClasses = computed(() => {
             ({{ property?.average_review_score }})
         </p>
         <inertia-link v-if="!withoutText" :href="route('reviews.index', { property: property, lang: $page.props?.locale })" :class="onDarkLinkClasses" class="text-sm font-medium leading-none  underline hover:no-underline ">
-            {{ property?.reviews.length }} {{ __('Review', property?.reviews.length) }}
+            {{ property?.reviews_count }} {{ __('Review', property?.reviews_count) }}
         </inertia-link>
     </div>
 </template>
