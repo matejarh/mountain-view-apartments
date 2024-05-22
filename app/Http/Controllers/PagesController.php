@@ -38,7 +38,7 @@ class PagesController extends Controller
             ],
         ];
 
-        $reviews = Review::with('reviewed')->orderByDesc('score')->take(10)->get();
+        $reviews = Review::with('reviewed')->approved()->orderByDesc('score')->take(10)->get();
 
         return Inertia::render('Welcome', [
             'page' => Page::with('galleries')->where('name', 'Home')->first(),

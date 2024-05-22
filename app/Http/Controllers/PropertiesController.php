@@ -31,7 +31,7 @@ class PropertiesController extends Controller
         // Gate::authorize('viewAny', Property::class);
 
         return Inertia::render('Properies/Index', [
-            'properties' => Property::with('galleries', 'facilities')->latest()->filter($filters)->paginate(10, ['*'], __('page'))->onEachSide(2)->withQueryString(),
+            'properties' => Property::with('galleries')->latest()->filter($filters)->paginate(10, ['*'], __('page'))->onEachSide(2)->withQueryString(),
             'filters' => $request->only(['search']),
             'can' => [
                 'view_properties' => auth()->check() ? auth()->user()->can('viewAny', Property::class) : false,

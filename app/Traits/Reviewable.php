@@ -39,7 +39,12 @@ trait Reviewable
 
     public function latestReviews() :Collection
     {
-        return $this->reviews()->latest()->take(5)->get();
+        return $this->reviews()->approved()->latest()->take(10)->get();
+    }
+
+    public function approvedReviews() :Collection
+    {
+        return $this->reviews()->approved()->latest()->get();
     }
 
     /**

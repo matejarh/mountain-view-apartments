@@ -90,6 +90,11 @@ class Review extends Model
 
     }
 
+    public function scopeApproved(Builder $query,) :Builder
+    {
+        return $query->whereNotNull('approved_at');
+    }
+
     public function createdAtHumanReadable(): string
     {
         return $this->created_at->diffForHumans();

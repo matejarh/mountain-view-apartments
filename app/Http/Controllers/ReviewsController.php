@@ -27,11 +27,12 @@ class ReviewsController extends Controller
         // Gate::authorize('viewAny', Review::class);
 
         return Inertia::render('Reviews/Index', [
-            'reviews' => $property->reviews()->with('owner')->filter($filters)->latest()->paginate(10, ['*'], __('page'))->onEachSide(2)->withQueryString(),
+            'reviews' => $property->reviews()->with('owner')->approved()->filter($filters)->latest()->paginate(10, ['*'], __('page'))->onEachSide(2)->withQueryString(),
             'property' => $property,
             'filters' => $request->only(['search']),
             'can' => [
                 'view_properties' => auth()->check() ? auth()->user()->can('viewAny', Review::class) : false,
+                'create_properties' => auth()->check() ? auth()->user()->can('create', Review::class) : false,
             ],
             'seo' => [
                 'title' => __('Reviews'),
