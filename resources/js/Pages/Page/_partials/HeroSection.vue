@@ -5,6 +5,7 @@ import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 import LogoHero from '@/Components/LogoHero.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
+import HeroTitle from '@/Components/_default/HeroTitle.vue';
 
 const page = usePage()
 
@@ -36,8 +37,9 @@ const scrollTo = (view) => {
 <HeroParallax :images="images" >
     <div class="px-4 mx-auto max-w-screen-xl text-center pb-24 md:pb-56 lg:pb-56 z-0">
         <div class="">
-            <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-white md:text-5xl lg:text-6xl">
-                {{ $page.props?.page.title[$page.props?.locale] }}</h1>
+            <HeroTitle>
+                {{ $page.props?.page.title[$page.props?.locale] }}
+            </HeroTitle>
 
             <p class="mb-8 text-lg font-normal text-gray-300 whitespace-pre-wrap lg:text-xl sm:px-16 lg:px-48">{{
                 $page.props?.page.description[$page.props?.locale] }}</p>

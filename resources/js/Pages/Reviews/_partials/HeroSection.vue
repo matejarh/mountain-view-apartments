@@ -3,6 +3,7 @@ import LikeButton from '@/Components/_default/Reviews/LikeButton.vue';
 import RatingStars from '@/Components/_default/Properties/RatingStars.vue';
 import { usePage } from '@inertiajs/vue3';
 import { onBeforeUnmount, onMounted, ref } from 'vue';
+import HeroTitle from '@/Components/_default/HeroTitle.vue';
 
 defineEmits(['create'])
 
@@ -57,12 +58,12 @@ onBeforeUnmount(() => {
     <section :style="`background-image: url(${bgImage});`"
         class="bg-center bg-cover bg-no-repeat  bg-gray-700 bg-blend-multiply transition-all duration-[2000ms] ease-in-out bg-paralax">
         <div class="px-4 mx-auto max-w-screen-xl text-center py-24 lg:py-56">
-            <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-white md:text-5xl lg:text-6xl">
+            <HeroTitle>
                 <inertia-link
                     :href="route('properties.show', { lang: $page.props?.locale, property: $page.props?.property })">
                     {{ $page.props?.property.title[$page.props?.locale] }}
                 </inertia-link>
-            </h1>
+            </HeroTitle>
 
             <div class="mb-8 text-lg font-normal text-gray-300 lg:text-xl sm:px-16 lg:px-48">
                 {{ $page.props?.property.quote[$page.props?.locale] }}
