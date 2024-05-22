@@ -28,13 +28,13 @@ class PagesController extends Controller
                 'title' => $bled->title,
                 'description' => $bled->description,
                 'link' => '/' . app()->currentLocale() . '/explore/bled',
-                'image' => $bled->galleries->count() > 0 ? $bled->galleries[0]->images[0]: null
+                'images' => $bled->galleries->count() > 0 ? $bled->galleries[0]->images : []
             ],
             'nassfeld' => [
                 'title' => $nassfeld->title,
                 'description' => $nassfeld->description,
                 'link' => '/' . app()->currentLocale() . '/discover/nassfeld',
-                'image' => $nassfeld->galleries->count() > 0 ? $nassfeld->galleries[0]->images[0] : null
+                'images' => $nassfeld->galleries->count() > 0 ? $nassfeld->galleries[0]->images : []
             ],
         ];
 
