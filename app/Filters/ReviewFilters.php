@@ -38,6 +38,6 @@ class ReviewFilters extends Filters
 
     public function notApproved($query) :Builder
     {
-        return $this->builder->whereNotNull('approved_at');
+        return $this->builder->whereNull('approved_at');
     }
 }

@@ -2,12 +2,9 @@
 import ActionSection from '@/Components/ActionSection.vue'
 import TableSection from '@/Components/TableSection.vue'
 import TableRow from './TableRow.vue'
-import TableHeader from './TableHeader.vue';
-import ArrowDownIcon from '@/Icons/ArrowDownIcon.vue';
-import { usePage } from '@inertiajs/vue3';
-import { ref } from 'vue';
-/* import ReviewEditDialog from './ReviewEditDialog.vue'; */
+import { ref, watch } from 'vue';
 import FiltersSection from '@/Components/FiltersSection.vue';
+import Checkbox from '@/Components/Checkbox.vue';
 
 const showReviewEditDialog = ref(false)
 const editingReview = ref({})
@@ -16,6 +13,35 @@ const handleEditReview = (user) => {
     editingReview.value = user
     showReviewEditDialog.value = true
 }
+
+const filters = ref({
+    approved: false,
+    notApproved: false
+})
+
+// Watch for changes in the approved checkbox
+watch(() => filters.value.approved, (newVal) => {
+    if (newVal) {
+        filters.value.notApproved = false;
+    }
+});
+
+// Watch for changes in the notApproved checkbox
+watch(() => filters.value.notApproved, (newVal) => {
+    if (newVal) {
+        filters.value.approved = false;
+    }
+});
+
+const headers = ref([
+    'Reviewer',
+    'Apartment',
+    'Score',
+    'Text',
+    'Approved',
+    'Last Update',
+    'Action'
+])
 
 </script>
 
@@ -29,7 +55,20 @@ const handleEditReview = (user) => {
             <TableSection :paginator="$page.props?.reviews">
                 <template #header>
                     <!-- <TableHeader /> -->
-                    <FiltersSection id="reviews-filters" route="admin.reviews.index" placeholder="Search for reviews" />
+                    <FiltersSection id="reviews-filters" route="admin.reviews.index" :filters="filters"
+                        placeholder="Search for reviews">
+                        <div class="flex flex-col ms-4">
+                            <label class="text-gray-500 block" for="approved">
+                                <Checkbox  class="w-12 h-12" id="approved" v-model:checked="filters.approved" />
+                                Approved
+                            </label>
+                            <label class="text-gray-500 block" for="not_approved">
+                                <Checkbox  class="w-12 h-12" id="not_approved" v-model:checked="filters.notApproved" />
+                                Not Approved
+                            </label>
+
+                        </div>
+                    </FiltersSection>
                 </template>
 
                 <template #tablehead>
@@ -40,26 +79,9 @@ const handleEditReview = (user) => {
                             <label for="checkbox-all" class="sr-only">{{ __('checkbox') }}</label>
                         </div>
                     </th>
-                    <th scope="col" class="px-6 py-3">
-                        {{ __('Reviewer') }}
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        {{ __('Apartment') }}
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        {{ __('Score') }}
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        {{ __('Text') }}
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        {{ __('Approved') }}
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        {{ __('Last Update') }}
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        {{ __('Action') }}
+
+                    <th v-for="header in headers" :key="header" scope="col" class="px-6 py-3">
+                        {{ __(header) }}
                     </th>
                 </template>
                 <TableRow v-for="review in $page.props?.reviews.data" :key="review.id" :item="review"
@@ -69,6 +91,4 @@ const handleEditReview = (user) => {
 
         </template>
     </ActionSection>
-
-    <!-- <UserEditDialog :show="showUserEditDialog" @close="showUserEditDialog = false" :user="editingUser" /> -->
 </template>
