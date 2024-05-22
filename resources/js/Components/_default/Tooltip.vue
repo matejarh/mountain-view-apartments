@@ -45,7 +45,6 @@ const initialize = () => {
         * options: optional
         */
         const tooltip = new Tooltip($targetEl, $triggerEl, options);
-
         // show the tooltip
         //tooltip.show();
     }
@@ -58,11 +57,11 @@ onMounted(() => {
 
 <template>
     <div class="">
-        <span :id="`tooltipButton${component.vnode.key}`" :ref="`tooltipButton`" type="button" class="font-semibold hover:font-bold relative">
+        <span :id="`tooltipButton-${component.vnode.key}`" :ref="`tooltipButton`" type="button" class="font-semibold hover:font-bold relative block">
             <slot />
         </span>
 
-            <div :id="`tooltipContent${component.vnode.key}`" :ref="`tooltipContent`" role="tooltip"
+            <div :id="`tooltipContent-${component.vnode.key}`" :ref="`tooltipContent`" role="tooltip"
                 class="absolute z-10 invisible inline-block px-3 py-2 whitespace-nowrap text-sm font-medium text-white transition-opacity duration-300 bg-gray-950 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-950">
                 {{ text }}
                 <div class="tooltip-arrow" data-popper-arrow></div>
