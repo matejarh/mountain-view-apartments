@@ -106,7 +106,6 @@ import WhatsUpIcon from '@/Icons/WhatsUpIcon.vue'
 import WheelchairIcon from '@/Icons/WheelchairIcon.vue'
 import XIcon from '@/Icons/XIcon.vue'
 import YoutubePlayButtonIcon from '@/Icons/YoutubePlayButtonIcon.vue'
-
 import AlignCenterIcon from '@/Components/TipTapIcons/AlignCenterIcon.vue';
 import BoldIcon from '@/Components/TipTapIcons/BoldIcon.vue';
 import AlignLeftIcon from '@/Components/TipTapIcons/AlignLeftIcon.vue';
