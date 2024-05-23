@@ -1,81 +1,24 @@
 <template>
-    <div class="rounded-lg w-full border " :class="errorClasses" >
-        <div v-if="editor"  :class="isSmall ? 'py-0': 'py-2'" class="flex items-center justify-between px-3 border-b dark:border-gray-600">
-            <div
-                class="w-full flex justify-between flex-wrap items-center divide-gray-200 sm:divide-x sm:rtl:divide-x-reverse dark:divide-gray-600">
+    <div class="rounded-lg w-full border" :class="errorClasses">
+        <div v-if="editor" :class="isSmall ? 'py-0' : 'py-2'" class="flex items-center justify-between px-3 border-b dark:border-gray-600">
+            <div class="w-full flex justify-between flex-wrap items-center divide-gray-200 sm:divide-x sm:rtl:divide-x-reverse dark:divide-gray-600">
                 <div class="left justify-self-stretch flex flex-wrap items-center space-x-1 rtl:space-x-reverse sm:pe-4">
-                    <button v-if="!isSmall && hasHeadings" @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
-                        :class="[buttonClasses, editor?.isActive('heading', { level: 1 }) ? activeButtonClasses : '']">
-                        <div class="flex">
-                            <HeadingIcon :class="iconClasses" />
-                            1
-                        </div>
-                    </button>
-                    <button v-if="!isSmall && hasHeadings" @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
-                        :class="[buttonClasses, editor?.isActive('heading', { level: 2 }) ? activeButtonClasses : '']">
-                        <div class="flex">
-                            <HeadingIcon :class="iconClasses" />
-                            2
-                        </div>
-                    </button>
-                    <button v-if="!isSmall && hasHeadings" @click="editor.chain().focus().toggleHeading({ level: 3 }).run()"
-                        :class="[buttonClasses, editor?.isActive('heading', { level: 3 }) ? activeButtonClasses : '']">
-                        <div class="flex">
-                            <HeadingIcon :class="iconClasses" />
-                            3
-                        </div>
-                    </button>
-                    <button v-if="!isSmall && hasHeadings" @click="editor.chain().focus().setParagraph().run()"
-                        :class="[buttonClasses, editor?.isActive('paragraph') ? activeButtonClasses : '']">
-                        <ParagraphIcon :class="iconClasses" class="" />
-                    </button>
-                    <button @click="editor.chain().focus().toggleBold().run()"
-                        :class="[buttonClasses, editor?.isActive('bold') ? activeButtonClasses : '']">
-                        <BoldIcon :class="iconClasses" class="" />
-                    </button>
-                    <button @click="editor.chain().focus().toggleItalic().run()"
-                        :class="[buttonClasses, editor?.isActive('italic') ? activeButtonClasses : '']">
-                        <ItalicIcon :class="iconClasses" />
-                    </button>
-                    <button @click="editor.chain().focus().toggleStrike().run()"
-                        :class="[buttonClasses, editor?.isActive('strike') ? activeButtonClasses : '']">
-                        <TextSlashIcon :class="iconClasses" />
-                    </button>
-                    <button @click="editor.chain().focus().toggleHighlight().run()"
-                        :class="[buttonClasses, editor?.isActive('highlight') ? activeButtonClasses : '']">
-                        <HighlightIcon :class="iconClasses" />
-                    </button>
-                    <button  v-if="!isSmall && hasHeadings" @click="editor.chain().focus().setTextAlign('left').run()"
-                        :class="[buttonClasses, editor?.isActive({ textAlign: 'left' }) ? activeButtonClasses : '']">
-                        <AlignLeftIcon :class="iconClasses" class="" />
-                    </button>
-                    <button  v-if="!isSmall && hasHeadings" @click="editor.chain().focus().setTextAlign('center').run()"
-                        :class="[buttonClasses, editor?.isActive({ textAlign: 'center' }) ? activeButtonClasses : '']">
-                        <AlignCenterIcon :class="iconClasses" class="" />
-                    </button>
-                    <button  v-if="!isSmall && hasHeadings" @click="editor.chain().focus().setTextAlign('right').run()"
-                        :class="[buttonClasses, editor?.isActive({ textAlign: 'right' }) ? activeButtonClasses : '']">
-
-
-                        <AlignRightIcon :class="iconClasses" class="" />
-                    </button>
-                    <button  v-if="!isSmall && hasHeadings" @click="editor.chain().focus().setTextAlign('justify').run()"
-                        :class="[buttonClasses, editor?.isActive({ textAlign: 'justify' }) ? activeButtonClasses : '']">
-                        <AlignJustifyIcon :class="iconClasses" class="" />
-                    </button>
+                    <template v-for="(button, index) in toolbarButtons" :key="index">
+                        <button v-if="button.condition" @click="button.action" :class="[buttonClasses, button.active ? activeButtonClasses : '']">
+                            <div class="flex">
+                                <component :is="button.icon" :class="iconClasses" />
+                                <span v-if="button.label">{{ button.label }}</span>
+                            </div>
+                        </button>
+                    </template>
                 </div>
-
-                <button class="justify-self-end"  @click=""
-                    :class="[buttonClasses]">
-                    <FullScreenIcon :class="iconClasses" class="" />
+                <button class="justify-self-end" @click="" :class="[buttonClasses]">
+                    <icons.FullScreenIcon :class="iconClasses" />
                 </button>
-
-
             </div>
-
         </div>
-        <div class="px-4 py-2  rounded-b-lg dark:bg-gray-800" :class="hasError? 'bg-bittersweet-50' : 'bg-gray-50 dark:bg-gray-800'">
-            <editor-content :editor="editor"  />
+        <div class="px-4 py-2 rounded-b-lg dark:bg-gray-800" :class="hasError ? 'bg-bittersweet-50' : 'bg-gray-50 dark:bg-gray-800'">
+            <editor-content :editor="editor" />
         </div>
     </div>
 </template>
@@ -86,17 +29,7 @@ import StarterKit from '@tiptap/starter-kit'
 import Highlight from '@tiptap/extension-highlight'
 import TextAlign from '@tiptap/extension-text-align'
 import { computed, onBeforeUnmount, ref, watch, watchEffect } from 'vue';
-import AlignCenterIcon from './TipTapIcons/AlignCenterIcon.vue';
-import BoldIcon from './TipTapIcons/BoldIcon.vue';
-import AlignLeftIcon from './TipTapIcons/AlignLeftIcon.vue';
-import AlignRightIcon from './TipTapIcons/AlignRightIcon.vue';
-import AlignJustifyIcon from './TipTapIcons/AlignJustifyIcon.vue';
-import ParagraphIcon from './TipTapIcons/ParagraphIcon.vue';
-import ItalicIcon from './TipTapIcons/ItalicIcon.vue';
-import TextSlashIcon from './TipTapIcons/TextSlashIcon.vue';
-import HighlightIcon from './TipTapIcons/HighlightIcon.vue';
-import HeadingIcon from './TipTapIcons/HeadingIcon.vue';
-import FullScreenIcon from '@/Icons/FullScreenIcon.vue';
+import { icons } from '@/icons'
 
 const props = defineProps({
     modelValue: {
@@ -182,11 +115,110 @@ const iconClasses = computed(() => {
 
 const activeButtonClasses = computed(() => {
     return 'text-gray-900 bg-gray-100 dark:text-white dark:bg-gray-600'
-
 })
+
+const toolbarButtons = computed(() => [
+    {
+        condition: !props.isSmall && props.hasHeadings,
+        action: () => editor.value.chain().focus().toggleHeading({ level: 1 }).run(),
+        icon: icons.HeadingIcon,
+        label: '1',
+        active: editor.value?.isActive('heading', { level: 1 })
+    },
+    {
+        condition: !props.isSmall && props.hasHeadings,
+        action: () => editor.value.chain().focus().toggleHeading({ level: 2 }).run(),
+        icon: icons.HeadingIcon,
+        label: '2',
+        active: editor.value?.isActive('heading', { level: 2 })
+    },
+    {
+        condition: !props.isSmall && props.hasHeadings,
+        action: () => editor.value.chain().focus().toggleHeading({ level: 3 }).run(),
+        icon: icons.HeadingIcon,
+        label: '3',
+        active: editor.value?.isActive('heading', { level: 3 })
+    },
+    {
+        condition: !props.isSmall && props.hasHeadings,
+        action: () => editor.value.chain().focus().toggleHeading({ level: 4 }).run(),
+        icon: icons.HeadingIcon,
+        label: '4',
+        active: editor.value?.isActive('heading', { level: 4 })
+    },
+    {
+        condition: !props.isSmall && props.hasHeadings,
+        action: () => editor.value.chain().focus().toggleHeading({ level: 5 }).run(),
+        icon: icons.HeadingIcon,
+        label: '5',
+        active: editor.value?.isActive('heading', { level: 5 })
+    },
+    {
+        condition: !props.isSmall && props.hasHeadings,
+        action: () => editor.value.chain().focus().setParagraph().run(),
+        icon: icons.ParagraphIcon,
+        label: '',
+        active: editor.value?.isActive('paragraph')
+    },
+    {
+        condition: true,
+        action: () => editor.value.chain().focus().toggleBold().run(),
+        icon: icons.BoldIcon,
+        label: '',
+        active: editor.value?.isActive('bold')
+    },
+    {
+        condition: true,
+        action: () => editor.value.chain().focus().toggleItalic().run(),
+        icon: icons.ItalicIcon,
+        label: '',
+        active: editor.value?.isActive('italic')
+    },
+    {
+        condition: true,
+        action: () => editor.value.chain().focus().toggleStrike().run(),
+        icon: icons.TextSlashIcon,
+        label: '',
+        active: editor.value?.isActive('strike')
+    },
+    {
+        condition: true,
+        action: () => editor.value.chain().focus().toggleHighlight().run(),
+        icon: icons.HighlightIcon,
+        label: '',
+        active: editor.value?.isActive('highlight')
+    },
+    {
+        condition: !props.isSmall && props.hasHeadings,
+        action: () => editor.value.chain().focus().setTextAlign('left').run(),
+        icon: icons.AlignLeftIcon,
+        label: '',
+        active: editor.value?.isActive({ textAlign: 'left' })
+    },
+    {
+        condition: !props.isSmall && props.hasHeadings,
+        action: () => editor.value.chain().focus().setTextAlign('center').run(),
+        icon: icons.AlignCenterIcon,
+        label: '',
+        active: editor.value?.isActive({ textAlign: 'center' })
+    },
+    {
+        condition: !props.isSmall && props.hasHeadings,
+        action: () => editor.value.chain().focus().setTextAlign('right').run(),
+        icon: icons.AlignRightIcon,
+        label: '',
+        active: editor.value?.isActive({ textAlign: 'right' })
+    },
+    {
+        condition: !props.isSmall && props.hasHeadings,
+        action: () => editor.value.chain().focus().setTextAlign('justify').run(),
+        icon: icons.AlignJustifyIcon,
+        label: '',
+        active: editor.value?.isActive({ textAlign: 'justify' })
+    }
+])
 
 onBeforeUnmount(() => {
   editor.value.destroy()
 })
 </script>
-
