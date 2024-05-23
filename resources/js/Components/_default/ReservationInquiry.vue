@@ -156,14 +156,15 @@ const store = () => {
         </div>
 
         <div class="mt-4">
-            <InputLabel :value="__('Apartmant')" for="Apartmant" />
+            <InputLabel :value="__('Apartmant')" as="div" />
 
-            <AccomodationsDropdown class="w-full" direction="down" :selected-property="propertyProxy" @selected="handleSelected" />
+            <AccomodationsDropdown id="apartmant" class="w-full" direction="down" :selected-property="propertyProxy" @selected="handleSelected" />
         </div>
 
         <div class="relative mt-4 ">
-            <InputLabel :value="__('Date (from-to)')" />
+            <InputLabel :value="__('Date (from-to)')" as="div" />
             <VueDatePicker id="daterangepicker"
+                            name="daterangepicker"
                             v-model="form.date"
 
                             :range="options"
