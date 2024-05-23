@@ -23,6 +23,7 @@ use App\Actions\Images\UpdateImage;
 use App\Actions\Inquiries\AdminCreateInquiry;
 use App\Actions\Inquiries\CreateInquiry;
 use App\Actions\Inquiries\DeleteInquiry;
+use App\Actions\Inquiries\ReplyToInquiry;
 use App\Actions\Inquiries\UpdateInquiry;
 use App\Actions\Notifications\DeleteAllNotifications;
 use App\Actions\Notifications\DeleteNotification;
@@ -67,6 +68,7 @@ use App\Contracts\ImageOrderChangeResponse as ImageOrderChangeResponseContract;
 use App\Contracts\ImageUpdateResponse as ImageUpdateResponseContract;
 use App\Contracts\InquiryCreateResponse as InquiryCreateResponseContract;
 use App\Contracts\InquiryDeleteResponse as InquiryDeleteResponseContract;
+use App\Contracts\InquiryReplyResponse as InquiryReplyResponseContract;
 use App\Contracts\InquiryUpdateResponse as InquiryUpdateResponseContract;
 use App\Contracts\NotificationDeleteAllResponse as NotificationDeleteAllResponseContract;
 use App\Contracts\NotificationDeleteResponse as NotificationDeleteResponseContract;
@@ -105,6 +107,7 @@ use App\Http\Responses\ImageOrderChangedResponse;
 use App\Http\Responses\ImageUpdatedResponse;
 use App\Http\Responses\InquiryCreatedResponse;
 use App\Http\Responses\InquiryDeletedResponse;
+use App\Http\Responses\InquiryRepliedResponse;
 use App\Http\Responses\InquiryUpdatedResponse;
 use App\Http\Responses\NotificationDeletedAllResponse;
 use App\Http\Responses\NotificationDeletedResponse;
@@ -183,6 +186,7 @@ class FortifyServiceProvider extends ServiceProvider
         $this->app->singleton(InquiryCreateResponseContract::class, InquiryCreatedResponse::class);
         $this->app->singleton(InquiryUpdateResponseContract::class, InquiryUpdatedResponse::class);
         $this->app->singleton(InquiryDeleteResponseContract::class, InquiryDeletedResponse::class);
+        $this->app->singleton(InquiryReplyResponseContract::class, InquiryRepliedResponse::class);
 
         $this->app->singleton(GuestInquiryStoreResponseContract::class, GuestInquiryStoredResponse::class);
 
@@ -246,6 +250,7 @@ class FortifyServiceProvider extends ServiceProvider
         AppFortify::createInquiriesUsing(AdminCreateInquiry::class);
         AppFortify::updateInquiriesUsing(UpdateInquiry::class);
         AppFortify::destroyInquiriesUsing(DeleteInquiry::class);
+        AppFortify::replyToInquiriesUsing(ReplyToInquiry::class);
 
         AppFortify::guestCreateInquiriesUsing(CreateInquiry::class);
 

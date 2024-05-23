@@ -4,8 +4,11 @@ namespace Tests\Feature;
 
 use App\Models\Inquiry;
 use App\Models\Property;
+use App\Notifications\InquiryReceivedNotification;
+use App\Notifications\ReplyToInquiry;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 
@@ -17,6 +20,8 @@ class InquiriesTest extends TestCase
     public function setUp() :void
     {
         parent::setUp();
+        Notification::fake();
+        Queue::fake();
 
         $this->inquiry = [
             'name' => 'Janez',
@@ -37,8 +42,6 @@ class InquiriesTest extends TestCase
      */
     public function test_guest_may_post_inquiry(): void
     {
-        Queue::fake();
-
         $property = Property::factory()->create();
 
         $inquiry = $this->inquiry;
@@ -47,12 +50,15 @@ class InquiriesTest extends TestCase
         $response->assertStatus(302);
         $response->assertSessionHas(["status" => "inquiry-created"]);
         $this->assertCount(1, Inquiry::all());
+        Notification::assertSentTo(
+            [$this->admin], InquiryReceivedNotification::class
+        );
 
     }
 
     public function test_user_may_post_inquiry(): void
     {
-        Queue::fake();
+
         $property = Property::factory()->create();
 
         $inquiry = $this->inquiry;
@@ -63,11 +69,14 @@ class InquiriesTest extends TestCase
         //$response->ddSession();
         $response->assertSessionHas(["status" => "inquiry-created"]);
         $response->assertSessionHas(["flash" => ["banner" => "Inquiry has been submited."]]);
+        Notification::assertSentTo(
+            [$this->admin], InquiryReceivedNotification::class
+        );
     }
 
     public function test_admin_may_post_inquiry(): void
     {
-        Queue::fake();
+
         $property = Property::factory()->create();
 
         $inquiry = $this->inquiry;
@@ -78,6 +87,9 @@ class InquiriesTest extends TestCase
         //$response->ddSession();
         $response->assertSessionHas(["status" => "inquiry-created"]);
         $response->assertSessionHas(["flash" => ["banner" => "Inquiry has been submited."]]);
+        Notification::assertNothingSentTo(
+            [$this->admin]
+        );
     }
 
     public function test_admin_may_update_any_inquiry(): void
@@ -147,5 +159,43 @@ class InquiriesTest extends TestCase
         $response = $this->post(route('inquiry.create', $property), $inquiry);
         $response->assertStatus(302)->assertSessionHasErrors(['date.1', 'date.0']);
 
+    }
+
+    public function test_admin_may_reply_to_given_guest_inquiry() :void
+    {
+        $this->withExceptionHandling();
+        $inquiry = Inquiry::factory()->create(['user_id' => null]);
+
+        $reply = [
+            'name' => $inquiry->name,
+            'email' => $inquiry->email,
+            'subject' => 'Reply to inquiry',
+            'text' => 'Reply text pa še mal da bo 10'
+        ];
+
+        $response = $this->actingAs($this->admin)->post(route('admin.inquiries.reply', $inquiry), $reply)
+            ->assertStatus(302)
+            ->assertSessionHas(['status' => 'inquiry-replied']);
+        $this->assertNotNull($inquiry->fresh()->read_at);
+        Notification::assertSentOnDemand(ReplyToInquiry::class);
+    }
+
+    public function test_admin_may_reply_to_given_user_inquiry() :void
+    {
+        $this->withExceptionHandling();
+        $inquiry = Inquiry::factory()->create(['user_id' => $this->user->id]);
+
+        $reply = [
+            'name' => $inquiry->name,
+            'email' => $inquiry->email,
+            'subject' => 'Reply to inquiry',
+            'text' => 'Reply text pa še mal da bo 10'
+        ];
+
+        $response = $this->actingAs($this->admin)->post(route('admin.inquiries.reply', $inquiry), $reply)
+            ->assertStatus(302)
+            ->assertSessionHas(['status' => 'inquiry-replied']);
+        $this->assertNotNull($inquiry->fresh()->read_at);
+        Notification::assertSentTo([$this->user],ReplyToInquiry::class);
     }
 }

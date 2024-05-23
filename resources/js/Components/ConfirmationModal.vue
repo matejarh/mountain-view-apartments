@@ -52,7 +52,7 @@ const close = () => {
     <Modal :show="show" :max-width="maxWidth" :closeable="closeable" @close="close">
 
         <!-- Modal content -->
-        <div class="relative p-4 text-center bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
+        <div class="relative p-4 text-center bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5 select-none">
             <CloseModalButton @close="close" />
             <slot name="icon" />
             <slot name="content" />

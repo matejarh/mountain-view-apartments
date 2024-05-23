@@ -83,8 +83,12 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
 
     Route::group(['prefix' => '{lang}', 'middleware' => 'web'], function () {
 
-        Route::name('reviews.')->prefix('reviews')->namespace('reviews')->group(function () {
+        Route::name('reviews.')->prefix('my-    reviews')->namespace('reviews')->group(function () {
             Route::get('/for/{property}/create', [ReviewsController::class, 'create'])->name('create');
+
+        });
+        Route::name('inquiries.')->prefix('my-inquiries')->namespace('inquiries')->group(function () {
+            Route::get('/', [InquiriesController::class, 'index'])->name('index');
 
         });
 

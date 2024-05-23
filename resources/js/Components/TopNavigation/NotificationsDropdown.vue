@@ -4,17 +4,8 @@ import EyeIcon from '@/Icons/EyeIcon.vue';
 import MessageIcon from '@/Icons/MessageIcon.vue';
 import NavDropdown from './NavDropdown.vue';
 import { useForm, usePage } from '@inertiajs/vue3';
-import { formatDistanceToNow } from 'date-fns';
-import { fr, enUS, de, sl, it, hu, cs } from 'date-fns/locale';
 import formatNumber from '@/mixins/numberToKilo';
-
-const locales = { en: enUS, fr: fr, de: de, sl: sl, it: it, hu: hu, cs: cs };
-
-const getFormattedDate = (date, localeKey) => {
-    const locale = locales[localeKey];
-    return formatDistanceToNow(date, { addSuffix: true, locale: locale });
-}
-
+import { getFormattedDate } from '@/utils/date';
 
 const show = ref(false)
 

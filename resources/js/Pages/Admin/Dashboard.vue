@@ -5,7 +5,9 @@ import OrderingList from '@/Components/OrderingList.vue';
 import Welcome from '@/Components/Welcome.vue';
 import FullLayout from '@/Layouts/FullLayout.vue';
 import { ref } from 'vue';
+import { useTranslationsStore } from '@/stores/translations';
 
+const store = useTranslationsStore()
 const content = ref('<p>A Vue.js wrapper component for tiptap to use <code>v-model</code>.</p>')
 </script>
 
@@ -25,5 +27,15 @@ const content = ref('<p>A Vue.js wrapper component for tiptap to use <code>v-mod
         </div>
 
         <OrderingList />
+
+        <div class="spacer h-48 w-full"></div>
+            <section>
+                <div class="max-w-screen-lg">
+                    <code>
+                        {{ store.missingKeys }}
+                    </code>
+                </div>
+            </section>
+            <div class="spacer h-48 w-full"></div>
     </FullLayout>
 </template>

@@ -104,6 +104,7 @@ Route::group(['middleware' => config('jetstream.middleware')], function () {
             Route::put('{inquiry}', [InquiriesController::class, 'update'])->name('update');
             Route::delete('{inquiry}', [InquiriesController::class, 'destroy'])->name('destroy');
             Route::post('/store/{property}', [InquiriesController::class, 'store'])->name('store');
+            Route::post('/reply/to/{inquiry}', [InquiriesController::class, 'reply'])->name('reply');
         });
 
         Route::name('reviews.')->prefix('reviews')->namespace('reviews')->group(function() {

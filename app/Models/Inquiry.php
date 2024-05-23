@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
+use App\Filters\InquiryFilters;
 use App\Traits\HasUUidAsPrimary;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Predis\Command\Argument\Search\SugAddArguments;
 
 class Inquiry extends Model
 {
@@ -21,5 +22,21 @@ class Inquiry extends Model
     public function property( ) :BelongsTo
     {
         return $this->belongsTo(Property::class);
+    }
+
+    public function owner( ) :BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+        /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param \App\Filters\InquiryFilters $filters
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeFilter(Builder $query, InquiryFilters $filters): Builder
+    {
+        return $filters->apply($query);
+
     }
 }

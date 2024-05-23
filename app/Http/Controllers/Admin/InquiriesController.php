@@ -6,7 +6,9 @@ use App\Contracts\CreatesNewInquiries;
 use App\Contracts\DeletesInquiries;
 use App\Contracts\InquiryCreateResponse;
 use App\Contracts\InquiryDeleteResponse;
+use App\Contracts\InquiryReplyResponse;
 use App\Contracts\InquiryUpdateResponse;
+use App\Contracts\RepliesToInquiries;
 use App\Contracts\UpdatesInquiries;
 use App\Filters\InquiryFilters;
 use App\Http\Controllers\Controller;
@@ -32,8 +34,46 @@ class InquiriesController extends Controller
     {
         Gate::authorize('viewAny', Inquiry::class);
 
+
+        $inquiries = Inquiry::with('property')->latest()
+            ->filter($filters)->get()
+            ->map(function ($inquiry) {
+                return [
+                    'id' => $inquiry->id,
+                    'user' => $inquiry->owner ? [
+                        'name' => $inquiry->owner ? $inquiry->owner->name : null,
+                        'email' => $inquiry->owner ? $inquiry->owner->email : null,
+                        'profile_photo_url' => $inquiry->owner ? $inquiry->owner->profile_photo_url : null,
+                    ] : null,
+                    'name' => $inquiry->name,
+                    'email' => $inquiry->email,
+                    'avatar_url' => $this->defaultUserPhotoUrl($inquiry->name . " " . $inquiry->phone . " " . $inquiry->address),
+                    'phone' => $inquiry->phone,
+                    'property' => [
+                        'name' => $inquiry->property->name,
+                        'title' => $inquiry->property->title,
+                        'description' => $inquiry->property->description,
+                        'avatar_url' => $inquiry->property->avatar_url,
+                    ],
+                    'adults' => $inquiry->adults,
+                    'children' => $inquiry->children,
+                    'pets' => $inquiry->pets,
+                    'subject' => $inquiry->subject,
+                    'message' => $inquiry->message,
+                    'date' => $inquiry->date,
+                    'created_at' => $inquiry->created_at,
+                    'updated_at' => $inquiry->updated_at,
+                    'read_at' => $inquiry->read_at,
+                ];
+            })
+
+            ->sortByDesc('updated_at') // Order by latest
+            ->paginate(24, null,null, __('page')) // Paginate with 24 items per page
+            ->onEachSide(2) // Show pagination links on each side
+            ->withQueryString(); // Maintain query string in pagination links
+
         return Inertia::render('Admin/Inquiries/Index', [
-            'inquiries' => Inquiry::filter($filters)->latest()->paginate(24, ['*'], __('page'))->onEachSide(2)->withQueryString(),
+            'inquiries' => $inquiries,
             'filters' => $request->only(['search']),
             'can' => [
                 'view_inquiries' => auth()->user()->can('viewAny', Inquiry::class),
@@ -42,6 +82,10 @@ class InquiriesController extends Controller
         ]);
     }
 
+    protected function defaultUserPhotoUrl(string $name): string
+    {
+        return "https://api.dicebear.com/8.x/identicon/svg?seed=" . urlencode($name); // icons | pixel-art | ident ...  check https://www.dicebear.com/styles/
+    }
     /**
      * Renders and returns given inquiry page
      *
@@ -71,7 +115,7 @@ class InquiriesController extends Controller
      * @return \App\Contracts\InquiryCreateResponse
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function store(Request $request,Property $property, CreatesNewInquiries $creator): InquiryCreateResponse
+    public function store(Request $request, Property $property, CreatesNewInquiries $creator): InquiryCreateResponse
     {
         Gate::authorize('create', Inquiry::class);
 
@@ -114,5 +158,23 @@ class InquiriesController extends Controller
         $destroyer->destroy($inquiry);
 
         return app(InquiryDeleteResponse::class);
+    }
+
+    /**
+     * Replies to given inquiry.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Inquiry  $inquiry
+     * @param  \App\Contracts\RepliesToInquiries  $updater
+     * @return \App\Contracts\InquiryDeleteResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function reply(Request $request, Inquiry $inquiry, RepliesToInquiries $replier): InquiryReplyResponse
+    {
+        Gate::authorize('update', $inquiry);
+
+        $replier->reply($inquiry, $request->all());
+
+        return app(InquiryReplyResponse::class);
     }
 }

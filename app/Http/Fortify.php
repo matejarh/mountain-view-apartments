@@ -32,6 +32,7 @@ use App\Contracts\LikesProperties;
 use App\Contracts\ReadsAllNotifications;
 use App\Contracts\ReadsNotifications;
 use App\Contracts\RejectsReviews;
+use App\Contracts\RepliesToInquiries;
 use App\Contracts\ReviewsProperties;
 use App\Contracts\StoresGuestInquiry;
 use App\Contracts\UpdatesFacilities;
@@ -406,6 +407,17 @@ class Fortify
     public static function destroyInquiriesUsing(string $callback)
     {
         app()->singleton(DeletesInquiries::class, $callback);
+    }
+
+    /**
+     * Register a class / callback that should be used to reply to given inquiry.
+     *
+     * @param  string  $callback
+     * @return void
+     */
+    public static function replyToInquiriesUsing(string $callback)
+    {
+        app()->singleton(RepliesToInquiries::class, $callback);
     }
 
     /**

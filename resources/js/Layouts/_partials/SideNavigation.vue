@@ -31,10 +31,11 @@ const navItems = computed(() => [
         condition: page.props?.auth.user.is_admin,
         icon: icons.MountainCityIcon,
         title: 'Accommodations',
-        active: ['/admin/properties', '/admin/reviews', '/admin/reservations'],
+        active: ['/admin/properties', '/admin/reviews', '/admin/reservations', '/admin/inquiries'],
         children: [
             { href: '/admin/properties', title: 'List' },
             { href: '/admin/reviews', title: 'Reviews' },
+            { href: '/admin/inquiries', title: 'Inquiries' },
             { href: '/admin/reservations', title: 'Reservations' },
         ],
     },

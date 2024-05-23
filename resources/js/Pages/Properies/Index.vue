@@ -7,6 +7,8 @@ import { usePage } from '@inertiajs/vue3';
 import PillItem from '@/Components/_default/Properties/PillItem.vue';
 import AccordianComponent from '@/Components/_default/AccordianComponent.vue';
 import FaqSection from './_partials/FaqSection.vue';
+import ShapedSection from '@/Components/_default/ShapedSection.vue';
+import Heading2White from '@/Components/_default/Heading2White.vue';
 
 const filter = ref('.')
 
@@ -30,7 +32,23 @@ const navItems = ref([
         :keywords="$page.props?.seo?.keywords" :noindex="false">
 
         <div class="space-y-0">
-            <div class="spacer hidden xl:block h-[10svh] w-full"></div>
+            <ShapedSection :color="{ dark: 'primary-900', light: 'primary-700' }">
+                <!-- <div class="h-96 w-full"></div> -->
+                <div class="pt-8 xl:pt-48 mx-auto max-w-screen-md px-4">
+
+                    <Heading2White class="text-center" v-if="page.props?.properties.data.length > 0">
+                        {{ __('Our Apartments')  }}
+
+                    </Heading2White>
+
+                    <p class="mb-4 text-2xl text-center font-extrabold tracking-tight leading-none text-white md:text-3xl lg:text-2xl" v-else>
+                        {{ __('No apartments yet') }}
+                    </p>
+                    <!-- <ReviewCard v-for="review in $page.props?.reviews.data" :key="review.id" :review="review">
+                    </ReviewCard> -->
+                </div>
+
+            </ShapedSection>
             <Wrapper>
                 <ul
                     class="flex flex-wrap text-sm font-medium text-center bg-gray-50 dark:bg-gray-900 rounded-lg p-2  text-gray-500 dark:text-gray-400 mb-4">

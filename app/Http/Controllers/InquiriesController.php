@@ -8,9 +8,23 @@ use App\Models\Inquiry;
 use App\Models\Property;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class InquiriesController extends Controller
 {
+    public function index(Request $request) :Response
+    {
+        return Inertia::render('MyInquiries/Index', [
+            'inquiries' => auth()->user()->inquiries->paginate(20, null,null, __('page'))->onEachSide(2)->withQueryString(),
+            'seo' => [
+                'title' => __('My Inquiries'),
+                'description' => '',
+                'keywords' => ''
+            ]
+        ]);
+    }
+
     public function create(Request $request, Property $property, StoresGuestInquiry $storer ) :GuestInquiryStoreResponse
     {
 

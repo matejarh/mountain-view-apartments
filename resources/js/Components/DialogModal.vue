@@ -49,7 +49,7 @@ const close = () => {
         </div>
 
         <div class="p-4 md:p-5">
-            <div class="mb-4 overflow-y-auto">
+            <div class="mb-4 overflow-y-visible">
                 <slot name="content" />
 
             </div>
