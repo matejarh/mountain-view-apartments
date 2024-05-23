@@ -1,11 +1,57 @@
 <script setup>
-import Tooltip from '@/Components/Tooltip.vue';
-import DesktopIcon from '@/Icons/DesktopIcon.vue';
-import MobileIcon from '@/Icons/MobileIcon.vue';
-import TabletIcon from '@/Icons/TabletIcon.vue';
+import { usePage } from '@inertiajs/vue3'
+import { convertToPascalCase } from '@/utils/strings'
+import CreatedLogout from '@/Components/Activities/CreatedLogout.vue';
+import UpdatedUser from '@/Components/Activities/UpdatedUser.vue';
+import UpdatedProperty from '@/Components/Activities/UpdatedProperty.vue';
+import UpdatedImage from '@/Components/Activities/UpdatedImage.vue';
+import UpdatedGallery from '@/Components/Activities/UpdatedGallery.vue';
+import CreatedGallery from '@/Components/Activities/CreatedGallery.vue';
+import CreatedImage from '@/Components/Activities/CreatedImage.vue';
+import UpdatedPage from '@/Components/Activities/UpdatedPage.vue';
+import CreatedLike from '@/Components/Activities/CreatedLike.vue';
+import CreatedReview from '@/Components/Activities/CreatedReview.vue';
+import UpdatedReview from '@/Components/Activities/UpdatedReview.vue';
+import DeletedReview from '@/Components/Activities/DeletedReview.vue';
+import CreatedLogin from '@/Components/Activities/CreatedLogin.vue';
+import { onMounted } from 'vue';
+
 
 defineProps({
     item: Object
+})
+
+const page = usePage()
+
+const componentMap = {
+    created_login: CreatedLogin,
+    created_review: CreatedReview,
+    updated_user: UpdatedUser,
+    created_logout: CreatedLogout,
+    created_like: CreatedLike,
+    updated_property: UpdatedProperty,
+    updated_page: UpdatedPage,
+    created_gallery: CreatedGallery,
+    updated_gallery: UpdatedGallery,
+    created_image: CreatedImage,
+    updated_image: UpdatedImage,
+    updated_review: UpdatedReview,
+    deleted_review: DeletedReview,
+};
+
+
+const createComponentMap = () => {
+    page.props.types.forEach(type => {
+        componentMap[type] = convertToPascalCase(type)
+    });
+}
+
+const getComponentType = (type) => {
+    return componentMap[type] || null;
+};
+
+onMounted(() => {
+    //createComponentMap()
 })
 </script>
 
@@ -16,46 +62,14 @@ defineProps({
             <img class="rounded-full shadow-lg" :src="item?.owner.profile_photo_url"
                 :alt="`${item?.owner.name}s avatar`" />
         </span>
-        <div
-            class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-700 dark:border-gray-600">
-            <div class="items-center justify-between mb-3 sm:flex">
-                <time class="mb-1 text-xs font-normal text-gray-400 sm:order-last sm:mb-0">{{
-                    item?.created_at_diff_for_humans }} from {{ item?.location.cityName }}, {{ item?.location.countryName }}</time>
-
+        <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-700 dark:border-gray-600">
+            <div class="items-center justify-between mb-0 sm:flex">
+                <time class="mb-1 text-xs font-normal text-gray-400 sm:order-last sm:mb-0">
+                    {{ item?.created_at_diff_for_humans }} from {{ item?.location.cityName }}, {{
+                        item?.location.countryName }}
+                </time>
                 <div class="text-sm font-normal text-gray-500 lex dark:text-gray-300">
-                    {{ item?.owner.name }}
-                    {{ __(item?.type) }}
-                    <a href="#" class="font-semibold text-gray-900 dark:text-white hover:underline">
-                        {{ item?.subject?.name }}
-                        <span v-if="item?.type === 'created_like'">{{ item?.subject?.liked_trimed[0].title[$page.props?.locale] }}</span>
-                        <span v-if="item?.type === 'created_review'">{{ item?.subject?.reviewed_trimed[0].title[$page.props?.locale] }}</span></a>
-                </div>
-            </div>
-            <div
-                class="p-3 text-xs italic font-normal text-gray-500 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-600 dark:border-gray-500 dark:text-gray-300">
-                <div class="flex items-center  whitespace-nowrap ">
-                    <Tooltip text="Desktop" v-if="item?.agent.is_desktop">
-                        <DesktopIcon class="w-8 h-8 z-0" />
-                    </Tooltip>
-                    <Tooltip text="Mobile" v-else-if="item?.agent.is_mobile">
-                        <MobileIcon class="w-8 h-8 z-0" />
-                    </Tooltip>
-                    <Tooltip text="Tablet" v-else-if="item?.agent.is_tablet">
-                        <TabletIcon class="w-8 h-8 z-0" />
-                    </Tooltip>
-                    <Tooltip text="Unknown" v-else>
-                        <DesktopIcon class="w-8 h-8 z-0" />
-                    </Tooltip>
-                    <div class="ps-3 leading-tight">
-                        <p class="text-base">
-
-                            {{ item?.agent.browser }}
-                        </p>
-                        <p class="font-normal text-gray-500 dark:text-gray-300">
-                            {{ item?.agent.platform }}
-                        </p>
-
-                    </div>
+                    <component :is="getComponentType(item?.type)" :item="item" />
                 </div>
             </div>
         </div>

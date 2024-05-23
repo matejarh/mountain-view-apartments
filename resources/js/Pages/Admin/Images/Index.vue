@@ -17,7 +17,6 @@ const showFullScreenImageModal = ref(false)
 const showingImage = ref(null)
 
 const handleClicked = (image) => {
-    console.log(image)
     showingImage.value = image
 }
 </script>

@@ -7,6 +7,7 @@ import ActivityTableHeader from './ActivityTableHeader.vue';
 import ActivityTableRow from './ActivityTableRow.vue';
 import FiltersSection from '@/Components/FiltersSection.vue';
 import ActivityList from './ActivityList.vue';
+import Paginator from '@/Components/Paginator.vue';
 
 
 </script>
@@ -24,6 +25,7 @@ import ActivityList from './ActivityList.vue';
 
             <template #content>
                 <ActivityList />
+                <Paginator :paginator="$page.props.activities" />
             </template>
         </ActionSection>
     </FullLayout>

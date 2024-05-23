@@ -46,6 +46,7 @@ class Review extends Model
         return $this->reviewed()->get()->map(function ($reviewed) {
             return [
                 'name' => $reviewed->name ?: '',
+                'slug' => $reviewed->slug ?: '',
                 'title' => $reviewed->title ?: '',
                 'avatar_url' => $reviewed->avatar_url ?: '',
             ];

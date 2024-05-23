@@ -25,6 +25,7 @@ class ActivitiesLogController extends Controller
 
         return Inertia::render('Admin/Activity/Index', [
             'activities' => Activity::adminFeed($request, $filters),
+            'types' => Activity::get()->groupBy('type')->keys(),
             'filters' => $request->only(['search', 'sortBy', 'sortDirection']),
 
         ]);

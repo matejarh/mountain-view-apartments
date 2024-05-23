@@ -31,6 +31,7 @@ class Like extends Model
         return $this->liked()->get()->map(function($liked) {
             return [
                 'name' => $liked->name ?: '',
+                'slug' => $liked->slug ?: '',
                 'title' => $liked->title ?: '',
             ];
         });
