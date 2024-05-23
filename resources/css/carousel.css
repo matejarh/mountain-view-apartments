@@ -96,8 +96,8 @@
     transform: translateY(-50%);
 }
 
-.dark .carousel__prev,
-.dark .carousel__next {
+html.dark .carousel__prev,
+html.dark .carousel__next {
     color: var(--vc-nav-color);
 }
 
@@ -132,8 +132,8 @@
         color: var(--vc-nav-color-hover);
     }
 
-    .dark .carousel__prev:hover,
-    .dark .carousel__next:hover {
+    html.dark .carousel__prev:hover,
+    html.dark .carousel__next:hover {
         color: var(--vc-nav-color-hover);
     }
 }

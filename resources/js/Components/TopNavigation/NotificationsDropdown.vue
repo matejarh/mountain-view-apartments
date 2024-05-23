@@ -83,9 +83,9 @@ const readAll = () => {
                     </div>
                     <div class="pl-3 w-full">
                         <div class="text-gray-500 font-normal text-sm mb-1.5 dark:text-gray-400">
-                            <span class="font-semibold text-gray-900 dark:text-white">{{ notification.data.title
+                            <span class="font-semibold text-gray-900 dark:text-white">{{ __(notification.data.title)
                                 }}:</span><br>
-                            "{{ notification.data.message }}"
+                            "{{ __(notification.data.message) }}"
                         </div>
                         <div class="text-xs font-medium text-primary-600 dark:text-primary-500">
                             {{ getFormattedDate(notification.created_at, $page.props.locale) }}

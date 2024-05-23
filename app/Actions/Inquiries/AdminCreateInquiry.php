@@ -6,7 +6,6 @@ use App\Contracts\StoresGuestInquiry;
 use App\Models\Inquiry;
 use App\Models\Property;
 use App\Models\User;
-use App\Notifications\InquiryReceivedNotification;
 use App\Rules\AllowedBookingRange;
 use App\Rules\SpamFree;
 use Illuminate\Support\Facades\Notification;

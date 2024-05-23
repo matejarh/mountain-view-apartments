@@ -3,7 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Notification;
-use App\Notifications\InquiryReceivedNotification;
+use App\Notifications\Admin\InquiryReceivedNotification;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;

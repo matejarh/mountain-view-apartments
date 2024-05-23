@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Notifications;
+namespace App\Notifications\Admin;
 
 use App\Models\Inquiry;
 use Illuminate\Bus\Queueable;
@@ -38,11 +38,12 @@ class InquiryReceivedNotification extends Notification implements ShouldQueue
     {
         return (new MailMessage)
                     ->theme('mountain')
-                    ->subject('New inquiry received')
-                    ->line('New inquiry from ' . $this->inquiry->name . '')
+                    ->subject(__('New inquiry received'))
+                    ->markdown('mail.admin.inquiry.received', ['inquiry' => $this->inquiry, 'lang' => app()->currentLocale()])
+/*                     ->line('New inquiry from ' . $this->inquiry->name . '')
                     ->line('for ' . $this->inquiry->property->name . ' received.')
                     ->action('Show', route('admin.inquiries.show', $this->inquiry))
-                    ->line('Thank you for using '.config('app.name').'!');
+                    ->line('Thank you for using '.config('app.name').'!') */;
     }
 
     /**

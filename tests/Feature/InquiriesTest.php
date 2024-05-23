@@ -4,7 +4,8 @@ namespace Tests\Feature;
 
 use App\Models\Inquiry;
 use App\Models\Property;
-use App\Notifications\InquiryReceivedNotification;
+
+use App\Notifications\Admin\InquiryReceivedNotification;
 use App\Notifications\ReplyToInquiry;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;

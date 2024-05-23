@@ -739,7 +739,6 @@
     "Your name": "Your name",
     "Your password has been changed.": "Your password has been changed.",
     "Youtube Play Button Icon": "Youtube Play Button Icon",
-
     "Read more": "Read more",
     "You have already reviewed": "You have already reviewed",
     "This will permanently delete review from database.": "This will permanently delete review from database.",
@@ -774,5 +773,22 @@
     "Review Content": "Review Content",
     "Approve": "Approve",
     "Reject": "Reject",
-    "Yes Delete review": "Yes Delete review"
+    "Yes Delete review": "Yes Delete review",
+    "Replied At": "Replied At",
+    "Inquiry Message": "Inquiry Message",
+    "Pet": "Pet",
+    "Show": "Show",
+    "Reply": "Reply",
+    "Showing Iquiry From ": "Showing Iquiry From ",
+    "is interested in renting": "is interested in renting",
+    "from": "from",
+    "and a pet or pets": "and a pet or pets",
+    "Reply to inquiry": "Reply to inquiry",
+    "To": "To",
+    "Reply Message": "Reply Message",
+    "New inquiry from": "New inquiry from",
+    "received": "received",
+    "Thank you for using": "Thank you for using",
+    "Arrival Date": "Arrival Date",
+    "Departure Date": "Departure Date"
 }
