@@ -81,7 +81,15 @@ trait Reviewable
         $review = $this->reviews()->find($id);
 
         if ($review->approved_at) {
-            $this->decrement('reviews_count');
+            try {
+                //code...
+                // $this->reviewed()->decrement('reviews_count');
+                $this->decrement('reviews_count');
+            } catch (\Illuminate\Database\QueryException $th) {
+                //session()->flash('flash.banner', $th->getMessage());
+                //session()->flash('flash.bannerStyle', 'danger');
+                //throw $th;
+            }
         }
 
         $review->delete();

@@ -65,7 +65,15 @@ trait Likable
         // Delete the like record associated with the current user
         $attributes = ['user_id' => auth()->id()];
         if ($this->likes()->where($attributes)->forceDelete()) {
-            $this->decrement('likes_count');
+            try {
+                //code...
+                // $this->reviewed()->decrement('reviews_count');
+                $this->decrement('likes_count');
+            } catch (\Illuminate\Database\QueryException $th) {
+                //session()->flash('flash.banner', $th->getMessage());
+                //session()->flash('flash.bannerStyle', 'danger');
+                //throw $th;
+            }
             session()->flash('flash.banner', __('You don\'t like '.$this->title->$locale.'.'));
             session()->flash('flash.bannerStyle', 'danger');
         }

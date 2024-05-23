@@ -15,7 +15,15 @@ class DeleteReview implements DeletesReviews
     public function destroy(Review $review): void
     {
         if ($review->approved_at) {
-            $review->reviewed()->decrement('reviews_count');
+            try {
+                //code...
+                $review->reviewed()->decrement('reviews_count');
+            } catch (\Illuminate\Database\QueryException $th) {
+                session()->flash('flash.banner', $th->getMessage());
+                session()->flash('flash.bannerStyle', 'danger');
+                //throw $th;
+            }
+
         }
         $review->delete();
 
