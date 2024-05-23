@@ -26,12 +26,12 @@ const handleAttach = (gallery) => {
 </script>
 
 <template>
-    <DialogModal max-width="screen" :show="show" @close="$emit('close')">
+    <DialogModal max-width="6xl" :show="show" @close="$emit('close')">
         <template #title>{{ __('Manage Galleries') }}</template>
 
         <template #content>
             <TransitionGroup name="list" tag="ul"
-                class=" relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 4xl:grid-cols-6 gap-4 md:gap-4 lg:gap-6 2xl:gap-8">
+                class=" relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3 4xl:grid-cols-6 gap-4 md:gap-4 lg:gap-6 2xl:gap-8">
 
                 <GalleryCard v-for="gallery in $page.props?.galleries_not_in_page" :gallery="gallery"
                     :key="gallery.id" @attach="handleAttach" />
