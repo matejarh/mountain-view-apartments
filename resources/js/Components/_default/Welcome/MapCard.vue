@@ -1,5 +1,6 @@
 <script setup>
 import "leaflet/dist/leaflet.css";
+import "/resources/css/map.css"
 import { LMap, LTileLayer, LMarker, LPopup, LControl, LIcon } from "@vue-leaflet/vue-leaflet";
 import { ref, computed, watchEffect } from 'vue';
 import { useClientStore } from "@/stores/client";
@@ -148,41 +149,3 @@ const showBled = () => {
     </div>
 </template>
 
-<style>
-.leaflet-control-attribution {
-    display: none;
-}
-
-html.dark .leaflet-popup-content-wrapper {
-    background-color: rgb(79 79 79);
-    color: #ffffff
-}
-
-html.dark .leaflet-popup-tip {
-    background-color: rgb(79 79 79);
-}
-
-.leaflet-top {
-    top: 24px;
-}
-
-.leaflet-demo-control {
-    background: white;
-    border: 1px solid steelblue;
-    border-radius: 0.6em;
-    padding: 1em;
-    font-size: large;
-    font-style: italic;
-}
-
-html.dark .leaflet-control-zoom-in,
-html.dark .leaflet-control-zoom-out {
-    background-color: rgb(79 79 79);
-    color: #ffffff
-}
-
-html.dark .leaflet-layer,
-html.dark .leaflet-control-attribution {
-  filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
-}
-</style>
