@@ -77,7 +77,14 @@ class Review extends Model
     public function reject(): void
     {
         $this->approved_at = null;
-        $this->reviewed()->decrement('reviews_count');
+        try {
+            //code...
+            $this->reviewed()->decrement('reviews_count');
+        } catch (\Illuminate\Database\QueryException $th) {
+            session()->flash('flash.banner', $th->getMessage());
+            session()->flash('flash.bannerStyle', 'danger');
+            //throw $th;
+        }
         $this->save();
     }
 
