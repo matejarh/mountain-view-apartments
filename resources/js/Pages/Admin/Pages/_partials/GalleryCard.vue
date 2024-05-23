@@ -1,6 +1,7 @@
 <script setup>
 import Carousel from '@/Components/Carousel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
+import ActiveCarousel from '@/Components/_default/ActiveCarousel.vue';
 import ImageIcon from '@/Icons/ImageIcon.vue';
 import { usePage } from '@inertiajs/vue3'
 import { ref } from 'vue';
@@ -30,8 +31,9 @@ const carouselHeight = 'h-56'
             class="max-w-sm bg-white border border-gray-200 overflow-hidden rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700  transition duration-150 ease-out">
             <div class="flex flex-col justify-between pb-4 h-full space-y-4">
 
-                <Carousel v-if="gallery.images.length > 0" :items="gallery.images" rounded="rounded-t-lg" class="shadow-lg"
-                    :height="carouselHeight" />
+                <ActiveCarousel v-if="gallery.images.length > 0" :items="gallery.images" />
+                <!-- <Carousel v-if="gallery.images.length > 0" :items="gallery.images" rounded="rounded-t-lg" class="shadow-lg"
+                    :height="carouselHeight" /> -->
                 <div class="w-full flex items-center justify-center shadow-lg" :class="carouselHeight" v-else>
 
                     <ImageIcon class="w-56 h-56 text-gray-300 dark:text-gray-400" />
@@ -43,7 +45,7 @@ const carouselHeight = 'h-56'
                     <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ gallery.name }}
                     </h5>
 
-                    <p
+                    <p v-if="gallery.description !== ''"
                         class="mb-3 font-normal text-gray-700 dark:text-gray-400 bg-gray-50 dark:bg-gray-700 leading-tight whitespace-pre-wrap p-2 rounded-lg h-14 overflow-y-auto scrollbar-none ">
                         {{ gallery.description }}</p>
                 </div>
