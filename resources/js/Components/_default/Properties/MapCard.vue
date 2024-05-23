@@ -156,4 +156,15 @@ html.dark .leaflet-popup-tip {
     font-size: large;
     font-style: italic;
 }
+
+html.dark .leaflet-control-zoom-in,
+html.dark .leaflet-control-zoom-out {
+    background-color: rgb(79 79 79);
+    color: #ffffff
+}
+
+html.dark .leaflet-layer,
+html.dark .leaflet-control-attribution {
+  filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
+}
 </style>
