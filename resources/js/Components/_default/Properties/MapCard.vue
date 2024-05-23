@@ -2,12 +2,11 @@
 import "leaflet/dist/leaflet.css";
 import { LMap, LTileLayer, LMarker, LPopup, LControl, LIcon } from "@vue-leaflet/vue-leaflet";
 import { ref, computed, watchEffect } from 'vue';
-import MapLocationIcon from "@/Icons/MapLocationIcon.vue";
-import Tooltip from "../Tooltip.vue";
+import Tooltip from "@/Components/_default/Tooltip.vue";
 import { useClientStore } from "@/stores/client";
 import { usePage } from "@inertiajs/vue3";
 import { useHelperStore } from "@/stores/helpers";
-import CompressIcon from "@/Icons/CompressIcon.vue";
+import { icons } from "@/icons";
 
 const props = defineProps({
     property: Object
@@ -38,6 +37,8 @@ watchEffect(() => {
     }
 })
 
+let originalBounds = []
+
 const propertiesCoordinates = () => {
     let bounds = []
 
@@ -46,7 +47,9 @@ const propertiesCoordinates = () => {
     if (clientCoordinates) {
         bounds.push([client.location.coords?.latitude, client.location.coords?.longitude])
     }
-
+    if (originalBounds.length <= 0) {
+        originalBounds = bounds
+    }
     return bounds
 }
 
@@ -56,7 +59,7 @@ const clientCoordinates = computed(() => {
 
 const resetBounds = () => {
     bounds.value = propertiesCoordinates()
-    helpers.delay(200).then(() => zoom.value -= 1)
+    helpers.delay(500).then(() => zoom.value -= 1)
 
 }
 
@@ -101,10 +104,12 @@ const resetBounds = () => {
             <l-control
                 class="leaflet-control top-5 bg-white dark:bg-gray-700 border-primary-600 rounded-lg p-[1em] text-lg flex"
                 position="topright">
-                <Tooltip :text="__('Reset map')">
-                    <CompressIcon class="w-6 h-6" />
-                    <!-- {{ __('Reset map') }} -->
-                </Tooltip>
+                <button @click="resetBounds">
+                    <Tooltip :text="__('Reset map')">
+                        <icons.CompressIcon class="w-6 h-6" />
+                        <!-- {{ __('Reset map') }} -->
+                    </Tooltip>
+                </button>
             </l-control>
             <l-control
                 class="leaflet-control bottom-10 bg-white dark:bg-gray-700 border-primary-600 rounded-lg p-[1em] text-lg"
@@ -112,7 +117,7 @@ const resetBounds = () => {
                 <a :href="property.google_maps_link" target="_blank" class="dark:text-gray-100">
                     <Tooltip :text="__('Get Travel Directions')" key="map_directions" placement="top">
                         <div class="flex items-center">
-                            <MapLocationIcon class="w-8 h-5" />
+                            <icons.MapLocationIcon class="w-8 h-5" />
                             {{ __('Get Travel Directions') }}
 
                         </div>

@@ -76,7 +76,7 @@ const clientCoordinates = computed(() => {
 
 const resetBounds = () => {
     bounds.value = propertiesCoordinates()
-    helpers.delay(200).then(() => zoom.value -= 1)
+    helpers.delay(500).then(() => zoom.value -= 1)
 }
 const showBled = () => {
     bounds.value = [[parseFloat(page.props?.properties.find(property => property.name === 'Apartment Two Angels')[0].coordinates.lat), parseFloat(page.props?.properties.find(property => property.name === 'Apartment Two Angels')[0].coordinates.lng)]]
