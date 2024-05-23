@@ -37,17 +37,17 @@ watchEffect(() => {
         <template #content>
             <div class="">
                 <p>
-                    <b>{{ item.name }}</b> is interested in renting <b>{{ item.property.title[$page.props.locale]
-                        }}</b><br> from {{ formatdDate(item.date[0]) }} to {{ formatdDate(item.date[1]) }}
+                    <b>{{ item.name }}</b> {{__('is interested in renting')}} <b>{{ item.property.title[$page.props.locale]
+                        }}</b><br> {{__('from')}} {{ formatdDate(item.date[0]) }} to {{ formatdDate(item.date[1]) }}
 
                 </p>
                 <p class="mt-0">
-                    for {{ item.adults }} {{ __('Adult', item.adults) }}
+                    {{__('for')}} {{ item.adults }} {{ __('Adult', item.adults) }}
                     <span v-if="item.children > 0">
                         , {{ item.children }} {{ __('Child', item.children) }}
                     </span>
                     <span v-if="item.pets">
-                        and a pet or pets
+                        {{__('and a pet or pets')}}
                     </span>
                 </p>
                 <p class="mt-4 font-semibold">{{ __('Subject') }}</p>
