@@ -57,13 +57,12 @@ const groupedByCoordinates = computed(() => {
 
 const propertiesCoordinates = () => {
     let bounds = []
-    /* page.props?.accomodations?.forEach(property => {
-        bounds.push([parseFloat(property.coordinates.lat), parseFloat(property.coordinates.lng)])
-    }); */
+
     Object.keys(groupedByCoordinates.value).forEach(coordinate => {
         const [lat, lng] = coordinate.split(',').map(parseFloat);
         bounds.push([lat, lng]);
     });
+
     if (client.location) {
         bounds.push(clientCoordinates)
     }

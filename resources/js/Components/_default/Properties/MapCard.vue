@@ -38,8 +38,6 @@ watchEffect(() => {
     }
 })
 
-let originalBounds = []
-
 const propertiesCoordinates = () => {
     let bounds = []
 
@@ -48,9 +46,7 @@ const propertiesCoordinates = () => {
     if (clientCoordinates) {
         bounds.push([client.location.coords?.latitude, client.location.coords?.longitude])
     }
-    if (originalBounds.length <= 0) {
-        originalBounds = bounds
-    }
+
     return bounds
 }
 
