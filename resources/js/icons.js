@@ -107,6 +107,17 @@ import WheelchairIcon from '@/Icons/WheelchairIcon.vue'
 import XIcon from '@/Icons/XIcon.vue'
 import YoutubePlayButtonIcon from '@/Icons/YoutubePlayButtonIcon.vue'
 
+import AlignCenterIcon from '@/Components/TipTapIcons/AlignCenterIcon.vue';
+import BoldIcon from '@/Components/TipTapIcons/BoldIcon.vue';
+import AlignLeftIcon from '@/Components/TipTapIcons/AlignLeftIcon.vue';
+import AlignRightIcon from '@/Components/TipTapIcons/AlignRightIcon.vue';
+import AlignJustifyIcon from '@/Components/TipTapIcons/AlignJustifyIcon.vue';
+import ParagraphIcon from '@/Components/TipTapIcons/ParagraphIcon.vue';
+import ItalicIcon from '@/Components/TipTapIcons/ItalicIcon.vue';
+import TextSlashIcon from '@/Components/TipTapIcons/TextSlashIcon.vue';
+import HighlightIcon from '@/Components/TipTapIcons/HighlightIcon.vue';
+import HeadingIcon from '@/Components/TipTapIcons/HeadingIcon.vue';
+
 export const icons = {
 
     AdjustmentsIcon,
@@ -216,4 +227,14 @@ export const icons = {
     WheelchairIcon,
     XIcon,
     YoutubePlayButtonIcon,
+    AlignCenterIcon,
+    BoldIcon,
+    AlignLeftIcon,
+    AlignRightIcon,
+    AlignJustifyIcon,
+    ParagraphIcon,
+    ItalicIcon,
+    TextSlashIcon,
+    HighlightIcon,
+    HeadingIcon,
 };
