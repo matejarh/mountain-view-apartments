@@ -40,6 +40,7 @@ class ReplyToInquiry extends Notification implements ShouldQueue
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
+            ->theme('mountain')
             ->subject($this->reply['subject'])
             ->line(strip_tags($this->reply['text']))
             ->action('Notification Action', url('/'))

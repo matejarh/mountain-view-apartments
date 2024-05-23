@@ -37,6 +37,7 @@ class InquiryReceivedNotification extends Notification implements ShouldQueue
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
+                    ->theme('mountain')
                     ->subject('New inquiry received')
                     ->line('New inquiry from ' . $this->inquiry->name . '')
                     ->line('for ' . $this->inquiry->property->name . ' received.')
