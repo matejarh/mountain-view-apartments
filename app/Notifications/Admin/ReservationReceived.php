@@ -2,21 +2,23 @@
 
 namespace App\Notifications\Admin;
 
+use App\Models\Reservation;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ReservationReceived extends Notification
+class ReservationReceived extends Notification implements ShouldQueue
 {
     use Queueable;
 
+    public $reservation;
     /**
      * Create a new notification instance.
      */
-    public function __construct()
+    public function __construct(Reservation $reservation)
     {
-        //
+        $this->reservation = $reservation;
     }
 
     /**
@@ -26,7 +28,7 @@ class ReservationReceived extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return ['mail', 'database'];
     }
 
     /**
@@ -34,7 +36,10 @@ class ReservationReceived extends Notification
      */
     public function toMail(object $notifiable): MailMessage
     {
-        return (new MailMessage)->markdown('mail.admin.reservation.received');
+        return (new MailMessage)
+            ->theme('mountain')
+            ->subject('New reservation for ' . $this->reservation->property->name)
+            ->markdown('mail.admin.reservation.received', ['reservation' => $this->reservation, 'lang' => app()->currentLocale()]);
     }
 
     /**
@@ -45,7 +50,10 @@ class ReservationReceived extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            //
+            'title' => 'New Reservation Received',
+            'message' => 'New reservation for ' . $this->reservation->property->name . ' received',
+            'link' => route('admin.reservations.show', $this->reservation),
+            'icon' => 'NewReservationIcon',
         ];
     }
 }

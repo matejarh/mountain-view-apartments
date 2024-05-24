@@ -42,6 +42,9 @@ use App\Actions\Properties\DetachGallery as DetachPropertyGallery;
 use App\Actions\Properties\LikeProperty;
 use App\Actions\Properties\ReviewProperty;
 use App\Actions\Properties\UpdateProperty;
+use App\Actions\Reservations\CreateReservation;
+use App\Actions\Reservations\DeleteReservation;
+use App\Actions\Reservations\UpdateReservation;
 use App\Actions\Reviews\ApprovesReview;
 use App\Actions\Reviews\CreateReview;
 use App\Actions\Reviews\DeleteReview;
@@ -81,6 +84,9 @@ use App\Contracts\PropertyCreateResponse as PropertyCreateResponseContract;
 use App\Contracts\PropertyLikeResponse as PropertyLikeResponseContract;
 use App\Contracts\PropertyReviewResponse as PropertyReviewResponseContract;
 use App\Contracts\PropertyUpdateResponse as PropertyUpdateResponseContract;
+use App\Contracts\ReservationCreateResponse as ReservationCreateResponseContract;
+use App\Contracts\ReservationDeleteResponse as ReservationDeleteResponseContract;
+use App\Contracts\ReservationUpdateResponse as ReservationUpdateResponseContract;
 use App\Contracts\ReviewApproveResponse as ReviewApproveResponseContract;
 use App\Contracts\ReviewCreateResponse as ReviewCreateResponseContract;
 use App\Contracts\ReviewDeleteResponse as ReviewDeleteResponseContract;
@@ -120,6 +126,9 @@ use App\Http\Responses\PropertyCreatedResponse;
 use App\Http\Responses\PropertyLikedResponse;
 use App\Http\Responses\PropertyReviewedResponse;
 use App\Http\Responses\PropertyUpdatedResponse;
+use App\Http\Responses\ReservationCreatedResponse;
+use App\Http\Responses\ReservationDeletedResponse;
+use App\Http\Responses\ReservationUpdatedResponse;
 use App\Http\Responses\ReviewApprovedResponse;
 use App\Http\Responses\ReviewCreatedResponse;
 use App\Http\Responses\ReviewDeletedResponse;
@@ -200,6 +209,10 @@ class FortifyServiceProvider extends ServiceProvider
         $this->app->singleton(NotificationReadAllResponseContract::class, NotificationReadedAllResponse::class);
         $this->app->singleton(NotificationDeleteResponseContract::class, NotificationDeletedResponse::class);
         $this->app->singleton(NotificationDeleteAllResponseContract::class, NotificationDeletedAllResponse::class);
+
+        $this->app->singleton(ReservationCreateResponseContract::class, ReservationCreatedResponse::class);
+        $this->app->singleton(ReservationUpdateResponseContract::class, ReservationUpdatedResponse::class);
+        $this->app->singleton(ReservationDeleteResponseContract::class, ReservationDeletedResponse::class);
     }
 
     /**
@@ -264,6 +277,10 @@ class FortifyServiceProvider extends ServiceProvider
         AppFortify::readAllNotificationsUsing(ReadAllNotifications::class);
         AppFortify::destroyNotificationsUsing(DeleteNotification::class);
         AppFortify::destroyAllNotificationsUsing(DeleteAllNotifications::class);
+
+        AppFortify::createReservationsUsing(CreateReservation::class);
+        AppFortify::updateReservationsUsing(UpdateReservation::class);
+        AppFortify::destroyReservationsUsing(DeleteReservation::class);
 
         RateLimiter::for('login', function (Request $request) {
             $throttleKey = str(str($request->input(Fortify::username()))->lower().'|'.$request->ip())->transliterate();

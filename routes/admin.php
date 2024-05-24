@@ -8,9 +8,14 @@ use App\Http\Controllers\Admin\InquiriesController;
 use App\Http\Controllers\Admin\NotificationsController;
 use App\Http\Controllers\Admin\PagesController;
 use App\Http\Controllers\Admin\PropertiesController;
+use App\Http\Controllers\Admin\ReservationsController;
 use App\Http\Controllers\Admin\ReviewsController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\UsersController;
+use App\Models\Inquiry;
+use App\Models\Property;
+use App\Models\User;
+use App\Notifications\Admin\InquiryReceivedNotification;
 use Laravel\Fortify\RoutePath;
 
 
@@ -116,15 +121,30 @@ Route::group(['middleware' => config('jetstream.middleware')], function () {
             Route::put('/approve/{review}', [ReviewsController::class, 'approve'])->name('approve');
             Route::put('/reject/{review}', [ReviewsController::class, 'reject'])->name('reject');
         });
+
+        Route::name('reservations.')->prefix('reservations')->namespace('reservations')->group(function() {
+            Route::get('/', [ReservationsController::class, 'index'])->name('index');
+            Route::get('{reservation}', [ReservationsController::class, 'show'])->name('show');
+            Route::put('{reservation}', [ReservationsController::class, 'update'])->name('update');
+            Route::delete('{reservation}', [ReservationsController::class, 'destroy'])->name('destroy');
+        });
+
         Route::name('notifications.')->prefix('notifications')->namespace('notifications')->group(function() {
-            Route::get('/', [NotificationsController::class, 'index'])->name('index');
+            Route::get('/preview', function () {
+                $property = Property::find(3);
+
+                return (new InquiryReceivedNotification($property->inquiries[0]))
+                            ->toMail(User::adminsMailingList());
+            });
             Route::get('{notification}', [NotificationsController::class, 'show'])->name('show');
+            Route::get('/', [NotificationsController::class, 'index'])->name('index');
             //Route::put('{notification}', [NotificationsController::class, 'update'])->name('update');
             // Route::delete('{notification}', [NotificationsController::class, 'destroy'])->name('destroy');
             Route::put('/read-all', [NotificationsController::class, 'readAll'])->name('read.all');
             Route::put('/read', [NotificationsController::class, 'read'])->name('read');
             Route::delete('/destroy-all', [NotificationsController::class, 'destroyAll'])->name('destroy.all');
             Route::delete('/destroy', [NotificationsController::class, 'destroy'])->name('destroy');
+
         });
     });
 

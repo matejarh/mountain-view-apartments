@@ -5,6 +5,7 @@ use App\Http\Controllers\InquiriesController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\PropertiesController;
+use App\Http\Controllers\ReservationsController;
 use App\Http\Controllers\ReviewsController;
 use App\Http\Controllers\StoriesController;
 use App\Http\Controllers\UserProfileController;
@@ -20,7 +21,7 @@ Route::get('/', function() {
  * Public routes without $lang prefix
  */
 Route::post('/language-switch', [LanguageController::class, 'switch'])->name('switch.language');
-Route::post('/send-inquiry/{property}', [InquiriesController::class, 'create'])->name('inquiry.create');
+Route::post('/send-inquiry/{property}', [InquiriesController::class, 'store'])->name('inquiry.store');
 Route::get('/fetch-properties-for-dropdown', [PropertiesController::class, 'fetch'])->name('properties.fetch');
 
 
@@ -72,6 +73,12 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
     Route::name('properties.')->prefix('accomodations')->namespace('accomodations')->group(function () {
         Route::post('/{property}/like', [PropertiesController::class, 'like'])->name('like');
         Route::post('/{property}/review', [PropertiesController::class, 'review'])->name('review');
+
+        Route::name('reservations.')->prefix('reservations')->namespace('reservations')->group(function () {
+            Route::post('/store/for/{property}', [ReservationsController::class, 'store'])->name('store');
+
+        });
+
     });
 
     Route::get('/user/activities', [ActivitiesController::class, 'index'])->name('activities');
@@ -87,9 +94,13 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
             Route::get('/for/{property}/create', [ReviewsController::class, 'create'])->name('create');
 
         });
+
         Route::name('inquiries.')->prefix('my-inquiries')->namespace('inquiries')->group(function () {
             Route::get('/', [InquiriesController::class, 'index'])->name('index');
+        });
 
+        Route::name('reservations.')->prefix('my-reservations')->namespace('reservations')->group(function () {
+            Route::get('/', [ReservationsController::class, 'index'])->name('index');
         });
 
     });

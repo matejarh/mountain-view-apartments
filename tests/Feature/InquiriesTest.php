@@ -46,7 +46,7 @@ class InquiriesTest extends TestCase
         $property = Property::factory()->create();
 
         $inquiry = $this->inquiry;
-        $response = $this->post(route('inquiry.create', $property), $inquiry);
+        $response = $this->post(route('inquiry.store', $property), $inquiry);
         //$this->assertCount(1, $this->admin->notifications);
         $response->assertStatus(302);
         $response->assertSessionHas(["status" => "inquiry-created"]);
@@ -63,7 +63,7 @@ class InquiriesTest extends TestCase
         $property = Property::factory()->create();
 
         $inquiry = $this->inquiry;
-        $response = $this->actingAs($this->user)->post(route('inquiry.create', $property), $inquiry);
+        $response = $this->actingAs($this->user)->post(route('inquiry.store', $property), $inquiry);
         //$this->assertCount(1, $this->admin->notifications);
         $this->assertCount(1, Inquiry::all());
         $response->assertStatus(302);
@@ -148,16 +148,16 @@ class InquiriesTest extends TestCase
         $inquiry = $this->inquiry;
         $inquiry['date'] = [now(), now()->addWeek()];
 
-        $response = $this->post(route('inquiry.create', $property), $inquiry);
+        $response = $this->post(route('inquiry.store', $property), $inquiry);
         //dd($response->ddSession());
         $response->assertStatus(302)->assertSessionHasErrors(['date.0']);
 
         $inquiry['date'] = [now()->addDay(), now()->addYear()->addDay()];
-        $response = $this->post(route('inquiry.create', $property), $inquiry);
+        $response = $this->post(route('inquiry.store', $property), $inquiry);
         $response->assertStatus(302)->assertSessionHasErrors(['date.1']);
 
         $inquiry['date'] = [now(), now()->addYear()->addDay()];
-        $response = $this->post(route('inquiry.create', $property), $inquiry);
+        $response = $this->post(route('inquiry.store', $property), $inquiry);
         $response->assertStatus(302)->assertSessionHasErrors(['date.1', 'date.0']);
 
     }

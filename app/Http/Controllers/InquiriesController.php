@@ -25,12 +25,12 @@ class InquiriesController extends Controller
         ]);
     }
 
-    public function create(Request $request, Property $property, StoresGuestInquiry $storer ) :GuestInquiryStoreResponse
+    public function store(Request $request, Property $property, StoresGuestInquiry $creator ) :GuestInquiryStoreResponse
     {
 
         // Gate::authorize('create', Inquiry::class);
 
-        $storer->create($property, $request->all());
+        $creator->create($property, $request->all());
 
         return app(GuestInquiryStoreResponse::class);
     }

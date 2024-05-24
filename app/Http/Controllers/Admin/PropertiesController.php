@@ -22,6 +22,7 @@ use App\Models\Property;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -65,17 +66,17 @@ class PropertiesController extends Controller
         // Render the property details page using Inertia.js
         return Inertia::render('Admin/Properties/Show', [
             // Pass the property details along with its galleries and facilities
-            'property' => fn () => Property::with('galleries', 'facilities')->find($property->id),
+            'property' => fn() => Property::with('galleries', 'facilities')->find($property->id),
 
             'icon_list' => $this->fetchIconsList(),
 
             // Retrieve facilities not currently associated with the property
-            'facilities_not_in_property' => fn () => Facility::all()->intersect(
+            'facilities_not_in_property' => fn() => Facility::all()->intersect(
                 Facility::whereNotIn('id', $property->facilities->pluck('id')->toArray())->get()
             ),
 
             // Retrieve galleries not currently associated with the property, including their images
-            'galleries_not_in_property' => fn () => Gallery::with('images')->get()->intersect(
+            'galleries_not_in_property' => fn() => Gallery::with('images')->get()->intersect(
                 Gallery::whereNotIn('id', $property->galleries->pluck('id')->toArray())->get()
             ),
 
@@ -106,13 +107,23 @@ class PropertiesController extends Controller
     {
         Gate::authorize('viewAny', Property::class);
 
+        return cache()->rememberForever('iconList', function () {
+            // Convert the array to a collection
+            return $this->scanIconDirectory();
+        });
+    }
+
+    protected function scanIconDirectory() : Collection
+    {
         $path = "/resources/js/Icons";
+
+        // Append your output to the file
 
         // Get all files in the directory
         $files = array_diff(scandir(base_path() . $path), ['.', '..']);
-
         // Remove the file extension and format the filenames
         $formattedFiles = array_map(function ($file) {
+            //Storage::append($filePath, $file);
             $file = str_replace('.vue', '', $file);
             return [
                 'name' => $file,
@@ -125,8 +136,21 @@ class PropertiesController extends Controller
             return $file['name'] !== 'DinamicIcon';
         });
 
-        // Convert the array to a collection
         return collect($formattedFiles);
+    }
+
+    protected function writeIconListToFile($list): void
+    {
+        $filePath = 'iconlist.txt';
+
+        if (!Storage::exists($filePath)) {
+            // If the file doesn't exist, create it
+            Storage::put($filePath, '');
+        }
+
+        array_map(function ($file) use ($filePath) {
+            Storage::append($filePath, $file);
+        }, $list);
     }
 
     /**

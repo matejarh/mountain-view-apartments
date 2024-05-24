@@ -345,7 +345,7 @@ class PropertiesAdminTest extends TestCase
             'date' => [now()->addDay(), now()->addWeek()],
         ];
 
-        $response = $this->post(route('inquiry.create', $property), $inquiry);
+        $response = $this->post(route('inquiry.store', $property), $inquiry);
 
         $this->assertCount(1, Inquiry::all());
 

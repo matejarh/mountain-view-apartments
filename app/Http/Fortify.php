@@ -15,6 +15,7 @@ use App\Contracts\CreatesNewPages;
 use App\Contracts\CreatesNewProperties;
 use App\Contracts\CreatesNewReviews;
 use App\Contracts\CreatesNewSettings;
+use App\Contracts\CreatesReservations;
 use App\Contracts\DeletesAllNotifications;
 use App\Contracts\DeletesFacilities;
 use App\Contracts\DeletesGalleries;
@@ -22,6 +23,7 @@ use App\Contracts\DeletesImages;
 use App\Contracts\DeletesInquiries;
 use App\Contracts\DeletesNotifications;
 use App\Contracts\DeletesPages;
+use App\Contracts\DeletesReservations;
 use App\Contracts\DeletesReviews;
 use App\Contracts\DetachesFacilitiesFromProperties;
 use App\Contracts\DetachesGalleriesFromImages;
@@ -41,6 +43,7 @@ use App\Contracts\UpdatesImages;
 use App\Contracts\UpdatesInquiries;
 use App\Contracts\UpdatesPages;
 use App\Contracts\UpdatesProperties;
+use App\Contracts\UpdatesReservations;
 use App\Contracts\UpdatesReviews;
 use App\Contracts\UpdatesSettings;
 
@@ -519,4 +522,36 @@ class Fortify
         app()->singleton(DeletesAllNotifications::class, $callback);
     }
 
+    /**
+     * Register a class / callback that should be used to create new reservations.
+     *
+     * @param  string  $callback
+     * @return void
+     */
+    public static function createReservationsUsing(string $callback)
+    {
+        app()->singleton(CreatesReservations::class, $callback);
+    }
+
+    /**
+     * Register a class / callback that should be used to update given review.
+     *
+     * @param  string  $callback
+     * @return void
+     */
+    public static function updateReservationsUsing(string $callback)
+    {
+        app()->singleton(UpdatesReservations::class, $callback);
+    }
+
+    /**
+     * Register a class / callback that should be used to destroyes given review.
+     *
+     * @param  string  $callback
+     * @return void
+     */
+    public static function destroyReservationsUsing(string $callback)
+    {
+        app()->singleton(DeletesReservations::class, $callback);
+    }
 }
