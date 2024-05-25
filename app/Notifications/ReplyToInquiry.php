@@ -42,9 +42,10 @@ class ReplyToInquiry extends Notification implements ShouldQueue
         return (new MailMessage)
             ->theme('mountain')
             ->subject($this->reply['subject'])
-            ->line(strip_tags($this->reply['text']))
+            ->markdown('mail.inquiry.reply', ['inquiry' => $this->inquiry, 'reply' => $this->reply, 'lang' => app()->currentLocale()])
+            /* ->line(strip_tags($this->reply['text']))
             ->action('Notification Action', url('/'))
-            ->line('Thank you for using ' . config('app.name') . '!');
+            ->line('Thank you for using ' . config('app.name') . '!') */;
     }
 
     /**
