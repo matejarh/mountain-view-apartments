@@ -82,10 +82,6 @@ class InquiriesController extends Controller
         ]);
     }
 
-    protected function defaultUserPhotoUrl(string $name): string
-    {
-        return "https://api.dicebear.com/8.x/identicon/svg?seed=" . urlencode($name); // icons | pixel-art | ident ...  check https://www.dicebear.com/styles/
-    }
     /**
      * Renders and returns given inquiry page
      *
