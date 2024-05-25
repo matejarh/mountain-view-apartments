@@ -11,10 +11,10 @@ const props = defineProps({
         type: Number,
     },
     image: {
-        type:Object,
+        type: Object,
         default: {
-            image:null,
-            key:0,
+            image: null,
+            key: 0,
         },
     },
     isFullScreen: {
@@ -24,19 +24,20 @@ const props = defineProps({
 
 })
 
-const carousel=ref(null)
+const carousel = ref(null)
+const carouselRef = ref(null)
 
 const makeItems = () => {
     let items = []
     props.slides?.forEach((slide, index) => {
-        items.push({position: index, el: document.getElementById(`${props.id}-item-${index}`)})
+        items.push({ position: index, el: document.getElementById(`${props.id}-item-${index}`) })
     });
     return items
 }
 const makeIndicators = () => {
     let items = []
     props.slides?.forEach((slide, index) => {
-        items.push({position: index, el: document.getElementById(`${props.id}-indicator-${index}`)})
+        items.push({ position: index, el: document.getElementById(`${props.id}-indicator-${index}`) })
     });
     return items
 }
@@ -55,6 +56,7 @@ const initialize = () => {
     const options = {
         defaultPosition: 1,
         interval: props.interval,
+        pause: false,
 
         indicators: {
             activeClasses: 'bg-primary-700 dark:bg-primary-600',
@@ -78,19 +80,16 @@ const initialize = () => {
 
     // instance options object
     const instanceOptions = {
-      id: props.id,
-      override: true
+        id: props.id,
+        override: true
     };
-    const carouselElement = document.getElementById(props.id);
-    carousel.value = new Carousel(carouselElement, items, options, instanceOptions);
 
-    // carousel.value.removeEventListener('mouseenter');
-    // carousel.value.removeEventListener('mouseleave');
+    const carouselElement = carouselRef.value;
+    carousel.value = new Carousel(carouselElement, items, options, instanceOptions);
 
     carousel.value.slideTo(props.image.key)
 
     carousel.value.cycle();
-
 }
 
 onMounted(() => {
@@ -100,13 +99,12 @@ onMounted(() => {
 </script>
 
 <template>
-<div :id="id" class="relative w-full">
-    <!-- Carousel wrapper -->
-    <div
-        class="relative overflow-visible rounded-lg " @mouseenter="carousel.pause()" @mouseleave="carousel.cycle()" :class="fullScreenClasses"
-    >
-        <slot />
-        <!-- <div v-for="image, key in slides" :id="`carousel-item-${key}`" class="hidden duration-700 ease-in-out" >
+    <div :id="id" ref="carouselRef" class="relative w-full">
+        <!-- Carousel wrapper -->
+        <div class="relative overflow-visible rounded-lg "
+            :class="fullScreenClasses">
+            <slot />
+            <!-- <div v-for="image, key in slides" :id="`carousel-item-${key}`" class="hidden duration-700 ease-in-out" >
             <img
                 :src="image.photo_url"
                 class="absolute left-1/2 top-1/2 block w-full -translate-x-1/2 -translate-y-1/2"
@@ -114,23 +112,16 @@ onMounted(() => {
             />
         </div> -->
 
-    </div>
-    <!-- Slider indicators -->
-    <div v-show="false"
-        class="absolute -bottom-2 left-1/2 z-30 flex -translate-x-1/2 space-x-3 rtl:space-x-reverse"
-    >
-        <button
-            v-for="item, key in slides"
-            :key="key"
-            :id="`${id}-indicator-${key}`"
-            type="button"
-            class="h-3 w-3 rounded-full bg-primary-500 hover:bg-primary-500"
-            aria-current="true"
-            :aria-label="`Slide ${key}`"
-        ></button>
-    </div>
-    <!-- Slider controls -->
-<!--     <button
+        </div>
+        <!-- Slider indicators -->
+        <div v-show="false"
+            class="absolute -bottom-2 left-1/2 z-30 flex -translate-x-1/2 space-x-3 rtl:space-x-reverse">
+            <button v-for="item, key in slides" :key="key" :id="`${id}-indicator-${key}`" type="button"
+                class="h-3 w-3 rounded-full bg-primary-500 hover:bg-primary-500" aria-current="true"
+                :aria-label="`Slide ${key}`"></button>
+        </div>
+        <!-- Slider controls -->
+        <!--     <button
         @click="carousel.prev()"
         id="data-carousel-prev"
         type="button"
@@ -144,7 +135,7 @@ onMounted(() => {
             <span class="hidden">{{__('Previous')}}</span>
         </span>
     </button> -->
-<!--     <button
+        <!--     <button
         @click="carousel.next()"
         id="data-carousel-next"
         type="button"
@@ -157,5 +148,5 @@ onMounted(() => {
             <span class="hidden">{{__('Next')}}</span>
         </span>
     </button> -->
-</div>
+    </div>
 </template>
