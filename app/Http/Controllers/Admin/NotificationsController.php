@@ -11,6 +11,7 @@ use App\Contracts\NotificationReadResponse;
 use App\Contracts\ReadsAllNotifications;
 use App\Contracts\ReadsNotifications;
 use App\Http\Controllers\Controller;
+use App\Models\Inquiry;
 use App\Models\Notification;
 use App\Models\Property;
 use App\Models\User;
@@ -94,7 +95,20 @@ class NotificationsController extends Controller
     public function preview(Request $request, $notification, $items): MailMessage
     {
         Gate::authorize('viewAny', Notification::class);
+        if ($notification === 'ReplyToInquiry') {
+            $notificationClass = "\\App\\Notifications\\" . ucfirst($notification);
 
+            if (!class_exists($notificationClass)) {
+                abort(404, 'Notification class not found.');
+            }
+            $inquiry = Inquiry::first();
+            $reply = [
+                'text' => "<p>".fake()->sentence()." <b>tole je pa bold</b></p>",
+                'subject'=> __("Reply to your inquiry about") . $inquiry->property->title->en,
+            ];
+            return (new $notificationClass($reply, $inquiry))
+            ->toMail(User::adminsMailingList());
+        }
         $notificationClass = "\\App\\Notifications\\Admin\\" . ucfirst($notification);
         //$itemsClass = "\\App\\Model\\" . ucfirst($items);
 
