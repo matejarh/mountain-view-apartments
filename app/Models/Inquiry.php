@@ -19,6 +19,10 @@ class Inquiry extends Model
         'pets' => 'boolean',
     ];
 
+    protected $appends = [
+        'avatar_url'
+    ];
+
     public function property( ) :BelongsTo
     {
         return $this->belongsTo(Property::class);
@@ -27,6 +31,11 @@ class Inquiry extends Model
     public function owner( ) :BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    protected function getAvatarUrlAttribute(): string
+    {
+        return "https://api.dicebear.com/8.x/identicon/svg?seed=" . urlencode($this->name . ' ' . $this->email); // icons | pixel-art | ident ...  check https://www.dicebear.com/styles/
     }
 
         /**
