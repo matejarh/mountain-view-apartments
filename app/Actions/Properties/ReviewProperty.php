@@ -4,8 +4,11 @@ namespace App\Actions\Properties;
 
 use App\Contracts\ReviewsProperties;
 use App\Models\Property;
+use App\Models\User;
+use App\Notifications\Admin\ReviewReceived;
 use App\Rules\Recaptcha;
 use App\Rules\SpamFree;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -42,7 +45,9 @@ class ReviewProperty implements ReviewsProperties
         $validator->validateWithBag('reviewingProperty');
 
         if (!$property->isReviewed()) {
-            $property->review($input['score'], $input['text']);
+            $review = $property->review($input['score'], $input['text']);
+
+            Notification::send(User::adminsMailingList(), new ReviewReceived($review));
 
             session()->flash('flash.banner', __('You have reviewed') . ' ' . $property->title->$locale . '.');
             session()->flash('flash.bannerStyle', 'success');
