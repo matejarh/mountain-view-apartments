@@ -53,7 +53,7 @@ class ReviewReceived extends Notification
             'title' => 'New Review Received',
             'message' => 'New review for ' . $this->review->reviewed_trimed[0]['title']->{app()->currentLocale()} . ' received',
             'link' => route('admin.reviews.show', $this->review),
-            'icon' => 'NewReservationIcon',
+            'icon' => 'PenNibIcon',
         ];
     }
 }
