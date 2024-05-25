@@ -76,16 +76,20 @@ import NapisiLogoIcon from '@/Icons/NapisiLogoIcon.vue'
 import NewspaperIcon from '@/Icons/NewspaperIcon.vue'
 import NonSmokingRoomsIcon from '@/Icons/NonSmokingRoomsIcon.vue'
 import PagesIcon from '@/Icons/PagesIcon.vue'
+import PaperClipIcon from '@/Icons/PaperClipIcon.vue'
 import PaperPlane from '@/Icons/PaperPlane.vue'
 import PartiesIcon from '@/Icons/PartiesIcon.vue'
 import PatioIcon from '@/Icons/PatioIcon.vue'
+import PenNibIcon from '@/Icons/PenNibIcon.vue'
 import PetsIcon from '@/Icons/PetsIcon.vue'
 import PinIcon from '@/Icons/PinIcon.vue'
 import PinterestIcon from '@/Icons/PinterestIcon.vue'
 import PrivateBeachAreaIcon from '@/Icons/PrivateBeachAreaIcon.vue'
 import PrivateKitchenIcon from '@/Icons/PrivateKitchenIcon.vue'
 import QueenBedIcon from '@/Icons/QueenBedIcon.vue'
+import QuestionCircleIcon from '@/Icons/QuestionCircleIcon.vue'
 import QuietHoursIcon from '@/Icons/QuietHoursIcon.vue'
+import ReceiptIcon from '@/Icons/ReceiptIcon.vue'
 import ReplyIcon from '@/Icons/ReplyIcon.vue'
 import SearchIcon from '@/Icons/SearchIcon.vue'
 import ShareNodesIcon from '@/Icons/ShareNodesIcon.vue'
@@ -195,16 +199,19 @@ export const icons = {
     NewspaperIcon,
     NonSmokingRoomsIcon,
     PagesIcon,
+    PaperClipIcon,
     PaperPlane,
     ParagraphIcon,
     PartiesIcon,
     PatioIcon,
+    PenNibIcon,
     PetsIcon,
     PinIcon,
     PinterestIcon,
     PrivateBeachAreaIcon,
     PrivateKitchenIcon,
     QueenBedIcon,
+    QuestionCircleIcon,
     QuietHoursIcon,
     ReplyIcon,
     SearchIcon,
