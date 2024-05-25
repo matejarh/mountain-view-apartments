@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Filters\ReservationFilters;
 use App\Traits\HasUUidAsPrimary;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -21,6 +23,9 @@ class Reservation extends Model
 
     protected $appends = [
         'can',
+        'localized_arrival',
+        'localized_departure',
+        'excerpt',
     ];
 
     public function owner() :BelongsTo
@@ -48,5 +53,74 @@ class Reservation extends Model
     public function getCanAttribute(): array
     {
         return $this->can();
+    }
+
+    public function getLocalizedArrivalAttribute() :string
+    {
+        return \Carbon\Carbon::parse($this->arrival)->locale(app()->currentLocale())->isoFormat('LLLL');
+    }
+
+    public function getLocalizedDepartureAttribute() :string
+    {
+        return \Carbon\Carbon::parse($this->departure)->locale(app()->currentLocale())->isoFormat('LLLL');
+    }
+
+
+    public function excerpt(): string
+    {
+        return str(strip_tags($this->message))->limit(15);
+    }
+
+    public function getExcerptAttribute(): string
+    {
+        return $this->excerpt();
+    }
+
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param \App\Filters\ReservationFilters $filters
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeFilter(Builder $query, ReservationFilters $filters): Builder
+    {
+        return $filters->apply($query);
+
+    }
+
+    /**
+     * Confirmes reservation
+     */
+    public function confirm() :void
+    {
+        $this->confirmed_at = now();
+        $this->save();
+    }
+
+    /**
+     * Confirmes reservation
+     */
+    public function reject() :void
+    {
+        $this->confirmed_at = null;
+        $this->save();
+    }
+
+    /**
+     * Approve payment
+     */
+    public function approvePayment() :void
+    {
+        $this->payment_received_at = now();
+        $this->save();
+    }
+
+    /**
+     * Reject payment
+     */
+    public function rejectPayment() :void
+    {
+        $this->payment_received_at = null;
+        $this->save();
     }
 }

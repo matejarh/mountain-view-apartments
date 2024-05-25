@@ -20,9 +20,9 @@ Route::get('/', function() {
 /**
  * Public routes without $lang prefix
  */
-Route::post('/language-switch', [LanguageController::class, 'switch'])->name('switch.language');
-Route::post('/send-inquiry/{property}', [InquiriesController::class, 'store'])->name('inquiry.store');
-Route::get('/fetch-properties-for-dropdown', [PropertiesController::class, 'fetch'])->name('properties.fetch');
+Route::post('/language-switch', [LanguageController::class, 'switch'])->name('switch.language')->middleware('throttle:10');
+Route::post('/send-inquiry/{property}', [InquiriesController::class, 'store'])->name('inquiry.store')->middleware(app()->environment() === 'production' ? 'throttle:10' : 'throttle:global');
+Route::get('/fetch-properties-for-dropdown', [PropertiesController::class, 'fetch'])->name('properties.fetch')->middleware('throttle:10');
 
 
 /**
@@ -75,8 +75,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
         Route::post('/{property}/review', [PropertiesController::class, 'review'])->name('review');
 
         Route::name('reservations.')->prefix('reservations')->namespace('reservations')->group(function () {
-            Route::post('/store/for/{property}', [ReservationsController::class, 'store'])->name('store');
-
+            Route::post('/store/for/{property}', [ReservationsController::class, 'store'])->name('store')->middleware([app()->environment() === 'production' ? 'throttle:one-per-hour' : 'throttle:global']);
         });
 
     });
@@ -90,9 +89,8 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
 
     Route::group(['prefix' => '{lang}', 'middleware' => 'web'], function () {
 
-        Route::name('reviews.')->prefix('my-    reviews')->namespace('reviews')->group(function () {
+        Route::name('reviews.')->prefix('my-reviews')->namespace('reviews')->group(function () {
             Route::get('/for/{property}/create', [ReviewsController::class, 'create'])->name('create');
-
         });
 
         Route::name('inquiries.')->prefix('my-inquiries')->namespace('inquiries')->group(function () {

@@ -1,5 +1,6 @@
 <?php
 namespace App\Http;
+use App\Contracts\ApprovesReservationsPayments;
 use App\Contracts\ApprovesReviews;
 use App\Contracts\AttachesFacilitiesToProperties;
 use App\Contracts\AttachesGalleriesToImages;
@@ -7,6 +8,7 @@ use App\Contracts\AttachesGalleriesToPages;
 use App\Contracts\AttachesGalleriesToProperties;
 use App\Contracts\AttachesImagesToGalleries;
 use App\Contracts\ChangesImagesOrder;
+use App\Contracts\ConfirmsReservations;
 use App\Contracts\CreatesNewFacilities;
 use App\Contracts\CreatesNewGalleries;
 use App\Contracts\CreatesNewImages;
@@ -33,6 +35,8 @@ use App\Contracts\DetachesImagesFromGalleries;
 use App\Contracts\LikesProperties;
 use App\Contracts\ReadsAllNotifications;
 use App\Contracts\ReadsNotifications;
+use App\Contracts\RejectsReservations;
+use App\Contracts\RejectsReservationsPayments;
 use App\Contracts\RejectsReviews;
 use App\Contracts\RepliesToInquiries;
 use App\Contracts\ReviewsProperties;
@@ -534,7 +538,7 @@ class Fortify
     }
 
     /**
-     * Register a class / callback that should be used to update given review.
+     * Register a class / callback that should be used to update given reservation.
      *
      * @param  string  $callback
      * @return void
@@ -545,7 +549,7 @@ class Fortify
     }
 
     /**
-     * Register a class / callback that should be used to destroyes given review.
+     * Register a class / callback that should be used to destroyes given reservation.
      *
      * @param  string  $callback
      * @return void
@@ -553,5 +557,49 @@ class Fortify
     public static function destroyReservationsUsing(string $callback)
     {
         app()->singleton(DeletesReservations::class, $callback);
+    }
+
+    /**
+     * Register a class / callback that should be used to confirmes given reservation.
+     *
+     * @param  string  $callback
+     * @return void
+     */
+    public static function confirmReservationsUsing(string $callback)
+    {
+        app()->singleton(ConfirmsReservations::class, $callback);
+    }
+
+    /**
+     * Register a class / callback that should be used to rejects given reservation.
+     *
+     * @param  string  $callback
+     * @return void
+     */
+    public static function rejectReservationsUsing(string $callback)
+    {
+        app()->singleton(RejectsReservations::class, $callback);
+    }
+
+    /**
+     * Register a class / callback that should be used to rejects payment for given reservation.
+     *
+     * @param  string  $callback
+     * @return void
+     */
+    public static function rejectPaymentsForReservationsUsing(string $callback)
+    {
+        app()->singleton(RejectsReservationsPayments::class, $callback);
+    }
+
+    /**
+     * Register a class / callback that should be used to confirmes payment for given reservation.
+     *
+     * @param  string  $callback
+     * @return void
+     */
+    public static function approvePaymentsForReservationsUsing(string $callback)
+    {
+        app()->singleton(ApprovesReservationsPayments::class, $callback);
     }
 }

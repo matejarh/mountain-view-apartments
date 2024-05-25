@@ -123,6 +123,10 @@ Route::group(['middleware' => config('jetstream.middleware')], function () {
             Route::get('/', [ReservationsController::class, 'index'])->name('index');
             Route::get('{reservation}', [ReservationsController::class, 'show'])->name('show');
             Route::put('{reservation}', [ReservationsController::class, 'update'])->name('update');
+            Route::put('{reservation}/confirm', [ReservationsController::class, 'confirm'])->name('confirm');
+            Route::put('{reservation}/reject', [ReservationsController::class, 'reject'])->name('reject');
+            Route::put('{reservation}/payment-reject', [ReservationsController::class, 'rejectPayment'])->name('reject.payment');
+            Route::put('{reservation}/payment-approve', [ReservationsController::class, 'approvePayment'])->name('approve.payment');
             Route::delete('{reservation}', [ReservationsController::class, 'destroy'])->name('destroy');
         });
 

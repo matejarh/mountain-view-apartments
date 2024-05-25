@@ -136,4 +136,49 @@ class ReservationsTest extends TestCase
 
         $response->assertStatus(403);
     }
+
+    public function test_admin_may_confirm_given_reservation() :void
+    {
+        $reservation = Reservation::factory()->create();
+
+        $response = $this->actingAs($this->admin)->put(route('admin.reservations.confirm', $reservation))
+            ->assertStatus(302)->assertSessionHasNoErrors()->assertSessionHas('status', 'reservation-confirmed');
+        $this->assertNotNull($reservation->fresh()->confirmed_at);
+    }
+
+    public function test_admin_may_reject_given_reservation() :void
+    {
+        $reservation = Reservation::factory()->create();
+        $reservation->confirm();
+        $this->assertNotNull($reservation->fresh()->confirmed_at);
+
+        $response = $this->actingAs($this->admin)->put(route('admin.reservations.reject', $reservation))
+            ->assertStatus(302)->assertSessionHasNoErrors()->assertSessionHas('status', 'reservation-rejected');
+        $this->assertNull($reservation->fresh()->confirmed_at);
+    }
+
+    public function test_admin_may_approve_payment_for_given_reservation() :void
+    {
+        $reservation = Reservation::factory()->create();
+
+        $response = $this->actingAs($this->admin)->put(route('admin.reservations.approve.payment', $reservation))
+            ->assertStatus(302)->assertSessionHasNoErrors()->assertSessionHas('status', 'reservation-payment-approved');
+        //$response->ddSession();
+        // dd($reservation->fresh()) ;
+        $this->assertNotNull($reservation->fresh()->payment_received_at);
+    }
+
+    public function test_admin_may_reject_payment_for_given_reservation() :void
+    {
+        $reservation = Reservation::factory()->create();
+
+        $reservation->approvePayment();
+
+        $this->assertNotNull($reservation->fresh()->payment_received_at);
+
+        $response = $this->actingAs($this->admin)->put(route('admin.reservations.reject.payment', $reservation))
+            ->assertStatus(302)->assertSessionHasNoErrors()->assertSessionHas('status', 'reservation-payment-rejected');
+
+        $this->assertNull($reservation->fresh()->payment_received_at);
+    }
 }

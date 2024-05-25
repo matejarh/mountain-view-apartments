@@ -6,12 +6,19 @@ use App\Models\Property;
 use App\Models\Review;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
 class ReviewsTest extends TestCase
 {
     use RefreshDatabase;
 
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        Notification::fake();
+    }
     /**
      * A basic feature test example.
      */

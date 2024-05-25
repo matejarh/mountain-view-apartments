@@ -47,7 +47,9 @@ class AppServiceProvider extends ServiceProvider
 
         RateLimiter::for('one-per-hour', function (Request $request) {
             $throttleKey = str(str($request->input(Fortify::username()))->lower() . '|' . $request->ip())->transliterate();
-            return Limit::perHour(1)->by($throttleKey);
+            return Limit::perHour(1)->by($throttleKey)->response(function (Request $request, array $headers) {
+                return response(__('You can not post another reservation yet'), 429, $headers);
+            });
         });
 
         RateLimiter::for('admins', function (Request $request) {

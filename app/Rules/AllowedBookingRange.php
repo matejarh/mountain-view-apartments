@@ -14,8 +14,8 @@ class AllowedBookingRange implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        $today = now()->toDateString();
-        $oneYearFromNow = now()->addYear()->toDateString();
+        $today = now();
+        $oneYearFromNow = now()->addYear();
         //dd($value);
         if($value <= $today || $value > $oneYearFromNow)
             $fail(__('The :attribute must be a date after today and before one year from now.'));

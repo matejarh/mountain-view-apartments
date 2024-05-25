@@ -42,8 +42,12 @@ use App\Actions\Properties\DetachGallery as DetachPropertyGallery;
 use App\Actions\Properties\LikeProperty;
 use App\Actions\Properties\ReviewProperty;
 use App\Actions\Properties\UpdateProperty;
+use App\Actions\Reservations\ApprovePayment;
+use App\Actions\Reservations\ConfirmReservation;
 use App\Actions\Reservations\CreateReservation;
 use App\Actions\Reservations\DeleteReservation;
+use App\Actions\Reservations\RejectPayment;
+use App\Actions\Reservations\RejectReservation;
 use App\Actions\Reservations\UpdateReservation;
 use App\Actions\Reviews\ApprovesReview;
 use App\Actions\Reviews\CreateReview;
@@ -84,8 +88,12 @@ use App\Contracts\PropertyCreateResponse as PropertyCreateResponseContract;
 use App\Contracts\PropertyLikeResponse as PropertyLikeResponseContract;
 use App\Contracts\PropertyReviewResponse as PropertyReviewResponseContract;
 use App\Contracts\PropertyUpdateResponse as PropertyUpdateResponseContract;
+use App\Contracts\ReservationConfirmResponse as ReservationConfirmResponseContract;
 use App\Contracts\ReservationCreateResponse as ReservationCreateResponseContract;
 use App\Contracts\ReservationDeleteResponse as ReservationDeleteResponseContract;
+use App\Contracts\ReservationPaymentApproveResponse as ReservationPaymentApproveResponseContract;
+use App\Contracts\ReservationPaymentRejectResponse as ReservationPaymentRejectResponseContract;
+use App\Contracts\ReservationRejectResponse as ReservationRejectResponseContract;
 use App\Contracts\ReservationUpdateResponse as ReservationUpdateResponseContract;
 use App\Contracts\ReviewApproveResponse as ReviewApproveResponseContract;
 use App\Contracts\ReviewCreateResponse as ReviewCreateResponseContract;
@@ -126,8 +134,12 @@ use App\Http\Responses\PropertyCreatedResponse;
 use App\Http\Responses\PropertyLikedResponse;
 use App\Http\Responses\PropertyReviewedResponse;
 use App\Http\Responses\PropertyUpdatedResponse;
+use App\Http\Responses\ReservationConfirmedResponse;
 use App\Http\Responses\ReservationCreatedResponse;
 use App\Http\Responses\ReservationDeletedResponse;
+use App\Http\Responses\ReservationPaymentApprovedResponse;
+use App\Http\Responses\ReservationPaymentRejectedResponse;
+use App\Http\Responses\ReservationRejectedResponse;
 use App\Http\Responses\ReservationUpdatedResponse;
 use App\Http\Responses\ReviewApprovedResponse;
 use App\Http\Responses\ReviewCreatedResponse;
@@ -213,6 +225,10 @@ class FortifyServiceProvider extends ServiceProvider
         $this->app->singleton(ReservationCreateResponseContract::class, ReservationCreatedResponse::class);
         $this->app->singleton(ReservationUpdateResponseContract::class, ReservationUpdatedResponse::class);
         $this->app->singleton(ReservationDeleteResponseContract::class, ReservationDeletedResponse::class);
+        $this->app->singleton(ReservationConfirmResponseContract::class, ReservationConfirmedResponse::class);
+        $this->app->singleton(ReservationRejectResponseContract::class, ReservationRejectedResponse::class);
+        $this->app->singleton(ReservationPaymentApproveResponseContract::class, ReservationPaymentApprovedResponse::class);
+        $this->app->singleton(ReservationPaymentRejectResponseContract::class, ReservationPaymentRejectedResponse::class);
     }
 
     /**
@@ -281,6 +297,10 @@ class FortifyServiceProvider extends ServiceProvider
         AppFortify::createReservationsUsing(CreateReservation::class);
         AppFortify::updateReservationsUsing(UpdateReservation::class);
         AppFortify::destroyReservationsUsing(DeleteReservation::class);
+        AppFortify::confirmReservationsUsing(ConfirmReservation::class);
+        AppFortify::rejectReservationsUsing(RejectReservation::class);
+        AppFortify::rejectPaymentsForReservationsUsing(RejectPayment::class);
+        AppFortify::approvePaymentsForReservationsUsing(ApprovePayment::class);
 
         RateLimiter::for('login', function (Request $request) {
             $throttleKey = str(str($request->input(Fortify::username()))->lower().'|'.$request->ip())->transliterate();
