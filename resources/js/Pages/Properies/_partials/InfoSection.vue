@@ -1,8 +1,6 @@
 <script setup>
-import CalendarIcon from '@/Icons/CalendarIcon.vue';
-import CommentDotsIcon from '@/Icons/CommentDotsIcon.vue';
-import MapLocationIcon from '@/Icons/MapLocationIcon.vue';
 import { ref } from 'vue';
+import { icons } from '@/icons';
 import SocialSharingDialog from './SocialSharingDialog.vue';
 import FullScreenImagesModal from '@/Pages/Admin/Images/_partials/FullScreenImagesModal.vue';
 import DinamicIcon from '@/Components/DinamicIcon.vue';
@@ -58,7 +56,7 @@ const handleFullScreenImage = (image) => {
 
                     </div>
 
-                    <div class="mt-4 grid grid-cols-2 gap-2">
+                    <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-2">
                         <div class="flex space-x-2 items-center " v-for="type, key in $page.props?.property?.bed_types"
                             :key="key">
 
@@ -73,7 +71,7 @@ const handleFullScreenImage = (image) => {
                         <a :href="$page.props?.property?.google_maps_link" target="_blank"
                             class="text-md font-semibold text-gray-900 sm:text-md dark:text-gray-300 hover:font-bold transition">
                             <div class="flex items-center w-fit">
-                                <MapLocationIcon class="w-8 h-5" />
+                                <icons.MapLocationIcon class="w-8 h-5" />
                                 <Tooltip :text="__('Get Travel Directions')" key="directions" placement="top">
                                     {{ $page.props?.property?.address }}
                                 </Tooltip>
@@ -93,7 +91,7 @@ const handleFullScreenImage = (image) => {
                             <a href="#availability" title=""
                                 class="text-white relative mt-4 sm:mt-0 bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800 flex items-center justify-center"
                                 role="button">
-                                <CalendarIcon class="w-5 h-5 -ms-2 me-2 sm:ms-0 sm:me-0" />
+                                <icons.CalendarIcon class="w-5 h-5 -ms-2 me-2 sm:ms-0 sm:me-0" />
                                 <span class="sm:hidden">
                                 {{ __('Check availability') }}
                                 </span>
@@ -105,7 +103,7 @@ const handleFullScreenImage = (image) => {
                                 title=""
                                 class="text-white relative mt-4 sm:mt-0 bg-amazon-700 hover:bg-amazon-800 focus:ring-4 focus:ring-amazon-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-amazon-600 dark:hover:bg-amazon-700 focus:outline-none dark:focus:ring-amazon-800 flex items-center justify-center"
                                 role="button">
-                                <CommentDotsIcon class="w-5 h-5 -ms-2 me-2 sm:ms-0 sm:me-0" />
+                                <icons.CommentDotsIcon class="w-5 h-5 -ms-2 me-2 sm:ms-0 sm:me-0" />
                                 <div
                                     class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-amazon-700 border-2 border-white rounded-full -top-2 -end-2 dark:border-gray-50">
                                     {{ formatNumber($page.props?.property.reviews_count) }}
@@ -120,7 +118,7 @@ const handleFullScreenImage = (image) => {
                             <a href="#" @click="showSocialSharingDialog = true" title=""
                                 class="text-white mt-4 sm:mt-0 bg-amazon-700 hover:bg-amazon-800 focus:ring-4 focus:ring-amazon-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-amazon-600 dark:hover:bg-amazon-700 focus:outline-none dark:focus:ring-amazon-800 flex items-center justify-center"
                                 role="button">
-                                <ShareNodesIcon class="w-5 h-5 -ms-2 me-2 sm:ms-0 sm:me-0" />
+                                <icons.ShareNodesIcon class="w-5 h-5 -ms-2 me-2 sm:ms-0 sm:me-0" />
                                 <span class="sm:hidden">
                                     {{ __('Share') }}
 

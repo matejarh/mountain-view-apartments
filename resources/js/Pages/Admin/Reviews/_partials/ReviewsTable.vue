@@ -48,7 +48,7 @@ const headers = ref([
 
 <template>
 
-    <ActionSection>
+    <ActionSection :fullwidth="false">
         <template #title>
             {{ __("Reviews List") }}
         </template>
@@ -61,13 +61,12 @@ const headers = ref([
                         <div class="flex flex-col ms-4">
                             <label class="text-gray-500 block" for="approved">
                                 <Checkbox class="w-12 h-12" id="approved" v-model:checked="filters.approved" />
-                                Approved
+                                {{__('Approved')}}
                             </label>
                             <label class="text-gray-500 block" for="not_approved">
                                 <Checkbox class="w-12 h-12" id="not_approved" v-model:checked="filters.notApproved" />
-                                Not Approved
+                                {{__('Not Approved')}}
                             </label>
-
                         </div>
                     </FiltersSection>
                 </template>
@@ -77,9 +76,7 @@ const headers = ref([
                 </template>
                 <TableRow v-for="review in $page.props?.reviews.data" :key="review.id" :item="review"
                     @edit-review="handleEditReview" />
-
             </TableSection>
-
         </template>
     </ActionSection>
 </template>

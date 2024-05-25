@@ -70,6 +70,9 @@ const onDarkTextClasses = computed(() => {
             <component v-for="(icon, index) in starComponents" :is="icon" :key="index" class=""
                 :class="[(icon === icons.StarEmptyIcon ? 'text-gray-200' : 'text-yellow-300'), sizeClasses]" />
         </div>
+        <p v-if="withoutText" class="text-sm font-medium leading-none text-gray-500 dark:text-gray-400" :class="onDarkTextClasses" >
+            ({{ score }})
+        </p>
         <p v-if="!withoutText" class="text-sm font-medium leading-none text-gray-500 dark:text-gray-400" :class="onDarkTextClasses" >
             ({{ property?.average_review_score }})
         </p>

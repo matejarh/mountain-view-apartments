@@ -30,6 +30,25 @@ class Review extends Model
         'owner',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            if (empty($model->uuid)) {
+                $model->uuid = (string) str()->uuid();
+            }
+        });
+    }
+
+    /**
+     * Get the route key for the model.
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'uuid';
+    }
+
     public function reviewed(): MorphTo
     {
         return $this->MorphTo();
@@ -39,7 +58,6 @@ class Review extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
-
 
     public function reviewedTrimed(): Collection
     {

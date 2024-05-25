@@ -16,6 +16,7 @@ use App\Filters\ReviewFilters;
 use App\Http\Controllers\Controller;
 use App\Models\Property;
 use App\Models\Review;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
@@ -54,12 +55,22 @@ class ReviewsController extends Controller
      * @return \Inertia\Response
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function show(Request $request, Review $review): Response
+    public function show(Request $request, Review $review): Response|RedirectResponse
     {
-        Gate::authorize('view', $review);
+        Gate::authorize('update', $review);
+
+        if($request->has('approve') && $request->get('approve') === '1') {
+            $review->approve();
+            return redirect(route('admin.reviews.show', $review));
+        }
+
+        if($request->has('reject') && $request->get('reject') === '1') {
+            $review->reject();
+            return redirect(route('admin.reviews.show', $review));
+        }
 
         return Inertia::render('Admin/Reviews/Show', [
-            'review' => Review::with('property')->find($review->id),
+            'review' => Review::with('reviewed')->find($review->id),
             'can' => [
                 'view_review' => auth()->user()->can('view', $review),
                 'delete_review' => auth()->user()->can('delete', $review),

@@ -17,6 +17,6 @@ class ReviewDeletedResponse implements ReviewDeleteResponseContract
     {
         return $request->wantsJson()
             ? new JsonResponse('', 201)
-            : back()->with('status', 'review-deleted');
+            : redirect(route('admin.reviews.index'))->with('status', 'review-deleted');
     }
 }

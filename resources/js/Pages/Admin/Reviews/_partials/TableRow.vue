@@ -3,25 +3,15 @@ import TableRow from '@/Components/TableRow.vue';
 import Tooltip from '@/Components/_default/Tooltip.vue';
 import Popover from '@/Components/_default/Popover.vue';
 import RatingStars from '@/Components/_default/Properties/RatingStars.vue';
-import CheckIcon from '@/Icons/CheckIcon.vue';
-import CloseCircleIcon from '@/Icons/CloseCircleIcon.vue';
-
-/* import ReviewEditIcon from '@/Icons/ReviewEditIcon.vue'; */
-import { hasFlag } from 'country-flag-icons';
-import { getCode, getName } from 'country-list';
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import Badge from '@/Components/_default/Badge.vue';
 import ConfirmationModal from '@/Components/ConfirmationModal.vue';
-import WarningIcon from '@/Icons/WarningIcon.vue';
-import TrashBinIcon from '@/Icons/TrashBinIcon.vue';
-/* import ReviewEditDialog from './ReviewEditDialog.vue'; */
+import { icons } from '@/icons';
 
 const props = defineProps({
     item: Object,
 })
-
-const showReviewEditDialog = ref(false)
 
 defineEmits(['edit-review'])
 
@@ -53,14 +43,6 @@ const destroy = () => {
         }
     })
 }
-
-/* const loadFlag = () => {
-    let flag
-    import(`country-flag-icons/string/3x2/US`).then(flag => {
-        flag = flag
-    });
-    return flag;
-} */
 </script>
 
 <template>
@@ -87,7 +69,6 @@ const destroy = () => {
 
         <td class="px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
             <div class="flex items-center">
-                <!-- {{ item?.reviewed_trimed[0].title[$page.props?.locale] }} -->
                 <img class="w-10 h-10 rounded-sm" :src="item?.reviewed_trimed[0].avatar_url"
                     :alt="item?.reviewed_trimed[0]?.title[$page.props?.locale] + 's image'">
                 <div class="ps-3">
@@ -95,7 +76,6 @@ const destroy = () => {
                     </div>
                     <div class="font-normal text-gray-500 dark:text-gray-300">{{ item?.owner.email }}</div>
                 </div>
-
             </div>
         </td>
 
@@ -107,21 +87,14 @@ const destroy = () => {
                 {{ item?.excerpt }}
                 <template #content>
                     <div class="" v-html="item?.text"></div>
-
                 </template>
             </Popover>
         </td>
         <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
             <div class="flex items-center justify-center ">
                 <Badge :color="item.approved_at ? 'amazon' : 'bittersweet'">
-                    {{ item.approved_at ? 'approved' : 'not approved' }}
+                    {{ item.approved_at ? __('Approved') : __('Not Approved') }}
                 </Badge>
-                <!--                 <div
-                :class="item.approved_at ? 'bg-amazon-600': 'bg-red-700' "
-                class="inline-block w-4 h-4 mr-2  rounded-full"
-                    >
-                </div> -->
-
             </div>
         </td>
         <td class="px-6 py-4 whitespace-nowrap">
@@ -130,19 +103,24 @@ const destroy = () => {
         </td>
         <td class="px-6 py-4">
             <div class="flex space-x-2 items-center">
+                <Tooltip :key="`showReviewTooltip${item.id}`" :text="__('Show')">
+                    <button class="text-primary-700 dark:text-primary-800" @click="$inertia.get(route('admin.reviews.show', item))">
+                        <icons.EyeIcon class="w-5 h-5" />
+                    </button>
+                </Tooltip>
                 <Tooltip :key="`rejectReviewTooltip${item.id}`" :text="__('Reject')" v-if="item.approved_at">
                     <button class="text-bittersweet-700 dark:text-bittersweet-800" @click="reject">
-                        <CloseCircleIcon class="w-5 h-5" />
+                        <icons.CloseCircleIcon class="w-5 h-5" />
                     </button>
                 </Tooltip>
                 <Tooltip :key="`approveReviewTooltip${item.id}`" :text="__('Approve')" v-else>
                     <button class="text-amazon-600 dark:text-amazon-700" @click="approve">
-                        <CheckIcon class="w-5 h-5" />
+                        <icons.CheckIcon class="w-5 h-5" />
                     </button>
                 </Tooltip>
                 <Tooltip :key="`deleteReviewTooltip${item.id}`" :text="__('Delete')">
                     <button class="text-bittersweet-700 dark:text-bittersweet-800" @click="showDestroyConfirm = true">
-                        <TrashBinIcon class="w-5 h-5" />
+                        <icons.TrashBinIcon class="w-5 h-5" />
                     </button>
                 </Tooltip>
             </div>
@@ -152,14 +130,12 @@ const destroy = () => {
     <ConfirmationModal :is-danger="true" :show="showDestroyConfirm" @close="showDestroyConfirm = false" @confirmed="destroy" :form="form"
         busy-text="Deleting" recently-successful-text="Review deleted" button-text="Yes Delete review">
         <template #icon>
-            <WarningIcon class=" text-bittersweet-400 dark:text-bittersweet-500 w-11 h-11 mb-3.5 mx-auto" />
+            <icons.WarningIcon class=" text-bittersweet-400 dark:text-bittersweet-500 w-11 h-11 mb-3.5 mx-auto" />
             <p class="mb-4 text-gray-500 dark:text-gray-300 text-lg">
                     {{ __('This will permanently delete review from database.')}}</p>
             <div class="p-4">
                 <p>{{ item.owner?.name }} {{ __('wrote') }}:</p>
-                <article v-html="item.text">
-
-                </article>
+                <article v-html="item.text" />
             </div>
             <p class="mb-4 text-gray-500 dark:text-gray-300 text-lg">
                     {{ __('This action is not reversable!')}}</p>
@@ -168,5 +144,4 @@ const destroy = () => {
         </template>
 
     </ConfirmationModal>
-    <!-- <ReviewEditDialog :show="showReviewEditDialog" @close="showReviewEditDialog = false" :user="user" /> -->
 </template>

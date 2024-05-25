@@ -1,4 +1,14 @@
 // icons.js
+import AlignCenterIcon from '@/Components/TipTapIcons/AlignCenterIcon.vue'
+import AlignJustifyIcon from '@/Components/TipTapIcons/AlignJustifyIcon.vue'
+import AlignLeftIcon from '@/Components/TipTapIcons/AlignLeftIcon.vue'
+import AlignRightIcon from '@/Components/TipTapIcons/AlignRightIcon.vue'
+import BoldIcon from '@/Components/TipTapIcons/BoldIcon.vue'
+import HeadingIcon from '@/Components/TipTapIcons/HeadingIcon.vue'
+import HighlightIcon from '@/Components/TipTapIcons/HighlightIcon.vue'
+import ItalicIcon from '@/Components/TipTapIcons/ItalicIcon.vue'
+import ParagraphIcon from '@/Components/TipTapIcons/ParagraphIcon.vue'
+import TextSlashIcon from '@/Components/TipTapIcons/TextSlashIcon.vue'
 import AdjustmentsIcon from '@/Icons/AdjustmentsIcon.vue'
 import AgeRestrictionIcon from '@/Icons/AgeRestrictionIcon.vue'
 import AirConditionIcon from '@/Icons/AirConditionIcon.vue'
@@ -31,6 +41,7 @@ import CogIcon from '@/Icons/CogIcon.vue'
 import CommentDotsIcon from '@/Icons/CommentDotsIcon.vue'
 import CompressIcon from '@/Icons/CompressIcon.vue'
 import DesktopIcon from '@/Icons/DesktopIcon.vue'
+import DotsIcon from '@/Icons/DotsIcon.vue'
 import EditIcon from '@/Icons/EditIcon.vue'
 import ErrorIcon from '@/Icons/ErrorIcon.vue'
 import EyeIcon from '@/Icons/EyeIcon.vue'
@@ -106,28 +117,23 @@ import WhatsUpIcon from '@/Icons/WhatsUpIcon.vue'
 import WheelchairIcon from '@/Icons/WheelchairIcon.vue'
 import XIcon from '@/Icons/XIcon.vue'
 import YoutubePlayButtonIcon from '@/Icons/YoutubePlayButtonIcon.vue'
-import AlignCenterIcon from '@/Components/TipTapIcons/AlignCenterIcon.vue';
-import BoldIcon from '@/Components/TipTapIcons/BoldIcon.vue';
-import AlignLeftIcon from '@/Components/TipTapIcons/AlignLeftIcon.vue';
-import AlignRightIcon from '@/Components/TipTapIcons/AlignRightIcon.vue';
-import AlignJustifyIcon from '@/Components/TipTapIcons/AlignJustifyIcon.vue';
-import ParagraphIcon from '@/Components/TipTapIcons/ParagraphIcon.vue';
-import ItalicIcon from '@/Components/TipTapIcons/ItalicIcon.vue';
-import TextSlashIcon from '@/Components/TipTapIcons/TextSlashIcon.vue';
-import HighlightIcon from '@/Components/TipTapIcons/HighlightIcon.vue';
-import HeadingIcon from '@/Components/TipTapIcons/HeadingIcon.vue';
 
 export const icons = {
 
     AdjustmentsIcon,
     AgeRestrictionIcon,
     AirConditionIcon,
+    AlignCenterIcon,
+    AlignJustifyIcon,
+    AlignLeftIcon,
+    AlignRightIcon,
     ArrowDownIcon,
     ArrowRightIcon,
     ArrowUpIcon,
     ArrowUpRightIcon,
     AttachedBathroomIcon,
     BalconyIcon,
+    BoldIcon,
     BookOpenIcon,
     CableChannelsIcon,
     CalendarIcon,
@@ -151,6 +157,7 @@ export const icons = {
     CommentDotsIcon,
     CompressIcon,
     DesktopIcon,
+    DotsIcon,
     EditIcon,
     ErrorIcon,
     EyeIcon,
@@ -163,14 +170,17 @@ export const icons = {
     FullScreenIcon,
     FullyEquipedKitchenIcon,
     GardenViewIcon,
+    HeadingIcon,
     HeartIcon,
     HeatingIcon,
+    HighlightIcon,
     HomeIcon,
     HribiLogoIcon,
     ImageIcon,
     InfoIcon,
     InnerCourtyardViewIcon,
     InstagramIcon,
+    ItalicIcon,
     LandmarkIcon,
     LightbulbIcon,
     LogoIcon,
@@ -186,6 +196,7 @@ export const icons = {
     NonSmokingRoomsIcon,
     PagesIcon,
     PaperPlane,
+    ParagraphIcon,
     PartiesIcon,
     PatioIcon,
     PetsIcon,
@@ -193,9 +204,9 @@ export const icons = {
     PinterestIcon,
     PrivateBeachAreaIcon,
     PrivateKitchenIcon,
-    ReplyIcon,
     QueenBedIcon,
     QuietHoursIcon,
+    ReplyIcon,
     SearchIcon,
     ShareNodesIcon,
     SignOutIcon,
@@ -212,6 +223,7 @@ export const icons = {
     SunLogoIcon,
     TabletIcon,
     TerraceIcon,
+    TextSlashIcon,
     TrashBinIcon,
     TumblrIcon,
     TwitterIcon,
@@ -226,14 +238,4 @@ export const icons = {
     WheelchairIcon,
     XIcon,
     YoutubePlayButtonIcon,
-    AlignCenterIcon,
-    BoldIcon,
-    AlignLeftIcon,
-    AlignRightIcon,
-    AlignJustifyIcon,
-    ParagraphIcon,
-    ItalicIcon,
-    TextSlashIcon,
-    HighlightIcon,
-    HeadingIcon,
 };

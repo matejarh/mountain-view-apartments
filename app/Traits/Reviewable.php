@@ -54,12 +54,12 @@ trait Reviewable
      * @param string $text
      * @return void
      */
-    public function review(int $score, string $text): void
+    public function review(int $score, string $text): Review|null
     {
         if ($this->isReviewed()) {
             session()->flash('flash.banner', __('You have already reviewed this accomodation'));
             session()->flash('flash.bannerStyle', 'danger');
-            return;
+            return null;
         }
 
         $attributes = [
@@ -68,7 +68,7 @@ trait Reviewable
             'text' => $text,
         ];
 
-        $this->reviews()->forceCreate($attributes);
+        return $this->reviews()->forceCreate($attributes);
     }
 
     /**

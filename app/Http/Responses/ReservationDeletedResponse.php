@@ -17,6 +17,6 @@ class ReservationDeletedResponse implements ReservationDeleteResponseContract
     {
         return $request->wantsJson()
             ? new JsonResponse('', 201)
-            : back()->with('status', 'reservation-deleted');
+            : redirect(route('admin.reservations.index'))->with('status', 'reservation-deleted');
     }
 }
