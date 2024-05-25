@@ -17,6 +17,6 @@ class InquiryDeletedResponse implements InquiryDeleteResponseContract
     {
         return $request->wantsJson()
             ? new JsonResponse('', 201)
-            : back()->with('status', 'inquiry-deleted');
+            : redirect(route('admin.inquiries.index'))->with('status', 'inquiry-deleted');
     }
 }

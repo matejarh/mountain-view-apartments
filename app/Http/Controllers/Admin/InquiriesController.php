@@ -35,8 +35,8 @@ class InquiriesController extends Controller
         Gate::authorize('viewAny', Inquiry::class);
 
 
-        $inquiries = Inquiry::with('property')->latest()
-            ->filter($filters)->get()
+        $inquiries = Inquiry::with('owner', 'property')->latest()
+            ->filter($filters)/* ->get()
             ->map(function ($inquiry) {
                 return [
                     'id' => $inquiry->id,
@@ -67,14 +67,14 @@ class InquiriesController extends Controller
                 ];
             })
 
-            ->sortByDesc('updated_at') // Order by latest
-            ->paginate(24, null,null, __('page')) // Paginate with 24 items per page
+            ->sortByDesc('updated_at') // Order by latest */
+            ->paginate(24, ['*'], __('page')) // Paginate with 24 items per page
             ->onEachSide(2) // Show pagination links on each side
             ->withQueryString(); // Maintain query string in pagination links
 
         return Inertia::render('Admin/Inquiries/Index', [
             'inquiries' => $inquiries,
-            'filters' => $request->only(['search']),
+            'filters' => $request->only(['search', 'answered', 'notAnswered']),
             'can' => [
                 'view_inquiries' => auth()->user()->can('viewAny', Inquiry::class),
             ],

@@ -23,6 +23,8 @@ const form = ref({
     search: page.props?.filters.search,
     approved: page.props?.filters.approved,
     notApproved: page.props?.filters.notApproved,
+    answered: page.props?.filters.answered,
+    notAnswered: page.props?.filters.notAnswered,
 })
 
 const debouncedHandler = debounce(() => {
@@ -36,8 +38,11 @@ const debouncedHandler = debounce(() => {
 watch(form, debouncedHandler, { deep: true });
 watch(props, () => {
     if(props.filters) {
-        form.value.approved = props.filters.approved
-        form.value.notApproved = props.filters.notApproved
+        form.value.approved = props.filters?.approved
+        form.value.notApproved = props.filters?.notApproved
+        form.value.answered = props.filters?.answered
+        form.value.notAnswered = props.filters?.notAnswered
+
     }
 })
 const reset = () => {

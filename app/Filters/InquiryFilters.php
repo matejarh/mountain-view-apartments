@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 class InquiryFilters extends Filters
 {
-    protected $filters = ['search'];
+    protected $filters = ['search', 'answered', 'notAnswered'];
 
     /**
      * Filter the query
@@ -23,6 +23,17 @@ class InquiryFilters extends Filters
                 ->orWhere('message', 'like', '%' . $search . '%');
         });
 
+    }
+
+
+    public function answered() :Builder
+    {
+        return  $this->builder->whereNotNull('read_at');
+    }
+
+    public function notAnswered($query) :Builder
+    {
+        return $this->builder->whereNull('read_at');
     }
 
 }
