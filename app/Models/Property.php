@@ -283,7 +283,7 @@ class Property extends Model
      */
     public function getUnavailableDates($startDate, $endDate)
     {
-        $reservations = $this->reservations()
+        $reservations = $this->reservations()->confirmed()->paymentReceived()
             ->where(function ($query) use ($startDate, $endDate) {
                 $query->whereBetween('arrival', [$startDate, $endDate])
                     ->orWhereBetween('departure', [$startDate, $endDate])
