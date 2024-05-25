@@ -49,8 +49,8 @@ Route::group(['prefix' => '{lang}', 'middleware' => 'web'], function () {
     Route::get('/discover/nassfeld', [PagesController::class, 'nassfeld'])->name('discover.nassfeld');
 
     Route::name('stories.')->prefix('stories')->namespace('stories')->group(function () {
-        Route::get('/{story}', [StoriesController::class, 'show'])->name('show');
         Route::get('/', [StoriesController::class, 'index'])->name('index');
+        Route::get('/{story}', [StoriesController::class, 'show'])->name('show');
     });
 
 });
@@ -90,19 +90,19 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
     Route::group(['prefix' => '{lang}', 'middleware' => 'web'], function () {
 
         Route::name('reviews.')->prefix('my-reviews')->namespace('reviews')->group(function () {
-            Route::get('/for/{property}/create', [ReviewsController::class, 'create'])->name('create');
-            Route::get('/{review}', [ReviewsController::class, 'show'])->name('show');
             Route::get('/', [ReviewsController::class, 'index'])->name('index');
+            Route::get('/{review}', [ReviewsController::class, 'show'])->name('show');
+            Route::get('/for/{property}/create', [ReviewsController::class, 'create'])->name('create');
         });
 
         Route::name('inquiries.')->prefix('my-inquiries')->namespace('inquiries')->group(function () {
-            Route::get('/{inquiry}', [InquiriesController::class, 'show'])->name('show');
             Route::get('/', [InquiriesController::class, 'index'])->name('index');
+            Route::get('/{inquiry}', [InquiriesController::class, 'show'])->name('show');
         });
 
         Route::name('reservations.')->prefix('my-reservations')->namespace('reservations')->group(function () {
-            Route::get('/{reservation}', [ReservationsController::class, 'show'])->name('show');
             Route::get('/', [ReservationsController::class, 'index'])->name('index');
+            Route::get('/{reservation}', [ReservationsController::class, 'show'])->name('show');
         });
 
     });
