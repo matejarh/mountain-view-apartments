@@ -1,11 +1,10 @@
 <script setup>
 import { computed, ref } from 'vue';
-import EyeIcon from '@/Icons/EyeIcon.vue';
-import MessageIcon from '@/Icons/MessageIcon.vue';
 import NavDropdown from './NavDropdown.vue';
 import { useForm, usePage } from '@inertiajs/vue3';
 import formatNumber from '@/mixins/numberToKilo';
 import { getFormattedDate } from '@/utils/date';
+import { icons } from '@/icons';
 
 const show = ref(false)
 
@@ -78,7 +77,7 @@ const readAll = () => {
                     :key="notification.id"
                     class="flex py-3 px-4 border-b hover:bg-gray-100 dark:hover:bg-gray-600 dark:border-gray-600">
                     <div class="flex-shrink-0">
-                        <MessageIcon class="w-11 h-11 transform -scale-x-100 text-gray-500  rounded-full" />
+                        <icons.MessageIcon class="w-11 h-11 transform -scale-x-100 text-gray-500  rounded-full" />
 
                     </div>
                     <div class="pl-3 w-full">
@@ -205,7 +204,7 @@ const readAll = () => {
             <button @click="readAll"
                 class="block w-full py-2 text-md font-medium text-center text-gray-900 bg-gray-50 hover:bg-gray-100 dark:bg-gray-600 hover:dark:bg-gray-500 dark:text-white dark:hover:underline">
                 <div class="inline-flex items-center">
-                    <EyeIcon class="mr-2 w-4 h-4 text-gray-500 dark:text-gray-400" />
+                    <icons.EyeIcon class="mr-2 w-4 h-4 text-gray-500 dark:text-gray-400" />
                     {{__('Read all')}}
                 </div>
             </button>
