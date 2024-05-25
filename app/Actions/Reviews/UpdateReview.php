@@ -20,8 +20,8 @@ class UpdateReview implements UpdatesReviews
     {
 
         $validator = Validator::make($input, [
-            'score' => ['required', 'integer', 'max:5', 'min:1'] ,
-            'text' => ['required', 'string', 'min:5', 'max:100', new SpamFree, 'unique:reviews'],
+            'score' => ['integer', 'max:5', 'min:1'] ,
+            'text' => ['string', 'min:5', 'max:100', new SpamFree, 'unique:reviews'],
         ]);
 
         //dd($validator);
