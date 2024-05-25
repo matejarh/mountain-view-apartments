@@ -20,6 +20,7 @@ use App\Filters\ReservationFilters;
 use App\Http\Controllers\Controller;
 use App\Models\Property;
 use App\Models\Reservation;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
@@ -47,6 +48,39 @@ class ReservationsController extends Controller
                 'view_reservations' => auth()->user()->can('viewAny', Reservation::class),
             ],
 
+        ]);
+    }
+
+    /**
+     * Renders and returns given reservation page
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Reservation  $reservation
+     * @return \Inertia\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function show(Request $request, Reservation $reservation): Response|RedirectResponse
+    {
+        Gate::authorize('update', $reservation);
+
+        if($request->has('confirm') && $request->get('confirm') === '1') {
+            $reservation->confirm();
+
+            return redirect(route('admin.reservations.show', $reservation))->with('flash.banner', __('Reservation has been approved.'));
+        }
+
+        if($request->has('reject') && $request->get('reject') === '1') {
+            $reservation->reject();
+
+            return redirect(route('admin.reservations.show', $reservation))->with('flash.banner', __('Reservation has been rejected.'));
+        }
+
+        return Inertia::render('Admin/Reservations/Show', [
+            'reservation' => Reservation::with('owner', 'property')->find($reservation->id),
+            'can' => [
+                'view_reservation' => auth()->user()->can('view', $reservation),
+                'delete_reservation' => auth()->user()->can('delete', $reservation),
+            ],
         ]);
     }
 
