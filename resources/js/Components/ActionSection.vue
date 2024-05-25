@@ -1,9 +1,6 @@
 <script setup>
-import ArrowDownIcon from '@/Icons/ArrowDownIcon.vue';
-import SectionTitle from './SectionTitle.vue';
 import Tooltip from './Tooltip.vue';
 import CarretLeftIcon from '@/Icons/CarretLeftIcon.vue';
-import { router } from '@inertiajs/vue3'
 
 defineProps({
     fullwidth: {
@@ -22,16 +19,7 @@ const goBack = () => {
 
 <template>
     <div class="md:grid md:grid-cols-2 md:gap-6">
-        <!-- <SectionTitle>
-            <template #title>
-                <slot name="title" />
-            </template>
-            <template #description>
-                <slot name="description" />
-            </template>
-        </SectionTitle> -->
-
-        <div class="mt-5 md:mt-0 md:col-span-2 " :class="{'max-w-screen-xl' : !fullwidth}">
+        <div class="mt-5 md:mt-0 md:col-span-2 " :class="{'md:max-w-screen-xl lg:max-w-screen-2xl' : !fullwidth}">
             <div class="space-y-4 px-4 py-5 sm:p-6 bg-white dark:bg-gray-900 text-gray-950 dark:text-gray-50 shadow sm:rounded-lg">
                 <div class="flex items-center">
                     <button v-if="back" @click="goBack">
