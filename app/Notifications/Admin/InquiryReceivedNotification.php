@@ -56,7 +56,8 @@ class InquiryReceivedNotification extends Notification implements ShouldQueue
         return [
             'title' => 'New Inquiry Received',
             'message' => 'New inquiry for ' . $this->inquiry->property->name . ' received',
-            'link' => route('admin.inquiries.show', $this->inquiry)
+            'link' => route('admin.inquiries.show', $this->inquiry),
+            'icon' => 'NewInquiryIcon',
         ];
     }
 }

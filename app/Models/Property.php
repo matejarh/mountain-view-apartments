@@ -26,12 +26,12 @@ class Property extends Model
      *
      * @var array
      */
-/*     protected $attributes = [
-        'title' => $this->langArray(),
-        'description' => $this->langArray(),
-        'keywords' => $this->langArray(),
-        'rules' => $this->langArray(),
-    ]; */
+    /*     protected $attributes = [
+            'title' => $this->langArray(),
+            'description' => $this->langArray(),
+            'keywords' => $this->langArray(),
+            'rules' => $this->langArray(),
+        ]; */
 
     protected $casts = [
         'coordinates' => 'object',
@@ -56,6 +56,7 @@ class Property extends Model
         'is_liked',
         'is_reviewed',
         'average_review_score',
+        'unavailable_dates',
     ];
 
     /**
@@ -143,10 +144,22 @@ class Property extends Model
         return $this->belongsToMany(Gallery::class, 'properties_galleries', 'property_id', 'gallery_id')->latest();
     }
 
-    public function langArray() :array
+    /**
+     * Get the reservations associated with the property.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function reservations(): HasMany
+    {
+        return $this->hasMany(Reservation::class)->latest();
+    }
+
+    public function langArray(): array
     {
         $langarray = [];
-        foreach (config('app.supported_locales') as $key => $value) { $langarray[$value] = ''; }
+        foreach (config('app.supported_locales') as $key => $value) {
+            $langarray[$value] = '';
+        }
         return $langarray;
     }
 
@@ -206,17 +219,17 @@ class Property extends Model
         return "https://api.dicebear.com/8.x/pixel-art/svg?seed=" . urlencode($this->slug) . ""; // icons | pixel-art | ident ...  check https://www.dicebear.com/styles/
     }
 
-    public function avatarUrl( ) :string
+    public function avatarUrl(): string
     {
         return $this->galleries->count() > 0 ? $this->galleries[0]->images[0]->thumb_url : $this->defaultPhotoUrl();
     }
 
-    public function getAvatarUrlAttribute( ) :string
+    public function getAvatarUrlAttribute(): string
     {
         return $this->avatarUrl();
     }
 
-    public function seoDescription( ) :array
+    public function seoDescription(): array
     {
         $striped = [];
         foreach (config('app.supported_locales') as $key => $locale) {
@@ -224,9 +237,14 @@ class Property extends Model
         }
         return $striped;
     }
-    public function getSeoDescriptionAttribute( ) :array
+    public function getSeoDescriptionAttribute(): array
     {
         return $this->seoDescription();
+    }
+
+    public function getUnavailableDatesAttribute(): array
+    {
+        return $this->getUnavailableDates(now(), now()->addYears(7));
     }
 
     /**
@@ -242,9 +260,9 @@ class Property extends Model
 
     }
 
-    public function fetchListForDropdowns() : \Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection
+    public function fetchListForDropdowns(): \Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection
     {
-        $properties = Property::latest()->get()->map(function($property) {
+        $properties = Property::latest()->get()->map(function ($property) {
             return [
                 'slug' => $property->slug,
                 'type' => $property->type,
@@ -254,5 +272,45 @@ class Property extends Model
         });
 
         return $properties;
+    }
+
+    /**
+     * Get all unavailable dates within a given date range.
+     *
+     * @param string $startDate The start date of the range.
+     * @param string $endDate The end date of the range.
+     * @return array An array of unavailable dates.
+     */
+    public function getUnavailableDates($startDate, $endDate)
+    {
+        $reservations = $this->reservations()
+            ->where(function ($query) use ($startDate, $endDate) {
+                $query->whereBetween('arrival', [$startDate, $endDate])
+                    ->orWhereBetween('departure', [$startDate, $endDate])
+                    ->orWhere(function ($query) use ($startDate, $endDate) {
+                        $query->where('arrival', '<=', $startDate)
+                            ->where('departure', '>=', $endDate);
+                    });
+            })
+            ->get();
+
+        // Initialize an array to hold the unavailable dates
+        $unavailableDates = [];
+
+        // Loop through each reservation and add the dates to the array
+        foreach ($reservations as $reservation) {
+            $currentDate = \Carbon\Carbon::parse($reservation->arrival);
+            $endDate = \Carbon\Carbon::parse($reservation->departure);
+
+            // Add all dates between arrival and departure to the array
+            while ($currentDate->lte($endDate)) {
+                $unavailableDates[] = $currentDate->toDateString();
+                $currentDate->addDay();
+            }
+        }
+
+        // Return the array of unavailable dates
+        return array_unique($unavailableDates);
+
     }
 }

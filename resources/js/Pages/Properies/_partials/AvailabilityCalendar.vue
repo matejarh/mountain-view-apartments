@@ -22,7 +22,9 @@ const __ = appContext.config.globalProperties.__;
 
 const date = ref([]);
 
-const disabledDates = ref(["2024-06-11", "2024-06-12", "2024-06-13", "2024-06-14", "2024-06-31"]);
+const disabledDates = computed(() => {
+    return page.props.property.unavailable_dates
+});
 
 const addDays = (date, days) => {
     const result = new Date(date);
@@ -49,7 +51,7 @@ const notAvailableMarkers = computed(() => {
     return markers
 })
 
-const highlightedDates = ref(["2024-05-11", "2024-05-12", "2024-05-13", "2024-05-14"])
+const highlightedDates = ref([/* "2024-05-11", "2024-05-12", "2024-05-13", "2024-05-14" */])
 
 const datepickerRange = page.props?.settings?.find(setting => setting.slug === 'datepicker-range')
 
@@ -81,7 +83,7 @@ const options = ref({
 })
 watch(disabledDates, () => {
     dateRangePicker.update({
-        disabledDates: disabledDates.value,
+        disabledDates: disabledDates,
         markers: notAvailableMarkers,
         highlight: highlightedDates.value,
     });
@@ -109,7 +111,6 @@ const book = () => {
             <div class="mx-auto max-w-screen-xl text-center">
                 <h2 class="mb-4 text-4xl tracking-tight font-extrabold leading-tight text-white dark:text-white">
                     {{ __('Availability Calendar') }}</h2>
-
                 <div class="flex justify-center w-full mb-2">
                     <div id="rangepicker">
                         <VueDatePicker v-model="date" :range="options.range" :multi-calendars="options.multi"

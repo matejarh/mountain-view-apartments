@@ -32,8 +32,8 @@ class CreateReservation implements CreatesReservations
             'departure' => __('Departure'),
         );
 
-        $arrival = $input['arrival']->format('Y-m-d') . ' 16:00:00';
-        $departure = $input['departure']->format('Y-m-d') . ' 12:00:00';
+        $arrival = \Carbon\Carbon::parseFromLocale($input['arrival'], app()->currentLocale())->format('Y-m-d') . ' 16:00:00';
+        $departure = \Carbon\Carbon::parseFromLocale($input['departure'], app()->currentLocale())->format('Y-m-d') . ' 12:00:00';
         $propertyId = $property->id;
 
         $input['date_range'] = [$arrival,$departure];
@@ -52,12 +52,12 @@ class CreateReservation implements CreatesReservations
             'captcha_token' => [new Recaptcha],
 
         ], [
-            'arrival.required' => 'Arrival date is required.',
-            'arrival.date' => 'Arrival date must be a valid date.',
-            'arrival.before' => 'Arrival date must be before the departure date.',
-            'departure.required' => 'Departure date is required.',
-            'departure.date' => 'Departure date must be a valid date.',
-            'departure.after' => 'Departure date must be after the arrival date.',
+            'arrival.required' => __('Arrival date is required.'),
+            'arrival.date' => __('Arrival date must be a valid date.'),
+            'arrival.before' => __('Arrival date must be before the departure date.'),
+            'departure.required' => __('Departure date is required.'),
+            'departure.date' => __('Departure date must be a valid date.'),
+            'departure.after' => __('Departure date must be after the arrival date.'),
         ]);
 
         //dd($validator);

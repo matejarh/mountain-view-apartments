@@ -44,8 +44,8 @@ class ReservationsTest extends TestCase
         $property = Property::factory()->create();
 
         $reservation1 = [
-            'arrival' => now()->addWeek(),
-            'departure' => now()->addWeek()->addDays(3),
+            'arrival' => now()->addWeek()->format('Y-m-d'),
+            'departure' => now()->addWeek()->addDays(3)->format('Y-m-d'),
             'guests' => [
                 'adults' => 2,
                 'children' => 1,
@@ -60,8 +60,8 @@ class ReservationsTest extends TestCase
         Notification::assertSentTo([$this->admin], ReservationReceived::class);
 
         $reservation2 = [
-            'arrival' => now()->addWeek()->addDays(2),
-            'departure' => now()->addWeek()->addDays(5),
+            'arrival' => now()->addWeek()->addDays(2)->format('Y-m-d'),
+            'departure' => now()->addWeek()->addDays(5)->format('Y-m-d'),
             'guests' => [
                 'adults' => 2,
                 'children' => 1,
@@ -75,8 +75,8 @@ class ReservationsTest extends TestCase
         $response->assertStatus(302)->assertSessionHasErrors('date_range','The selected date range is not available.');
 
         $reservation3 = [
-            'arrival' => now()->addWeek()->addDays(3),
-            'departure' => now()->addWeek()->addDays(5),
+            'arrival' => now()->addWeek()->addDays(3)->format('Y-m-d'),
+            'departure' => now()->addWeek()->addDays(5)->format('Y-m-d'),
             'guests' => [
                 'adults' => 2,
                 'children' => 1,
