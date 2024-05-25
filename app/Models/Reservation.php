@@ -13,7 +13,8 @@ class Reservation extends Model
 
     protected $casts = [
         'guests' => 'object',
-        'date' => 'array',
+        'arrival' => 'datetime',
+        'departure' => 'datetime',
         'confirmed_at' => 'datetime',
         'payment_received_at' => 'datetime',
     ];
