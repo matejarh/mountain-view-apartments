@@ -88,6 +88,24 @@ class Reservation extends Model
 
     }
 
+    public function scopeConfirmed(Builder $query) :Builder
+    {
+        return $query->whereNotNull('confirmed_at');
+    }
+
+    public function scopeUnConfirmed(Builder $query) :Builder
+    {
+        return $query->whereNull('confirmed_at');
+    }
+    public function scopePaymentReceived(Builder $query) :Builder
+    {
+        return $query->whereNotNull('payment_received_at');
+    }
+    public function scopePaymentNotReceived(Builder $query) :Builder
+    {
+        return $query->whereNull('payment_received_at');
+    }
+
     /**
      * Confirmes reservation
      */
