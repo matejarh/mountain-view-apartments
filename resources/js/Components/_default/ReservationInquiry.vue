@@ -80,6 +80,7 @@ const store = () => {
     form.clearErrors()
     showInquiryConfirmationModal.value = false
     form.post(`/send-inquiry/${propertyProxy.value.slug}`, {
+        errorBag: 'creatingInquiry',
         onSuccess: () => {
             form.reset()
             emit('close')
@@ -140,7 +141,7 @@ const store = () => {
 
                 <TextInput id="children" v-model="form.children" type="number" min="0" max="4" step="1" class="mt-1 block w-full"
                     :has-error="!!form.errors.children" />
-                <InputError :message="form.errors.children" class="mt-2" />
+                c
             </div>
             <div class="mt-4">
                 <InputLabel class="inline-flex items-center justify-center  cursor-pointer w-full">
@@ -179,7 +180,7 @@ const store = () => {
                             six-weeks="center"
                             :placeholder="__('Select arrival & departure dates') + '...'"
                             ></VueDatePicker>
-
+            <InputError :message="form.errors.date_range" class="mt-2" />
         </div>
         <div class="mt-4">
 
