@@ -36,18 +36,18 @@ class UpdateReservation implements UpdatesReservations
         $departure = isset($input['departure']) ? $input['departure']->format('Y-m-d') . ' 12:00:00' : $reservation->departure;
         $propertyId = $reservation->property_id;
 
-        $input['date_range'] = [$arrival,$departure];
+        $input['date_range'] = [$arrival, $departure];
 
         $validator = Validator::make($input, [
 
-            'message' => ['nullable', 'string', 'min:10', 'max:1000', new SpamFree],
-            'guests' => ['nullable', 'array', 'min:1'],
-            'guests.adults' => ['nullable', 'min:1', 'integer', 'max:10'],
-            'guests.kids' => ['nullable', 'min:1', 'integer', 'max:10'],
+            'message' => ['string', 'min:10', 'max:1000', new SpamFree],
+            'guests' => ['array', 'min:1'],
+            'guests.adults' => ['min:1', 'integer', 'max:10'],
+            'guests.kids' => ['min:1', 'integer', 'max:10'],
             'guests.pets' => ['boolean'],
-            'arrival' => ['nullable', 'date', 'before:departure', new AllowedBookingRange],
-            'departure' => ['nullable', 'date', 'after:arrival', new AllowedBookingRange],
-            'date_range' => ['nullable', new DateRangeOverlap($propertyId, $reservation->id)],
+            'arrival' => ['date', 'before:departure', new AllowedBookingRange],
+            'departure' => ['date', 'after:arrival', new AllowedBookingRange],
+            'date_range' => [new DateRangeOverlap($propertyId, $reservation->id)],
             'captcha_token' => [new Recaptcha],
         ]);
 
