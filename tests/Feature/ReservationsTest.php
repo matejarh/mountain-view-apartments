@@ -59,6 +59,10 @@ class ReservationsTest extends TestCase
 
         Notification::assertSentTo([$this->admin], ReservationReceived::class);
 
+        $reservation1 = Reservation::first();
+        $reservation1->confirm();
+        $reservation1->approvePayment();
+
         $reservation2 = [
             'arrival' => now()->addWeek()->addDays(2)->format('Y-m-d'),
             'departure' => now()->addWeek()->addDays(5)->format('Y-m-d'),
