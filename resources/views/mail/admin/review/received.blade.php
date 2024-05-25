@@ -3,7 +3,7 @@ $buttons=[
 [
 'url' => route('admin.reviews.show', ['review' => $review, 'approve' => true]),
 'color' => 'green',
-'align' => 'center',
+'align' => 'left',
 'text' => 'Approve'
 ],
 [
@@ -12,16 +12,23 @@ $buttons=[
 'align' => 'center',
 'text' => 'Reject'
 ],
+[
+'url' => route('admin.reviews.show', ['review' => $review]),
+'color' => 'primary',
+'align' => 'right',
+'text' => 'Show'
+],
 ];
 @endphp
 <x-mail::message>
 # {{__('New review for')}} {{ $review->reviewed_trimed[0]['title']->$lang }}
 
-{{__('from')}} **{{ $review->owner->name }}** {{__('received')}}:
+{{__('from')}} **{{ $review->owner->name }}**:
 
 ![{{$review->reviewed_trimed[0]['title']->$lang}}s {{__('image')}}]({{$review->reviewed_trimed[0]['avatar_url']}})
 
-## {{__('Review content')}}:
+## {{__('Score')}}: {{$review->score}}
+## {{__('Content')}}:
 
 <x-mail::panel>
 {!! $review->text !!}

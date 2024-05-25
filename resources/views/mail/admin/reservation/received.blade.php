@@ -1,10 +1,44 @@
+@php
+$buttons=[
+[
+'url' => route('admin.reservations.show', ['reservation' => $reservation, 'confirm' => true]),
+'color' => 'green',
+'align' => 'left',
+'text' => 'Confirm'
+],
+[
+'url' => route('admin.reservations.show', ['reservation' => $reservation, 'reject' => true]),
+'color' => 'red',
+'align' => 'center',
+'text' => 'Reject'
+],
+[
+'url' => route('admin.reservations.show', ['reservation' => $reservation]),
+'color' => 'primary',
+'align' => 'right',
+'text' => 'Show'
+],
+];
+@endphp
 <x-mail::message>
-# {{__('New reservation from')}} {{ $reservation->user->name }}
+# {{__('New reservation')}} {{__('from')}} {{ $reservation->owner->name }}
+## {{__('for')}} **{{ $reservation->property->title->$lang }}**
 
-The body of your message.
+<x-mail::panel>
+{{ $reservation->message }}
 
-<x-mail::button :url="''">
-Button Text
+- {{__('Adults')}}: {{$reservation->guests->adults}}
+- {{__('Children')}}: {{$reservation->guests->children}}
+- {{__('Pets')}}: {{$reservation->guests->pets ? __('Yes') : __('No')}}
+</x-mail::panel>
+
+<x-mail::table>
+| {{__('Arrival Date')}} | {{__('Departure Date')}} |
+| :-------------: |:-------------:|
+| {{\Carbon\Carbon::parse($reservation->arrival)->locale($lang)->isoFormat('LLLL')}} | {{\Carbon\Carbon::parse($reservation->departure)->locale($lang)->isoFormat('LLLL')}} |
+</x-mail::table>
+
+<x-mail::buttons :buttons="$buttons">
 </x-mail::button>
 
 <x-mail::subcopy>

@@ -12,11 +12,8 @@ use App\Http\Controllers\Admin\ReservationsController;
 use App\Http\Controllers\Admin\ReviewsController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\UsersController;
-use App\Models\Inquiry;
-use App\Models\Property;
-use App\Models\User;
-use App\Notifications\Admin\InquiryReceivedNotification;
-use Laravel\Fortify\RoutePath;
+
+
 
 
 
@@ -130,12 +127,7 @@ Route::group(['middleware' => config('jetstream.middleware')], function () {
         });
 
         Route::name('notifications.')->prefix('notifications')->namespace('notifications')->group(function() {
-            Route::get('/preview', function () {
-                $property = Property::find(3);
-
-                return (new InquiryReceivedNotification($property->inquiries[0]))
-                            ->toMail(User::adminsMailingList());
-            });
+            Route::get('/preview/{notification}/{items}', [NotificationsController::class, 'preview'])->name('preview');
             Route::get('{notification}', [NotificationsController::class, 'show'])->name('show');
             Route::get('/', [NotificationsController::class, 'index'])->name('index');
             //Route::put('{notification}', [NotificationsController::class, 'update'])->name('update');

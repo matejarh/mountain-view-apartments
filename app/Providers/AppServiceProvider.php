@@ -45,6 +45,11 @@ class AppServiceProvider extends ServiceProvider
             }); */
         });
 
+        RateLimiter::for('one-per-hour', function (Request $request) {
+            $throttleKey = str(str($request->input(Fortify::username()))->lower() . '|' . $request->ip())->transliterate();
+            return Limit::perHour(1)->by($throttleKey);
+        });
+
         RateLimiter::for('admins', function (Request $request) {
             return Limit::perMinute(120)->by($request->session()->get('login.id'));
         });
@@ -58,7 +63,8 @@ class AppServiceProvider extends ServiceProvider
          * @param string $pageName
          * @return array
          */
-        Collection::macro('paginate', function ($perPage, $total = null, $page = null, $pageName = 'page') : LengthAwarePaginator {
+        Collection::macro('paginate', function ($perPage, $total = null, $page = null, $pageName = 'page') : LengthAwarePaginator
+        {
             $page = $page ?: LengthAwarePaginator::resolveCurrentPage($pageName);
             return new LengthAwarePaginator(
                 $this->forPage($page, $perPage),

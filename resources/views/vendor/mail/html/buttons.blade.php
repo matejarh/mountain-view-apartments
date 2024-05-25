@@ -18,8 +18,8 @@
 <table border="0" cellpadding="4" cellspacing="0" role="presentation">
 <tr>
 @foreach ($buttons as $button)
-<td>
-<a href="{{ $button['url'] }}" class="button button-{{ $button['color'] }}" target="_blank" rel="noopener">{{ $button['text'] }}</a>
+<td align="{{ $button['align'] }}">
+<a href="{{ $button['url'] }}" class="button button-{{ $button['color'] }}" target="_blank" rel="noopener">{{ __($button['text']) }}</a>
 </td>
 @endforeach
 </tr>

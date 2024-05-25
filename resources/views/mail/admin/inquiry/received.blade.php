@@ -14,12 +14,9 @@
 </x-mail::panel>
 
 <x-mail::table>
-
-
 | {{__('Arrival Date')}} | {{__('Departure Date')}} |
 | :-------------: |:-------------:|
-| {{\Carbon\Carbon::parse($inquiry->date[0])->locale($lang)->toDateString()}} | {{\Carbon\Carbon::parse($inquiry->date[0])->locale($lang)->toDateString()}} |
-
+| {{\Carbon\Carbon::parse($inquiry->date[0])->locale($lang)->isoFormat('LLLL')}} | {{\Carbon\Carbon::parse($inquiry->date[0])->locale($lang)->isoFormat('LLLL')}} |
 </x-mail::table>
 
 <x-mail::button :url="route('admin.inquiries.show', $inquiry)">

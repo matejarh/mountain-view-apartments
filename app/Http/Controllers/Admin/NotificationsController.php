@@ -12,7 +12,11 @@ use App\Contracts\ReadsAllNotifications;
 use App\Contracts\ReadsNotifications;
 use App\Http\Controllers\Controller;
 use App\Models\Notification;
+use App\Models\Property;
+use App\Models\User;
+use App\Notifications\Admin\ReservationReceived;
 use Illuminate\Http\Request;
+use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\Facades\Gate;
 
 class NotificationsController extends Controller
@@ -27,6 +31,8 @@ class NotificationsController extends Controller
      */
     public function read(Request $request, ReadsNotifications $reader): NotificationReadResponse
     {
+        Gate::authorize('update', Notification::find($request->only('id')['id']));
+
         $reader->read($request->only('id')['id']);
 
         return app(NotificationReadResponse::class);
@@ -42,6 +48,8 @@ class NotificationsController extends Controller
      */
     public function readAll(Request $request, ReadsAllNotifications $reader): NotificationReadAllResponse
     {
+        Gate::authorize('update', Notification::class);
+
         $reader->readAll();
 
         return app(NotificationReadAllResponse::class);
@@ -57,6 +65,8 @@ class NotificationsController extends Controller
      */
     public function destroy(Request $request, DeletesNotifications $destroyer): NotificationDeleteResponse
     {
+        Gate::authorize('delete', Notification::find($request->only('id')['id']));
+
         $destroyer->destroy($request->only('id')['id']);
 
         return app(NotificationDeleteResponse::class);
@@ -72,8 +82,31 @@ class NotificationsController extends Controller
      */
     public function destroyAll(Request $request, DeletesAllNotifications $destroyer): NotificationDeleteAllResponse
     {
+        Gate::authorize('update', Notification::class);
         $destroyer->destroyAll();
 
         return app(NotificationDeleteAllResponse::class);
+    }
+
+    /** Previews notificaition with given attributes
+     *
+     */
+    public function preview(Request $request, $notification, $items): MailMessage
+    {
+        Gate::authorize('viewAny', Notification::class);
+
+        $notificationClass = "\\App\\Notifications\\Admin\\" . ucfirst($notification);
+        //$itemsClass = "\\App\\Model\\" . ucfirst($items);
+
+        if (!class_exists($notificationClass)) {
+            abort(404, 'Notification class not found.');
+        }
+
+        $property = Property::with($items)->findOrFail(1);
+
+        $i = $property->$items->count() > 0 ? $property->$items[0] : abort(404, "No $items found");
+
+        return (new $notificationClass($i))
+            ->toMail(User::adminsMailingList());
     }
 }

@@ -61,12 +61,14 @@ class ReviewsController extends Controller
 
         if($request->has('approve') && $request->get('approve') === '1') {
             $review->approve();
-            return redirect(route('admin.reviews.show', $review));
+
+            return redirect(route('admin.reviews.show', $review))->with('flash.banner', __('Review has been approved.'));
         }
 
         if($request->has('reject') && $request->get('reject') === '1') {
             $review->reject();
-            return redirect(route('admin.reviews.show', $review));
+
+            return redirect(route('admin.reviews.show', $review))->with('flash.banner', __('Review has been rejected.'));
         }
 
         return Inertia::render('Admin/Reviews/Show', [
