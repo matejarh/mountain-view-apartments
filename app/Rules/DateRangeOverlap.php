@@ -24,7 +24,10 @@ class DateRangeOverlap implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        $exist = Reservation::whereNot('id', $this->selfId)->where('property_id', $this->propertyId)
+        $exist = Reservation::confirmed()
+            ->paymentReceived()
+            ->whereNot('id', $this->selfId)
+            ->where('property_id', $this->propertyId)
             ->where(function ($query) use ($value) {
                 $query->whereBetween('arrival', [$value[0], $value[1]])
                     ->orWhereBetween('departure', [$value[0], $value[1]])
@@ -35,7 +38,7 @@ class DateRangeOverlap implements ValidationRule
                     /* ->orWhere(function ($query) {
                         $query->where('arrival', '<', $this->departure)
                             ->where('departure', '>', $this->arrival);
-                    }) */;
+                    }) */ ;
             })->exists();
 
         //dd($exist);
