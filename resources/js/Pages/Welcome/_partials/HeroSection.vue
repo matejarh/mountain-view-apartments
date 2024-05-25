@@ -1,7 +1,7 @@
 <script setup>
 import HeroTitlesCarousel from '@/Components/_default/Welcome/HeroTitlesCarousel.vue';
 import { router, usePage } from '@inertiajs/vue3';
-import { initCarousels } from 'flowbite';
+/* import { initCarousels } from 'flowbite'; */
 import { onBeforeUnmount, onMounted, ref, computed } from 'vue';
 import LogoHero from '@/Components/LogoHero.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
@@ -32,7 +32,7 @@ const scrollTo = (view) => {
 }
 
 onMounted(() => {
-    initCarousels()
+    // initCarousels()
 })
 
 </script>

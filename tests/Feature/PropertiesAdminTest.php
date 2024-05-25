@@ -10,6 +10,7 @@ use App\Models\Property;
 use App\Models\Review;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Notification;
 use SebastianBergmann\Type\VoidType;
 use Tests\TestCase;
 
@@ -23,7 +24,7 @@ class PropertiesAdminTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-
+        Notification::fake();
         $property = [
             'user_id' => $this->admin->id,
             'type' => "One-Bedroom Apartment",
@@ -326,6 +327,7 @@ class PropertiesAdminTest extends TestCase
 
     public function test_on_property_destroy_delete_likes_reviews_inquitries() :void
     {
+        Notification::fake();
         $property = Property::factory()->create();
 
         $response = $this->actingAs($this->user)->post(route('properties.like', ['property' => $property, 'lang' => app()->currentLocale()]))

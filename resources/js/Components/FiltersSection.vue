@@ -1,9 +1,8 @@
 <script setup>
 import { router, usePage } from '@inertiajs/vue3';
 import { debounce, mapValues, trim, pickBy } from 'lodash';
-import { ref, watch } from 'vue';
+import { ref, watch, watchEffect } from 'vue';
 import SearchIcon from '@/Icons/SearchIcon.vue';
-import Checkbox from './Checkbox.vue';
 
 const props = defineProps({
     id:String,
@@ -20,11 +19,15 @@ const props = defineProps({
 const page = usePage()
 
 const form = ref({
-    search: page.props?.filters.search,
-    approved: page.props?.filters.approved,
-    notApproved: page.props?.filters.notApproved,
-    answered: page.props?.filters.answered,
-    notAnswered: page.props?.filters.notAnswered,
+    search: page.props?.filters?.search,
+    approved: page.props?.filters?.approved,
+    notApproved: page.props?.filters?.notApproved,
+    answered: page.props?.filters?.answered,
+    notAnswered: page.props?.filters?.notAnswered,
+    confirmed: page.props?.filters?.confirmed,
+    rejected: page.props?.filters?.rejected,
+    paymentReceived: page.props?.filters?.paymentReceived,
+    paymentNotReceived: page.props?.filters?.paymentNotReceived,
 })
 
 const debouncedHandler = debounce(() => {
@@ -36,15 +39,20 @@ const debouncedHandler = debounce(() => {
 }, 500);
 
 watch(form, debouncedHandler, { deep: true });
+
 watch(props, () => {
-    if(props.filters) {
+    if (props.filters) {
         form.value.approved = props.filters?.approved
         form.value.notApproved = props.filters?.notApproved
         form.value.answered = props.filters?.answered
         form.value.notAnswered = props.filters?.notAnswered
-
+        form.value.confirmed = props.filters?.confirmed
+        form.value.rejected = props.filters?.rejected
+        form.value.paymentReceived = props.filters?.paymentReceived
+        form.value.paymentNotReceived = props.filters?.paymentNotReceived
     }
 })
+
 const reset = () => {
     form.value = mapValues(form.value, () => null);
 };
