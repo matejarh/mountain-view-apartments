@@ -19,7 +19,7 @@ const form = useForm({
 
 })
 const approve = () => {
-    form.put(route('admin.reservations.approve', props.item), {
+    form.put(route('admin.reservations.confirm', props.item), {
         onSuccess: () => {
             form.reset()
         }
