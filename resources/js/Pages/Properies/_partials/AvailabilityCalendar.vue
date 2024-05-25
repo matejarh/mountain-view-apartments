@@ -88,18 +88,17 @@ watch(disabledDates, () => {
         highlight: highlightedDates.value,
     });
 });
+const rangePickerRef = ref(null)
 
 const book = () => {
-    let picker = document.getElementById('rangepicker')
-
     if (date.value.length > 0) {
-        picker.classList.remove('animate-shake')
+        rangePickerRef.value.classList.remove('animate-shake', 'border', 'border-bittersweet-700')
         alert('You selected from ' + date.value[0].toLocaleDateString(page.props?.locale) + ' to ' + date.value[1].toLocaleDateString(page.props?.locale));
     } else {
-        picker.classList.add('animate-shake')
+        rangePickerRef.value.classList.add('animate-shake', 'border', 'border-bittersweet-700')
 
         helpers.delay(1000)
-            .then(() => { picker.classList.remove('animate-shake') })
+            .then(() => { rangePickerRef.value.classList.remove('animate-shake') })
     }
 }
 
@@ -112,7 +111,7 @@ const book = () => {
                 <h2 class="mb-4 text-4xl tracking-tight font-extrabold leading-tight text-white dark:text-white">
                     {{ __('Availability Calendar') }}</h2>
                 <div class="flex justify-center w-full mb-2">
-                    <div id="rangepicker">
+                    <div id="rangepicker" ref="rangePickerRef">
                         <VueDatePicker v-model="date" :range="options.range" :multi-calendars="options.multi"
                             :min-date="tomorrow" :max-date="yearFromNow" prevent-min-max-navigation
                             :markers="notAvailableMarkers" :disabled-dates="disabledDates" :highlight="highlightedDates"
