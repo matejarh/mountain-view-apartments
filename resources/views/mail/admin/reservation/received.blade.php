@@ -1,5 +1,5 @@
 <x-mail::message>
-# Introduction
+# {{__('New reservation from')}} {{ $reservation->user->name }}
 
 The body of your message.
 
@@ -7,6 +7,7 @@ The body of your message.
 Button Text
 </x-mail::button>
 
-Thanks,<br>
-{{ config('app.name') }}
+<x-mail::subcopy>
+{{__('Thank you for using')}} **[{{config('app.name')}}<sup>&copy;</sup>]({{config('app.url')}})**!
+</x-mail::subcopy>
 </x-mail::message>
