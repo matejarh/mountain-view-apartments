@@ -8,6 +8,7 @@ use App\Models\Property;
 use App\Models\User;
 use App\Notifications\Admin\InquiryReceivedNotification;
 use App\Rules\AllowedBookingRange;
+use App\Rules\DateRangeOverlap;
 use App\Rules\Recaptcha;
 use App\Rules\SpamFree;
 use Illuminate\Support\Facades\Notification;
@@ -36,6 +37,12 @@ class CreateInquiry implements StoresGuestInquiry
             'date' => __('Date'),
         );
 
+        $arrival = \Carbon\Carbon::parseFromLocale($input['arrival'], app()->currentLocale())->format('Y-m-d') . ' 16:00:00';
+        $departure = \Carbon\Carbon::parseFromLocale($input['departure'], app()->currentLocale())->format('Y-m-d') . ' 12:00:00';
+        $propertyId = $property->id;
+
+        $input['date_range'] = [$arrival,$departure];
+
         $validator = Validator::make($input, [
             'name' => ['required', 'string', 'max:255', new SpamFree],
             'email' => ['required', 'email', 'max:255', new SpamFree],
@@ -47,13 +54,14 @@ class CreateInquiry implements StoresGuestInquiry
             'message' => ['required', 'string', 'min:10', 'max:1000', new SpamFree],
             'date' => ['required', 'array', 'min:2'],
             'date.*' => ['required', 'date', new AllowedBookingRange],
+            'date_range' => [new DateRangeOverlap($propertyId)],
             'captcha_token' => [new Recaptcha],
 
         ]);
 
         //dd($validator);
 
-        $validator->setAttributeNames($attributeNames)->validate();
+        $validator->setAttributeNames($attributeNames)->validateWithBag('creatingInquiry');
 
         foreach ($input['date'] as $key => $value) {
             $input['date'][$key] = \Carbon\Carbon::parse($value)->format('Y-m-d');
