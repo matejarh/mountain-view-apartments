@@ -99,7 +99,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <div :id="id" ref="carouselRef" class="relative w-full">
+    <div :id="id" ref="carouselRef" class="relative w-full select-none">
         <!-- Carousel wrapper -->
         <div class="relative overflow-visible rounded-lg "
             :class="fullScreenClasses">
