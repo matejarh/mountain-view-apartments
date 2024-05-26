@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Filters\InquiryFilters;
 use App\Traits\HasUUidAsPrimary;
+use App\Traits\RecordsActivity;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Inquiry extends Model
 {
-    use HasFactory, HasUUidAsPrimary;
+    use HasFactory, HasUUidAsPrimary, RecordsActivity;
 
     protected $casts = [
         'date' => 'array',
@@ -20,8 +21,14 @@ class Inquiry extends Model
     ];
 
     protected $appends = [
-        'avatar_url'
+        'avatar_url',
+        'property_basic_info',
     ];
+
+    protected static function getActivitiesToRecord(): array
+    {
+        return ['created'];
+    }
 
     public function property( ) :BelongsTo
     {
@@ -38,7 +45,17 @@ class Inquiry extends Model
         return "https://api.dicebear.com/8.x/identicon/svg?seed=" . urlencode($this->name . ' ' . $this->email); // icons | pixel-art | ident ...  check https://www.dicebear.com/styles/
     }
 
-        /**
+    public function getPropertyBasicInfoAttribute() :array
+    {
+        $property = \DB::table('properties')->select('name', 'title')->where('id', $this->property->id)->first();
+        return [
+            'name' => $property->name,
+            'title' => $property->title,
+            // 'avatar_url' => $property->avatar_url,
+        ];
+    }
+
+    /**
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @param \App\Filters\InquiryFilters $filters
      * @return \Illuminate\Database\Eloquent\Builder
