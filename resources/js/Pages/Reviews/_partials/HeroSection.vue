@@ -62,7 +62,9 @@ onBeforeUnmount(() => {
     <section :style="`background-image: url(${backgroundImage});`" class="bg-center bg-cover bg-no-repeat bg-gray-700 bg-blend-multiply transition-all duration-[2000ms] ease-in-out bg-paralax">
         <div class="px-4 mx-auto max-w-screen-xl text-center py-24 lg:py-56">
             <HeroTitle>
+
                 <inertia-link :href="route('properties.show', { lang: $page.props?.locale, property: $page.props?.property })">
+                    <small>{{ __('Reviews') }} {{ __('for') }}</small><br>
                     {{ $page.props?.property.title[$page.props?.locale] }}
                 </inertia-link>
             </HeroTitle>
