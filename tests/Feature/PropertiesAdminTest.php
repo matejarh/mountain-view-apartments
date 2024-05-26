@@ -86,7 +86,7 @@ class PropertiesAdminTest extends TestCase
                 ['title' => 'living_room', 'name'=>'1 sofa bed', 'icon' => 'SofaBedIcon'],
             ],
             'recomended' => [
-                'for 4 adults',
+                'title' =>'for 4 adults',
             ],
             'prices' => [
                 ['guests' => 4, 'price' => "945"],
