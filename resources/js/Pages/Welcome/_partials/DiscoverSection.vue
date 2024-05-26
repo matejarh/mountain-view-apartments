@@ -1,6 +1,7 @@
 <script setup>
+import PrimaryButton from '@/Components/PrimaryButton.vue';
 import ActiveCarousel from '@/Components/_default/ActiveCarousel.vue';
-import ShapedSection from '@/Components/_default/ShapedSection.vue';
+import { icons } from '@/icons';
 
 
 </script>
@@ -17,21 +18,25 @@ import ShapedSection from '@/Components/_default/ShapedSection.vue';
                         <!-- <img class="rounded-t-lg  mix-blend-multiply transition-all ease-out duration-1000 object-cover w-full h-auto" :src="item.image.thumb_url" :alt="item.image.name  " /> -->
 
                     <div class="p-5">
-                        <a href="#">
+                        <inertia-link :href="item.link">
                             <h2 class="mb-2 text-4xl font-bold tracking-tight text-gray-900 dark:text-white">{{ __(item.title[$page.props?.locale]) }}</h2>
-                        </a>
+                        </inertia-link>
+
                         <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
                             {{ item.description[$page.props?.locale] }}
                         </p>
-                        <inertia-link :href="item.link"
-                            class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-primary-700 rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-                            {{ __('Read more') }}
-                            <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-                            </svg>
-                        </inertia-link>
+                        <div class="sm:flex sm:justify-between space-y-2 sm:space-y-0">
+                            <PrimaryButton class="w-full sm:w-auto" @click="$inertia.get(item.link)">
+                                {{ __('Read more') }}
+                                <icons.ArrowRightIcon class="rtl:rotate-180 w-3.5 h-3.5 ms-2" />
+                            </PrimaryButton>
+
+                            <PrimaryButton class="w-full sm:w-auto" @click="$inertia.get(item.link)">
+                                {{ __('Stay in') }} {{ key }}
+                                <icons.SingleBedIcon class="rtl:rotate-180 w-3.5 h-3.5 ms-2" />
+                            </PrimaryButton>
+
+                        </div>
                     </div>
 
                 </div>
