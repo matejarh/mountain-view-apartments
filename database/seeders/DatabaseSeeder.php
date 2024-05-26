@@ -27,19 +27,22 @@ class DatabaseSeeder extends Seeder
         User::factory(50)->create();
 
         $this->call([
-            SettingsSeeder::class,
-            FacilitiesSeeder::class,
+            // SettingsSeeder::class,
+            // FacilitiesSeeder::class,
 /*             PropertiesSeeder::class,
             PagesSeeder::class,
             GalleriesSeeder::class, */
         ]);
 
-        $this->call(ExportImagesTableSeeder::class);
-        $this->call(ExportGalleriesTableSeeder::class);
-        $this->call(ExportGalleriesImagesTableSeeder::class);
-        $this->call(ExportPropertiesTableSeeder::class);
-        $this->call(ExportPropertiesGalleriesTableSeeder::class);
-        $this->call(ExportPagesTableSeeder::class);
-        $this->call(ExportPagesGalleriesTableSeeder::class);
+        $this->call(ExportLatestSettingsTableSeeder::class);
+        $this->call(ExportLatestFacilitiesTableSeeder::class);
+        $this->call(ExportLatestGalleriesTableSeeder::class);
+        $this->call(ExportLatestImagesTableSeeder::class);
+        $this->call(ExportLatestPropertiesTableSeeder::class);
+        $this->call(ExportLatestPagesTableSeeder::class);
+        $this->call(ExportLatestGalleriesImagesTableSeeder::class);
+        $this->call(ExportLatestPropertiesFacilitiesTableSeeder::class);
+        $this->call(ExportLatestPropertiesGalleriesTableSeeder::class);
+        $this->call(ExportLatestPagesGalleriesTableSeeder::class);
     }
 }
