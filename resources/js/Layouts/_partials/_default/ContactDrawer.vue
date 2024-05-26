@@ -1,6 +1,5 @@
 <script setup>
 import Drawer from '@/Components/Drawer.vue';
-import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css'
 import { computed, ref } from 'vue';
 import { useHelperStore } from '@/stores/helpers';
