@@ -44,9 +44,6 @@ const options = ref({
     partialRange: false,
     noDisabledRange: true,
 })
-const textInputOptions = {
-  format: 'MM.dd.yyyy'
-};
 
 const tomorrow = computed(() => {
     const today = new Date()
@@ -141,7 +138,6 @@ const store = () => {
 
                 <TextInput id="children" v-model="form.children" type="number" min="0" max="4" step="1" class="mt-1 block w-full"
                     :has-error="!!form.errors.children" />
-                c
             </div>
             <div class="mt-4">
                 <InputLabel class="inline-flex items-center justify-center  cursor-pointer w-full">
@@ -181,6 +177,7 @@ const store = () => {
                             :placeholder="__('Select arrival & departure dates') + '...'"
                             ></VueDatePicker>
             <InputError :message="form.errors.date_range" class="mt-2" />
+            <InputError :message="form.errors[`date.*`]" class="mt-2" />
         </div>
         <div class="mt-4">
 
@@ -204,20 +201,23 @@ const store = () => {
                 <InfoIcon class=" text-gray-400 dark:text-gray-500 w-11 h-11 mb-3.5 mx-auto" />
             </template>
             <template #content>
-                <p class="mb-4 text-gray-500 dark:text-gray-300 text-lg">
-                    {{ __('Please review your inquiry and make sure that you include all needed information.')}}</p>
-                <ul class="mb-4 text-gray-500 dark:text-gray-300 text-sm">
-                    <li> <span class="font-semibold">{{ __('Name')}}:</span> {{ form.name }}</li>
-                    <li> <span class="font-semibold">{{ __('Email')}}:</span> {{ form.email }}</li>
-                    <li> <span class="font-semibold">{{ __('Subject')}}:</span> {{ form.subject }}</li>
-                    <li> <span class="font-semibold">{{ __('Message')}}:</span> {{ form.message }}</li>
-                    <li> <span class="font-semibold">{{ __('Selected apartma')}}:</span> {{ propertyProxy.title[$page.props?.locale] }}</li>
-                    <li> <span class="font-semibold">{{ __('Number of adults')}}:</span> {{ form.adults }}</li>
-                    <li> <span class="font-semibold">{{ __('Number of kids')}}:</span> {{ form.children }}</li>
-                    <li> <span class="font-semibold">{{ __('Pets')}}:</span> {{ form.pets }}</li>
-                    <li> <span class="font-semibold">{{ __('Date from')}}:</span> {{ form.date[0].toLocaleDateString($page.props?.locale) }}</li>
-                    <li> <span class="font-semibold">{{ __('Date to')}}:</span> {{ form.date[1].toLocaleDateString($page.props?.locale) }}</li>
-                </ul>
+
+
+                    <p class="mb-4 text-gray-500 dark:text-gray-300 text-lg">
+                        {{ __('Please review your inquiry and make sure that you include all needed information.')}}</p>
+                    <ul class="mb-4 text-gray-500 dark:text-gray-300 text-sm bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                        <li> <span class="font-semibold">{{ __('Name')}}:</span> {{ form.name }}</li>
+                        <li> <span class="font-semibold">{{ __('Email')}}:</span> {{ form.email }}</li>
+                        <li> <span class="font-semibold">{{ __('Subject')}}:</span> {{ form.subject }}</li>
+                        <li> <span class="font-semibold">{{ __('Message')}}:</span> {{ form.message }}</li>
+                        <li> <span class="font-semibold">{{ __('Selected apartma')}}:</span> {{ propertyProxy.title[$page.props?.locale] }}</li>
+                        <li> <span class="font-semibold">{{ __('Number of adults')}}:</span> {{ form.adults }}</li>
+                        <li> <span class="font-semibold">{{ __('Number of kids')}}:</span> {{ form.children }}</li>
+                        <li> <span class="font-semibold">{{ __('Pets')}}:</span> {{ form.pets }}</li>
+                        <li> <span class="font-semibold">{{ __('Date from')}}:</span> {{ form.date[0].toLocaleDateString($page.props?.locale) }}</li>
+                        <li> <span class="font-semibold">{{ __('Date to')}}:</span> {{ form.date[1].toLocaleDateString($page.props?.locale) }}</li>
+                    </ul>
+
             </template>
         </ConfirmationModal>
 </template>
