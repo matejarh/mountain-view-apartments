@@ -1,15 +1,13 @@
 <script setup>
-import { onMounted, ref, watch, watchEffect } from 'vue';
+import { ref, watchEffect } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import DialogModal from '@/Components/DialogModal.vue'
 import PrimaryButton from '@/Components/PrimaryButton.vue';
-import InputLabel from '@/Components/InputLabel.vue';
 import TextInput from '@/Components/TextInput.vue';
 import TextArea from '@/Components/TextArea.vue';
 import InputError from '@/Components/InputError.vue';
-import DropZone from '@/Components/DropZone.vue';
-import SpinnerIcon from '@/Icons/SpinnerIcon.vue';
 import ImagesList from './ImagesList.vue';
+import { icons } from '@/icons';
 
 const props = defineProps({
     show: Boolean,
@@ -49,9 +47,6 @@ const update = () => {
 const handleSubmit = () => {
     props.gallery ? update() : create()
 }
-
-const photoPreview = ref(null);
-const photoInput = ref(null);
 
 watchEffect(() => {
     if (props.gallery !== null) {
@@ -103,7 +98,7 @@ const populateForm = () => {
                 :class="{ 'opacity-25': form.processing || form.recentlySuccessful || !form.isDirty }"
                 :disabled="form.processing || form.recentlySuccessful" @click="handleSubmit">
                 <div class="flex items-center">
-                    <SpinnerIcon v-show="form.processing"
+                    <icons.SpinnerIcon v-show="form.processing"
                         class="animate-spin -ml-1 mr-3 h-5 w-5 text-white dark:text-white" />
                     {{ form.processing ? __('Saving') + '...' : form.recentlySuccessful ? __('Saved') : __('Save') }}
 

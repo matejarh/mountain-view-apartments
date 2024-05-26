@@ -1,12 +1,11 @@
 <script setup>
+import { ref } from 'vue';
+import { icons } from '@/icons';
 import ActionSection from '@/Components/ActionSection.vue'
 import Tooltip from '@/Components/Tooltip.vue'
 import FullLayout from '@/Layouts/FullLayout.vue';
 import GalleryCard from './_partials/GalleryCard.vue';
 import CreateGalleryDialog from './_partials/CreateGalleryDialog.vue';
-import { ref } from 'vue';
-import CirclePlusIcon from '@/Icons/CirclePlusIcon.vue';
-import ImageIcon from '@/Icons/ImageIcon.vue';
 import FiltersSection from '@/Components/FiltersSection.vue';
 
 const showCreateDialog = ref(false)
@@ -39,7 +38,7 @@ const handleEdit = (gallery) => {
 
                 <div v-else class="">
                     <div class="w-full text-center cursor-pointer" @click="showCreateDialog = true">
-                        <ImageIcon class="text-gray-300 dark:text-gray-400 w-32 h-32 mx-auto" />
+                        <icons.ImageIcon class="text-gray-300 dark:text-gray-400 w-32 h-32 mx-auto" />
 
                         <p class="text-gray-300 dark:text-gray-400 font-semibold ">{{ __('No galleries yet!') }}</p>
                         <p class="text-gray-300 dark:text-gray-400 text-sm">{{ __('To create one, click here') }}</p>
@@ -54,7 +53,7 @@ const handleEdit = (gallery) => {
 
                 <button @click="galleryProxy = null, showCreateDialog = true"
                     class=" drop-shadow-lg rounded-full bg-transparent ">
-                    <CirclePlusIcon
+                    <icons.CirclePlusIcon
                         class="w-16 h-16 text-amazon-400 hover:scale-105 hover:rotate-180 active:scale-95 transition " />
                 </button>
             </Tooltip>

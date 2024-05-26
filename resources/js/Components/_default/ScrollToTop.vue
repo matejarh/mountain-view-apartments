@@ -1,7 +1,7 @@
 <script setup>
-import ArrowUpIcon from '@/Icons/ArrowUpIcon.vue';
-import Tooltip from './Tooltip.vue';
 import { useScrollStore } from '@/stores/scroll';
+import { icons } from '@/icons';
+import Tooltip from './Tooltip.vue';
 
 const scroll = useScrollStore()
 
@@ -23,7 +23,7 @@ const scrollToTop = () => {
                 <button @click="scrollToTop"
                     class="inline-flex bg-opacity-20 shadow-lg overflow-visible dark:bg-opacity-20 hover:bg-opacity-70 hover:bg-primary-700 dark:hover:bg-primary-600 hover:dark:bg-opacity-70 justify-center p-0 text-gray-100 rounded-lg cursor-pointer dark:text-gray-200 dark:hover:text-white hover:text-white bg-primary-700 dark:bg-primary-800 transition ease-in-out duration-300 hover:-translate-y-1">
                     <Tooltip :text="__('Scroll To Top')">
-                        <ArrowUpIcon class="w-16 h-16 drop-shadow-lg" />
+                        <icons.ArrowUpIcon class="w-16 h-16 drop-shadow-lg" />
                     </Tooltip>
                 </button>
             </div>

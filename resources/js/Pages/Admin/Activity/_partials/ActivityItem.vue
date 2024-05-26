@@ -15,10 +15,10 @@ import UpdatedReview from '@/Components/Activities/UpdatedReview.vue';
 import DeletedReview from '@/Components/Activities/DeletedReview.vue';
 import CreatedLogin from '@/Components/Activities/CreatedLogin.vue';
 import CreatedInquiry from '@/Components/Activities/CreatedInquiry.vue';
-import { onMounted } from 'vue';
+import { computed } from 'vue';
 
 
-defineProps({
+const props = defineProps({
     item: Object
 })
 
@@ -48,13 +48,19 @@ const createComponentMap = () => {
     });
 }
 
-const getComponentType = (type) => {
-    return componentMap[type] || null;
-};
+const componentMapFromBackend = computed(() => {
+    return page.props.types.reduce((acc, item) => {
+        const pascalCaseKey = convertToPascalCase(item);
+        acc[item] = pascalCaseKey;
+        return acc;
+    }, {});
 
-onMounted(() => {
-    //createComponentMap()
 })
+
+const getComponentType = computed(() => {
+    return componentMap[props.item?.type] || null;
+});
+
 </script>
 
 <template>
@@ -71,7 +77,7 @@ onMounted(() => {
                         item?.location.countryName }}
                 </time>
                 <div class="text-sm font-normal text-gray-500 lex dark:text-gray-300">
-                    <component :is="getComponentType(item?.type)" :item="item" />
+                    <component :is="getComponentType" :item="item" />
                 </div>
             </div>
         </div>

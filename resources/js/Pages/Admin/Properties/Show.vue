@@ -9,9 +9,7 @@ import EditForm from './_partials/EditForm.vue';
 import ManageFacilitiesDialog from './_partials/ManageFacilitiesDialog.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import ManageGalleriesDialog from './_partials/ManageGalleriesDialog.vue';
-import SpinnerIcon from '@/Icons/SpinnerIcon.vue';
-import PinIcon from '@/Icons/PinIcon.vue';
-import AvailabilityCalendar from './_partials/AvailabilityCalendar.vue';
+import { icons } from '@/icons';
 
 const props = defineProps({
     property: Object,
@@ -21,14 +19,12 @@ const showFacilitiesDialog = ref(false)
 const showAttachGalleryDialog = ref(false)
 
 const facilitiesWithIcons = computed(() => {
-    // return _.filter(props.property.facilities, ['has_icon_file', true])
     return props.property.facilities.filter(facility => facility.has_icon_file);
 })
 
 const facilitiesWithoutIcons = computed(() => {
     return props.property.facilities.filter(facility => !facility.has_icon_file);
 
-    //return _.filter(props.property.facilities, ['has_icon_file', false])
 })
 
 const detachForm = useForm({})
@@ -55,11 +51,6 @@ const detach = (gallery) => {
                     </span>
                 </div>
             </template>
-<!--             <template #description>
-                <div class="whitespace-pre-wrap" v-html="$page.props?.property.description[$page.props?.locale]">
-                </div>
-
-            </template> -->
 
             <template #content>
                 <div class="lg:grid lg:grid-cols-1 xl:grid-cols-3 lg:gap-8 xl:gap-16">
@@ -77,7 +68,7 @@ const detach = (gallery) => {
                                         :class="{ 'opacity-25': detachForm.processing || detachForm.recentlySuccessful }"
                                         :disabled="detachForm.processing || detachForm.recentlySuccessful" @click="detach(gallery)">
                                         <div class="flex items-center">
-                                            <SpinnerIcon v-show="detachForm.processing"
+                                            <icons.SpinnerIcon v-show="detachForm.processing"
                                                 class="animate-spin -ml-1 mr-3 h-5 w-5 text-white dark:text-white" />
                                             {{ detachForm.processing ? __('removing') + '...' : detachForm.recentlySuccessful ?
                                             __('removed') : __('Remove Gallery') }}
@@ -117,7 +108,7 @@ const detach = (gallery) => {
                         </ul>
                         <div class="flex items-center space-x-2">
                             <a :href="property.google_maps_link" target="_blank" >{{__('Travel directions')}}</a>
-                            <PinIcon class="w-5 h-5 "/>
+                            <icons.PinIcon class="w-5 h-5 "/>
                         </div>
                         <MapCard :property="$page.props?.property" />
 

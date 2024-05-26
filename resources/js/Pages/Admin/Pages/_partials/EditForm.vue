@@ -10,12 +10,10 @@ import TextInput from '@/Components/TextInput.vue';
 import InputError from '@/Components/InputError.vue';
 import TextArea from '@/Components/TextArea.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
-import SpinnerIcon from '@/Icons/SpinnerIcon.vue';
 import TextInputHelper from '@/Components/TextInputHelper.vue';
-import TrashBinIcon from '@/Icons/TrashBinIcon.vue';
-import CirclePlusIcon from '@/Icons/CirclePlusIcon.vue';
 import NewExtraDialog from './NewExtraDialog.vue';
 import TipTapInput from '@/Components/TipTapInput.vue';
+import { icons } from '@/icons';
 
 const translations = useTranslationsStore()
 
@@ -134,7 +132,7 @@ onBeforeUnmount(() => {
             <div class="flex justify-between col-span-full w-full">
                 <h4 class="text-2xl font-bold dark:text-white">{{ __('Extras') }}</h4>
                 <button @click="showNewExtraDialog = true" class="text-amazon-500 dark:text-amazon-600">
-                    <CirclePlusIcon />
+                    <icons.CirclePlusIcon />
                 </button>
             </div>
 
@@ -145,7 +143,7 @@ onBeforeUnmount(() => {
                         {{ key.replace('_', ' ') }}
                     </h5>
                     <button class="text-bittersweet-600 dark:text-bittersweet-700" @click="delete form.extras[key]">
-                        <TrashBinIcon />
+                        <icons.TrashBinIcon />
                     </button>
                 </div>
 
@@ -163,13 +161,7 @@ onBeforeUnmount(() => {
 
                     <InputError :message="form.errors[`extras.${key}.text.${selectedTab}`]" class="mt-2" />
                 </div>
-
-                <!-- <TextArea :id="`extra-${key}-${selectedTab}`" v-model="form.extras[key][selectedTab]" class="mt-1 block w-full"
-                    autocomplete="extra" :has-error="!!form.errors[`extras.${key}.${selectedTab}`]"
-                    :placeholder="__('Enter text') + '...'"></TextArea> -->
             </div>
-
-
         </GridSection>
 
         <div class="col-span-full mt-4">
@@ -177,10 +169,9 @@ onBeforeUnmount(() => {
                 :class="{ 'opacity-25': form.processing || form.recentlySuccessful || !form.isDirty }"
                 :disabled="form.processing || form.recentlySuccessful || !form.isDirty" @click="handleSubmit">
                 <div class="flex items-center">
-                    <SpinnerIcon v-show="form.processing"
+                    <icons.SpinnerIcon v-show="form.processing"
                         class="animate-spin -ml-1 mr-3 h-5 w-5 text-white dark:text-white" />
-                    {{ form.processing ? __('Saving') + '...' : form.recentlySuccessful ? __('Saved') : __('Save')
-                    }}
+                    {{ form.processing ? __('Saving') + '...' : form.recentlySuccessful ? __('Saved') : __('Save') }}
 
                 </div>
             </PrimaryButton>

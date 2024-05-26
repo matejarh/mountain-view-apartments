@@ -5,19 +5,14 @@ import ActionSection from '@/Components/ActionSection.vue';
 import FullLayout from '@/Layouts/FullLayout.vue';
 import ImageCard from './_partials/ImageCard.vue';
 import Tooltip from '@/Components/Tooltip.vue';
-import CirclePlusIcon from '@/Icons/CirclePlusIcon.vue';
-import ImageIcon from '@/Icons/ImageIcon.vue';
 import AttachImagesDialog from './_partials/AttachImagesDialog.vue';
 import UploadPhotoDialog from './_partials/UploadPhotoDialog.vue';
 import TextInput from '@/Components/TextInput.vue';
 import InputError from '@/Components/InputError.vue';
-import EditIcon from '@/Icons/EditIcon.vue';
-import CheckCircleIcon from '@/Icons/CheckCircleIcon.vue';
 import TextArea from '@/Components/TextArea.vue';
-import TrashBinIcon from '@/Icons/TrashBinIcon.vue';
 import ConfirmationModal from '@/Components/ConfirmationModal.vue';
 import FullScreenImagesModal from '../Images/_partials/FullScreenImagesModal.vue';
-import CarretLeftIcon from '@/Icons/CarretLeftIcon.vue';
+import { icons } from '@/icons';
 
 const props = defineProps({
     gallery: Object,
@@ -125,7 +120,7 @@ onUnmounted(() => {
                 <div v-if="!editing" class="flex items-center space-x-2">
                     <button @click="editing = true">
                         <Tooltip :text="__('Edit')">
-                            <EditIcon
+                            <icons.EditIcon
                                 class=" text-primary-700 dark:text-primary-200 w-6 h-6 transform hover:scale-105 active:scale-95" />
                         </Tooltip>
                     </button>
@@ -134,10 +129,10 @@ onUnmounted(() => {
                 <div class="flex items-start space-x-2" v-if="editing">
                     <div class="">
                         <button @click="editing = false, form.reset(), form.clearErrors()">
-                            <CirclePlusIcon class="rotate-45 text-bittersweet-700 dark:text-bittersweet-300 w-6 h-6" />
+                            <icons.CirclePlusIcon class="rotate-45 text-bittersweet-700 dark:text-bittersweet-300 w-6 h-6" />
                         </button>
                         <button @click="update">
-                            <CheckCircleIcon class=" text-amazon-700 dark:text-amazon-300 w-6 h-6" />
+                            <icons.CheckCircleIcon class=" text-amazon-700 dark:text-amazon-300 w-6 h-6" />
                         </button>
 
                     </div>
@@ -171,7 +166,7 @@ onUnmounted(() => {
 
                             <figure @click="showImagesDialog = true"
                                 class="flex flex-col items-center justify-center text-center select-none hover:scale-105 active:scale-95 rounded-lg min-h-full relative shadow-lg  transition-all duration-300 cursor-pointer overflow-visible">
-                                <ImageIcon class="text-gray-300 dark:text-gray-400 w-32 h-32" />
+                                <icons.ImageIcon class="text-gray-300 dark:text-gray-400 w-32 h-32" />
                                 <p class="text-gray-300 dark:text-gray-400 text-sm">{{ __('Upload And Attach Images') }}
                                 </p>
                             </figure>
@@ -189,7 +184,7 @@ onUnmounted(() => {
 
                 <div v-else class="">
                     <div class="w-full text-center cursor-pointer" @click="showImagesDialog = true">
-                        <ImageIcon class="text-gray-300 dark:text-gray-400 w-32 h-32 mx-auto" />
+                        <icons.ImageIcon class="text-gray-300 dark:text-gray-400 w-32 h-32 mx-auto" />
 
                         <p class="text-gray-300 dark:text-gray-400 font-semibold ">{{ __('No images yet!') }}</p>
                         <p class="text-gray-300 dark:text-gray-400 text-sm">{{ __('Click here to add some') }}</p>
@@ -203,14 +198,14 @@ onUnmounted(() => {
             <Tooltip :text="__('Upload And Attach Images')" location="left">
                 <button @click="showImagesDialog = true"
                     class=" drop-shadow-lg active:drop-shadow hover:drop-shadow-xl transition-all ease-in-out duration-150 rounded-full bg-transparent ">
-                    <CirclePlusIcon
+                    <icons.CirclePlusIcon
                         class="w-16 h-16 text-amazon-400 hover:scale-105 hover:rotate-180  active:scale-95 transition-all ease-in-out duration-150 " />
                 </button>
             </Tooltip>
             <Tooltip :text="__('Remove Gallery')" location="left">
                 <button @click="showDestroyConfirm = true"
                     class=" drop-shadow-lg active:drop-shadow hover:drop-shadow-xl transition-all ease-in-out duration-150 rounded-full bg-transparent ">
-                    <TrashBinIcon
+                    <icons.TrashBinIcon
                         class="w-16 h-16 text-bittersweet-400 hover:scale-105 hover:rotate-3 active:scale-95 transition-all ease-in-out duration-150 " />
                 </button>
             </Tooltip>
@@ -223,7 +218,7 @@ onUnmounted(() => {
         <ConfirmationModal :show="showDestroyConfirm" @close="showDestroyConfirm = false" @confirmed="destroy"
             :form="destroyForm" :busy-text="__('Deleting Gallery')" :recently-successful-text="__('Gallery Deleted')">
             <template #icon>
-                <TrashBinIcon class=" text-gray-400 dark:text-gray-500 w-11 h-11 mb-3.5 mx-auto" />
+                <icons.TrashBinIcon class=" text-gray-400 dark:text-gray-500 w-11 h-11 mb-3.5 mx-auto" />
             </template>
             <template #content>
                 <p class="mb-4 text-gray-500 dark:text-gray-300 text-lg">

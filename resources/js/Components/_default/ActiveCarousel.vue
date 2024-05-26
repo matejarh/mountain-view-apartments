@@ -1,10 +1,10 @@
 <template>
     <Carousel :itemsToShow="1.95" :autoplay="5000" :wrapAround="true" :transition="500" :breakpoints="breakpoints">
         <Slide v-for="slide, key in items" :key="key">
-            <div class="carousel__item" @click="">
+            <!-- <div class="carousel__item" @click="">
                 <img :src="slide.thumb_url" class="w-auto h-full">
-                <!--    {{ slide.thumb_url }} -->
-            </div>
+            </div> -->
+            <ActiveCarouselItem :image-url="slide.thumb_url" />
         </Slide>
         <template #addons>
           <!--   <Pagination /> -->
@@ -16,8 +16,8 @@
 <script setup>
 import { ref } from 'vue';
 import { Carousel, Navigation, Pagination, Slide } from 'vue3-carousel'
-
 import 'vue3-carousel/dist/carousel.css'
+import ActiveCarouselItem from './ActiveCarouselItem.vue'
 
 const props = defineProps({
     items: Array,

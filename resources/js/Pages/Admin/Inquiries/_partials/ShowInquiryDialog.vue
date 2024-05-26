@@ -19,7 +19,7 @@ const form = useForm({
 
 })
 
-const formatdDate = (date) => {
+const formatDate = (date) => {
     return new Date(date).toLocaleDateString(page.props?.locale)
 }
 
@@ -38,7 +38,7 @@ watchEffect(() => {
             <div class="">
                 <p>
                     <b>{{ item.name }}</b> {{__('is interested in renting')}} <b>{{ item.property.title[$page.props.locale]
-                        }}</b><br> {{__('from')}} {{ formatdDate(item.date[0]) }} to {{ formatdDate(item.date[1]) }}
+                        }}</b><br> {{__('from')}} {{ formatDate(item.date[0]) }} to {{ formatDate(item.date[1]) }}
 
                 </p>
                 <p class="mt-0">

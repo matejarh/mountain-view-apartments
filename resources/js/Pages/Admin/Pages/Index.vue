@@ -2,12 +2,11 @@
 import FullLayout from '@/Layouts/FullLayout.vue';
 import ActionSection from '@/Components/ActionSection.vue';
 import FiltersSection from '@/Components/FiltersSection.vue';
-import PagesIcon from '@/Icons/PagesIcon.vue';
 import PageCard from './_partials/PageCard.vue';
 import Tooltip from '@/Components/Tooltip.vue';
-import CirclePlusIcon from '@/Icons/CirclePlusIcon.vue';
 import { ref } from 'vue';
 import CreateDialog from './_partials/CreateDialog.vue';
+import { icons } from '@/icons';
 
 const showCreateDialog = ref(false)
 
@@ -34,7 +33,7 @@ const showCreateDialog = ref(false)
 
                 <div v-else class="">
                     <div class="w-full text-center cursor-pointer" @click="showCreateDialog = true">
-                        <PagesIcon class="text-gray-300 dark:text-gray-400 w-32 h-32 mx-auto" />
+                        <icons.PagesIcon class="text-gray-300 dark:text-gray-400 w-32 h-32 mx-auto" />
 
                         <p class="text-gray-300 dark:text-gray-400 font-semibold ">{{ __('No pages yet!') }}</p>
                         <p class="text-gray-300 dark:text-gray-400 text-sm">{{ __('To create one, click here') }}</p>
@@ -48,7 +47,7 @@ const showCreateDialog = ref(false)
 
                 <button @click="showCreateDialog = true"
                     class=" drop-shadow-lg rounded-full bg-transparent ">
-                    <CirclePlusIcon
+                    <icons.CirclePlusIcon
                         class="w-16 h-16 text-amazon-400 hover:scale-105 hover:rotate-180 active:scale-95 transition " />
                 </button>
             </Tooltip>

@@ -1,12 +1,5 @@
 <script setup>
 import DialogModal from '@/Components/DialogModal.vue'
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import SelectInput from '@/Components/SelectInput.vue';
-import TextInput from '@/Components/TextInput.vue';
-import { reactive, ref, watchEffect } from 'vue';
-import FacilityComponent from './FacilityComponent.vue';
 import GalleryCard from './GalleryCard.vue';
 import { useForm } from '@inertiajs/vue3';
 

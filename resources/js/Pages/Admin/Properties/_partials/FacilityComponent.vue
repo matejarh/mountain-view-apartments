@@ -1,11 +1,9 @@
 <script setup>
-import Tooltip from '@/Components/Tooltip.vue';
-import SpinnerIcon from '@/Icons/SpinnerIcon.vue';
-import CloseXIcon from '@/Icons/CloseXIcon.vue';
-import { useForm, usePage } from '@inertiajs/vue3';
-import TrashBinIcon from '@/Icons/TrashBinIcon.vue';
-import ConfirmationModal from '@/Components/ConfirmationModal.vue';
 import { ref } from 'vue';
+import { useForm, usePage } from '@inertiajs/vue3';
+import { icons } from '@/icons';
+import Tooltip from '@/Components/Tooltip.vue';
+import ConfirmationModal from '@/Components/ConfirmationModal.vue';
 
 const props = defineProps({
     facility: Object,
@@ -46,8 +44,8 @@ const destroy = () => {
                     :disabled="detachForm.processing || detachForm.recentlySuccessful"
                     class="inline-flex items-center p-1  ms-2 text-sm text-amazon-400 bg-transparent rounded-sm hover:bg-amazon-200 hover:text-amazon-900 dark:hover:bg-amazon-800 dark:hover:text-amazon-300"
                     aria-label="Remove">
-                    <CloseXIcon class="w-2 h-2 " v-show="!detachForm.processing" />
-                    <SpinnerIcon v-show="detachForm.processing" class="animate-spin  h-2 w-2 " />
+                    <icons.CloseXIcon class="w-2 h-2 " v-show="!detachForm.processing" />
+                    <icons.SpinnerIcon v-show="detachForm.processing" class="animate-spin  h-2 w-2 " />
                     <span class="sr-only">{{ __('Remove') }}</span>
                 </button>
             </Tooltip>
@@ -61,8 +59,8 @@ const destroy = () => {
                     :disabled="attachForm.processing || attachForm.recentlySuccessful"
                     class="inline-flex items-center p-1  ms-2 text-sm text-bittersweet-400 bg-transparent rounded-sm hover:bg-bittersweet-200 hover:text-bittersweet-900 dark:hover:bg-bittersweet-800 dark:hover:text-bittersweet-300"
                     aria-label="Attach">
-                    <CloseXIcon class="w-2 h-2 rotate-45" v-show="!attachForm.processing" />
-                    <SpinnerIcon v-show="attachForm.processing" class="animate-spin  h-2 w-2 " />
+                    <icons.CloseXIcon class="w-2 h-2 rotate-45" v-show="!attachForm.processing" />
+                    <icons.SpinnerIcon v-show="attachForm.processing" class="animate-spin  h-2 w-2 " />
                     <span class="sr-only">{{ __('Add') }}</span>
                 </button>
             </Tooltip>
@@ -73,8 +71,8 @@ const destroy = () => {
                     class="inline-flex items-center p-0  ms-2 text-sm text-bittersweet-400 bg-transparent rounded-sm hover:bg-bittersweet-200 hover:text-bittersweet-900 dark:hover:bg-bittersweet-800 dark:hover:text-bittersweet-300"
                     aria-label="Destroy">
 
-                    <TrashBinIcon class="w-2.5 h-2.5 " v-show="!destroyForm.processing" />
-                    <SpinnerIcon v-show="destroyForm.processing" class="animate-spin  h-2 w-2 " />
+                    <icons.TrashBinIcon class="w-2.5 h-2.5 " v-show="!destroyForm.processing" />
+                    <icons.SpinnerIcon v-show="destroyForm.processing" class="animate-spin  h-2 w-2 " />
                     <span class="sr-only">{{ __('Destroy') }}</span>
                 </button>
             </Tooltip>
@@ -83,7 +81,7 @@ const destroy = () => {
     <ConfirmationModal :show="showDestroyConfirm" @close="showDestroyConfirm = false" @confirmed="destroy"
         :form="destroyForm" :busy-text="__('Deleting Facility')" :recently-successful-text="__('Facility Deleted')">
         <template #icon>
-            <TrashBinIcon class=" text-gray-400 dark:text-gray-500 w-11 h-11 mb-3.5 mx-auto" />
+            <icons.TrashBinIcon class=" text-gray-400 dark:text-gray-500 w-11 h-11 mb-3.5 mx-auto" />
         </template>
         <template #content>
             <p class="mb-4 text-gray-500 dark:text-gray-300 text-lg">{{ __('This will remove facility from the server.')}}</p>

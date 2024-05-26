@@ -1,10 +1,10 @@
 <script setup>
-import HeartIcon from '@/Icons/HeartIcon.vue';
-
 import { computed } from 'vue';
 import { useForm, usePage } from '@inertiajs/vue3';
-import Tooltip from '../Tooltip.vue';
 import { useReCaptcha } from 'vue-recaptcha-v3';
+import { icons } from '@/icons';
+import Tooltip from '../Tooltip.vue';
+
 const props = defineProps({
     item: Object,
 })
@@ -44,7 +44,7 @@ const likedClasses = computed(() => {
             <div class="">
 
                 <Tooltip :text="__(likeButtonText)">
-                    <HeartIcon class="w-8 h-8 " />
+                    <icons.HeartIcon class="w-8 h-8 " />
                     <!-- {{ item?.is_liked ? __('Liked') : __('Like') }} -->
                 </Tooltip>
 

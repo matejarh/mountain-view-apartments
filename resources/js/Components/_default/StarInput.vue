@@ -9,10 +9,8 @@
 </template>
 
 <script setup>
-import { ref, computed, defineEmits } from 'vue';
-import StarEmptyIcon from '@/Icons/StarEmptyIcon.vue';
-import StarFullIcon from '@/Icons/StarFullIcon.vue';
-import StarHalfFullIcon from '@/Icons/StarHalfFullIcon.vue';
+import { computed, defineEmits } from 'vue';
+import { icons } from '@/icons';
 
 const emit = defineEmits(['update:modelValue']);
 
@@ -38,13 +36,13 @@ const starComponents = computed(() => {
     const emptyStarsCount = props.maxStars - Math.ceil(props.modelValue);
 
     for (let i = 0; i < fullStarsCount; i++) {
-        components.push({ component: StarFullIcon, class: 'text-yellow-300 w-6 h-6' });
+        components.push({ component: icons.StarFullIcon, class: 'text-yellow-300 w-6 h-6' });
     }
     if (hasHalfStar) {
-        components.push({ component: StarHalfFullIcon, class: 'text-yellow-300 w-6 h-6' });
+        components.push({ component: icons.StarHalfFullIcon, class: 'text-yellow-300 w-6 h-6' });
     }
     for (let i = 0; i < emptyStarsCount; i++) {
-        components.push({ component: StarEmptyIcon, class: 'text-gray-100 w-6 h-6' });
+        components.push({ component: icons.StarEmptyIcon, class: 'text-gray-100 w-6 h-6' });
     }
 
     return components;

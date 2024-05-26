@@ -4,11 +4,10 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
-import SpinnerIcon from '@/Icons/SpinnerIcon.vue';
 import { useForm, usePage } from '@inertiajs/vue3';
 import { computed } from 'vue';
-import sulgify from 'slugify';
 import slugify from 'slugify';
+import { icons } from '@/icons';
 
 
 const props = defineProps({
@@ -49,7 +48,6 @@ const emit = defineEmits(['close', 'create'])
         <template #title>{{ __('Create New Extra') }}</template>
 
         <template #content>
-            {{ extra }}
             <div class="col-span-full mt-4">
                 <InputLabel :for="`extra_key`" :value="__('Extra key')" />
                 <TextInput :id="`new_extra_key`" v-model="form.name" type="text" class="mt-1 block w-full" required
@@ -64,10 +62,9 @@ const emit = defineEmits(['close', 'create'])
                 :class="{ 'opacity-25': form.processing || form.recentlySuccessful || !form.isDirty }"
                 :disabled="form.processing || form.recentlySuccessful || !form.isDirty" @click="$emit('create', extra), $emit('close'), form.reset()">
                 <div class="flex items-center">
-                    <SpinnerIcon v-show="form.processing"
+                    <icons.SpinnerIcon v-show="form.processing"
                         class="animate-spin -ml-1 mr-3 h-5 w-5 text-white dark:text-white" />
-                    {{ form.processing ? __('Adding') + '...' : form.recentlySuccessful ? __('Added') : __('Add')
-                    }}
+                    {{ form.processing ? __('Adding') + '...' : form.recentlySuccessful ? __('Added') : __('Add') }}
 
                 </div>
             </PrimaryButton>

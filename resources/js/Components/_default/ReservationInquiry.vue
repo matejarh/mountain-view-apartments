@@ -1,19 +1,18 @@
 <script setup>
+import { computed, ref } from 'vue';
+import { useForm, usePage } from '@inertiajs/vue3';
+import { useHelperStore } from '@/stores/helpers';
+import { useReCaptcha } from 'vue-recaptcha-v3';
+import { icons } from '@/icons';
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css'
-import { computed, ref } from 'vue';
-import { useHelperStore } from '@/stores/helpers';
 import InputLabel from '../InputLabel.vue';
 import TextInput from '../TextInput.vue';
 import InputError from '../InputError.vue';
 import TextArea from '../TextArea.vue';
-import { useForm, usePage } from '@inertiajs/vue3';
 import PrimaryButton from '../PrimaryButton.vue';
-import SpinnerIcon from '@/Icons/SpinnerIcon.vue';
 import ConfirmationModal from '../ConfirmationModal.vue';
-import InfoIcon from '@/Icons/InfoIcon.vue';
 import AccomodationsDropdown from './AccomodationsDropdown.vue';
-import { useReCaptcha } from 'vue-recaptcha-v3';
 
 const emit = defineEmits(['close'])
 
@@ -185,7 +184,7 @@ const store = () => {
                 :class="{ 'opacity-25': form.processing || form.recentlySuccessful || !form.isDirty || !propertyProxy || !form.date }"
                 :disabled="form.processing || form.recentlySuccessful || !form.isDirty || !propertyProxy || !form.date">
                 <div class="flex items-center">
-                    <SpinnerIcon v-show="form.processing"
+                    <icons.SpinnerIcon v-show="form.processing"
                         class="animate-spin -ml-1 mr-3 h-5 w-5 text-white dark:text-white" />
                     {{ form.processing ? __('Submiting') + '...' : form.recentlySuccessful ? __('Submited') : __('Submit')
                     }}
@@ -198,7 +197,7 @@ const store = () => {
     <ConfirmationModal :is-danger="false" :show="showInquiryConfirmationModal" @close="showInquiryConfirmationModal = false" @confirmed="recaptcha"
             :form="form" busy-text="Sending inquiry" recently-successful-text="Inquiry sent" button-text="Send inquiry">
             <template #icon>
-                <InfoIcon class=" text-gray-400 dark:text-gray-500 w-11 h-11 mb-3.5 mx-auto" />
+                <icons.InfoIcon class=" text-gray-400 dark:text-gray-500 w-11 h-11 mb-3.5 mx-auto" />
             </template>
             <template #content>
 

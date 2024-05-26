@@ -2,9 +2,7 @@
 import Checkbox from '@/Components/Checkbox.vue';
 import TableRow from '@/Components/TableRow.vue';
 import Tooltip from '@/Components/Tooltip.vue';
-import DesktopIcon from '@/Icons/DesktopIcon.vue';
-import MobileIcon from '@/Icons/MobileIcon.vue';
-import TabletIcon from '@/Icons/TabletIcon.vue';
+import { icons } from '@/icons';
 import { ref } from 'vue';
 
 const props = defineProps({
@@ -38,16 +36,16 @@ const checked = ref(false)
         </td>
         <td class="flex items-center px-6 py-4 whitespace-nowrap ">
             <Tooltip text="Desktop" v-if="activity.agent.is_desktop">
-                <DesktopIcon class="w-10 h-10 z-0" />
+                <icons.DesktopIcon class="w-10 h-10 z-0" />
             </Tooltip>
             <Tooltip text="Mobile" v-else-if="activity.agent.is_mobile">
-                <MobileIcon class="w-10 h-10 z-0" />
+                <icons.MobileIcon class="w-10 h-10 z-0" />
             </Tooltip>
             <Tooltip text="Tablet" v-else-if="activity.agent.is_tablet">
-                <TabletIcon class="w-10 h-10 z-0" />
+                <icons.TabletIcon class="w-10 h-10 z-0" />
             </Tooltip>
             <Tooltip text="Unknown" v-else>
-                <DesktopIcon class="w-10 h-10 z-0" />
+                <icons.DesktopIcon class="w-10 h-10 z-0" />
             </Tooltip>
             <div class="ps-3">
                 <div class="text-base">

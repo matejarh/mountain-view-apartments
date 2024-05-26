@@ -1,9 +1,8 @@
 <script setup>
-import Carousel from '@/Components/Carousel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import ActiveCarousel from '@/Components/_default/ActiveCarousel.vue';
 import PagesIcon from '@/Icons/PagesIcon.vue';
-import { router } from '@inertiajs/vue3'
+import { icons } from '@/icons';
 import { ref } from 'vue';
 
 const props = defineProps({
@@ -49,26 +48,12 @@ const carouselHeight = ref('h-56')
                         {{ page.description[$page.props?.locale] }}</p>
                 </div>
 
-                <PrimaryButton type="button" @click="router.visit(route('admin.pages.show', page))" class="mx-4">
+                <PrimaryButton type="button" @click="$inertia.get(route('admin.pages.show', page))" class="mx-4">
                     <div class="flex items-center">
                         {{ __('Edit Page') }}
-                        <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M1 5h12m0 0L9 1m4 4L9 9" />
-                        </svg>
+                        <icons.ArrowRightIcon class="rtl:rotate-180 w-3.5 h-3.5 ms-2" />
                     </div>
                 </PrimaryButton>
-<!--                 <inertia-link :href="route('admin.pages.show', page)" class="hover:scale-105 active:scale-95 inline-flex items-center justify-center px-4 py-2 bg-primary-700 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-primary-500 active:bg-primary-700 focus:outline-none focus:ring-0 active:shadow hover:shadow-xl shadow-lg   transition ease-in-out duration-150">
-                    <div class="flex items-center">
-                        {{ __('Edit Page') }}
-                        <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M1 5h12m0 0L9 1m4 4L9 9" />
-                        </svg>
-                    </div>
-                </inertia-link> -->
             </div>
         </div>
     </li>

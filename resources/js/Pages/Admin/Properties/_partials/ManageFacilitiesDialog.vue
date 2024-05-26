@@ -6,8 +6,7 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import FacilityComponent from './FacilityComponent.vue';
 import { useForm } from '@inertiajs/vue3';
-import CirclePlusIcon from '@/Icons/CirclePlusIcon.vue';
-import SpinnerIcon from '@/Icons/SpinnerIcon.vue';
+import { icons } from '@/icons';
 
 const emit = defineEmits(['close', 'updated'])
 
@@ -79,9 +78,9 @@ const store = () => {
                                 :class="{ 'opacity-25': form.processing || form.recentlySuccessful || !form.isDirty }"
                                 :disabled="form.processing || form.recentlySuccessful || !form.isDirty" @click="store">
                                 <div class="flex items-center">
-                                    <SpinnerIcon v-if="form.processing"
+                                    <icons.SpinnerIcon v-if="form.processing"
                                         class="animate-spin h-5 w-5 text-white dark:text-white" />
-                                    <CirclePlusIcon v-else class="h-5 w-5 text-white dark:text-white" />
+                                    <icons.CirclePlusIcon v-else class="h-5 w-5 text-white dark:text-white" />
                                 </div>
                             </PrimaryButton>
                         </div>

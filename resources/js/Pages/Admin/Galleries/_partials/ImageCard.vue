@@ -1,14 +1,10 @@
 <script setup>
 import { useForm, usePage } from '@inertiajs/vue3';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
+import { icons } from '@/icons';
 import ConfirmationModal from '@/Components/ConfirmationModal.vue';
 import Tooltip from '@/Components/Tooltip.vue';
-import ArrowUpRightIcon from '@/Icons/ArrowUpRightIcon.vue';
-import EditIcon from '@/Icons/EditIcon.vue';
 import EditImageInfoDialog from './EditImageInfoDialog.vue';
-import TrashBinIcon from '@/Icons/TrashBinIcon.vue';
-import ArrowUpIcon from '@/Icons/ArrowUpIcon.vue';
-import CarretLeftIcon from '@/Icons/CarretLeftIcon.vue';
 
 const props = defineProps({
     image: Object,
@@ -46,6 +42,17 @@ const showDetachConfirm = ref(false)
 const showAttachConfirm = ref(false)
 const showDestroyConfirm = ref(false)
 const showEditDialog = ref(false)
+
+const imgsrc = ref(null)
+const img = new Image()
+
+onMounted(() => {
+
+    img.src = props.image.thumb_url
+    img.onload = () => {
+        imgsrc.value = props?.image.thumb_url
+    }
+})
 
 const detach = () => {
     detachForm.put(route('admin.galleries.detach', { image: props.image, gallery: page.props?.gallery }), {
@@ -86,24 +93,15 @@ const destroy = () => {
         <figure
             class="min-h-[240px] z-0 sm:min-h-[252px] md:min-h-[164px] lg:min-h-[160px] xl:min-h-auto relative shadow-lg active:shadow hover:shadow-xl brightness-90 hover:brightness-105 transition-all ease-out duration-150 cursor-pointer  overflow-visible">
             <div @click="$emit('clicked', { image: image, key: 0 })">
-                <img class="rounded-lg" :src="image.thumb_url" :alt="image.name">
+                <img class="rounded-lg" :src="imgsrc" :alt="image.name">
             </div>
-
-            <!-- <figcaption
-                class="absolute top-0 w-full flex justify-center items-center h-full text-gray-50 font-bold text-4xl drop-shadow-lg">
-                <p>
-
-                    {{ image.pivot.order }}
-                    {{ itemKey }}
-                </p>
-            </figcaption> -->
 
             <figcaption id="moveup" v-if="image.pivot && image.pivot.order < imagesCount && itemKey + 1 < imagesCount"
                 class="order top-0 bottom-0 right-0 text-gray-50 font-bold text-3xl absolute h-full flex flex-col justify-center items-end ">
                 <Tooltip :text="__('Move Back')">
                     <button id="moveupbutton" :disabled="isBusy" @click="$emit('moveDown', itemKey)"
                         :class="{ 'opacity-75': isBusy }" class="hover:translate-x-1 transition">
-                        <CarretLeftIcon class="w-8 h-8 -rotate-180" />
+                        <icons.CarretLeftIcon class="w-8 h-8 -rotate-180" />
                     </button>
                 </Tooltip>
             </figcaption>
@@ -113,7 +111,7 @@ const destroy = () => {
                 <Tooltip :text="__('Move Forward')">
                     <button id="movedownbutton" :disabled="isBusy" @click="$emit('moveUp', itemKey)" c
                         :class="{ 'opacity-75': isBusy }" class="hover:-translate-x-1 transition">
-                        <CarretLeftIcon class="w-8 h-8 " />
+                        <icons.CarretLeftIcon class="w-8 h-8 " />
                     </button>
                 </Tooltip>
             </figcaption>
@@ -124,7 +122,7 @@ const destroy = () => {
                     <button @click="showEditDialog = true"
                         class="hover:text-primary-700 transition-colors ease-out duration-150">
                         <Tooltip :text="__('Edit image info')">
-                            <EditIcon class="w-6 h-6" />
+                            <icons.EditIcon class="w-6 h-6" />
                         </Tooltip>
                     </button>
 
@@ -134,21 +132,21 @@ const destroy = () => {
                     <button v-if="hasGallery && !isIndex" @click="showDetachConfirm = true"
                         class="hover:text-primary-700 transition-colors ease-out duration-150">
                         <Tooltip :text="__('Remove image from gallery')">
-                            <ArrowUpRightIcon class="w-6 h-6" />
+                            <icons.ArrowUpRightIcon class="w-6 h-6" />
                         </Tooltip>
                     </button>
 
                     <button v-if="!hasGallery && !isIndex" @click="showAttachConfirm = true"
                         class="hover:text-primary-700 transition-colors ease-out duration-150">
                         <Tooltip :text="__('Attach to gallery')">
-                            <ArrowUpRightIcon class="w-6 h-6 rotate-180" />
+                            <icons.ArrowUpRightIcon class="w-6 h-6 rotate-180" />
                         </Tooltip>
                     </button>
 
                     <button v-if="image.can['delete-image']" @click="showDestroyConfirm = true"
                         class="hover:text-bittersweet-700 transition-colors ease-out duration-150">
                         <Tooltip :text="__('Delete from server')">
-                            <TrashBinIcon class="w-6 h-6" />
+                            <icons.TrashBinIcon class="w-6 h-6" />
                         </Tooltip>
                     </button>
                 </div>
@@ -167,7 +165,7 @@ const destroy = () => {
             :busy-text="__('Detaching from gallery')" :recently-successful-text="__('Detached from gallery')"
             @close="showDetachConfirm = false" @confirmed="detach">
             <template #icon>
-                <ArrowUpRightIcon class=" text-gray-400 dark:text-gray-500 w-11 h-11 mb-3.5 mx-auto" />
+                <icons.ArrowUpRightIcon class=" text-gray-400 dark:text-gray-500 w-11 h-11 mb-3.5 mx-auto" />
             </template>
             <template #content>
                 <p class="mb-4 text-gray-500 dark:text-gray-300 text-lg">{{ __('This will remove image from this gallery.')}}</p>
@@ -179,7 +177,7 @@ const destroy = () => {
             :busy-text="__('Attaching to gallery')" :recently-successful-text="__('Attached')"
             @close="showAttachConfirm = false" @confirmed="attach">
             <template #icon>
-                <ArrowUpRightIcon class=" text-gray-400 dark:text-gray-500 w-11 h-11 mb-3.5 mx-auto" />
+                <icons.ArrowUpRightIcon class=" text-gray-400 dark:text-gray-500 w-11 h-11 mb-3.5 mx-auto" />
             </template>
             <template #content>
                 <p class="mb-4 text-gray-500 dark:text-gray-300 text-lg">{{ __('This will add image to this gallery.')
@@ -192,7 +190,7 @@ const destroy = () => {
             :busy-text="__('Deleting Image')" :recently-successful-text="__('Image Deleted')"
             @close="showDestroyConfirm = false" @confirmed="destroy">
             <template #icon>
-                <TrashBinIcon class=" text-gray-400 dark:text-gray-500 w-11 h-11 mb-3.5 mx-auto" />
+                <icons.TrashBinIcon class=" text-gray-400 dark:text-gray-500 w-11 h-11 mb-3.5 mx-auto" />
             </template>
             <template #content>
                 <p class="mb-4 text-gray-500 dark:text-gray-300 text-lg">{{ __('This will delete image and its all files action.')}}</p>

@@ -1,16 +1,13 @@
 <script setup>
-import { computed, onMounted, onUpdated, ref, watch, watchEffect } from 'vue';
-import DialogModal from '@/Components/DialogModal.vue'
-import SpinnerIcon from '@/Icons/SpinnerIcon.vue';
-import ImageCard from './ImageCard.vue';
-import ImageIcon from '@/Icons/ImageIcon.vue';
-import Paginator from '@/Components/Paginator.vue';
+import { computed, ref, watch} from 'vue';
 import { debounce } from 'lodash';
 import { trim } from 'lodash';
 import { mapValues } from 'lodash';
-import SearchIcon from '@/Icons/SearchIcon.vue';
 import { usePage } from '@inertiajs/vue3';
 import { pickBy } from 'lodash';
+import { icons } from '@/icons';
+import DialogModal from '@/Components/DialogModal.vue'
+import ImageCard from './ImageCard.vue';
 
 
 const props = defineProps({
@@ -80,7 +77,7 @@ const reset = () => {
                 <label for="search_images" class="sr-only">{{ __('Search') }}</label>
                 <div class="relative">
                     <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
-                        <SearchIcon class="w-6 h-6 text-gray-500 dark:text-gray-200" />
+                        <icons.SearchIcon class="w-6 h-6 text-gray-500 dark:text-gray-200" />
                     </div>
                     <input type="search" @reset="reset" v-model="form.search" autocomplete="off" id="search_images"
                         class="block w-full p-3 ps-12 text-lg text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-primary-600 focus:ring-0 focus:border-primary-600 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-600 dark:focus:border-primary-700"
@@ -91,7 +88,7 @@ const reset = () => {
                 leave-active-class="animate__animated animate__fadeOut absolute" class="min-h-[75vh]">
 
                 <div class="p-6 w-full" v-if="busy">
-                    <SpinnerIcon class="w-6 h-6 animate-spin mx-auto" />
+                    <icons.SpinnerIcon class="w-6 h-6 animate-spin mx-auto" />
                 </div>
                 <div class="" v-else>
 
@@ -101,7 +98,7 @@ const reset = () => {
                             :has-gallery="false" />
                         <div key="empty">
                             <div class="w-full text-center cursor-pointer " @click="$emit('showUploadPhotoDialog')">
-                                <ImageIcon class="text-gray-300 dark:text-gray-400 w-32 h-32 mx-auto" />
+                                <icons.ImageIcon class="text-gray-300 dark:text-gray-400 w-32 h-32 mx-auto" />
 
                                 <p class="text-gray-300 dark:text-gray-400 text-sm">{{ __('Click here to upload some')
                                     }}</p>
@@ -112,7 +109,7 @@ const reset = () => {
 
                     <div v-else class="h-full flex flex-col justify-center">
                         <div class="w-full text-center cursor-pointer" @click="$emit('showUploadPhotoDialog')">
-                            <ImageIcon class="text-gray-300 dark:text-gray-400 w-32 h-32 mx-auto" />
+                            <icons.ImageIcon class="text-gray-300 dark:text-gray-400 w-32 h-32 mx-auto" />
 
                             <p class="text-gray-300 dark:text-gray-400 font-semibold ">{{ $page.props?.total_images_count
                                 > 0 ? __('All uploaded images are attached to gallery!') : __('No images uploaded yet!')

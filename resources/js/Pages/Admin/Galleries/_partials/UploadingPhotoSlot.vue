@@ -1,15 +1,11 @@
 <script setup>
-import InputLabel from '@/Components/InputLabel.vue';
+import { useForm } from '@inertiajs/vue3';
+import { getCurrentInstance } from 'vue';
+import { icons } from '@/icons';
 import TextInput from '@/Components/TextInput.vue';
 import TextArea from '@/Components/TextArea.vue';
 import InputError from '@/Components/InputError.vue';
-import { useForm } from '@inertiajs/vue3';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
-import UploadIcon from '@/Icons/UploadIcon.vue';
-import { getCurrentInstance } from 'vue';
-import CirclePlusIcon from '@/Icons/CirclePlusIcon.vue';
-import TrashBinIcon from '@/Icons/TrashBinIcon.vue';
-import SpinnerIcon from '@/Icons/SpinnerIcon.vue';
 import Tooltip from '@/Components/Tooltip.vue';
 import ProgressBar from '@/Components/ProgressBar.vue';
 
@@ -56,7 +52,7 @@ const create = () => {
                     @click="$emit('remove', { photo: props.photo, saved: true })">
 
                     <Tooltip :text="__('Remove')">
-                        <TrashBinIcon class="w-6 h-6" />
+                        <icons.TrashBinIcon class="w-6 h-6" />
                     </Tooltip>
 
                 </button>
@@ -86,9 +82,9 @@ const create = () => {
                     :class="{ 'opacity-25': form.processing || form.recentlySuccessful }"
                     :disabled="form.processing || form.recentlySuccessful" @click="create">
                     <div class="mx-auto flex items-center justify-center text-center">
-                        <SpinnerIcon v-if="form.processing"
+                        <icons.SpinnerIcon v-if="form.processing"
                             class="animate-spin -ml-1 mr-3 h-5 w-5 text-white dark:text-white" />
-                        <UploadIcon v-else class="-ml-1 mr-3 h-5 w-5 text-white dark:text-white" />
+                        <icons.UploadIcon v-else class="-ml-1 mr-3 h-5 w-5 text-white dark:text-white" />
                         {{ form.processing ? __('Uploading') + '...' : form.recentlySuccessful ? __('Uploaded') :
                             __('Upload') }}
 
@@ -99,9 +95,5 @@ const create = () => {
             </div>
         </div>
         <ProgressBar v-if="form.progress" :progress="form.progress.percentage" />
-
-        <!--         <progress v-if="true" :value="50" max="100" class="w-full">
-            {{ 100 }}%
-        </progress> -->
     </li>
 </template>

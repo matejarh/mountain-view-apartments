@@ -1,9 +1,8 @@
 <script setup>
-import MoonIcon from '@/Icons/MoonIcon.vue';
-import SunIcon from '@/Icons/SunIcon.vue';
-import NavButton from './NavButton.vue';
 import { onMounted } from 'vue';
 import { useHelperStore } from '@/stores/helpers';
+import { icons } from '@/icons';
+import NavButton from './NavButton.vue';
 
 const helpers = useHelperStore()
 
@@ -34,12 +33,12 @@ onMounted(() => {
 <template>
     <NavButton type="button" @click="toggle">
             <div class="relative" v-if="helpers.isDark">
-                <SunIcon id="theme-toggle-dark-icon" class="absolute hover:animate-ping w-6 h-6" />
-                <SunIcon id="theme-toggle-dark-icon" class="w-6 h-6" />
+                <icons.SunIcon id="theme-toggle-dark-icon" class="absolute hover:animate-ping w-6 h-6" />
+                <icons.SunIcon id="theme-toggle-dark-icon" class="w-6 h-6" />
             </div>
             <div class="relative" v-else>
-                <MoonIcon id="theme-toggle-light-icon" class="absolute hover:animate-ping w-6 h-6" />
-                <MoonIcon id="theme-toggle-light-icon" class="w-6 h-6" />
+                <icons.MoonIcon id="theme-toggle-light-icon" class="absolute hover:animate-ping w-6 h-6" />
+                <icons.MoonIcon id="theme-toggle-light-icon" class="w-6 h-6" />
             </div>
     </NavButton>
 </template>

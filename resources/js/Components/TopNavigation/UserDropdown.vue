@@ -2,7 +2,7 @@
 import { router, useForm } from '@inertiajs/vue3';
 import DropdownItem from './DropdownItem.vue';
 import NavDropdown from './NavDropdown.vue';
-import {icons} from "@/icons"
+import { icons } from "@/icons"
 
 const logoutForm = useForm({})
 const logout = () => {
@@ -13,7 +13,7 @@ const logout = () => {
 <template>
     <NavDropdown align="right">
         <template #trigger>
-            <span class="sr-only">{{__('Open user menu')}}</span>
+            <span class="sr-only">{{ __('Open user menu') }}</span>
             <img class="w-8 h-8 rounded-full" :src="$page.props?.auth.user.profile_photo_url" alt="user photo" />
         </template>
         <div class="py-3 px-4 ">
@@ -25,8 +25,8 @@ const logout = () => {
             <DropdownItem :href="$page.props?.auth.user.is_admin ? route('profile.show') : route('profile.show')">
                 {{ __("My Profile") }}
             </DropdownItem>
-            <DropdownItem v-if="$page.props?.auth.user.is_admin":href="route('admin.dashboard.show')">
-                {{__("Administration")}}
+            <DropdownItem v-if="$page.props?.auth.user.is_admin" :href="route('admin.dashboard.show')">
+                {{ __("Administration") }}
             </DropdownItem>
 
         </ul>
@@ -36,14 +36,16 @@ const logout = () => {
                 <a href="#"
                     class="flex items-center py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                     <icons.BookOpenIcon class="mr-2 w-5 h-5 text-gray-400" />
-                    My Reviews</a>
+                    {{__('My Reviews')}}
+                </a>
             </li>
             <li>
                 <inertia-link :href="route('inquiries.index', $page.props.locale)"
                     class="flex items-center py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
 
                     <icons.InfoIcon class="mr-2 w-5 h-5 text-gray-400" />
-                    My Inquiries</inertia-link>
+                    {{__('My Inquiries')}}
+                </inertia-link>
             </li>
             <!-- <li>
                 <a href="#"
@@ -70,7 +72,7 @@ const logout = () => {
 
             <DropdownItem as="button" @clicked="logout">
 
-                {{__("Sign out")}}
+                {{ __("Sign out") }}
             </DropdownItem>
         </ul>
     </NavDropdown>

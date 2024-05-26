@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 import HeroCarousel from '../HeroCarousel.vue';
 import { usePage } from '@inertiajs/vue3';
 import HeroTitle from '@/Components/_default/HeroTitle.vue';

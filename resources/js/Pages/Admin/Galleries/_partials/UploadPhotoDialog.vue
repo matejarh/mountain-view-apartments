@@ -52,9 +52,7 @@ const fileExists = (otherPhotoPreview) => {
 const saved = ref(false)
 const removeFromPhotoPreview = (value) => {
     saved.value = value.saved
-    /*     photoPreview.value = photoPreview.value.filter(function(item, key) {
-            return key !== value
-        }) */
+
     const index = photoPreview.value.indexOf(value.photo);
     if (index > -1) {
         photoPreview.value.splice(index, 1);
@@ -67,13 +65,6 @@ const removeFromPhotoPreview = (value) => {
     }
 
     saved.value = false
-
-    /*     if (photoPreview.value.length === 0) {
-            setTimeout(() => {
-
-                emit('close')
-            }, 2000);
-        } */
 }
 
 

@@ -1,7 +1,6 @@
 <script setup>
 import { getCurrentInstance, ref, watchEffect } from 'vue';
 import DropdownInput from './DropdownInput.vue';
-import Dropdown from './Dropdown.vue';
 import { icons } from '@/icons';
 
 const props = defineProps({

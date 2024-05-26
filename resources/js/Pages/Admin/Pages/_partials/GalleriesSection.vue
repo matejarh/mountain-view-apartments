@@ -1,7 +1,7 @@
 <script setup>
-import ImageIcon from '@/Icons/ImageIcon.vue';
 import GalleryCard from './GalleryCard.vue';
 import { useForm, usePage } from '@inertiajs/vue3';
+import { icons } from '@/icons';
 
 defineEmits(['manage'])
 
@@ -31,7 +31,7 @@ const detach = (gallery) => {
                 <li key="0">
                     <div class="w-full text-center flex flex-col justify-center h-full cursor-pointer"
                         @click="$emit('manage')">
-                        <ImageIcon class="text-gray-300 dark:text-gray-400 w-32 h-32 mx-auto" />
+                        <icons.ImageIcon class="text-gray-300 dark:text-gray-400 w-32 h-32 mx-auto" />
 
                         <p v-if="$page.props?.page.galleries.length > 0"
                             class="text-gray-300 dark:text-gray-400 font-semibold ">{{ __('Attach another gallery!') }}
@@ -46,15 +46,6 @@ const detach = (gallery) => {
                 </li>
             </TransitionGroup>
         </div>
-
-        <!-- <div v-else class="">
-            <div class="w-full text-center cursor-pointer" @click="$emit('manage')">
-                <ImageIcon class="text-gray-300 dark:text-gray-400 w-32 h-32 mx-auto" />
-
-                <p class="text-gray-300 dark:text-gray-400 font-semibold ">{{ __('No galleries attached yet!') }}</p>
-                <p class="text-gray-300 dark:text-gray-400 text-sm">{{ __('To attach one, click here') }}</p>
-            </div>
-        </div> -->
     </div>
 </template>
 

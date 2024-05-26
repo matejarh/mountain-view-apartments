@@ -1,11 +1,10 @@
 <script setup>
-import HeartIcon from '@/Icons/HeartIcon.vue';
-
 import { computed } from 'vue';
 import { useForm, usePage } from '@inertiajs/vue3';
-import Tooltip from '../Tooltip.vue';
 import { useReCaptcha } from 'vue-recaptcha-v3';
+import { icons } from '@/icons';
 import formatNumber from '@/mixins/numberToKilo'
+import Tooltip from '../Tooltip.vue';
 
 const props = defineProps({
     item: Object,
@@ -45,7 +44,7 @@ const likedClasses = computed(() => {
             <button @click="recaptcha" title="" :class="likedClasses"
                 class="flex w-full relative items-center justify-center py-2.5 px-5 text-sm font-medium focus:outline-none border focus:z-10 focus:ring-4 rounded-lg "
                 role="button">
-                <HeartIcon class="w-5 h-5 -ms-2 me-2 sm:ms-0 sm:me-0" />
+                <icons.HeartIcon class="w-5 h-5 -ms-2 me-2 sm:ms-0 sm:me-0" />
                 <span class="sm:hidden">
 
                     {{ item?.is_liked ? __('Liked') : __('Like') }}

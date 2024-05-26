@@ -1,15 +1,14 @@
 <script setup>
-import { onMounted, ref, watch, watchEffect } from 'vue';
+import { ref } from 'vue';
 import DialogModal from '@/Components/DialogModal.vue'
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import { useForm, router } from '@inertiajs/vue3';
-import InputLabel from '@/Components/InputLabel.vue';
 import TextInput from '@/Components/TextInput.vue';
 import TextArea from '@/Components/TextArea.vue';
 import InputError from '@/Components/InputError.vue';
 import Tooltip from '@/Components/Tooltip.vue';
-import SpinnerIcon from '@/Icons/SpinnerIcon.vue';
 import ProgressBar from '@/Components/ProgressBar.vue';
+import { icons } from '@/icons';
 
 
 const props = defineProps({
@@ -119,9 +118,7 @@ const clearPhotoFileInput = () => {
                         autocomplete="description" :has-error="!!form.errors.description"
                         :placeholder="__('Enter description') + '...'" />
                     <InputError :message="form.errors.description" class="mt-2" />
-
                 </div>
-
             </div>
         </template>
 
@@ -130,7 +127,7 @@ const clearPhotoFileInput = () => {
                 :class="{ 'opacity-25': form.processing || form.recentlySuccessful || !form.isDirty }"
                 :disabled="form.processing || form.recentlySuccessful" @click="update">
                 <div class="flex items-center">
-                    <SpinnerIcon v-show="form.processing"
+                    <icons.SpinnerIcon v-show="form.processing"
                         class="animate-spin -ml-1 mr-3 h-5 w-5 text-white dark:text-white" />
                     {{ form.processing ? __('Saving') + '...' : form.recentlySuccessful ? __('Saved') : __('Save') }}
 

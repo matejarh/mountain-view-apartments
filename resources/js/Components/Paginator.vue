@@ -38,8 +38,6 @@ const links = computed(() => {
                 class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-5 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-gray-300 focus:border-primary-600 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:focus:border-primary-700 dark:active:bg-gray-700 dark:active:text-gray-300">
             </inertia-link>
 
-
-
             <inertia-link :href="paginator.next_page_url"
                 v-html="__('pagination.next')"
                 v-if="hasMorePages"
@@ -49,7 +47,6 @@ const links = computed(() => {
             <span v-else
                 v-html="__('pagination.next')"
                 class="relative cursor-not-allowed inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 leading-5 rounded-md dark:text-gray-600 dark:bg-gray-800 dark:border-gray-600">
-
             </span>
 
         </div>

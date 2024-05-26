@@ -1,8 +1,7 @@
 <script setup>
-import ArrowUpIcon from '@/Icons/ArrowUpIcon.vue';
-import Tooltip from './Tooltip.vue';
-import CarretLeftIcon from '@/Icons/CarretLeftIcon.vue';
 import { useScrollStore } from '@/stores/scroll';
+import { icons } from '@/icons';
+import Tooltip from './Tooltip.vue';
 
 /* defineProps({
     scrollTop: Number,
@@ -31,7 +30,7 @@ const scrollForward = () => {
                     <Tooltip :text="__('Show more') + '...'">
                     <div class="animate-bounce hover:animate-none">
 
-                            <CarretLeftIcon class="w-16 h-16 drop-shadow  -rotate-90" />
+                            <icons.CarretLeftIcon class="w-16 h-16 drop-shadow  -rotate-90" />
                         </div>
                     </Tooltip>
                 </button>

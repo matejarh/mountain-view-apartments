@@ -1,15 +1,9 @@
 <script setup>
 import ActionSection from '@/Components/ActionSection.vue'
-import TableSection from '@/Components/TableSection.vue'
 import FullLayout from '@/Layouts/FullLayout.vue';
-import ArrowDownIcon from '@/Icons/ArrowDownIcon.vue';
-import ActivityTableHeader from './ActivityTableHeader.vue';
-import ActivityTableRow from './ActivityTableRow.vue';
 import FiltersSection from '@/Components/FiltersSection.vue';
 import ActivityList from './ActivityList.vue';
 import Paginator from '@/Components/Paginator.vue';
-
-
 </script>
 
 <template>

@@ -1,9 +1,7 @@
 <script setup>
-import Carousel from '@/Components/Carousel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import ActiveCarousel from '@/Components/_default/ActiveCarousel.vue';
-import ImageIcon from '@/Icons/ImageIcon.vue';
-import { usePage } from '@inertiajs/vue3'
+import { icons } from '@/icons';
 import { ref } from 'vue';
 
 const props = defineProps({
@@ -36,14 +34,13 @@ const carouselHeight = 'h-56'
                     :height="carouselHeight" /> -->
                 <div class="w-full flex items-center justify-center shadow-lg" :class="carouselHeight" v-else>
 
-                    <ImageIcon class="w-56 h-56 text-gray-300 dark:text-gray-400" />
+                    <icons.ImageIcon class="w-56 h-56 text-gray-300 dark:text-gray-400" />
                 </div>
-                <!--  <img v-else :src="'https://via.placeholder.com/640x480.png/6d6d6d?text='+__('No%20images')" class="rounded-t-lg w-auto" :class="carouselHeight" /> -->
+
 
                 <div class="px-4 h-full max-h-44 overflow-y-auto scrollbar-none">
 
-                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ gallery.name }}
-                    </h5>
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ gallery.name }}</h5>
 
                     <p v-if="gallery.description !== ''"
                         class="mb-3 font-normal text-gray-700 dark:text-gray-400 bg-gray-50 dark:bg-gray-700 leading-tight whitespace-pre-wrap p-2 rounded-lg h-14 overflow-y-auto scrollbar-none ">

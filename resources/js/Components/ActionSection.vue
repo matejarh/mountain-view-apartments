@@ -1,6 +1,6 @@
 <script setup>
+import { icons } from '@/icons';
 import Tooltip from './Tooltip.vue';
-import CarretLeftIcon from '@/Icons/CarretLeftIcon.vue';
 
 defineProps({
     fullwidth: {
@@ -24,7 +24,7 @@ const goBack = () => {
                 <div class="flex items-center">
                     <button v-if="back" @click="goBack">
                         <Tooltip :text="__('Back')">
-                            <CarretLeftIcon class="w-6 h-6  " />
+                            <icons.CarretLeftIcon class="w-6 h-6  " />
                         </Tooltip>
                     </button>
                     <h1 class="text-2xl font-bold w-full" v-if="$slots.title">

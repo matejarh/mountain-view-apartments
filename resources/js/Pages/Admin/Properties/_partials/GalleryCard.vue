@@ -3,6 +3,7 @@ import Carousel from '@/Components/Carousel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import ImageIcon from '@/Icons/ImageIcon.vue';
 import SpinnerIcon from '@/Icons/SpinnerIcon.vue';
+import { icons } from '@/icons';
 import { router, useForm, usePage } from '@inertiajs/vue3'
 import { ref } from 'vue';
 
@@ -32,7 +33,7 @@ const carouselHeight = 'h-56'
                     :height="carouselHeight" />
                 <div class="w-full flex items-center justify-center shadow-lg" :class="carouselHeight" v-else>
 
-                    <ImageIcon class="w-56 h-56 text-gray-300 dark:text-gray-400" />
+                    <icons.ImageIcon class="w-56 h-56 text-gray-300 dark:text-gray-400" />
                 </div>
                 <!--  <img v-else :src="'https://via.placeholder.com/640x480.png/6d6d6d?text='+__('No%20images')" class="rounded-t-lg w-auto" :class="carouselHeight" /> -->
 
@@ -49,7 +50,7 @@ const carouselHeight = 'h-56'
                 <PrimaryButton type="button"  class="mx-4"
                     @click="$emit('attach', gallery)">
                     <div class="flex items-center">
-                        <!-- <SpinnerIcon v-show="attachForm.processing"
+                        <!--<icons.SpinnerIcon v-show="attachForm.processing"
                             class="animate-spin -ml-1 mr-3 h-5 w-5 text-white dark:text-white" /> -->
                         {{  __('Attach to property') }}
 

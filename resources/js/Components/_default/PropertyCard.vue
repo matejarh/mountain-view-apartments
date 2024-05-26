@@ -1,12 +1,11 @@
 <script setup>
+import { getCurrentInstance, onMounted, ref } from 'vue';
+import { useHelperStore } from '@/stores/helpers';
+import { icons } from '@/icons';
 import Carousel from '@/Components/Carousel.vue';
 import DinamicIcon from '@/Components/DinamicIcon.vue';
 import RatingStars from '@/Components/_default/Properties/RatingStars.vue';
-import ArrowRightIcon from '@/Icons/ArrowRightIcon.vue';
-import { useHelperStore } from '@/stores/helpers';
-import { getCurrentInstance, onMounted, ref } from 'vue';
 import CarouselGallery from './CarouselGallery.vue';
-import { icons } from '@/icons';
 import PrimaryButton from '../PrimaryButton.vue';
 
 const props = defineProps({

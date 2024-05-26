@@ -1,12 +1,10 @@
 <script setup>
+import { ref } from 'vue';
+import { icons } from '@/icons';
 import ActionSection from '@/Components/ActionSection.vue';
 import FullLayout from '@/Layouts/FullLayout.vue';
 import ImageCard from '@/Pages/Admin/Galleries/_partials/ImageCard.vue';
-import GridSection from '@/Components/GridSection.vue';
 import Tooltip from '@/Components/Tooltip.vue';
-import CirclePlusIcon from '@/Icons/CirclePlusIcon.vue';
-import ImageIcon from '@/Icons/ImageIcon.vue';
-import { ref } from 'vue';
 import UploadPhotoDialog from '@/Pages/Admin/Galleries/_partials/UploadPhotoDialog.vue';
 import Paginator from '@/Components/Paginator.vue';
 import FullScreenImagesModal from './_partials/FullScreenImagesModal.vue';
@@ -37,7 +35,7 @@ const handleClicked = (image) => {
 
                             <figure @click="showUploadPhotoDialog = true"
                                 class="flex flex-col items-center justify-center text-center select-none hover:scale-105 active:scale-95 rounded-lg min-h-full relative shadow-lg active:shadow hover:shadow-xl  transition-all duration-300 cursor-pointer overflow-visible">
-                                <ImageIcon class="text-gray-300 dark:text-gray-400 w-32 h-32" />
+                                <icons.ImageIcon class="text-gray-300 dark:text-gray-400 w-32 h-32" />
                                 <p class="text-gray-300 dark:text-gray-400 text-sm">{{ __('Click here to add some') }}
                                 </p>
                             </figure>
@@ -56,7 +54,7 @@ const handleClicked = (image) => {
 
                 <div v-else class="">
                     <div class="w-full text-center cursor-pointer" @click="showUploadPhotoDialog = true">
-                        <ImageIcon class="text-gray-300 dark:text-gray-400 w-32 h-32 mx-auto" />
+                        <icons.ImageIcon class="text-gray-300 dark:text-gray-400 w-32 h-32 mx-auto" />
 
                         <p class="text-gray-300 dark:text-gray-400 font-semibold ">{{ __('No images yet!') }}</p>
                         <p class="text-gray-300 dark:text-gray-400 text-sm">{{ __('Click here to add some') }}</p>
@@ -69,7 +67,7 @@ const handleClicked = (image) => {
         <div class=" fixed top-28 sm:top-20 right-4 md:top-20  md:right-4 z-10">
             <Tooltip :text="__('Upload Images')" location="left">
                 <button @click="showUploadPhotoDialog = true" class=" drop-shadow-lg rounded-full bg-transparent ">
-                    <CirclePlusIcon
+                    <icons.CirclePlusIcon
                         class="w-16 h-16 text-amazon-400 hover:scale-105 hover:rotate-180 active:scale-95 transition " />
                 </button>
             </Tooltip>

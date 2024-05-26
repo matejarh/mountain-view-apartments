@@ -5,6 +5,7 @@ import Carousel from '@/Components/Carousel.vue';
 import ImageIcon from '@/Icons/ImageIcon.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import ActiveCarousel from '@/Components/_default/ActiveCarousel.vue';
+import { icons } from '@/icons';
 
 const props = defineProps({
     property: Object
@@ -49,11 +50,7 @@ const carouselHeight = 'h-56'
                     class="mx-4">
                     <div class="flex items-center">
                         {{ __('Edit Property') }}
-                        <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M1 5h12m0 0L9 1m4 4L9 9" />
-                        </svg>
+                        <icons.ArrowRightIcon class="rtl:rotate-180 w-3.5 h-3.5 ms-2" />
                     </div>
                 </PrimaryButton>
             </div>
