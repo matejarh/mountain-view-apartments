@@ -1,12 +1,12 @@
 <script setup>
 import { Head, usePage } from '@inertiajs/vue3';
 import { computed, onBeforeMount, ref } from 'vue';
+import { useTranslationsStore } from '@/stores/translations';
+import { useScrollStore } from '@/stores/scroll';
 import SideNavigation from './_partials/SideNavigation.vue';
 import TopNavigation from './_partials/TopNavigation.vue';
 import ScrollToTop from '@/Components/ScrollToTop.vue';
 import Banner from '@/Components/Banner.vue';
-import { useTranslationsStore } from '@/stores/translations';
-import { useScrollStore } from '@/stores/scroll';
 
 defineProps({
     title: String,

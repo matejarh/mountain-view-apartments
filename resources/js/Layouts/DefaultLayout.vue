@@ -87,7 +87,7 @@ const fetchPropertiesListForDropdowns = async () => {
 
 const init = () => {
     client.getLocation()
-    fetchPropertiesListForDropdowns()
+    //fetchPropertiesListForDropdowns()
     /* document.addEventListener('visibilitychange', handleVisibilityChange); */
     if (!helpers.pageLoaded) {
         helpers.delay(600)
@@ -136,7 +136,6 @@ onBeforeUnmount(() => {
 
             <div id="page" ref="container" v-if="helpers.showMain" class="transition-all ease-in-out duration-1000 relative antialiased text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-900 w-screen min-h-screen overflow-hidden bg-blend-multiply inset-0 bg-no-repeat bg-cover
                     bg-fixed h-screen" :style="`background-image: url(${backgroundImageUrl});`">
-
 
                 <TopNavigation :show="showNav" :scroll-position="scroll.scrollPosition" class="z-30" />
 

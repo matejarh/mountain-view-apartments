@@ -1,12 +1,13 @@
 <script setup>
-import { computed, onMounted, ref, watchEffect } from 'vue';
+import { computed, watchEffect } from 'vue';
+import { useHelperStore } from '@/stores/helpers';
 import ThemeSwitch from '@/Components/_default/ThemeSwitch.vue';
 import LanguageDropdown from '@/Components/_default/LanguageDropdown.vue';
 import TopNavigationItems from './TopNavigationItems.vue';
 import LogoComponent from '@/Components/_default/LogoComponent.vue';
 import ShapeBottom from '@/Components/_default/ShapeBottom.vue';
 import UserDropdown from '@/Components/TopNavigation/UserDropdown.vue';
-import { useHelperStore } from '@/stores/helpers';
+import HamburgerButton from '@/Components/_default/MobileNavigation/HamburgerButton.vue';
 
 const props = defineProps({
     scrollPosition: Number,
@@ -73,16 +74,8 @@ watchEffect(async () => {
                                 <LanguageDropdown v-show="helpers.showLang" />
                             </Transition>
 
-                            <button data-collapse-toggle="navbar-language" type="button"
-                                class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                                aria-controls="navbar-language" aria-expanded="false">
-                                <span class="sr-only">Open main menu</span>
-                                <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                    viewBox="0 0 17 14">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                        stroke-width="2" d="M1 1h15M1 7h15M1 13h15" />
-                                </svg>
-                            </button>
+                            <HamburgerButton class="xl:hidden" />
+
                             <Transition enter-active-class="animate__animated animate__bounceInDown"
                                 leave-active-class="animate__animated animate__bounceOutUp">
 
