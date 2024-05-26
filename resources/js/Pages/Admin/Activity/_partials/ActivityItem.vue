@@ -14,6 +14,7 @@ import CreatedReview from '@/Components/Activities/CreatedReview.vue';
 import UpdatedReview from '@/Components/Activities/UpdatedReview.vue';
 import DeletedReview from '@/Components/Activities/DeletedReview.vue';
 import CreatedLogin from '@/Components/Activities/CreatedLogin.vue';
+import CreatedInquiry from '@/Components/Activities/CreatedInquiry.vue';
 import { onMounted } from 'vue';
 
 
@@ -25,6 +26,7 @@ const page = usePage()
 
 const componentMap = {
     created_login: CreatedLogin,
+    created_inquiry: CreatedInquiry,
     created_review: CreatedReview,
     updated_user: UpdatedUser,
     created_logout: CreatedLogout,
