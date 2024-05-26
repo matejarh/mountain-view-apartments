@@ -82,7 +82,7 @@ class PropertyFactory extends Factory
                 ['title' => 'living_room', 'name'=>'1 sofa bed', 'icon' => 'SofaBedIcon'],
             ],
             'recomended' => [
-
+                ['title' => 'test title'],
             ],
             'prices' => [
 
