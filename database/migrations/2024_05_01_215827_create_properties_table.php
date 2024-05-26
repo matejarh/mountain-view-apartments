@@ -36,6 +36,8 @@ return new class extends Migration
             $table->json('rules')->nullable();
             $table->unsignedBigInteger('likes_count')->default(0);
             $table->unsignedBigInteger('reviews_count')->default(0);
+            $table->unsignedBigInteger('reservations_count')->default(0);
+            $table->unsignedBigInteger('views_count')->default(0);
             $table->timestamps();
         });
 
