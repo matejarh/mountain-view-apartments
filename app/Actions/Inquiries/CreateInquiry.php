@@ -37,8 +37,8 @@ class CreateInquiry implements StoresGuestInquiry
             'date' => __('Date'),
         );
 
-        $arrival = \Carbon\Carbon::parseFromLocale($input['arrival'], app()->currentLocale())->format('Y-m-d') . ' 16:00:00';
-        $departure = \Carbon\Carbon::parseFromLocale($input['departure'], app()->currentLocale())->format('Y-m-d') . ' 12:00:00';
+        $arrival = \Carbon\Carbon::parseFromLocale($input['date'][0], app()->currentLocale())->format('Y-m-d') . ' 16:00:00';
+        $departure = \Carbon\Carbon::parseFromLocale($input['date'][1], app()->currentLocale())->format('Y-m-d') . ' 12:00:00';
         $propertyId = $property->id;
 
         $input['date_range'] = [$arrival,$departure];
