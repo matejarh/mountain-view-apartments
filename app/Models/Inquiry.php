@@ -49,9 +49,9 @@ class Inquiry extends Model
     {
         $property = \DB::table('properties')->select('name', 'title')->where('id', $this->property->id)->first();
         return [
-            'name' => $property->name,
-            'title' => $property->title,
-            // 'avatar_url' => $property->avatar_url,
+            'name' => $this->property->name,
+            'title' => $this->property->title,
+            'avatar_url' => $this->property->avatar_url,
         ];
     }
 
