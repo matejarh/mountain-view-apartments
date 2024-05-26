@@ -36,7 +36,7 @@ trait RecordsActivity
         $ip = (app()->environment() === 'local' && config('location.testing.enabled')) ? config('location.testing.ip') : request()->ip();
 
         $this->activity()->forceCreate([
-            'user_id' => auth()->id(),
+            'user_id' => auth()->check() ? auth()->id() : null,
             'type' => $this->getActivityType($event),
             'agent' => [
                 'is_desktop' => $agent->isDesktop(),
