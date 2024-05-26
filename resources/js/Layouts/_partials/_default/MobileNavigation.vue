@@ -1,22 +1,15 @@
 <script setup>
-import MobileNavigationItem from '@/Components/_default/MobileNavigation/MobileNavigationItem.vue';
-import HomeIcon from '@/Icons/HomeIcon.vue';
-import BookOpenIcon from '@/Icons/BookOpenIcon.vue';
-import LandmarkIcon from '@/Icons/LandmarkIcon.vue';
+import { computed } from 'vue';
+import { useForm } from '@inertiajs/vue3';
 import { useHelperStore } from '@/stores/helpers';
+import { useScrollStore } from '@/stores/scroll';
+import { icons } from '@/icons';
+import MobileNavigationItem from '@/Components/_default/MobileNavigation/MobileNavigationItem.vue';
 import MobileThemeSwitch from '@/Components/_default/MobileThemeSwitch.vue';
 import HamburgerButton from '@/Components/_default/MobileNavigation/HamburgerButton.vue';
 import LanguageDropdown from '@/Components/_default/LanguageDropdown.vue';
-import CloseIcon from '@/Icons/CloseIcon.vue';
 import ReservationInquiryForm from '@/Components/_default/ReservationInquiry.vue';
-import CalendarIcon from '@/Icons/CalendarIcon.vue';
-import AdjustmentsIcon from '@/Icons/AdjustmentsIcon.vue';
-import UserIcon from '@/Icons/UserIcon.vue';
-import SignOutIcon from '@/Icons/SignOutIcon.vue';
-import { useForm } from '@inertiajs/vue3';
 import Backdrop from '@/Components/_default/Backdrop.vue';
-import { useScrollStore } from '@/stores/scroll';
-import { computed } from 'vue';
 
 const helpers = useHelperStore();
 const scroll = useScrollStore();
@@ -44,42 +37,42 @@ const navItems = [
         key: 'home',
         route: 'home',
         label: 'Home',
-        icon: HomeIcon,
+        icon: icons.HomeIcon,
         path: (locale) => `/${locale}/home`,
     },
     {
         key: 'accommodations',
         route: 'properties.index',
         label: 'Apartments',
-        icon: LandmarkIcon,
+        icon: icons.LandmarkIcon,
         path: (locale) => `/${locale}/accommodations`,
     },
     {
         key: 'exploreBled',
         route: 'explore.bled',
         label: 'Explore Bled',
-        icon: LandmarkIcon,
+        icon: icons.LandmarkIcon,
         path: (locale) => `/${locale}/explore/bled`,
     },
     {
         key: 'exploreNassfeld',
         route: 'discover.nassfeld',
         label: 'Discover Nassfeld',
-        icon: LandmarkIcon,
+        icon: icons.LandmarkIcon,
         path: (locale) => `/${locale}/discover/nassfeld`,
     },
     {
         key: 'aboutUs',
         route: 'aboutus',
         label: 'About Us',
-        icon: LandmarkIcon,
+        icon: icons.LandmarkIcon,
         path: (locale) => `/${locale}/about-us`,
     },
     {
         key: 'contact',
         route: 'contact.show',
         label: 'Contact',
-        icon: BookOpenIcon,
+        icon: icons.BookOpenIcon,
         path: (locale) => `/${locale}/contact`,
     },
 ];
@@ -105,7 +98,7 @@ const navItems = [
                     <h5 class="text-base font-semibold text-gray-500 uppercase dark:text-gray-400">{{ __('Menu') }}</h5>
                     <button @click="helpers.hideMobileDrawer" type="button"
                         class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 absolute top-2.5 end-2.5 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
-                        <CloseIcon class="w-5 h-5" />
+                        <icons.CloseIcon class="w-5 h-5" />
                         <span class="sr-only">{{ __('Close menu') }}</span>
                     </button>
                 </div>
@@ -122,15 +115,15 @@ const navItems = [
                                         </div>
                                     </div>
                                     <MobileNavigationItem as="div" v-if="$page.props?.auth.user.is_admin" @clicked="helpers.hideMobileDrawer" :active="`/admin/dashboard`" :href="route('admin.dashboard.show')">
-                                        <template #icon><AdjustmentsIcon /></template>
+                                        <template #icon><icons.AdjustmentsIcon /></template>
                                         {{ __("Administration") }}
                                     </MobileNavigationItem>
                                     <MobileNavigationItem as="div" @clicked="helpers.hideMobileDrawer" :active="`/user/profile`" :href="route('profile.show')">
-                                        <template #icon><UserIcon /></template>
+                                        <template #icon><icons.UserIcon /></template>
                                         {{ __("My Profile") }}
                                     </MobileNavigationItem>
                                     <MobileNavigationItem as="div" :href="null" @clicked="logout">
-                                        <template #icon><SignOutIcon /></template>
+                                        <template #icon><icons.SignOutIcon /></template>
                                         {{ __("Sign out") }}
                                     </MobileNavigationItem>
                                 </div>
@@ -145,7 +138,7 @@ const navItems = [
                     </div>
                     <div class="pt-4 mt-4 space-y-2 font-medium border-t border-gray-200 dark:border-gray-700 mx-4">
                         <h5 class="inline-flex items-center mb-6 text-base font-semibold text-gray-500 uppercase dark:text-gray-400">
-                            <CalendarIcon class="w-3.5 h-3.5 me-2.5" />
+                            <icons.CalendarIcon class="w-3.5 h-3.5 me-2.5" />
                             {{ __('Reservation Inquiry') }}
                         </h5>
                         <ReservationInquiryForm @close="helpers.hideMobileDrawer" />
