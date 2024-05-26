@@ -4,14 +4,16 @@ namespace App\Models;
 
 use App\Filters\ReservationFilters;
 use App\Traits\HasUUidAsPrimary;
+use App\Traits\RecordsActivity;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Stevebauman\Location\Facades\Location;
 
 class Reservation extends Model
 {
-    use HasFactory, HasUUidAsPrimary;
+    use HasFactory, HasUUidAsPrimary, RecordsActivity;
 
     protected $casts = [
         'guests' => 'object',
@@ -27,6 +29,11 @@ class Reservation extends Model
         'localized_departure',
         'excerpt',
     ];
+
+    protected static function getActivitiesToRecord(): array
+    {
+        return ['created'];
+    }
 
     public function owner() :BelongsTo
     {
@@ -113,6 +120,7 @@ class Reservation extends Model
     {
         $this->confirmed_at = now();
         $this->save();
+
     }
 
     /**
@@ -122,6 +130,8 @@ class Reservation extends Model
     {
         $this->confirmed_at = null;
         $this->save();
+
+
     }
 
     /**
