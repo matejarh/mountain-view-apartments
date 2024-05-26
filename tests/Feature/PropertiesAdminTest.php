@@ -86,7 +86,7 @@ class PropertiesAdminTest extends TestCase
                 ['title' => 'living_room', 'name'=>'1 sofa bed', 'icon' => 'SofaBedIcon'],
             ],
             'recomended' => [
-                'title' =>'for 4 adults',
+                ['title' =>'for 4 adults'],
             ],
             'prices' => [
                 ['guests' => 4, 'price' => "945"],
@@ -245,11 +245,12 @@ class PropertiesAdminTest extends TestCase
         $updated['name'] = "new name";
         $updated['rules']['en'] = ['name' => 'Pets', 'title' => '', 'description' => 'Pets are allowed.', 'icon' => 'QuietHoursIcon'];
         $updated['quote']['en'] = 'Test text';
+        $updated['quote']['en'] = 'Test text';
 
         $response = $this->actingAs($this->admin)->put(route('admin.properties.update', $property), $updated)
             ->assertStatus(302)
             ->assertRedirect('/');
-            //dd($response->ddSession());
+            // $response->ddSession();
             $response->assertSessionHas(["status" => "property-updated"]);
 
         $this->assertEquals('new name', $property->fresh()->name);

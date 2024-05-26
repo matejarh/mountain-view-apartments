@@ -149,16 +149,16 @@ class InquiriesTest extends TestCase
         $inquiry['date'] = [now(), now()->addWeek()];
 
         $response = $this->post(route('inquiry.store', $property), $inquiry);
-        //dd($response->ddSession());
-        $response->assertStatus(302)->assertSessionHasErrors(['date.0']);
+        //$response->ddSession();
+        $response->assertStatus(302)->assertSessionHasErrors(['date.0'],null, 'creatingInquiry');
 
         $inquiry['date'] = [now()->addDay(), now()->addYear()->addDay()];
         $response = $this->post(route('inquiry.store', $property), $inquiry);
-        $response->assertStatus(302)->assertSessionHasErrors(['date.1']);
+        $response->assertStatus(302)->assertSessionHasErrors(['date.1'],null, 'creatingInquiry');
 
         $inquiry['date'] = [now(), now()->addYear()->addDay()];
         $response = $this->post(route('inquiry.store', $property), $inquiry);
-        $response->assertStatus(302)->assertSessionHasErrors(['date.1', 'date.0']);
+        $response->assertStatus(302)->assertSessionHasErrors(['date.1', 'date.0'],null, 'creatingInquiry');
 
     }
 
