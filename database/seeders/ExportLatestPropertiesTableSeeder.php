@@ -90,7 +90,7 @@ class ExportLatestPropertiesTableSeeder extends Seeder
             ),
             3 =>
             array (
-                'id' => 3,
+                'id' => 4,
                 'user_id' => 1,
                 'type' => 'Two-Bedroom Apartment',
                 'slug' => 'apartment-rose',
