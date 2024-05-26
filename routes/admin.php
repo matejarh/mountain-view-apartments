@@ -58,6 +58,7 @@ Route::group(['middleware' => config('jetstream.middleware')], function () {
         Route::name('users.')->prefix('users')->namespace('users')->group(function() {
 
             Route::get('/all', [UsersController::class, 'index'])->name('index');
+            Route::get('/{user}', [UsersController::class, 'show'])->name('show');
 
             Route::put('/all/{user}', [UsersController::class, 'update'])->name('update');
 

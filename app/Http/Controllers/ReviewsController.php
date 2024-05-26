@@ -53,12 +53,12 @@ class ReviewsController extends Controller
      */
     public function create(string $lang, Property $property): Response | RedirectResponse
     {
-
+        // dd($property);
         if ($property->is_reviewed) {
-            session()->flash('flash.banner', __("You have already reviewed " . $property->title->$lang));
+            session()->flash('flash.banner', __("You have already reviewed") . ' ' . $property->title->$lang);
             session()->flash('flash.bannerStyle', 'danger');
 
-            return redirect(route('reviews.index', ['lang' => $lang, 'property' => $property]));
+            return redirect(route('properties.reviews.index', ['lang' => $lang, 'property' => $property]));
         }
 
         Gate::authorize('create', Review::class);

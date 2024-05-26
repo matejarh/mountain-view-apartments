@@ -140,6 +140,16 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Review::class)->latest();
     }
 
+    public function reservations(): HasMany
+    {
+        return $this->hasMany(Reservation::class)->latest();
+    }
+
+    public function likes(): HasMany
+    {
+        return $this->hasMany(Like::class)->latest();
+    }
+
     public function lastSeenDiffForHumans(): string
     {
 /*         if ($this->activities->count() > 0) {

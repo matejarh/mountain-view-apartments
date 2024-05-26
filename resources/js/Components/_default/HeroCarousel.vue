@@ -1,13 +1,14 @@
 <script setup>
 import CarouselCarretLeftIcon from '@/Icons/CarouselCarretLeftIcon.vue';
+import { useClientStore } from '@/stores/client';
 import { Carousel } from 'flowbite';
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 
 const props = defineProps({
     id: String,
     slides: Array,
     interval: {
-        default: 3000,
+        default: 10000,
         type: Number,
     },
     image: {
@@ -20,12 +21,21 @@ const props = defineProps({
     isFullScreen: {
         type: Boolean,
         default: false,
-    }
-
+    },
 })
 
 const carousel = ref(null)
 const carouselRef = ref(null)
+
+/* const client = useClientStore()
+
+watch(client,() => {
+    if (client.isBrowserActive) {
+        carousel.value.slideTo(0)
+
+        carousel.value.cycle();
+    }
+}) */
 
 const makeItems = () => {
     let items = []

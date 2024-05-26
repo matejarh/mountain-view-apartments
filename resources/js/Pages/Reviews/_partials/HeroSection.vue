@@ -1,66 +1,68 @@
 <script setup>
+import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { usePage } from '@inertiajs/vue3';
 import LikeButton from '@/Components/_default/Reviews/LikeButton.vue';
 import RatingStars from '@/Components/_default/Properties/RatingStars.vue';
-import { usePage } from '@inertiajs/vue3';
-import { onBeforeUnmount, onMounted, ref } from 'vue';
 import HeroTitle from '@/Components/_default/HeroTitle.vue';
+import TransparentButton from '@/Components/_default/TransparentButton.vue';
+import { icons } from '@/icons';
 
-defineEmits(['create'])
+const page = usePage();
+const defaultBackgroundImage = new URL('/resources/images/backgrounds/winter-sunrise.jpg', import.meta.url);
+const backgroundImage = ref(defaultBackgroundImage);
+const interval = ref(null);
 
-const page = usePage()
-const bgImage = ref(new URL('/resources/images/backgrounds/winter-sunrise.jpg', import.meta.url))
-
-const int = ref(page.props?.settings.find(setting => setting.slug === 'intervals'))
-const interval = ref(null)
 const initBgImageRotation = () => {
-    if (page.props?.property?.galleries.length <= 0) {
-        clearInterval(interval)
-        return
+    const gallery = page.props?.property?.galleries?.[0];
+    if (!gallery || gallery.images.length <= 0) {
+        clearInterval(interval.value);
+        return;
     }
-    //const gallery = _.filter(page.props?.property?.galleries, ['name', page.props?.property?.name])[0]
-    //const gallery = page.props?.property?.galleries.find('name', page.props?.property?.name);
-    const gallery = page.props?.property?.galleries[0];
 
-    bgImage.value = gallery.images[0].photo_url
-    let current = 0
+    let current = 0;
+    const image = new Image();
+
+    const setImage = (index) => {
+        image.src = gallery.images[index].photo_url;
+        image.onload = () => {
+            backgroundImage.value = gallery.images[index].photo_url;
+        };
+    };
+
+    setImage(current);
 
     interval.value = setInterval(() => {
-        bgImage.value = gallery.images[current].photo_url
-
-        if (current + 1 >= gallery.images.length) {
-            current = 0
-        } else {
-            current++
-        }
-    }, int.value.attributes.hero_background_interval * 1000);
-}
+        current = (current + 1) % gallery.images.length;
+        setImage(current);
+    }, page.props?.settings?.find(setting => setting.slug === 'intervals')?.attributes?.hero_background_interval * 1000 || 5000);
+};
 
 const handleInitialImage = () => {
-    if (page.property?.galeries.length > 0) {
-        if (page.property?.galeries[0].images.length > 0) {
-            bgImage.value = new URL(page.props?.property?.galleries[0].images[0].photo_url, import.meta.url)
-        }
+    const gallery = page.props?.property?.galleries?.[0];
+    if (gallery?.images?.length > 0) {
+        const image = new Image();
+        image.src = gallery.images[0].photo_url;
+        image.onload = () => {
+            backgroundImage.value = gallery.images[0].photo_url;
+        };
     }
-}
+};
 
 onMounted(() => {
-    handleInitialImage()
-    initBgImageRotation()
-})
+    handleInitialImage();
+    initBgImageRotation();
+});
+
 onBeforeUnmount(() => {
-    clearInterval(interval.value)
-})
+    clearInterval(interval.value);
+});
 </script>
 
 <template>
-
-
-    <section :style="`background-image: url(${bgImage});`"
-        class="bg-center bg-cover bg-no-repeat  bg-gray-700 bg-blend-multiply transition-all duration-[2000ms] ease-in-out bg-paralax">
+    <section :style="`background-image: url(${backgroundImage});`" class="bg-center bg-cover bg-no-repeat bg-gray-700 bg-blend-multiply transition-all duration-[2000ms] ease-in-out bg-paralax">
         <div class="px-4 mx-auto max-w-screen-xl text-center py-24 lg:py-56">
             <HeroTitle>
-                <inertia-link
-                    :href="route('properties.show', { lang: $page.props?.locale, property: $page.props?.property })">
+                <inertia-link :href="route('properties.show', { lang: $page.props?.locale, property: $page.props?.property })">
                     {{ $page.props?.property.title[$page.props?.locale] }}
                 </inertia-link>
             </HeroTitle>
@@ -70,27 +72,21 @@ onBeforeUnmount(() => {
             </div>
             <div class="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0">
                 <RatingStars :property="$page.props?.property" :size="'large'" :without-text="false" :on-dark="true" />
-
             </div>
 
             <div class="mt-8 flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0">
-                <inertia-link
-                    :href="route('reviews.create', { property: $page.props?.property, lang: $page.props?.locale })"
-                    class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-0 focus:ring-primary-300 dark:focus:ring-primary-900">
-                    Post Review
-                    <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                        fill="none" viewBox="0 0 14 10">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M1 5h12m0 0L9 1m4 4L9 9" />
-                    </svg>
-                </inertia-link>
+                <TransparentButton type="button" @click="$inertia.get(route('reviews.create', { property: $page.props?.property, lang: $page.props?.locale }))">
+                    {{ __('Post Review') }}
+                    <icons.PenNibIcon class="w-3.5 h-3.5 ms-2 rtl:rotate-180" />
+                </TransparentButton>
+
                 <LikeButton :item="$page.props?.property" />
-                <a href="#"
-                    class="inline-flex justify-center hover:text-gray-900 items-center py-3 px-5 sm:ms-4 text-base font-medium text-center text-white rounded-lg border border-white hover:bg-gray-100 focus:ring-4 focus:ring-gray-400">
-                    Book
-                </a>
+
+                <TransparentButton type="button" @click="$inertia.get(route('reservations.create', $page.props.locale))">
+                    {{ __('Book Now') }}
+                    <icons.CalendarIcon class="w-3.5 h-3.5 ms-2 rtl:rotate-180" />
+                </TransparentButton>
             </div>
         </div>
     </section>
-
 </template>

@@ -81,10 +81,14 @@ const fetchPropertiesListForDropdowns = async () => {
 
 }
 
+/* const handleVisibilityChange = (e) => {
+    client.handleVisibilityChange()
+} */
+
 const init = () => {
     client.getLocation()
     fetchPropertiesListForDropdowns()
-
+    /* document.addEventListener('visibilitychange', handleVisibilityChange); */
     if (!helpers.pageLoaded) {
         helpers.delay(600)
             .then(() => {

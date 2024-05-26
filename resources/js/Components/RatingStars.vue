@@ -76,7 +76,7 @@ const onDarkTextClasses = computed(() => {
         <p v-if="!withoutText" class="text-sm font-medium leading-none text-gray-500 dark:text-gray-400" :class="onDarkTextClasses" >
             ({{ property?.average_review_score }})
         </p>
-        <inertia-link v-if="!withoutText" :href="route('reviews.index', { property: property, lang: $page.props?.locale })" :class="onDarkLinkClasses" class="text-sm font-medium leading-none  underline hover:no-underline ">
+        <inertia-link v-if="!withoutText" :href="route('properties.reviews.index', { property: property, lang: $page.props?.locale })" :class="onDarkLinkClasses" class="text-sm font-medium leading-none  underline hover:no-underline ">
             {{ property?.reviews_count }} {{ __('Review', property?.reviews_count) }}
         </inertia-link>
     </div>

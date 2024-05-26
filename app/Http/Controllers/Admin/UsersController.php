@@ -44,6 +44,33 @@ class UsersController extends Controller
     }
 
     /**
+     * Display the specified user.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function show(Request $request, User $user): Response
+    {
+        // Check if the user has permission to view the page
+        Gate::authorize('view', $user);
+
+        // Render the page details page using Inertia.js
+        return Inertia::render('Admin/Users/Show', [
+            // Pass the page details along with its galleries and facilities
+            'user' => User::with('reviews', 'reservations', 'likes')->find($user->id),
+
+            // Determine the user's permissions for this page
+            'can' => [
+                'view_page' => auth()->user()->can('view', $user),
+                'edit_page' => auth()->user()->can('update', $user),
+                'delete_page' => auth()->user()->can('delete', $user),
+            ],
+        ]);
+    }
+
+    /**
      * Update the given user's profile information.
      *
      * @param  \Illuminate\Http\Request  $request

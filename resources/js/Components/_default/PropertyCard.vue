@@ -6,6 +6,8 @@ import ArrowRightIcon from '@/Icons/ArrowRightIcon.vue';
 import { useHelperStore } from '@/stores/helpers';
 import { getCurrentInstance, onMounted, ref } from 'vue';
 import CarouselGallery from './CarouselGallery.vue';
+import { icons } from '@/icons';
+import PrimaryButton from '../PrimaryButton.vue';
 
 const props = defineProps({
     property: Object,
@@ -61,13 +63,25 @@ onMounted(() => {
                 <div class="mb-8 mt-4 text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400"
                     v-html="property.description[$page.props?.locale]"></div>
 
-                <div class="flex flex-col space-y-4 sm:flex-row sm:space-y-0">
-                    <inertia-link :href="route('properties.show', { property: property, lang: $page.props?.locale })"
+                <div class="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-2">
+                    <PrimaryButton @click="$inertia.get(route('properties.show', { property: property, lang: $page.props?.locale }))">
+
+                        {{ __('Learn more') }}
+                        <icons.InfoIcon class="w-3.5 h-3.5 ms-2" />
+
+                    </PrimaryButton>
+                    <PrimaryButton @click="$inertia.get(route('reservations.create', $page.props.locale))">
+
+                        {{ __('Book Now') }}
+                        <icons.CalendarIcon class="w-3.5 h-3.5 ms-2" />
+
+                    </PrimaryButton>
+<!--                     <inertia-link :href="route('properties.show', { property: property, lang: $page.props?.locale })"
                         class="inline-flex hover:scale-105 active:scale-95 items-center justify-center px-4 py-2 bg-primary-700 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-primary-500 active:bg-primary-700 focus:outline-none focus:ring-0 active:shadow hover:shadow-xl shadow-lg   transition ease-in-out duration-150">
                         {{ __('Learn more') }}
-                        <ArrowRightIcon class="w-3.5 h-3.5 ms-2" />
+                        <icons.ArrowRightIcon class="w-3.5 h-3.5 ms-2" />
 
-                    </inertia-link>
+                    </inertia-link> -->
 
                 </div>
             </div>

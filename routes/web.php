@@ -37,12 +37,13 @@ Route::group(['prefix' => '{lang}', 'middleware' => 'web'], function () {
     Route::name('properties.')->prefix('accomodations')->namespace('accomodations')->group(function () {
         Route::get('/', [PropertiesController::class, 'index'])->name('index');
         Route::get('/{property}', [PropertiesController::class, 'show'])->name('show');
+
+        Route::name('reviews.')->prefix('reviews')->namespace('reviews')->group(function () {
+            Route::get('/for/{property}', [ReviewsController::class, 'index'])->name('index');
+
+        });
     });
 
-    Route::name('reviews.')->prefix('reviews')->namespace('reviews')->group(function () {
-        Route::get('/for/{property}', [ReviewsController::class, 'index'])->name('index');
-
-    });
     Route::get('/offers', [PagesController::class, 'offers'])->name('offers');
     Route::get('/contact', [PagesController::class, 'contact'])->name('contact.show');
     Route::get('/explore/bled', [PagesController::class, 'bled'])->name('explore.bled');
@@ -103,6 +104,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
         Route::name('reservations.')->prefix('my-reservations')->namespace('reservations')->group(function () {
             Route::get('/', [ReservationsController::class, 'index'])->name('index');
             Route::get('/{reservation}', [ReservationsController::class, 'show'])->name('show');
+            Route::get('/create', [ReservationsController::class, 'create'])->name('create');
         });
 
     });

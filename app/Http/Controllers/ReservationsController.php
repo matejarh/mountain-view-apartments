@@ -25,6 +25,18 @@ class ReservationsController extends Controller
         ]);
     }
 
+    public function create(Request $request) :Response
+    {
+        return Inertia::render('MyReservations/Create', [
+            'properties' => Property::fetchListForDropdowns(),
+            'seo' => [
+                'title' => __('Create New Reservation'),
+                'description' => '',
+                'keywords' => ''
+            ]
+        ]);
+    }
+
 
     public function store(Request $request, Property $property, CreatesReservations $creator ) :ReservationCreateResponse
     {

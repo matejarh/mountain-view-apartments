@@ -1,11 +1,11 @@
 <script setup>
 import HeroParallax from '@/Components/_default/HeroParallax.vue';
 import { usePage } from '@inertiajs/vue3';
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
-import LogoHero from '@/Components/LogoHero.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import SecondaryButton from '@/Components/SecondaryButton.vue';
+import { computed } from 'vue';
+
 import HeroTitle from '@/Components/_default/HeroTitle.vue';
+import TransparentButton from '@/Components/_default/TransparentButton.vue';
+import { icons } from '@/icons';
 
 const page = usePage()
 
@@ -45,9 +45,10 @@ const scrollTo = (view) => {
                 $page.props?.page.description[$page.props?.locale] }}</p>
 
             <div class="mb-8 flex flex-col space-y-4 sm:space-x-4 sm:flex-row sm:justify-center sm:space-y-0">
-                <SecondaryButton type="button" @click="scrollTo('content-section')">
+                <TransparentButton type="button" @click="scrollTo('content-section')">
                     {{__('Learn more')}}
-                </SecondaryButton>
+                    <icons.ArrowRightIcon class="w-3.5 h-3.5 ms-2 rtl:rotate-180" />
+                </TransparentButton>
             </div>
         </div>
     </div>

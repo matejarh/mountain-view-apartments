@@ -45,7 +45,7 @@ const countryFlag = computed(() => {
                 <label :for="`checkbox-${user.id}`" class="sr-only">{{ __('checkbox') }}</label>
             </div>
         </td>
-        <th scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+        <th scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white cursor-pointer" @click="$inertia.get(route('admin.users.show', user))">
             <img class="w-10 h-10 rounded-full" :src="user.profile_photo_url" :alt="user.name + 's image'">
             <div class="ps-3">
                 <div class="text-base font-semibold">{{ user.name }}</div>

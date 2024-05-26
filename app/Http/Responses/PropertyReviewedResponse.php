@@ -37,7 +37,7 @@ class PropertyReviewedResponse implements PropertyReviewResponseContract
 
         return $request->wantsJson()
             ? new JsonResponse('', 201)
-            : redirect(route('reviews.index', [
+            : redirect(route('properties.reviews.index', [
                 'property' => $this->property,
                 'lang' => app()->currentLocale()
             ]))->with('status', 'property-reviewed');

@@ -1,14 +1,11 @@
 <script setup>
-import ShapeBottom from '@/Components/_default/ShapeBottom.vue';
-import ShapeTop from '@/Components/_default/ShapeTop.vue';
 import { usePage } from '@inertiajs/vue3';
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
-import LogoHero from '@/Components/LogoHero.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import SecondaryButton from '@/Components/SecondaryButton.vue';
+import { computed } from 'vue';
+
 import TransparentButton from '@/Components/_default/TransparentButton.vue';
 import HeroParallax from '@/Components/_default/HeroParallax.vue';
 import HeroTitle from '@/Components/_default/HeroTitle.vue';
+import { icons } from '@/icons';
 
 const page = usePage()
 
@@ -49,18 +46,19 @@ const scrollTo = (view) => {
                     v-html="$page.props?.property.quote[$page.props?.locale]"></div>
 
                 <div class="mb-8 flex flex-col space-y-4 sm:space-x-4 sm:flex-row sm:justify-center sm:space-y-0">
-                    <PrimaryButton @click="scrollTo('availability')" class="py-3 px-5 " type="button">
-
+                    <TransparentButton @click="scrollTo('availability')"  type="button">
                         {{ __('Check availability') }}
-                        <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M1 5h12m0 0L9 1m4 4L9 9" />
-                        </svg>
-                    </PrimaryButton class="py-3 px-5 ">
+                        <icons.ArrowRightIcon class="w-3.5 h-3.5 ms-2 rtl:rotate-180" />
+                    </TransparentButton>
 
                     <TransparentButton type="button" @click="scrollTo('info')">
                         {{ __('Learn more') }}
+                        <icons.InfoIcon class="w-3.5 h-3.5 ms-2 rtl:rotate-180" />
+                    </TransparentButton>
+
+                    <TransparentButton type="button" @click="$inertia.get(route('reservations.create', $page.props.locale))">
+                        {{ __('Book Now') }}
+                        <icons.CalendarIcon class="w-3.5 h-3.5 ms-2 rtl:rotate-180" />
                     </TransparentButton>
 
                 </div>
