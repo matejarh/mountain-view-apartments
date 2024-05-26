@@ -95,7 +95,7 @@ class PropertiesSeeder extends Seeder
                 ],
             ],
             "recomended" => [
-                "for 4 adults",
+                "title"=>"for 4 adults",
             ],
             "prices" => [
                 [
@@ -186,7 +186,7 @@ class PropertiesSeeder extends Seeder
                 ],
             ],
             "recomended" => [
-                "for 2 adults",
+                "title"=>"for 2 adults",
             ],
             "prices" => [
                 [
@@ -276,7 +276,7 @@ class PropertiesSeeder extends Seeder
                 ],
             ],
             "recomended" => [
-                "for 4 adults",
+                "title"=>"for 4 adults",
             ],
             "prices" => [
                 [

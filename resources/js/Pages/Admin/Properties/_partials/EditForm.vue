@@ -1,55 +1,54 @@
 <script setup>
+import { useForm, usePage } from '@inertiajs/vue3';
+import { onBeforeUnmount, onMounted, reactive, ref } from 'vue';
+import { useTranslationsStore } from '@/stores/translations';
+import { icons } from '@/icons';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextArea from '@/Components/TextArea.vue';
 import TextInput from '@/Components/TextInput.vue';
-import SpinnerIcon from '@/Icons/SpinnerIcon.vue';
-import { useForm, usePage } from '@inertiajs/vue3';
-import SelectInput from '@/Components/SelectInput.vue';
-import TrashBinIcon from '@/Icons/TrashBinIcon.vue';
-import { onBeforeUnmount, onMounted, reactive, ref } from 'vue';
-import CirclePlusIcon from '@/Icons/CirclePlusIcon.vue';
 import HorizontalTabs from '@/Components/HorizontalTabs.vue';
 import HorizontalTabItem from '@/Components/HorizontalTabItem.vue';
-import { useTranslationsStore } from '@/stores/translations';
 import GridSection from '@/Components/GridSection.vue';
 import TipTapInput from '@/Components/TipTapInput.vue';
+import IconsDropdown from '@/Components/IconsDropdown.vue';
 
 const page = usePage()
 
 const store = useTranslationsStore()
 
 const form = useForm({
-    type: page.props?.property?.type,
-    name: page.props?.property?.name,
-    title: page.props?.property?.title,
-    quote: page.props?.property?.quote,
-    description: page.props?.property?.description,
-    long_description: page.props?.property?.long_description,
-    address: page.props?.property?.address,
-    keywords: page.props?.property?.keywords,
-    size: page.props?.property?.size,
-    is_entire_apartment: page.props?.property?.is_entire_apartment,
-    coordinates: page.props?.property?.coordinates,
-    bed_types: page.props?.property?.bed_types,
-    recomended: page.props?.property?.recomended,
-    prices: page.props?.property?.prices,
-    rules: page.props?.property?.rules,
+    ...page.props?.property,
+    /*     type: page.props?.property?.type,
+        name: page.props?.property?.name,
+        title: page.props?.property?.title,
+        quote: page.props?.property?.quote,
+        description: page.props?.property?.description,
+        long_description: page.props?.property?.long_description,
+        address: page.props?.property?.address,
+        keywords: page.props?.property?.keywords,
+        size: page.props?.property?.size,
+        is_entire_apartment: page.props?.property?.is_entire_apartment,
+        coordinates: page.props?.property?.coordinates,
+        bed_types: page.props?.property?.bed_types,
+        recomended: page.props?.property?.recomended,
+        prices: page.props?.property?.prices,
+        rules: page.props?.property?.rules, */
 })
 
 const selectedTab = ref(page.props?.locale)
 
-const newBedType = useForm({
+const newBedType = reactive({
     name: '',
     title: '',
     icon: 'none',
 })
-const newPrice = useForm({
+const newPrice = reactive({
     guests: '',
     price: '',
 })
-const newRule = useForm({
+const newRule = reactive({
     name: '',
     title: '',
     description: '',
@@ -72,73 +71,25 @@ const update = () => {
     })
 }
 
-const handleRemoveBedType = (item) => {
-    const index = form.bed_types.indexOf(item)
-    if (index > -1) {
-        form.bed_types.splice(index, 1);
-    }
-}
-const handleRemoveRecomended = (item) => {
-    const index = form.recomended.indexOf(item)
-    if (index > -1) {
-        form.recomended.splice(index, 1);
-    }
-}
-const handleRemovePrice = (item) => {
-    const index = form.prices.indexOf(item)
-    if (index > -1) {
-        form.prices.splice(index, 1);
-    }
-}
-const handleRemoveRule = (item) => {
-    const index = form.rules[selectedTab.value].indexOf(item)
-    if (index > -1) {
-        form.rules[selectedTab.value].splice(index, 1);
-    }
-}
+const removeItem = (list, item) => {
+    const index = list.indexOf(item);
+    if (index > -1) list.splice(index, 1);
+};
 
-const handleAddBadType = () => {
-    if (newBedType.name !== '' && newBedType.title !== '' && newBedType.icon !== 'none') {
-        let item = {
-            name: newBedType.name,
-            title: newBedType.title,
-            icon: newBedType.icon,
+const handleAddItem = (list, newItem) => {
+    if (Object.values(newItem).every(value => value)) {
+        list.push({ ...newItem });
+        Object.keys(newItem).forEach(key => newItem[key] = '');
+    }
+};
+
+const handleAddRuleItem = (list, newItem) => {
+    page.props.supported_locales.forEach(locale => {
+        if (Object.values(newItem).every(value => value)) {
+            list[locale].push({ ...newItem });
         }
-        form.bed_types.push(item)
-        newBedType.reset()
-    }
-}
-const handleAddPrice = () => {
-    if (newPrice.guests !== '' && newPrice.price !== '') {
-        let item = {
-            guests: newPrice.guests,
-            price: newPrice.price,
-
-        }
-        form.prices.push(item)
-        newPrice.reset()
-    }
-}
-const handleAddRule = () => {
-    if (newRule.name !== '' && newRule.description !== '' && newRule.icon !== 'none') {
-        let item = {
-            name: newRule.name,
-            title: newRule.title,
-            description: newRule.description,
-            icon: newRule.icon,
-
-        }
-        form.rules[selectedTab.value].push(item)
-        newRule.reset()
-    }
-}
-
-const handleAddRecomended = () => {
-    if (newRecomended.title !== '') {
-        form.recomended.push(newRecomended.title)
-
-        newRecomended.title = ''
-    }
+    })
+    Object.keys(newItem).forEach(key => newItem[key] = '');
 }
 
 const saveOnCtrlS = (e) => {
@@ -189,44 +140,48 @@ onBeforeUnmount(() => document.removeEventListener('keydown', saveOnCtrlS));
                 </HorizontalTabItem>
             </template>
         </HorizontalTabs>
-        <GridSection class="mt-4">
-            <div class="col-span-full xl:col-span-full">
-                <InputLabel for="title" :value="__('Title')" />
-                <TextInput id="title" v-model="form.title[selectedTab]" type="text" class="mt-1 block w-full" required
-                    autocomplete="title" :has-error="!!form.errors.title" :placeholder="__('Enter title') + '...'" />
-                <InputError :message="form.errors.title" class="mt-2" />
-            </div>
+        <div class="p-4 dark:bg-gray-700 bg-gray-50">
 
-            <div class="col-span-full">
-                <InputLabel for="quote" :value="__('Quote')" />
-                <TextInput id="quote" v-model="form.quote[selectedTab]" type="text" class="mt-1 block w-full"
-                    autocomplete="quote" :has-error="!!form.errors[`quote.${selectedTab}`]"
-                    :placeholder="__('Enter quote') + '...'" />
-                <InputError :message="form.errors[`quote.${selectedTab}`]" class="mt-2" />
-            </div>
+            <GridSection class="mt-4">
+                <div class="col-span-full xl:col-span-full">
+                    <InputLabel for="title" :value="__('Title')" />
+                    <TextInput id="title" v-model="form.title[selectedTab]" type="text" class="mt-1 block w-full"
+                        required autocomplete="title" :has-error="!!form.errors.title"
+                        :placeholder="__('Enter title') + '...'" />
+                    <InputError :message="form.errors.title" class="mt-2" />
+                </div>
 
-            <div class="col-span-full">
-                <InputLabel for="description" :value="__('Description')" />
-                <TipTapInput v-model="form.description[selectedTab]"
-                    :has-error="!!form.errors[`description.${selectedTab}`]" />
-                <InputError :message="form.errors[`description.${selectedTab}`]" class="mt-2" />
-            </div>
+                <div class="col-span-full">
+                    <InputLabel for="quote" :value="__('Quote')" />
+                    <TextInput id="quote" v-model="form.quote[selectedTab]" type="text" class="mt-1 block w-full"
+                        autocomplete="quote" :has-error="!!form.errors[`quote.${selectedTab}`]"
+                        :placeholder="__('Enter quote') + '...'" />
+                    <InputError :message="form.errors[`quote.${selectedTab}`]" class="mt-2" />
+                </div>
 
-            <div class="col-span-full">
-                <InputLabel for="long_description" :value="__('Long description')" />
-                <TipTapInput v-model="form.long_description[selectedTab]"
-                    :has-error="!!form.errors[`long_description.${selectedTab}`]" />
-                <InputError :message="form.errors[`long_description.${selectedTab}`]" class="mt-2" />
-            </div>
+                <div class="col-span-full">
+                    <InputLabel for="description" :value="__('Description')" as="div" />
+                    <TipTapInput v-model="form.description[selectedTab]"
+                        :has-error="!!form.errors[`description.${selectedTab}`]" />
+                    <InputError :message="form.errors[`description.${selectedTab}`]" class="mt-2" />
+                </div>
 
-            <div class="col-span-full">
-                <InputLabel for="keywords" :value="__('Keywords')" />
-                <TextArea id="keywords" v-model="form.keywords[selectedTab]" class="mt-1 block w-full"
-                    autocomplete="keywords" :has-error="!!form.errors[`keywords.${selectedTab}`]"
-                    :placeholder="__('Enter keywords') + '...'"></TextArea>
-                <InputError :message="form.errors[`keywords.${selectedTab}`]" class="mt-2" />
-            </div>
-        </GridSection>
+                <div class="col-span-full">
+                    <InputLabel for="long_description" :value="__('Long description')" as="div" />
+                    <TipTapInput v-model="form.long_description[selectedTab]"
+                        :has-error="!!form.errors[`long_description.${selectedTab}`]" />
+                    <InputError :message="form.errors[`long_description.${selectedTab}`]" class="mt-2" />
+                </div>
+
+                <div class="col-span-full">
+                    <InputLabel for="keywords" :value="__('Keywords')" />
+                    <TextArea id="keywords" v-model="form.keywords[selectedTab]" class="mt-1 block w-full"
+                        autocomplete="keywords" :has-error="!!form.errors[`keywords.${selectedTab}`]"
+                        :placeholder="__('Enter keywords') + '...'"></TextArea>
+                    <InputError :message="form.errors[`keywords.${selectedTab}`]" class="mt-2" />
+                </div>
+            </GridSection>
+        </div>
 
         <GridSection class="mt-4">
             <div class="col-span-3 ">
@@ -237,7 +192,8 @@ onBeforeUnmount(() => document.removeEventListener('keydown', saveOnCtrlS));
             </div>
 
             <div class="col-span-3 relative">
-                <InputLabel class="inline-flex items-center justify-center  cursor-pointer w-full">
+                <InputLabel for="is_entire_apartment"
+                    class="inline-flex items-center justify-center  cursor-pointer w-full">
                     {{ __('Is entire apartment') }}
                     <input type="checkbox" value="" class="sr-only peer" id="is_entire_apartment"
                         v-model.checked="form.is_entire_apartment" :checked="form.is_entire_apartment">
@@ -269,40 +225,33 @@ onBeforeUnmount(() => document.removeEventListener('keydown', saveOnCtrlS));
         <h4 class="text-xl mt-4 font-bold dark:text-white">{{ __('Bed Types') }}</h4>
 
         <div class="col-span-full">
-            <div class="flex items-center">
+            <div class="hidden sm:flex sm:items-center">
                 <p class="w-full">{{ __('Room') }}</p>
                 <p class="w-full">{{ __('Type') }}</p>
                 <p class="w-full">{{ __('Icon') }}</p>
             </div>
-            <div class="flex items-center space-x-2" v-for="type, key in form.bed_types">
-                <!-- <BedTypeIcon :icon="type.icon" /> -->
-
+            <div class="sm:flex sm:items-center sm:space-x-2" v-for="type, key in form.bed_types">
                 <div class="w-full">
-
                     <TextInput :id="`bed_type_${key}_title`" v-model="form.bed_types[key].title" type="text"
                         class="mt-1 block w-full" required :has-error="!!form.errors['bed_types.' + key + '.title']"
                         :placeholder="__('Enter title') + '...'" />
                     <InputError :message="form.errors['bed_types.' + key + '.title']" class="mt-2" />
                 </div>
-                <div class="w-full">
 
+                <div class="w-full">
                     <TextInput :id="`bed_type_${key}_name`" v-model="form.bed_types[key].name" type="text"
                         class="mt-1 block w-full" required :has-error="!!form.errors['bed_types.' + key + '.name']"
                         :placeholder="__('Enter name') + '...'" />
                     <InputError :message="form.errors['bed_types.' + key + '.name']" class="mt-2" />
                 </div>
-                <div class="w-full">
 
-                    <SelectInput v-model="form.bed_types[key].icon" :id="`bed_type_${key}_icon`">
-                        <option disabled value="">- {{ __('select icon') }} -</option>
-                        <option v-for="icon, key in $page.props?.icon_list" :key="key" :value="icon.name">{{
-                            __(icon.label) }}
-                        </option>
-                    </SelectInput>
+                <div class="w-full">
+                    <IconsDropdown class="mt-1 block w-full" v-model="form.bed_types[key].icon"
+                        :id="`bed_type_icon_select`" :key="`bed_type_icon_select`" />
                 </div>
                 <div class="">
-                    <button @click="handleRemoveBedType(type)">
-                        <TrashBinIcon class="text-bittersweet-700 dark:text-bittersweet-500" />
+                    <button @click="removeItem(form.bed_types, form.bed_types[key])">
+                        <icons.TrashBinIcon class="text-bittersweet-700 dark:text-bittersweet-500" />
                     </button>
                 </div>
 
@@ -310,7 +259,6 @@ onBeforeUnmount(() => document.removeEventListener('keydown', saveOnCtrlS));
             <h4 class="text-base font-bold dark:text-white mt-2">{{ __('Add New') }}</h4>
 
             <div class="flex items-center space-x-2">
-                <!-- <BedTypeIcon :icon="type.icon" /> -->
                 <div class="w-full">
 
                     <TextInput :id="`bed_type_new_title`" v-model="newBedType.title" type="text"
@@ -322,17 +270,12 @@ onBeforeUnmount(() => document.removeEventListener('keydown', saveOnCtrlS));
                         required :placeholder="__('Enter name') + '...'" />
                 </div>
                 <div class="w-full">
-
-                    <SelectInput v-model="newBedType.icon" id="bed_type_new_icon">
-                        <option disabled value="none">- {{ __('select icon') }} -</option>
-                        <option v-for="icon, key in $page.props?.icon_list" :key="key" :value="icon.name">{{
-                            __(icon.label) }}
-                        </option>
-                    </SelectInput>
+                    <IconsDropdown class="mt-1 block w-full" v-model="newBedType.icon" id="bed_type_new_icon"
+                        key="bed_type_new_icon" />
                 </div>
                 <div class="">
-                    <button @click="handleAddBadType">
-                        <CirclePlusIcon class="text-amazon-600 dark:text-amazon-400" />
+                    <button @click="handleAddItem(form.bed_types, newBedType)">
+                        <icons.CirclePlusIcon class="text-amazon-600 dark:text-amazon-400" />
                     </button>
                 </div>
             </div>
@@ -342,33 +285,35 @@ onBeforeUnmount(() => document.removeEventListener('keydown', saveOnCtrlS));
         <h4 class="text-xl mt-4 font-bold dark:text-white">{{ __('Recommended') }}</h4>
 
         <div class="col-span-full">
+
             <div class="flex items-center space-x-2" v-for="recomended, key in form.recomended">
-                <!-- <BedTypeIcon :icon="type.icon" /> -->
+
+
                 <div class="w-full">
-                    <!-- <InputLabel :for="`bed_type_${key}_title`" :value="__('Title')" /> -->
-                    <TextInput :id="`recomended_${key}_title`" v-model="form.recomended[key]" type="text"
+
+                    <TextInput :id="`recomended_${key}_title`" v-model="form.recomended[key].title" type="text"
                         class="mt-1 block w-full" required :autocomplete="`recomended_${key}_title`"
-                        :has-error="!!form.errors['recomended.' + key]" :placeholder="__('Enter Recomended') + '...'" />
+                        :has-error="!!form.errors[`recomended.${key}.title`]"
+                        :placeholder="__('Enter Recomended') + '...'" />
                 </div>
                 <div class="">
-                    <button @click="handleRemoveRecomended(recomended)">
-                        <TrashBinIcon class="text-bittersweet-700 dark:text-bittersweet-500" />
+                    <button @click="removeItem(form.recomended, form.recomended[key])">
+                        <icons.TrashBinIcon class="text-bittersweet-700 dark:text-bittersweet-500" />
                     </button>
                 </div>
 
             </div>
             <h4 class="text-base font-bold dark:text-white mt-2">{{ __('Add New') }}</h4>
             <div class="flex items-center space-x-2">
-                <!-- <BedTypeIcon :icon="type.icon" /> -->
                 <div class="w-full">
-                    <!-- <InputLabel :for="`bed_type_${key}_title`" :value="__('Title')" /> -->
+
                     <TextInput :id="`recomended_new_title`" v-model="newRecomended.title" type="text"
                         class="mt-1 block w-full" required :autocomplete="`recomended_new_title`"
                         :placeholder="__('Enter recomended') + '...'" />
                 </div>
                 <div class="">
-                    <button @click="handleAddRecomended">
-                        <CirclePlusIcon class="text-amazon-600 dark:text-amazon-400" />
+                    <button @click="handleAddItem(form.recomended, newRecomended)">
+                        <icons.CirclePlusIcon class="text-amazon-600 dark:text-amazon-400" />
                     </button>
                 </div>
 
@@ -383,17 +328,14 @@ onBeforeUnmount(() => document.removeEventListener('keydown', saveOnCtrlS));
                 <p class="w-full">{{ __('Price in €') }}</p>
             </div>
             <div class="flex items-center space-x-2" v-for="price, key in form.prices">
-                <!-- <BedTypeIcon :icon="type.icon" /> -->
-
                 <div class="w-full">
-
                     <TextInput :id="`price_${key}_guests`" v-model="form.prices[key].guests" type="text"
                         class="mt-1 block w-full" required :has-error="!!form.errors['prices.' + key + '.guests']"
                         :placeholder="__('Enter number of guests') + '...'" />
                     <InputError :message="form.errors['prices.' + key + '.guests']" class="mt-2" />
                 </div>
-                <div class="w-full">
 
+                <div class="w-full">
                     <TextInput :id="`price_${key}_price`" v-model="form.prices[key].price" type="text"
                         class="mt-1 block w-full" required :has-error="!!form.errors['prices.' + key + '.price']"
                         :placeholder="__('Enter price') + '...'" />
@@ -401,8 +343,8 @@ onBeforeUnmount(() => document.removeEventListener('keydown', saveOnCtrlS));
                 </div>
 
                 <div class="">
-                    <button @click="handleRemovePrice(price)">
-                        <TrashBinIcon class="text-bittersweet-700 dark:text-bittersweet-500" />
+                    <button @click="removeItem(form.prices, price)">
+                        <icons.TrashBinIcon class="text-bittersweet-700 dark:text-bittersweet-500" />
                     </button>
                 </div>
 
@@ -410,7 +352,6 @@ onBeforeUnmount(() => document.removeEventListener('keydown', saveOnCtrlS));
             <h4 class="text-base font-bold dark:text-white mt-2">{{ __('Add New') }}</h4>
 
             <div class="flex items-center space-x-2">
-                <!-- <BedTypeIcon :icon="type.icon" /> -->
                 <div class="w-full">
 
                     <TextInput :id="`new_guests`" v-model="newPrice.guests" type="text" class="mt-1 block w-full"
@@ -423,8 +364,8 @@ onBeforeUnmount(() => document.removeEventListener('keydown', saveOnCtrlS));
                 </div>
 
                 <div class="">
-                    <button @click="handleAddPrice">
-                        <CirclePlusIcon class="text-amazon-600 dark:text-amazon-400" />
+                    <button @click="handleAddItem(form.prices, newPrice)">
+                        <icons.CirclePlusIcon class="text-amazon-600 dark:text-amazon-400" />
                     </button>
                 </div>
             </div>
@@ -440,123 +381,109 @@ onBeforeUnmount(() => document.removeEventListener('keydown', saveOnCtrlS));
                 </HorizontalTabItem>
             </template>
         </HorizontalTabs>
+        <div class="p-4 dark:bg-gray-700 bg-gray-50">
+            <h4 class="text-xl mt-4 font-bold dark:text-white">{{ __('Rules') }}</h4>
 
-        <h4 class="text-xl mt-4 font-bold dark:text-white">{{ __('Rules') }}</h4>
+            <GridSection>
+                <div class="col-span-full">
+                    <div class="flex items-center">
+                        <p class="w-full">{{ __('Name') }}</p>
+                        <p class="w-full">{{ __('Title') }}</p>
 
-        <GridSection>
-            <div class="col-span-full">
+                        <p class="w-full">{{ __('Icon') }}</p>
+                    </div>
+
+                    <div class="flex items-center space-x-2 mb-4" v-for="rule, key in form.rules[selectedTab]">
+                        <div class="w-full">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-full">
+
+                                    <TextInput :id="`rule_${key}_name`" v-model="form.rules[selectedTab][key].name"
+                                        type="text" class="mt-1 block w-full" required
+                                        :has-error="!!form.errors['rules.' + selectedTab + '.' + key + '.name']"
+                                        :placeholder="__('Enter number of name') + '...'" />
+                                    <InputError :message="form.errors['rules.' + selectedTab + '.' + key + '.name']"
+                                        class="mt-2" />
+                                </div>
+                                <div class="w-full">
+
+                                    <TextInput :id="`rule_${key}_title`" v-model="form.rules[selectedTab][key].title"
+                                        type="text" class="mt-1 block w-full" required
+                                        :has-error="!!form.errors['rules.' + selectedTab + '.' + key + '.title']"
+                                        :placeholder="__('Enter title') + '...'" />
+                                    <InputError :message="form.errors['rules.' + selectedTab + '.' + key + '.title']"
+                                        class="mt-2" />
+                                </div>
+                                <div class="w-full">
+                                    <IconsDropdown class="mt-1 block w-full" v-model="form.rules[selectedTab][key].icon"
+                                        :id="`bed_type_${key}_new_icon`" :key="`bed_type_${key}_new_icon`" />
+                                </div>
+                            </div>
+                            <div class="w-full mt-2">
+                                <TipTapInput :is-small="true" :id="`rule_${key}_description`"
+                                    v-model="form.rules[selectedTab][key].description"
+                                    :has-error="!!form.errors['rules.' + selectedTab + '.' + key + '.description']" />
+                                <InputError :message="form.errors['rules.' + selectedTab + '.' + key + '.description']"
+                                    class="mt-2" />
+                            </div>
+                        </div>
+                        <div class="">
+                            <button @click="removeItem(form.rules, rule)">
+                                <icons.TrashBinIcon class="text-bittersweet-700 dark:text-bittersweet-500" />
+                            </button>
+                        </div>
+                    </div>
+
+                    <h4 class="text-base font-bold dark:text-white mt-2">{{ __('Add New') }}</h4>
+
+                    <div class="flex items-center space-x-2">
+                        <div class="w-full">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-full">
+                                    <TextInput :id="`new_rule_name`" v-model="newRule.name" type="text"
+                                        class="mt-1 block w-full" required
+                                        :placeholder="__('Enter rule name') + '...'" />
+                                </div>
+
+                                <div class="w-full">
+                                    <TextInput :id="`new_rule_title`" v-model="newRule.title" type="text"
+                                        class="mt-1 block w-full" required
+                                        :placeholder="__('Enter rule title') + '...'" />
+                                </div>
+
+                                <div class="w-full">
+                                    <IconsDropdown class="mt-1 block w-full" v-model="newRule.icon"
+                                        :id="`rule_new_icon`" :key="`rule_new_icon`" />
+                                </div>
+                            </div>
+
+                            <div class="w-full mt-2">
+                                <TipTapInput :is-small="true" :id="`new_rule_description`"
+                                    v-model="newRule.description" />
+                            </div>
+                        </div>
+
+                        <div class="">
+                            <button @click="handleAddRuleItem(form.rules, newRule)">
+                                <icons.CirclePlusIcon class="text-amazon-600 dark:text-amazon-400" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </GridSection>
+
+        </div>
+        <div class="mt-4">
+
+            <PrimaryButton type="button"
+                :class="{ 'opacity-25': form.processing || form.recentlySuccessful || !form.isDirty }"
+                :disabled="form.processing || form.recentlySuccessful || !form.isDirty" @click="update">
                 <div class="flex items-center">
-                    <p class="w-full">{{ __('Name') }}</p>
-                    <p class="w-full">{{ __('Title') }}</p>
-
-                    <p class="w-full">{{ __('Icon') }}</p>
+                    <icons.SpinnerIcon v-show="form.processing"
+                        class="animate-spin -ml-1 mr-3 h-5 w-5 text-white dark:text-white" />
+                    {{ form.processing ? __('Saving') + '...' : form.recentlySuccessful ? __('Saved') : __('Save') }}
                 </div>
-
-                <div class="flex items-center space-x-2 mb-4" v-for="rule, key in form.rules[selectedTab]">
-                    <div class="w-full">
-                        <div class="flex items-center space-x-2">
-                            <div class="w-full">
-
-                                <TextInput :id="`rule_${key}_name`" v-model="form.rules[selectedTab][key].name"
-                                    type="text" class="mt-1 block w-full" required
-                                    :has-error="!!form.errors['rules.' + selectedTab + '.' + key + '.name']"
-                                    :placeholder="__('Enter number of name') + '...'" />
-                                <InputError :message="form.errors['rules.' + selectedTab + '.' + key + '.name']"
-                                    class="mt-2" />
-                            </div>
-                            <div class="w-full">
-
-                                <TextInput :id="`rule_${key}_title`" v-model="form.rules[selectedTab][key].title"
-                                    type="text" class="mt-1 block w-full" required
-                                    :has-error="!!form.errors['rules.' + selectedTab + '.' + key + '.title']"
-                                    :placeholder="__('Enter title') + '...'" />
-                                <InputError :message="form.errors['rules.' + selectedTab + '.' + key + '.title']"
-                                    class="mt-2" />
-                            </div>
-                            <div class="w-full">
-                                <SelectInput v-model="form.rules[selectedTab][key].icon"
-                                    :id="`bed_type_${key}_new_icon`">
-                                    <option disabled value="none">- {{ __('select icon') }} -</option>
-                                    <option v-for="icon, key in $page.props?.icon_list" :key="key" :value="icon.name">{{
-                                        __(icon.label) }}
-                                    </option>
-                                </SelectInput>
-                            </div>
-                        </div>
-                        <div class="w-full mt-2">
-                            <TipTapInput :is-small="true"
-                                :id="`rule_${key}_description`"
-                                v-model="form.rules[selectedTab][key].description"
-                                :has-error="!!form.errors['rules.' + selectedTab + '.' + key + '.description']" />
-                            <!-- <TextArea :id="`rule_${key}_description`" rows="2"
-                                v-model="form.rules[selectedTab][key].description" type="text" class="mt-1 block w-full"
-                                required :has-error="!!form.errors['rules.' + selectedTab + '.' + key + '.description']"
-                                :placeholder="__('Enter description') + '...'" /> -->
-                            <InputError :message="form.errors['rules.' + selectedTab + '.' + key + '.description']"
-                                class="mt-2" />
-                        </div>
-                    </div>
-                    <div class="">
-                        <button @click="handleRemoveRule(rule)">
-                            <TrashBinIcon class="text-bittersweet-700 dark:text-bittersweet-500" />
-                        </button>
-                    </div>
-                </div>
-
-                <h4 class="text-base font-bold dark:text-white mt-2">{{ __('Add New') }}</h4>
-
-                <div class="flex items-center space-x-2">
-                    <div class="w-full">
-                        <div class="flex items-center space-x-2">
-                            <div class="w-full">
-                                <TextInput :id="`new_rule_name`" v-model="newRule.name" type="text"
-                                    class="mt-1 block w-full" required :placeholder="__('Enter rule name') + '...'" />
-                            </div>
-
-                            <div class="w-full">
-                                <TextInput :id="`new_rule_title`" v-model="newRule.title" type="text"
-                                    class="mt-1 block w-full" required :placeholder="__('Enter rule title') + '...'" />
-                            </div>
-
-                            <div class="w-full">
-                                <SelectInput v-model="newRule.icon" id="rule_new_icon">
-                                    <option disabled value="none">- {{ __('select icon') }} -</option>
-                                    <option v-for="icon, key in $page.props?.icon_list" :key="key" :value="icon.name">{{
-                                        __(icon.label) }}
-                                    </option>
-                                </SelectInput>
-                            </div>
-                        </div>
-
-                        <div class="w-full mt-2">
-                            <TipTapInput :is-small="true" :id="`new_rule_description`" v-model="newRule.description" />
-                            <!-- <TextArea :id="`new_rule_description`" rows="2" v-model="newRule.description" type="text"
-                                class="mt-1 block w-full" required :placeholder="__('Enter description') + '...'" /> -->
-                        </div>
-                    </div>
-
-                    <div class="">
-                        <button @click="handleAddRule">
-                            <CirclePlusIcon class="text-amazon-600 dark:text-amazon-400" />
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </GridSection>
-
-        <PrimaryButton type="button"
-            :class="{ 'opacity-25': form.processing || form.recentlySuccessful || !form.isDirty }"
-            :disabled="form.processing || form.recentlySuccessful || !form.isDirty" @click="update">
-            <div class="flex items-center">
-                <SpinnerIcon v-show="form.processing"
-                    class="animate-spin -ml-1 mr-3 h-5 w-5 text-white dark:text-white" />
-                {{ form.processing ? __('Saving') + '...' : form.recentlySuccessful ? __('Saved') : __('Save')
-                }}
-            </div>
-        </PrimaryButton>
-
-
-
-
+            </PrimaryButton>
+        </div>
     </div>
 </template>

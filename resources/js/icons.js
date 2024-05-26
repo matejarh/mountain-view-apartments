@@ -121,6 +121,8 @@ import WhatsUpIcon from '@/Icons/WhatsUpIcon.vue'
 import WheelchairIcon from '@/Icons/WheelchairIcon.vue'
 import XIcon from '@/Icons/XIcon.vue'
 import YoutubePlayButtonIcon from '@/Icons/YoutubePlayButtonIcon.vue'
+import BellActiveIcon from './Icons/BellActiveIcon.vue'
+import BellIcon from './Icons/BellIcon.vue'
 
 export const icons = {
 
@@ -245,4 +247,6 @@ export const icons = {
     WheelchairIcon,
     XIcon,
     YoutubePlayButtonIcon,
+    BellActiveIcon,
+    BellIcon,
 };

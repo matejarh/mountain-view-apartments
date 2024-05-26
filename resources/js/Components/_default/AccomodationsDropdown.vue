@@ -10,6 +10,8 @@ defineProps({
     selectedProperty: { type: Object, default: null },
 })
 
+defineEmits(['selected'])
+
 const selected = ref(null)
 
 const properties = usePropertyStore()
