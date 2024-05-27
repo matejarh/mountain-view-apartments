@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\RateLimiter;
 
 use Illuminate\Support\ServiceProvider;
+use Laravel\Cashier\Cashier;
 use Laravel\Fortify\Fortify;
 
 class AppServiceProvider extends ServiceProvider
@@ -55,6 +56,8 @@ class AppServiceProvider extends ServiceProvider
         RateLimiter::for('admins', function (Request $request) {
             return Limit::perMinute(120)->by($request->session()->get('login.id'));
         });
+
+        Cashier::calculateTaxes();
 
         /**
          * Paginate a standard Laravel Collection.
