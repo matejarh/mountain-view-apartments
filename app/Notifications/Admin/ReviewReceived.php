@@ -8,7 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ReviewReceived extends Notification
+class ReviewReceived extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -28,7 +28,7 @@ class ReviewReceived extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return ['mail', 'database'];
     }
 
     /**
@@ -37,9 +37,9 @@ class ReviewReceived extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-        ->theme('mountain')
-        ->subject(__('New review received'))
-        ->markdown('mail.admin.review.received', ['review' => $this->review, 'lang' => app()->currentLocale()]);
+            ->theme('mountain')
+            ->subject(__('New review received'))
+            ->markdown('mail.admin.review.received', ['review' => $this->review, 'lang' => app()->currentLocale()]);
     }
 
     /**
