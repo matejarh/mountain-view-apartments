@@ -39,7 +39,7 @@ $buttons=[
 </x-mail::table>
 
 <x-mail::buttons :buttons="$buttons">
-</x-mail::button>
+</x-mail::buttons>
 
 <x-mail::subcopy>
 {{__('Thank you for using')}} **[{{config('app.name')}}<sup>&copy;</sup>]({{config('app.url')}})**!

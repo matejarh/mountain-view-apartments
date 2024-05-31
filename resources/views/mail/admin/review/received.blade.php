@@ -1,23 +1,23 @@
 @php
-$buttons=[
-[
-'url' => route('admin.reviews.show', ['review' => $review, 'approve' => true]),
-'color' => 'green',
-'align' => 'left',
-'text' => 'Approve'
-],
-[
-'url' => route('admin.reviews.show', ['review' => $review, 'reject' => true]),
-'color' => 'red',
-'align' => 'center',
-'text' => 'Reject'
-],
-[
-'url' => route('admin.reviews.show', ['review' => $review]),
-'color' => 'primary',
-'align' => 'right',
-'text' => 'Show'
-],
+$buttons = [
+    [
+        'url' => route('admin.reviews.show', ['review' => $review, 'approve' => true]),
+        'color' => 'green',
+        'align' => 'left',
+        'text' => 'Approve'
+    ],
+    [
+        'url' => route('admin.reviews.show', ['review' => $review, 'reject' => true]),
+        'color' => 'red',
+        'align' => 'center',
+        'text' => 'Reject'
+    ],
+    [
+        'url' => route('admin.reviews.show', ['review' => $review]),
+        'color' => 'primary',
+        'align' => 'right',
+        'text' => 'Show'
+    ],
 ];
 @endphp
 <x-mail::message>
@@ -35,7 +35,7 @@ $buttons=[
 </x-mail::panel>
 
 <x-mail::buttons :buttons="$buttons">
-</x-mail::button>
+</x-mail::buttons>
 
 <x-mail::subcopy>
 {{__('Thank you for using')}} **[{{config('app.name')}}<sup>&copy;</sup>]({{config('app.url')}})**!
