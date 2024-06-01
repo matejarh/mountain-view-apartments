@@ -21,7 +21,7 @@ const goBack = () => {
     <div class="md:grid md:grid-cols-2 md:gap-6">
         <div class="mt-5 md:mt-0 md:col-span-2 " :class="{'md:max-w-screen-xl lg:max-w-screen-2xl' : !fullwidth}">
             <div class="space-y-4 px-4 py-5 sm:p-6 bg-white dark:bg-gray-900 text-gray-950 dark:text-gray-50 shadow sm:rounded-lg">
-                <div class="flex items-center">
+                <div class="flex items-center sticky top-0 py-2 z-10 bg-white dark:bg-gray-900">
                     <button v-if="back" @click="goBack">
                         <Tooltip :text="__('Back')">
                             <icons.CarretLeftIcon class="w-6 h-6  " />
