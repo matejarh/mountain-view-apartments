@@ -17,6 +17,7 @@ use App\Contracts\CreatesNewPages;
 use App\Contracts\CreatesNewProperties;
 use App\Contracts\CreatesNewReviews;
 use App\Contracts\CreatesNewSettings;
+use App\Contracts\CreatesPrices;
 use App\Contracts\CreatesReservations;
 use App\Contracts\DeletesAllNotifications;
 use App\Contracts\DeletesFacilities;
@@ -25,6 +26,7 @@ use App\Contracts\DeletesImages;
 use App\Contracts\DeletesInquiries;
 use App\Contracts\DeletesNotifications;
 use App\Contracts\DeletesPages;
+use App\Contracts\DeletesPrices;
 use App\Contracts\DeletesReservations;
 use App\Contracts\DeletesReviews;
 use App\Contracts\DetachesFacilitiesFromProperties;
@@ -46,6 +48,7 @@ use App\Contracts\UpdatesGalleries;
 use App\Contracts\UpdatesImages;
 use App\Contracts\UpdatesInquiries;
 use App\Contracts\UpdatesPages;
+use App\Contracts\UpdatesPrices;
 use App\Contracts\UpdatesProperties;
 use App\Contracts\UpdatesReservations;
 use App\Contracts\UpdatesReviews;
@@ -602,4 +605,38 @@ class Fortify
     {
         app()->singleton(ApprovesReservationsPayments::class, $callback);
     }
+
+    /**
+     * Register a class / callback that should be used to create new prices.
+     *
+     * @param  string  $callback
+     * @return void
+     */
+    public static function createPricesUsing(string $callback)
+    {
+        app()->singleton(CreatesPrices::class, $callback);
+    }
+
+    /**
+     * Register a class / callback that should be used to update prices.
+     *
+     * @param  string  $callback
+     * @return void
+     */
+    public static function updatePricesUsing(string $callback)
+    {
+        app()->singleton(UpdatesPrices::class, $callback);
+    }
+
+    /**
+     * Register a class / callback that should be used to destroy prices.
+     *
+     * @param  string  $callback
+     * @return void
+     */
+    public static function destroyPricesUsing(string $callback)
+    {
+        app()->singleton(DeletesPrices::class, $callback);
+    }
+
 }

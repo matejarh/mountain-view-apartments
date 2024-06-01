@@ -66,9 +66,11 @@ class PropertiesController extends Controller
         // Render the property details page using Inertia.js
         return Inertia::render('Admin/Properties/Show', [
             // Pass the property details along with its galleries and facilities
-            'property' => fn() => Property::with('galleries', 'facilities')->find($property->id),
+            'property' => fn() => Property::with('galleries', 'facilities', 'prices')->find($property->id),
 
             'icon_list' => $this->fetchIconsList(),
+
+            'defined_dates' => $property->getDatesWithDefinedPrices(now(), now()->addYears(5)),
 
             // Retrieve facilities not currently associated with the property
             'facilities_not_in_property' => fn() => Facility::all()->intersect(

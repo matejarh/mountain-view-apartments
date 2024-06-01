@@ -34,6 +34,9 @@ use App\Actions\Pages\CreateNewPage;
 use App\Actions\Pages\DeletePage;
 use App\Actions\Pages\DetachGallery as DetachPageGallery;
 use App\Actions\Pages\UpdatePage;
+use App\Actions\Prices\CreatePrice;
+use App\Actions\Prices\DeletePrice;
+use App\Actions\Prices\UpdatePrice;
 use App\Actions\Properties\AttachFacility;
 use App\Actions\Properties\AttachGallery as AttachPropertyGallery;
 use App\Actions\Properties\CreateNewProperty;
@@ -84,6 +87,9 @@ use App\Contracts\NotificationReadResponse as NotificationReadResponseContract;
 use App\Contracts\PageCreateResponse as PageCreateResponseContract;
 use App\Contracts\PageDeleteResponse as PageDeleteResponseContract;
 use App\Contracts\PageUpdateResponse as PageUpdateResponseContract;
+use App\Contracts\PriceCreateResponse as PriceCreateResponseContract;
+use App\Contracts\PriceDeleteResponse as PriceDeleteResponseContract;
+use App\Contracts\PriceUpdateResponse as PriceUpdateResponseContract;
 use App\Contracts\PropertyCreateResponse as PropertyCreateResponseContract;
 use App\Contracts\PropertyLikeResponse as PropertyLikeResponseContract;
 use App\Contracts\PropertyReviewResponse as PropertyReviewResponseContract;
@@ -130,6 +136,9 @@ use App\Http\Responses\NotificationReadedResponse;
 use App\Http\Responses\PageCreatedResponse;
 use App\Http\Responses\PageDeletedResponse;
 use App\Http\Responses\PageUpdatedResponse;
+use App\Http\Responses\PriceCreatedResponse;
+use App\Http\Responses\PriceDeletedResponse;
+use App\Http\Responses\PriceUpdatedResponse;
 use App\Http\Responses\PropertyCreatedResponse;
 use App\Http\Responses\PropertyLikedResponse;
 use App\Http\Responses\PropertyReviewedResponse;
@@ -229,6 +238,10 @@ class FortifyServiceProvider extends ServiceProvider
         $this->app->singleton(ReservationRejectResponseContract::class, ReservationRejectedResponse::class);
         $this->app->singleton(ReservationPaymentApproveResponseContract::class, ReservationPaymentApprovedResponse::class);
         $this->app->singleton(ReservationPaymentRejectResponseContract::class, ReservationPaymentRejectedResponse::class);
+
+        $this->app->singleton(PriceCreateResponseContract::class, PriceCreatedResponse::class);
+        $this->app->singleton(PriceUpdateResponseContract::class, PriceUpdatedResponse::class);
+        $this->app->singleton(PriceDeleteResponseContract::class, PriceDeletedResponse::class);
     }
 
     /**
@@ -301,6 +314,10 @@ class FortifyServiceProvider extends ServiceProvider
         AppFortify::rejectReservationsUsing(RejectReservation::class);
         AppFortify::rejectPaymentsForReservationsUsing(RejectPayment::class);
         AppFortify::approvePaymentsForReservationsUsing(ApprovePayment::class);
+
+        AppFortify::createPricesUsing(CreatePrice::class);
+        AppFortify::updatePricesUsing(UpdatePrice::class);
+        AppFortify::destroyPricesUsing(DeletePrice::class);
 
         RateLimiter::for('login', function (Request $request) {
             $throttleKey = str(str($request->input(Fortify::username()))->lower().'|'.$request->ip())->transliterate();
