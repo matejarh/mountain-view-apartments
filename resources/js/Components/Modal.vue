@@ -105,8 +105,7 @@ const fullScreenClasses = computed(() => {
                         class="absolute top-2 right-2 sm:top-6 sm:right-6 lg:top-10 lg:right-10 z-50">
                         <Tooltip :text="__('Close')" location="bottom">
                             <button type="button" @click="close"
-                                class="transition hover:scale-105 active:scale-95 hover:rotate-180 shadow-lg text-white bg-white bg-opacity-50 opacity-50 p-4 lg:p-6 rounded-full text-xl ms-auto inline-flex justify-center items-center"
-                                data-modal-toggle="crud-modal">
+                                class="transition hover:scale-105 active:scale-95 hover:rotate-180 shadow-lg text-white bg-white bg-opacity-50 opacity-50 p-4 lg:p-6 rounded-full text-xl ms-auto inline-flex justify-center items-center">
                                 <svg class="w-4 h-4 md:w-6 md:h-6 lg:w-8 lg:h-8 " aria-hidden="true"
                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
