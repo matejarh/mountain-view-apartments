@@ -26,6 +26,7 @@ export default {
                 'spin-slow': 'spin 30s linear infinite',
                 'spin-slower': 'spin 45s linear infinite',
                 'spin-reverse': 'reverse-spin 45s linear infinite',
+                'bounce-easy': 'bounce-easy 3s infinite',
             },
             keyframes: {
                 shake: {
@@ -38,7 +39,17 @@ export default {
                     from: {
                         transform: 'rotate(360deg)'
                     },
-                }
+                },
+                'bounce-easy': {
+                    '0%, 100%': {
+                        transform: 'translateY(-10%)',
+                        'animation-timing-function': 'cubic-bezier(0.9,0,1,1)',
+                    },
+                    '50%': {
+                        transform: 'none',
+                        'animation-timing-function': 'cubic-bezier(0,0,0.1,1)',
+                    },
+                },
 
             },
             dropShadow: {
