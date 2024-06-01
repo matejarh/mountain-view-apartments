@@ -80,6 +80,7 @@ import PaperClipIcon from '@/Icons/PaperClipIcon.vue'
 import PaperPlane from '@/Icons/PaperPlane.vue'
 import PartiesIcon from '@/Icons/PartiesIcon.vue'
 import PatioIcon from '@/Icons/PatioIcon.vue'
+import PenIcon from '@/Icons/PenIcon.vue'
 import PenNibIcon from '@/Icons/PenNibIcon.vue'
 import PetsIcon from '@/Icons/PetsIcon.vue'
 import PinIcon from '@/Icons/PinIcon.vue'
@@ -206,6 +207,7 @@ export const icons = {
     ParagraphIcon,
     PartiesIcon,
     PatioIcon,
+    PenIcon,
     PenNibIcon,
     PetsIcon,
     PinIcon,
