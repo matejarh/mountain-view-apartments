@@ -84,13 +84,14 @@ class NotificationsController extends Controller
     public function destroyAll(Request $request, DeletesAllNotifications $destroyer): NotificationDeleteAllResponse
     {
         Gate::authorize('update', Notification::class);
+
         $destroyer->destroyAll();
 
         return app(NotificationDeleteAllResponse::class);
     }
 
-    /** Previews notificaition with given attributes
-     *
+    /**
+     * Previews notificaition with given attributes
      */
     public function preview(Request $request, $notification, $items): MailMessage
     {
@@ -116,8 +117,8 @@ class NotificationsController extends Controller
             abort(404, 'Notification class not found.');
         }
 
-        $property = Property::with($items)->findOrFail(1);
-
+        $property = Property::with($items)->findOrFail(3);
+        //dd($property);
         $i = $property->$items->count() > 0 ? $property->$items[0] : abort(404, "No $items found");
 
         return (new $notificationClass($i))

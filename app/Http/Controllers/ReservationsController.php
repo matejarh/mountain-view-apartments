@@ -37,10 +37,8 @@ class ReservationsController extends Controller
         ]);
     }
 
-
     public function store(Request $request, Property $property, CreatesReservations $creator ) :ReservationCreateResponse
     {
-
         Gate::authorize('create', Reservation::class);
 
         $creator->create($property, $request->all());

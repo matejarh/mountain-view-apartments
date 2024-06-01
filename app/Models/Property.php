@@ -93,7 +93,7 @@ class Property extends Model
 
     protected static function deleteItems(): array
     {
-        return ['inquiries'];
+        return ['inquiries', 'prices', 'reservations'];
     }
 
     /**
@@ -152,6 +152,16 @@ class Property extends Model
     public function reservations(): HasMany
     {
         return $this->hasMany(Reservation::class)->latest();
+    }
+
+    /**
+     * Get the prices associated with the property.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function prices(): HasMany
+    {
+        return $this->hasMany(Price::class)->latest();
     }
 
     public function langArray(): array
@@ -311,6 +321,46 @@ class Property extends Model
 
         // Return the array of unavailable dates
         return array_unique($unavailableDates);
+
+    }
+
+    /**
+     * Get all dates within a given date range.
+     *
+     * @param string $startDate The start date of the range.
+     * @param string $endDate The end date of the range.
+     * @return array An array of unavailable dates.
+     */
+    public function getDatesWithDefinedPrices($startDate, $endDate)
+    {
+        $prices = $this->prices()
+            ->where(function ($query) use ($startDate, $endDate) {
+                $query->whereBetween('from', [$startDate, $endDate])
+                    ->orWhereBetween('to', [$startDate, $endDate])
+                    ->orWhere(function ($query) use ($startDate, $endDate) {
+                        $query->where('from', '<=', $startDate)
+                            ->where('to', '>=', $endDate);
+                    });
+            })
+            ->get();
+
+        // Initialize an array to hold the unavailable dates
+        $definedDates = [];
+
+        // Loop through each reservation and add the dates to the array
+        foreach ($prices as $price) {
+            $currentDate = \Carbon\Carbon::parse($price->from);
+            $endDate = \Carbon\Carbon::parse($price->to);
+
+            // Add all dates between arrival and departure to the array
+            while ($currentDate->lte($endDate)) {
+                $definedDates[] = $currentDate->toDateString();
+                $currentDate->addDay();
+            }
+        }
+
+        // Return the array of unavailable dates
+        return array_unique($definedDates);
 
     }
 }
