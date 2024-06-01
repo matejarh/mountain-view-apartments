@@ -13,9 +13,7 @@ use Tests\TestCase;
 class ReservationsTest extends TestCase
 {
     use RefreshDatabase;
-    /**
-     * A basic feature test example.
-     */
+
     public function test_authenticated_user_may_post_reservation_for_given_property(): void
     {
         Notification::fake();
@@ -32,7 +30,7 @@ class ReservationsTest extends TestCase
             'message' => 'A message with reservation'
         ];
         $response = $this->actingAs($this->user)->post(route('properties.reservations.store', $property), $reservation);
-        // $response->ddSession();
+
         $response->assertStatus(302)->assertSessionHas('status','reservation-created');
 
         Notification::assertSentTo([$this->admin], ReservationReceived::class);
@@ -54,7 +52,7 @@ class ReservationsTest extends TestCase
             'message' => 'A message with reservation'
         ];
         $response = $this->actingAs($this->user)->post(route('properties.reservations.store', $property), $reservation1);
-        // $response->ddSession();
+
         $response->assertStatus(302)->assertSessionHas('status','reservation-created');
 
         Notification::assertSentTo([$this->admin], ReservationReceived::class);
@@ -75,7 +73,7 @@ class ReservationsTest extends TestCase
         ];
 
         $response = $this->actingAs($this->user)->post(route('properties.reservations.store', $property), $reservation2);
-        // $response->ddSession();
+
         $response->assertStatus(302)->assertSessionHasErrors('date_range','The selected date range is not available.');
 
         $reservation3 = [
@@ -167,8 +165,7 @@ class ReservationsTest extends TestCase
 
         $response = $this->actingAs($this->admin)->put(route('admin.reservations.approve.payment', $reservation))
             ->assertStatus(302)->assertSessionHasNoErrors()->assertSessionHas('status', 'reservation-payment-approved');
-        //$response->ddSession();
-        // dd($reservation->fresh()) ;
+
         $this->assertNotNull($reservation->fresh()->payment_received_at);
     }
 
