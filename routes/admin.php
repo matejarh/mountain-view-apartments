@@ -7,15 +7,12 @@ use App\Http\Controllers\Admin\ImagesController;
 use App\Http\Controllers\Admin\InquiriesController;
 use App\Http\Controllers\Admin\NotificationsController;
 use App\Http\Controllers\Admin\PagesController;
+use App\Http\Controllers\Admin\PricesController;
 use App\Http\Controllers\Admin\PropertiesController;
 use App\Http\Controllers\Admin\ReservationsController;
 use App\Http\Controllers\Admin\ReviewsController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\UsersController;
-
-
-
-
 
 Route::group(['middleware' => config('jetstream.middleware')], function () {
     $authMiddleware = config('jetstream.guard')
@@ -47,6 +44,12 @@ Route::group(['middleware' => config('jetstream.middleware')], function () {
             Route::put('detach-facility/{property}/{facility}', [PropertiesController::class, 'detachFacility'])->name('detach.facility');
             Route::put('attach-gallery/{property}/{gallery}', [PropertiesController::class, 'attachGallery'])->name('attach.gallery');
             Route::put('detach-gallery/{property}/{gallery}', [PropertiesController::class, 'detachGallery'])->name('detach.gallery');
+        });
+
+        Route::name('prices.')->prefix('prices')->namespace('prices')->group(function() {
+            Route::post('/{property}', [PricesController::class, 'store'])->name('store');
+            Route::put('/{price}', [PricesController::class, 'update'])->name('update');
+            Route::delete('/{price}', [PricesController::class, 'destroy'])->name('destroy');
         });
 
         Route::name('facilities.')->prefix('facilities')->namespace('facilities')->group(function() {

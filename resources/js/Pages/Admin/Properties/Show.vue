@@ -1,15 +1,17 @@
 <script setup>
 import { computed, ref } from 'vue';
 import { router, useForm } from '@inertiajs/vue3'
+import { icons } from '@/icons';
 import FullLayout from '@/Layouts/FullLayout.vue';
 import ActionSection from '@/Components/ActionSection.vue';
 import MapCard from './_partials/MapCard.vue';
 import FacilityIcon from './_partials/FacilityIcon.vue';
 import EditForm from './_partials/EditForm.vue';
 import ManageFacilitiesDialog from './_partials/ManageFacilitiesDialog.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
+import ManagePricesDialog from './_partials/ManagePricesDialog.vue';
 import ManageGalleriesDialog from './_partials/ManageGalleriesDialog.vue';
-import { icons } from '@/icons';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
+import PricesList from '@/Components/Properties/PricesList.vue';
 
 const props = defineProps({
     property: Object,
@@ -17,6 +19,7 @@ const props = defineProps({
 
 const showFacilitiesDialog = ref(false)
 const showAttachGalleryDialog = ref(false)
+const showPricesDialog = ref(false)
 
 const facilitiesWithIcons = computed(() => {
     return props.property.facilities.filter(facility => facility.has_icon_file);
@@ -54,8 +57,8 @@ const detach = (gallery) => {
 
             <template #content>
                 <div class="lg:grid lg:grid-cols-1 xl:grid-cols-3 lg:gap-8 xl:gap-16">
-                    <div class=" mx-auto flex flex-col space-y-4">
-                        <PrimaryButton @click="showAttachGalleryDialog = true"
+                    <div class="w-full mx-auto flex flex-col space-y-4">
+                        <PrimaryButton type="button" @click="showAttachGalleryDialog = true"
                             v-if="$page.props?.property.galleries.length <= 0">{{__('attach gallery')}}</PrimaryButton>
 
                         <div class="" v-if="$page.props?.property.galleries.length > 0">
@@ -76,7 +79,7 @@ const detach = (gallery) => {
                                         </div>
                                     </PrimaryButton>
 
-                                    <PrimaryButton class="w-full"
+                                    <PrimaryButton type="button" class="w-full"
                                         @click="router.visit(route('admin.galleries.show', gallery))"
                                         v-if="$page.props?.property.galleries.length > 0">{{__('Edit Gallery')}}</PrimaryButton>
                                 </div>
@@ -87,7 +90,7 @@ const detach = (gallery) => {
                         </div>
 
 
-                        <PrimaryButton @click="showFacilitiesDialog = true">{{__('manage facilities')}}</PrimaryButton>
+                        <PrimaryButton type="button" @click="showFacilitiesDialog = true">{{__('manage facilities')}}</PrimaryButton>
                         <div class="grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-4 gap-4 ">
 
                             <div class="w-full text-center mx-auto" v-for="facility, key in facilitiesWithIcons"
@@ -111,13 +114,13 @@ const detach = (gallery) => {
                             <icons.PinIcon class="w-5 h-5 "/>
                         </div>
                         <MapCard :property="$page.props?.property" />
-
+                        <PrimaryButton type="button" @click="showPricesDialog = true">{{__('Manage Prices')}}</PrimaryButton>
+                        <PricesList  />
                         <!-- <AvailabilityCalendar /> -->
 
                     </div>
                     <div class="right xl:col-span-2">
-                        <EditForm />
-
+                        <EditForm @manage-prices="showPricesDialog = true" />
                     </div>
 
 
@@ -129,6 +132,8 @@ const detach = (gallery) => {
         <ManageFacilitiesDialog :show="showFacilitiesDialog" @close="showFacilitiesDialog = false"
             :property="property" />
         <ManageGalleriesDialog :show="showAttachGalleryDialog" @close="showAttachGalleryDialog = false"
+            :property="property" />
+        <ManagePricesDialog :show="showPricesDialog" @close="showPricesDialog = false"
             :property="property" />
     </FullLayout>
 </template>

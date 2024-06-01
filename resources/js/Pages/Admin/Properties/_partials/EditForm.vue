@@ -18,6 +18,8 @@ const page = usePage()
 
 const store = useTranslationsStore()
 
+defineEmits(['managePrices'])
+
 const form = useForm({
     ...page.props?.property,
     /*     type: page.props?.property?.type,
@@ -135,8 +137,10 @@ onBeforeUnmount(() => document.removeEventListener('keydown', saveOnCtrlS));
                 <HorizontalTabItem @click="selectedTab = language.code" v-for="language in store.languages"
                     :key="language.code" :active="selectedTab === language.code">
                     <img :src="language.flag_url"
-                        class="w-4 h-4 me-2 text-gray-400 group-hover:text-gray-500 dark:text-gray-500 dark:group-hover:text-gray-300" />
-                    {{ language.name }}
+                        class="w-4 h-4 sm:me-2 text-gray-400 group-hover:text-gray-500 dark:text-gray-500 dark:group-hover:text-gray-300" />
+                    <span class="hidden sm:block">
+                        {{ language.name }}
+                    </span>
                 </HorizontalTabItem>
             </template>
         </HorizontalTabs>
@@ -280,6 +284,7 @@ onBeforeUnmount(() => document.removeEventListener('keydown', saveOnCtrlS));
                 </div>
             </div>
         </div>
+
         <hr class="my-4 md:my-4 border-gray-200 dark:border-gray-800 col-span-full" />
 
         <h4 class="text-xl mt-4 font-bold dark:text-white">{{ __('Recommended') }}</h4>
@@ -320,9 +325,15 @@ onBeforeUnmount(() => document.removeEventListener('keydown', saveOnCtrlS));
             </div>
         </div>
 
-        <h4 class="text-xl mt-4 font-bold dark:text-white">{{ __('Prices') }}</h4>
+        <div class="mt-4 flex justify-between items-center">
+            <h4 class="text-xl  font-bold dark:text-white">{{ __('Prices') }}</h4>
+            <button class="py-2" @click="$emit('managePrices')">
+                {{ __('Manage Prices') }}
+            </button>
 
-        <div class="col-span-full">
+        </div>
+
+<!--         <div class="col-span-full">
             <div class="flex items-center">
                 <p class="w-full">{{ __('Number of guests') }}</p>
                 <p class="w-full">{{ __('Price in €') }}</p>
@@ -369,15 +380,17 @@ onBeforeUnmount(() => document.removeEventListener('keydown', saveOnCtrlS));
                     </button>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <HorizontalTabs class="mt-4">
             <template #header>
                 <HorizontalTabItem @click="selectedTab = language.code" v-for="language in store.languages"
                     :key="language.code" :active="selectedTab === language.code">
                     <img :src="language.flag_url"
-                        class="w-4 h-4 me-2 text-gray-400 group-hover:text-gray-500 dark:text-gray-500 dark:group-hover:text-gray-300" />
-                    {{ language.name }}
+                        class="w-4 h-4 sm:me-2 text-gray-400 group-hover:text-gray-500 dark:text-gray-500 dark:group-hover:text-gray-300" />
+                    <span class="hidden sm:block">
+                        {{ language.name }}
+                    </span>
                 </HorizontalTabItem>
             </template>
         </HorizontalTabs>
@@ -395,7 +408,7 @@ onBeforeUnmount(() => document.removeEventListener('keydown', saveOnCtrlS));
 
                     <div class="flex items-center space-x-2 mb-4" v-for="rule, key in form.rules[selectedTab]">
                         <div class="w-full">
-                            <div class="flex items-center space-x-2">
+                            <div class="sm:flex sm:items-center sm:space-x-2">
                                 <div class="w-full">
 
                                     <TextInput :id="`rule_${key}_name`" v-model="form.rules[selectedTab][key].name"

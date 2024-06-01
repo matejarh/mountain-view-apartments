@@ -95,8 +95,10 @@ onBeforeUnmount(() => {
                 <HorizontalTabItem @click="selectedTab = language.code" v-for="language in translations.languages"
                     :key="language.code" :active="selectedTab === language.code">
                     <img :src="language.flag_url"
-                        class="w-4 h-4 me-2 text-gray-400 group-hover:text-gray-500 dark:text-gray-500 dark:group-hover:text-gray-300" />
-                    {{ language.name }}
+                        class="w-4 h-4 sm:me-2 text-gray-400 group-hover:text-gray-500 dark:text-gray-500 dark:group-hover:text-gray-300" />
+                    <span class="hidden sm:block">
+                        {{ language.name }}
+                    </span>
                 </HorizontalTabItem>
             </template>
         </HorizontalTabs>
