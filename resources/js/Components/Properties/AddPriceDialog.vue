@@ -17,23 +17,23 @@ const props = defineProps({
 const emit = defineEmits(['close'])
 
 const form = useForm({
-    from: props.price?.from,
-    to: props.price?.to,
+    // from: props.price?.from,
+    // to: props.price?.to,
     // range: props.price?.range,
     prices: props.price?.prices
 })
 
 const initialized = ref(false)
 
-/* watchEffect(() => {
+watchEffect(() => {
     if (props.price && initialized.value) {
         updateForm()
     }
-}) */
+})
 
 const updateForm = () => {
-    form.from = props.price?.from
-    form.to = props.price?.to
+    //form.from = props.price?.from
+    //form.to = props.price?.to
     form.prices = props.price?.prices
 }
 
@@ -74,10 +74,12 @@ onMounted(() => {
 
 <template>
     <DialogModal max-width="xl" :show="show" @close="$emit('close')">
-        <template #title>{{ __('Edit Prices') }} {{ __('from') }} {{ new
-            Date(price.from).toLocaleDateString($page.props.locale) }}
+        <template #title>
+            {{ __('Edit Prices') }} {{ __('from') }}
+            {{ new Date(price.from).toLocaleDateString($page.props.locale) }}
             {{ __('to') }}
-            {{ new Date(price.to).toLocaleDateString($page.props.locale) }}</template>
+            {{ new Date(price.to).toLocaleDateString($page.props.locale) }}
+        </template>
 
         <template #content>
 
