@@ -32,9 +32,9 @@ class UpdatePrice implements UpdatesPrices
         }
 
         $rules = [
-            'from' => ['date', 'before:to'],
-            'to' => ['date', 'after:from'],
-            'range' => ['array', 'min:2', new AllowedPriceRange($price->property_id, $price->id)],
+            //'from' => ['date', 'before:to'],
+            //'to' => ['date', 'after:from'],
+            //'range' => ['array', 'min:2', new AllowedPriceRange($price->property_id, $price->id)],
             'prices' => ['required', 'array', 'min:1'],
             'prices.*' => ['required', 'array', 'min:1', 'distinct'],
             'prices.*.guests' => ['required', 'integer', 'min:1', 'max:10'],
@@ -46,9 +46,9 @@ class UpdatePrice implements UpdatesPrices
         $validator->setAttributeNames($attributeNames)->validateWithBag('updatingPrice');
 
         $price->forceFill([
-            'from' => $input['from'],
-            'to' => $input['to'],
-            //'guests' => $input['guests'],
+            // 'from' => $input['from'],
+            // 'to' => $input['to'],
+            // 'guests' => $input['guests'],
             'prices' => $input['prices'],
         ])->save();
 
