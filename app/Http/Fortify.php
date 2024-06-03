@@ -53,6 +53,7 @@ use App\Contracts\UpdatesProperties;
 use App\Contracts\UpdatesReservations;
 use App\Contracts\UpdatesReviews;
 use App\Contracts\UpdatesSettings;
+use App\Contracts\UpdatesTranslations;
 
 class Fortify
 {
@@ -637,6 +638,17 @@ class Fortify
     public static function destroyPricesUsing(string $callback)
     {
         app()->singleton(DeletesPrices::class, $callback);
+    }
+
+    /**
+     * Register a class / callback that should be used to update translations.
+     *
+     * @param  string  $callback
+     * @return void
+     */
+    public static function updateTranslationsUsing(string $callback)
+    {
+        app()->singleton(UpdatesTranslations::class, $callback);
     }
 
 }

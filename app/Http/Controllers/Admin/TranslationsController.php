@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Contracts\TranslationsUpdateResponse;
+use App\Contracts\UpdatesTranslations;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Policies\TranslationPolicy;
@@ -83,36 +85,12 @@ class TranslationsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request): RedirectResponse
+    public function update(Request $request, UpdatesTranslations $updater): TranslationsUpdateResponse
     {
         Gate::allowIf(fn (User $user) => $user->is_admin);
 
-        // Get new translations from the request
-        $newTranslations = $request->get('translations', []);
+        $updater->update($request->all());
 
-        // Iterate over the new translations
-        foreach ($newTranslations as $key => $translations) {
-            foreach ($translations as $locale => $translation) {
-                $path = base_path("lang/{$locale}.json");
-
-                // Ensure the language directory exists
-                if (!File::exists(dirname($path))) {
-                    File::makeDirectory(dirname($path), 0755, true);
-                }
-
-                // Read existing translations
-                $existingTranslations = File::exists($path) ? json_decode(File::get($path), true) : [];
-
-                // Update or add the translation
-                $existingTranslations[$key] = $translation;
-
-                // Save the updated translations
-                File::put($path, json_encode($existingTranslations, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
-            }
-        }
-
-        session()->flash('flash.banner', __('Translations updated successfully!'));
-        // Redirect back with a status message
-        return back()->with('status', 'Translations updated successfully!');
+        return app(TranslationsUpdateResponse::class);
     }
 }

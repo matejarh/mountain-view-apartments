@@ -58,9 +58,10 @@ import { ref } from 'vue';
 
 const { keys_with_translation, supported_locales, status } = usePage().props;
 const formTranslations = ref(keys_with_translation.data);
-const form = useForm({})
+const form = useForm({translations: keys_with_translation.data})
 const updateTranslations = () => {
     form.translations = formTranslations.value
+
     form.put(route('admin.translations.update'),{
         preserveState: true,
         preserveScroll: true,

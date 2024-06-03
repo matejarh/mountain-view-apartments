@@ -59,6 +59,7 @@ use App\Actions\Reviews\RejectsReview;
 use App\Actions\Reviews\UpdateReview;
 use App\Actions\Settings\CreateNewSetting;
 use App\Actions\Settings\UpdateSetting;
+use App\Actions\Translations\UpdateTranslations;
 use App\Contracts\FacilityAttacheResponse as FacilityAttacheResponseContract;
 use App\Contracts\FacilityCreateResponse as FacilityCreateResponseContract;
 use App\Contracts\FacilityDeleteResponse as FacilityDeleteResponseContract;
@@ -108,6 +109,7 @@ use App\Contracts\ReviewRejectResponse as ReviewRejectResponseContract;
 use App\Contracts\ReviewUpdateResponse as ReviewUpdateResponseContract;
 use App\Contracts\SettingCreateResponse as SettingCreateResponseContract;
 use App\Contracts\SettingUpdateResponse as SettingUpdateResponseContract;
+use App\Contracts\TranslationsUpdateResponse as TranslationsUpdateResponseContract;
 use App\Http\Responses\FacilityAttachedResponse;
 use App\Http\Responses\FacilityCreatedResponse;
 use App\Http\Responses\FacilityDeletedResponse;
@@ -157,6 +159,7 @@ use App\Http\Responses\ReviewRejectedResponse;
 use App\Http\Responses\ReviewUpdatedResponse;
 use App\Http\Responses\SettingCreatedResponse;
 use App\Http\Responses\SettingUpdatedResponse;
+use App\Http\Responses\TranslationsUpdatedResponse;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
@@ -242,6 +245,8 @@ class FortifyServiceProvider extends ServiceProvider
         $this->app->singleton(PriceCreateResponseContract::class, PriceCreatedResponse::class);
         $this->app->singleton(PriceUpdateResponseContract::class, PriceUpdatedResponse::class);
         $this->app->singleton(PriceDeleteResponseContract::class, PriceDeletedResponse::class);
+
+        $this->app->singleton(TranslationsUpdateResponseContract::class, TranslationsUpdatedResponse::class);
     }
 
     /**
@@ -318,6 +323,8 @@ class FortifyServiceProvider extends ServiceProvider
         AppFortify::createPricesUsing(CreatePrice::class);
         AppFortify::updatePricesUsing(UpdatePrice::class);
         AppFortify::destroyPricesUsing(DeletePrice::class);
+
+        AppFortify::updateTranslationsUsing(UpdateTranslations::class);
 
         RateLimiter::for('login', function (Request $request) {
             $throttleKey = str(str($request->input(Fortify::username()))->lower().'|'.$request->ip())->transliterate();
