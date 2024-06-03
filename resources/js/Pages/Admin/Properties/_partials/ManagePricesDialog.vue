@@ -104,7 +104,7 @@ const store = () => {
 
             <TransitionGroup name="list" tag="ul" key="daterangeGroup"
                 class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-8">
-                <PriceCard v-for="price, key in $page.props.property.prices.sort((a, b) => new Date(b.from) - new Date(a.from))" :key="key" :item="price" />
+                <PriceCard v-for="price, key in $page.props.property.prices.sort((a, b) => new Date(b.from) - new Date(a.from))" :key="`${price.from}-${price.to}`" :item="price" />
             </TransitionGroup>
 
             <h4 class="text-base font-bold dark:text-white mt-2 cursor-pointer" @click="showAddRangeCalendar = !showAddRangeCalendar">{{ showAddRangeCalendar ? __('Hide Range Calendar') : __('Add New Range') }}</h4>

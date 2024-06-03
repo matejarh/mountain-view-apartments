@@ -1,6 +1,6 @@
 <script setup>
 import DialogModal from '@/Components/DialogModal.vue'
-import GalleryCard from './GalleryCard.vue';
+import GalleryCard from '@/Components/Properties/GalleryCard.vue';
 import { useForm } from '@inertiajs/vue3';
 
 

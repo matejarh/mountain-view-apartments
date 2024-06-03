@@ -2,7 +2,7 @@
 import ActionSection from '@/Components/ActionSection.vue'
 import Tooltip from '@/Components/Tooltip.vue'
 import FullLayout from '@/Layouts/FullLayout.vue';
-import PropertyCard from './_partials/PropertyCard.vue';
+import PropertyCard from '@/Components/Properties/PropertyCard.vue';
 import { ref } from 'vue';
 import FiltersSection from '@/Components/FiltersSection.vue';
 import Paginator from '@/Components/Paginator.vue';

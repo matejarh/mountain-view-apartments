@@ -20,6 +20,6 @@ class ConfirmReservation implements ConfirmsReservations
     {
         $reservation->confirm();
 
-        session()->flash('flash.banner', __('Reservation has been confirm.'));
+        session()->flash('flash.banner', __('Reservation has been confirmed.'));
     }
 }

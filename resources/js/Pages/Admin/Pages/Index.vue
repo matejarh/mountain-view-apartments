@@ -2,7 +2,7 @@
 import FullLayout from '@/Layouts/FullLayout.vue';
 import ActionSection from '@/Components/ActionSection.vue';
 import FiltersSection from '@/Components/FiltersSection.vue';
-import PageCard from './_partials/PageCard.vue';
+import PageCard from '@/Components/Pages/PageCard.vue';
 import Tooltip from '@/Components/Tooltip.vue';
 import { ref } from 'vue';
 import CreateDialog from './_partials/CreateDialog.vue';

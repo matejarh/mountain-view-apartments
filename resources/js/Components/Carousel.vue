@@ -78,7 +78,7 @@ const i18n = ref({
 </script>
 
 <template>
-    <div id="default-carousel" class="flex flex-col">
+    <div id="default-carousel" class="">
         <carousel :items-to-show="1"
                     :autoplay="autoplay"
                     :wrap-around="true"
@@ -87,12 +87,12 @@ const i18n = ref({
                     :i18n="i18n"
                     :breakpoints="breakpoints"
                     :pause-autoplay-on-hover="true"
-                    class="h-full overflow-hidden"
+                    class=" overflow-hidden"
                     :class="[rounded]">
 
             <slide v-for="slide, key in items" :key="key" class="">
-                <div class="overflow-hidden w-full h-full">
-                    <img :src="slide.thumb_url" class=" object-cover w-full h-full" :alt="slide.slug">
+                <div class="overflow-hidden">
+                    <img :src="slide.thumb_url" class=" object-cover w-full h-auto" :alt="slide.slug">
                 </div>
             </slide>
 

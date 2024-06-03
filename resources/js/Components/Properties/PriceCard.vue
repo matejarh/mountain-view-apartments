@@ -49,32 +49,32 @@ const destroy = () => {
         </div>
 
         <TransitionGroup name="list" tag="ul" class="relative" key="pricesGroup">
-    <li v-for="price, key in itemProxy.prices" :key="key" class="flex justify-between items-center">
-        <span class="flex items-center">
-            <div class="flex">
-                <icons.UserIcon class="w-5 h-5" v-for="n in parseInt(price.guests)" :key="key" />
+            <li v-for="price, key in itemProxy.prices" :key="price" class="flex justify-between items-center">
+                <span class="flex items-center">
+                    <div class="flex">
+                        <icons.UserIcon class="w-5 h-5" v-for="n in parseInt(price.guests)" :key="key" />
 
-            </div>
-            =
-            {{ parseFloat(price.price).toFixed(2).toLocaleString($page.props.locale) }} €
-        </span>
-    </li>
-    </TransitionGroup>
-    <AddPriceDialog :show="showNewPriceDialog" @close="showNewPriceDialog = false" :price="item" />
+                    </div>
+                    =
+                    {{ parseFloat(price.price).toFixed(2).toLocaleString($page.props.locale) }} €
+                </span>
+            </li>
+        </TransitionGroup>
+        <AddPriceDialog :show="showNewPriceDialog" @close="showNewPriceDialog = false" :price="item" />
 
-    <ConfirmationModal :is-danger="true" :show="showDestroyConfirm" @close="showDestroyConfirm = false"
-        @confirmed="destroy" :form="form" busy-text="Destroying" recently-successful-text="Destroyed"
-        button-text="Destroy">
-        <template #icon>
-            <icons.WarningIcon class=" text-bittersweet-400 dark:text-bittersweet-500 w-11 h-11 mb-3.5 mx-auto" />
-        </template>
-        <template #content>
-            <p class="mb-4 text-gray-500 dark:text-gray-300 text-lg">
-                {{ __('Are you sure you want to destroy this date range.') }}</p>
-            <p class="mb-4 text-gray-500 dark:text-gray-300 text-lg">
-                {{ __('This will also destroy all prices under that range.') }}</p>
-        </template>
-    </ConfirmationModal>
+        <ConfirmationModal :is-danger="true" :show="showDestroyConfirm" @close="showDestroyConfirm = false"
+            @confirmed="destroy" :form="form" busy-text="Destroying" recently-successful-text="Destroyed"
+            button-text="Destroy">
+            <template #icon>
+                <icons.WarningIcon class=" text-bittersweet-400 dark:text-bittersweet-500 w-11 h-11 mb-3.5 mx-auto" />
+            </template>
+            <template #content>
+                <p class="mb-4 text-gray-500 dark:text-gray-300 text-lg">
+                    {{ __('Are you sure you want to destroy this date range.') }}</p>
+                <p class="mb-4 text-gray-500 dark:text-gray-300 text-lg">
+                    {{ __('This will also destroy all prices under that range.') }}</p>
+            </template>
+        </ConfirmationModal>
     </li>
 </template>
 

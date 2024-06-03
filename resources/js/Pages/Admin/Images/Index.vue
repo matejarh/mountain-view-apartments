@@ -27,7 +27,7 @@ const handleClicked = (image) => {
             </template>
 
             <template #content>
-                <FiltersSection v-show="$page.props?.images.data.length > 0" id="images-filters" route="admin.images.index"  placeholder="Search for images" />
+                <FiltersSection v-show="$page.props?.images.data.length > 0" class="sticky top-10 bg-gray-50 z-10" id="images-filters" route="admin.images.index"  placeholder="Search for images" />
                 <div class="relative" v-if="$page.props?.images.data.length > 0">
                     <TransitionGroup name="list" tag="ul"
                         class=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 4xl:grid-cols-6 gap-4 md:gap-4 lg:gap-6 2xl:gap-8">

@@ -49,7 +49,7 @@ trait Likable
             $attributes = ['user_id' => auth()->id()];
             if ($this->likes()->forceCreate($attributes)) {
                 $this->increment('likes_count');
-                session()->flash('flash.banner', __('You like '.$this->title->$locale.'.'));
+                session()->flash('flash.banner', __('You like') . ' ' . $this->title->$locale . '.');
             }
         }
     }

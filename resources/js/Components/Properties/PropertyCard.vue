@@ -1,8 +1,6 @@
 <script setup>
-import { ref } from 'vue';
+import { getCurrentInstance, ref } from 'vue';
 import { router } from '@inertiajs/vue3'
-import Carousel from '@/Components/Carousel.vue';
-import ImageIcon from '@/Icons/ImageIcon.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import ActiveCarousel from '@/Components/_default/ActiveCarousel.vue';
 import { icons } from '@/icons';
@@ -11,9 +9,17 @@ const props = defineProps({
     property: Object
 })
 
+const { appContext } = getCurrentInstance();
+
+const __ = appContext.config.globalProperties.__;
+
 const show = ref(true)
 const carouselHeight = 'h-56'
-
+const noImages = ref([
+    {
+        thumb_url: 'https://placehold.co/512x366/6d6d6d/d1d1d1/png?text=' + __('No Images'),
+    }
+])
 </script>
 
 <template>
@@ -24,18 +30,12 @@ const carouselHeight = 'h-56'
             class="w-full bg-white border border-gray-200 overflow-hidden rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700  transition duration-150 ease-out">
             <div class="flex flex-col justify-between pb-4 h-full space-y-4 select-none">
 
-                <!-- <Carousel v-if="property.galleries.length > 0" :items="property.galleries[0].images" class="shadow-lg"
-                    :height="carouselHeight" /> -->
-                <ActiveCarousel v-if="property.galleries.length > 0" :items="property.galleries[0].images" />
-                <div class="w-full flex items-center justify-center shadow-lg" :class="carouselHeight" v-else>
-
-                    <ImageIcon class="w-56 h-56 text-gray-300 dark:text-gray-400" />
-                </div>
-                <!--  <img v-else :src="'https://via.placeholder.com/640x480.png/6d6d6d?text='+__('No%20images')" class="rounded-t-lg w-auto" :class="carouselHeight" /> -->
+                <ActiveCarousel class="shadow-lg" v-if="property.galleries.length > 0" :items="property.galleries[0].images" />
+                <ActiveCarousel class="shadow-lg" v-else :items="noImages" />
 
                 <div class="px-4 h-full max-h-44 overflow-y-auto scrollbar-none">
 
-                    <h2 class="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white">{{ property.type }}
+                    <h2 class="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white">{{ __(property.type) }}
                     </h2>
                     <h3
                         class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white whitespace-pre overflow-x-scroll scrollbar-none">
