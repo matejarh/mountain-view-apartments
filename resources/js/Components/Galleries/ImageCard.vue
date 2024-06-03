@@ -4,7 +4,7 @@ import { onMounted, ref } from 'vue';
 import { icons } from '@/icons';
 import ConfirmationModal from '@/Components/ConfirmationModal.vue';
 import Tooltip from '@/Components/Tooltip.vue';
-import EditImageInfoDialog from './EditImageInfoDialog.vue';
+import EditImageInfoDialog from '@/Pages/Admin/Galleries/_partials/EditImageInfoDialog.vue';
 
 const props = defineProps({
     image: Object,

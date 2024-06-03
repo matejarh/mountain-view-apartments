@@ -4,7 +4,7 @@ import { icons } from '@/icons';
 import ActionSection from '@/Components/ActionSection.vue'
 import Tooltip from '@/Components/Tooltip.vue'
 import FullLayout from '@/Layouts/FullLayout.vue';
-import GalleryCard from './_partials/GalleryCard.vue';
+import GalleryCard from '@/Components/Galleries/GalleryCard.vue';
 import CreateGalleryDialog from './_partials/CreateGalleryDialog.vue';
 import FiltersSection from '@/Components/FiltersSection.vue';
 

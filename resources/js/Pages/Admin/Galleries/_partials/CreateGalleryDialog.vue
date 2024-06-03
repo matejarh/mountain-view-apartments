@@ -6,7 +6,7 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import TextArea from '@/Components/TextArea.vue';
 import InputError from '@/Components/InputError.vue';
-import ImagesList from './ImagesList.vue';
+import ImagesList from '@/Components/Galleries/ImagesList.vue';
 import { icons } from '@/icons';
 
 const props = defineProps({

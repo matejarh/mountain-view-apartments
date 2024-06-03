@@ -48,13 +48,14 @@ const close = () => {
         </div>
 
         <div class="p-4 md:p-5">
-            <div class="mb-4 overflow-y-visible">
+            <div class="overflow-y-visible">
                 <slot name="content" />
 
             </div>
 
-
-            <slot name="footer" />
+            <div class="mt-4" v-if="$slots.footer">
+                <slot name="footer" />
+            </div>
         </div>
 
     </Modal>

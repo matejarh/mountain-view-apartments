@@ -7,7 +7,7 @@ import { usePage } from '@inertiajs/vue3';
 import { pickBy } from 'lodash';
 import { icons } from '@/icons';
 import DialogModal from '@/Components/DialogModal.vue'
-import ImageCard from './ImageCard.vue';
+import ImageCard from '@/Components/Galleries/ImageCard.vue';
 
 
 const props = defineProps({

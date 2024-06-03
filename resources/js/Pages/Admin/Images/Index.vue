@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import { icons } from '@/icons';
 import ActionSection from '@/Components/ActionSection.vue';
 import FullLayout from '@/Layouts/FullLayout.vue';
-import ImageCard from '@/Pages/Admin/Galleries/_partials/ImageCard.vue';
+import ImageCard from '@/Components/Galleries/ImageCard.vue';
 import Tooltip from '@/Components/Tooltip.vue';
 import UploadPhotoDialog from '@/Pages/Admin/Galleries/_partials/UploadPhotoDialog.vue';
 import Paginator from '@/Components/Paginator.vue';
@@ -11,7 +11,6 @@ import FullScreenImagesModal from './_partials/FullScreenImagesModal.vue';
 import FiltersSection from '@/Components/FiltersSection.vue';
 
 const showUploadPhotoDialog = ref(false)
-const showFullScreenImageModal = ref(false)
 const showingImage = ref(null)
 
 const handleClicked = (image) => {
@@ -27,7 +26,7 @@ const handleClicked = (image) => {
             </template>
 
             <template #content>
-                <FiltersSection v-show="$page.props?.images.data.length > 0" class="sticky top-10 bg-gray-50 z-10" id="images-filters" route="admin.images.index"  placeholder="Search for images" />
+                <FiltersSection v-show="$page.props?.images.data.length > 0" class="sticky top-10 bg-gray-50 dark:bg-gray-900 z-10" id="images-filters" route="admin.images.index"  placeholder="Search for images" />
                 <div class="relative" v-if="$page.props?.images.data.length > 0">
                     <TransitionGroup name="list" tag="ul"
                         class=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 4xl:grid-cols-6 gap-4 md:gap-4 lg:gap-6 2xl:gap-8">
@@ -40,15 +39,13 @@ const handleClicked = (image) => {
                                 </p>
                             </figure>
                         </li>
-                        <!-- <img class="rounded-lg w-auto h-full" v-for="image, key in $page.props?.images.data" :src="image.thumb_url" :alt="image.name"> -->
-
 
                         <ImageCard v-for="image, key in $page.props?.images.data" :images-count="$page.props?.images.total" :key="image.id" :image="image"
                             @clicked="handleClicked" :is-index="true" />
 
 
-                        </TransitionGroup>
-                        <Paginator key="paginator" class="col-span-8" :paginator="$page.props?.images" />
+                    </TransitionGroup>
+                    <Paginator key="paginator" class="col-span-8" :paginator="$page.props?.images" />
                 </div>
 
 
@@ -72,10 +69,6 @@ const handleClicked = (image) => {
                 </button>
             </Tooltip>
         </div>
-        <!-- <AttachImagesDialog :show="showImagesDialog"
-                            :gallery="$page.props?.gallery"
-                            @close="showImagesDialog = false"
-                            @show-upload-photo-dialog="showUploadPhotoDialog = true" /> -->
 
         <UploadPhotoDialog :show="showUploadPhotoDialog" @close="showUploadPhotoDialog = false" />
 

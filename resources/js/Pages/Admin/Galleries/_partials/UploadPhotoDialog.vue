@@ -4,7 +4,7 @@ import DialogModal from '@/Components/DialogModal.vue'
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import DropZone from '@/Components/DropZone.vue';
 import SpinnerIcon from '@/Icons/SpinnerIcon.vue';
-import UploadingPhotoSlot from './UploadingPhotoSlot.vue';
+import UploadingPhotoSlot from '@/Components/Galleries/UploadingPhotoSlot.vue';
 
 const props = defineProps({
     show: Boolean,
@@ -85,19 +85,6 @@ const removeFromPhotoPreview = (value) => {
 
 
             <DropZone v-model="photoInput" />
-        </template>
-
-        <template #footer>
-            <!--             <PrimaryButton type="button"
-                :class="{ 'opacity-25': form.processing || form.recentlySuccessful || !form.isDirty }"
-                :disabled="form.processing || form.recentlySuccessful" @click="createAll">
-                <div class="flex items-center">
-                    <SpinnerIcon v-show="form.processing"
-                        class="animate-spin -ml-1 mr-3 h-5 w-5 text-white dark:text-white" />
-                    {{ form.processing ? __('Uploading') + '...' : form.recentlySuccessful ? __('Uploaded') : __('Upload All') }}
-
-                </div>
-            </PrimaryButton> -->
         </template>
     </DialogModal>
 </template>
