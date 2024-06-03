@@ -73,7 +73,6 @@ const reset = () => {
 
         <template #content>
             <div class="w-full mb-4">
-                {{ form.search }}
                 <label for="search_images" class="sr-only">{{ __('Search') }}</label>
                 <div class="relative">
                     <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">

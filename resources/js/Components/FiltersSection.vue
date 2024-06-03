@@ -14,6 +14,10 @@ const props = defineProps({
     filters: {
         default: null,
         type: Object,
+    },
+    preserveState: {
+        default: true,
+        type: Boolean,
     }
 })
 const page = usePage()
@@ -33,7 +37,7 @@ const form = ref({
 const debouncedHandler = debounce(() => {
     form.value.search = trim(form.value.search)
     router.get(route(props.route), pickBy(form.value), {
-        preserveState: true,
+        preserveState: props.preserveState,
         preserveScroll: true,
     });
 }, 500);

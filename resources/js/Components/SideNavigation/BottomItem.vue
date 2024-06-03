@@ -2,6 +2,10 @@
 defineProps({
     href: String,
     active: String,
+    animation: {
+        type: String,
+        default: 'animate-spin'
+    }
 })
 </script>
 
@@ -11,7 +15,7 @@ defineProps({
         :href="href"
         class=" inline-flex justify-center p-2 transition-colors text-gray-500 rounded cursor-pointer dark:text-gray-400 dark:hover:text-white hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-600">
 
-        <div class="hover:animate-spin" :class="{ 'animate-spin': $page.url.startsWith(active) }">
+        <div class="" :class="[`hover:${animation}`,{ animation: $page.url.startsWith(active) }]">
             <slot />
         </div>
     </inertia-link>

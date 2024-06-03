@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\PropertiesController;
 use App\Http\Controllers\Admin\ReservationsController;
 use App\Http\Controllers\Admin\ReviewsController;
 use App\Http\Controllers\Admin\SettingsController;
+use App\Http\Controllers\Admin\TranslationsController;
 use App\Http\Controllers\Admin\UsersController;
 
 Route::group(['middleware' => config('jetstream.middleware')], function () {
@@ -32,6 +33,11 @@ Route::group(['middleware' => config('jetstream.middleware')], function () {
             Route::get('/{setting}', [SettingsController::class, 'show'])->name('show');
             Route::put('/{setting}', [SettingsController::class, 'update'])->name('update');
             Route::delete('/{setting}', [SettingsController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::name('translations.')->prefix('translations')->namespace('translations')->group(function() {
+            Route::get('/', [TranslationsController::class, 'index'])->name('index');
+            Route::post('/', [TranslationsController::class, 'update'])->name('update');
         });
 
         Route::name('properties.')->prefix('properties')->namespace('properties')->group(function() {

@@ -104,12 +104,14 @@ const bottomNavItems = computed(() => [
         </div>
         <div
             class="hidden absolute bottom-0 left-0 justify-center p-4 space-x-4 w-full lg:flex bg-gray-50 dark:bg-gray-800 z-20">
-            <BottomItem v-if="$page.props?.auth.user.is_admin" :href="'/'">
-                <icons.AdjustmentsIcon class="w-6 h-6" />
-            </BottomItem>
+            <Tooltip v-if="$page.props?.auth.user.is_admin" :text="__('Manage Translations')">
+                <BottomItem v-if="$page.props?.auth.user.is_admin" :href="'/admin/translations'" animation="animate-pulse" >
+                    <icons.AdjustmentsIcon class="w-6 h-6" />
+                </BottomItem>
+            </Tooltip>
 
             <Tooltip v-if="$page.props?.auth.user.is_admin" :text="__('Settings Page')">
-                <BottomItem :href="route('admin.settings.index')" active="/admin/settings">
+                <BottomItem :href="route('admin.settings.index')" active="/admin/settings" >
                     <icons.CogIcon class="w-6 h-6" />
                 </BottomItem>
             </Tooltip>
