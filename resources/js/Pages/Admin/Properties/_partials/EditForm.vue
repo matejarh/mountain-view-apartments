@@ -486,7 +486,7 @@ onBeforeUnmount(() => document.removeEventListener('keydown', saveOnCtrlS));
             </GridSection>
 
         </div>
-        <div class="mt-4">
+        <div class="mt-4 sticky bottom-4 z-10">
 
             <PrimaryButton type="button"
                 :class="{ 'opacity-25': form.processing || form.recentlySuccessful || !form.isDirty }"
