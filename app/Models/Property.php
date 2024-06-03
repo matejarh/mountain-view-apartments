@@ -6,8 +6,9 @@ use App\Filters\PropertyFilters;
 use App\Traits\Likable;
 use App\Traits\RecordsActivity;
 use App\Traits\Reviewable;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Support\Collection\Collection;
+use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -254,7 +255,8 @@ class Property extends Model
 
     public function getUnavailableDatesAttribute(): array
     {
-        return $this->getUnavailableDates(now(), now()->addYears(7));
+        // return $this->getUnavailableDates(now(), now()->addYears(7));
+        return $this->getUnavailableAndUndefinedDates(now(), now()->addYears(7));
     }
 
     /**
@@ -270,97 +272,151 @@ class Property extends Model
 
     }
 
-    public function fetchListForDropdowns(): \Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection
+    public function fetchListForDropdowns(): \Illuminate\Database\Eloquent\Collection|Collection
     {
-        $properties = Property::latest()->get()->map(function ($property) {
-            return [
-                'slug' => $property->slug,
-                'type' => $property->type,
-                'title' => $property->title,
-                'avatar_url' => $property->avatar_url,
-            ];
+        return cache()->rememberForever('properties_list_for_dropdown', function () {
+            return Property::latest()->get()->map(function (Property $property) {
+                return [
+                    'slug' => $property->slug,
+                    'type' => $property->type,
+                    'title' => $property->title,
+                    'avatar_url' => $property->avatar_url,
+                ];
+            });
         });
-
-        return $properties;
     }
 
     /**
      * Get all unavailable dates within a given date range.
      *
-     * @param string $startDate The start date of the range.
-     * @param string $endDate The end date of the range.
+     * @param string $startDate The start date of the range (Y-m-d format).
+     * @param string $endDate The end date of the range (Y-m-d format).
      * @return array An array of unavailable dates.
      */
-    public function getUnavailableDates($startDate, $endDate)
+    public function getUnavailableDates(string $startDate, string $endDate): Collection
     {
-        $reservations = $this->reservations()->confirmed()->paymentReceived()
-            ->where(function ($query) use ($startDate, $endDate) {
+        // Retrieve confirmed and payment received reservations within the specified date range
+        $reservations = $this->reservations()
+            ->confirmed()
+            ->paymentReceived()
+            ->where(function (Builder $query) use ($startDate, $endDate) {
                 $query->whereBetween('arrival', [$startDate, $endDate])
                     ->orWhereBetween('departure', [$startDate, $endDate])
-                    ->orWhere(function ($query) use ($startDate, $endDate) {
+                    ->orWhere(function (Builder $query) use ($startDate, $endDate) {
                         $query->where('arrival', '<=', $startDate)
                             ->where('departure', '>=', $endDate);
                     });
             })
             ->get();
 
-        // Initialize an array to hold the unavailable dates
-        $unavailableDates = [];
+        // Initialize a collection to hold the unavailable dates
+        $unavailableDates = collect();
 
-        // Loop through each reservation and add the dates to the array
-        foreach ($reservations as $reservation) {
-            $currentDate = \Carbon\Carbon::parse($reservation->arrival);
-            $endDate = \Carbon\Carbon::parse($reservation->departure);
+        // Loop through each reservation and add the dates to the collection
+        $reservations->each(function ($reservation) use ($unavailableDates) {
+            $currentDate = Carbon::parse($reservation->arrival);
+            $endDate = Carbon::parse($reservation->departure);
 
-            // Add all dates between arrival and departure to the array
+            // Generate all dates between arrival and departure and merge into the collection
             while ($currentDate->lte($endDate)) {
-                $unavailableDates[] = $currentDate->toDateString();
+                $unavailableDates->push($currentDate->toDateString());
                 $currentDate->addDay();
             }
-        }
+        });
 
-        // Return the array of unavailable dates
-        return array_unique($unavailableDates);
-
+        // Return the unique unavailable dates as an array
+        return $unavailableDates->unique();
     }
 
     /**
-     * Get all dates within a given date range.
+     * Get all dates within a given date range that have defined prices.
      *
-     * @param string $startDate The start date of the range.
-     * @param string $endDate The end date of the range.
-     * @return array An array of unavailable dates.
+     * @param string $startDate The start date of the range (Y-m-d format).
+     * @param string $endDate The end date of the range (Y-m-d format).
+     * @return array An array of dates with defined prices.
      */
-    public function getDatesWithDefinedPrices($startDate, $endDate)
+    public function getDatesWithDefinedPrices(string $startDate, string $endDate): Collection
     {
+        // Parse start and end dates using Carbon
+        $start = Carbon::parse($startDate);
+        $end = Carbon::parse($endDate);
+
+        // Retrieve prices within the specified date range
         $prices = $this->prices()
-            ->where(function ($query) use ($startDate, $endDate) {
-                $query->whereBetween('from', [$startDate, $endDate])
-                    ->orWhereBetween('to', [$startDate, $endDate])
-                    ->orWhere(function ($query) use ($startDate, $endDate) {
-                        $query->where('from', '<=', $startDate)
-                            ->where('to', '>=', $endDate);
+            ->where(function (Builder $query) use ($start, $end) {
+                $query->whereBetween('from', [$start, $end])
+                    ->orWhereBetween('to', [$start, $end])
+                    ->orWhere(function (Builder $query) use ($start, $end) {
+                        $query->where('from', '<=', $start)
+                            ->where('to', '>=', $end);
                     });
             })
             ->get();
 
-        // Initialize an array to hold the unavailable dates
-        $definedDates = [];
+        // Initialize a collection to hold the dates with defined prices
+        $definedDates = collect();
 
-        // Loop through each reservation and add the dates to the array
+        // Loop through each price range and add the dates to the collection
         foreach ($prices as $price) {
-            $currentDate = \Carbon\Carbon::parse($price->from);
-            $endDate = \Carbon\Carbon::parse($price->to);
+            $priceStart = Carbon::parse($price->from);
+            $priceEnd = Carbon::parse($price->to);
 
-            // Add all dates between arrival and departure to the array
-            while ($currentDate->lte($endDate)) {
-                $definedDates[] = $currentDate->toDateString();
-                $currentDate->addDay();
+            // Generate all dates between price start and end dates and merge into the collection
+            while ($priceStart->lte($priceEnd)) {
+                $definedDates->push($priceStart->toDateString());
+                $priceStart->addDay();
             }
         }
 
-        // Return the array of unavailable dates
-        return array_unique($definedDates);
+        // Return the unique dates with defined prices
+        return $definedDates->unique()/* ->values()->all() */;
+    }
 
+    /**
+     * Get all dates within a given date range that do not have defined prices.
+     *
+     * @param string $startDate The start date of the range (Y-m-d format).
+     * @param string $endDate The end date of the range (Y-m-d format).
+     * @return array An array of dates without defined prices.
+     */
+    public function getDatesWithoutDefinedPrices(string $startDate, string $endDate): Collection
+    {
+        // Parse start and end dates using Carbon
+        $start = Carbon::parse($startDate);
+        $end = Carbon::parse($endDate);
+
+        // Get all dates within the range
+        $allDates = collect();
+        $currentDate = $start->copy();
+        while ($currentDate->lte($end)) {
+            $allDates->push($currentDate->toDateString());
+            $currentDate->addDay();
+        }
+
+        // Get dates with defined prices
+        $datesWithDefinedPrices = collect($this->getDatesWithDefinedPrices($startDate, $endDate));
+
+        // Get dates without defined prices by diffing the two collections
+        $datesWithoutDefinedPrices = $allDates->diff($datesWithDefinedPrices);
+
+        // Return the dates without defined prices as an array
+        return $datesWithoutDefinedPrices->unique();
+    }
+
+    /**
+     * Get all unavailable and undefined dates within a given date range.
+     *
+     * @param string $startDate The start date of the range (Y-m-d format).
+     * @param string $endDate The end date of the range (Y-m-d format).
+     * @return array An array of unavailable and undefined dates.
+     */
+    public function getUnavailableAndUndefinedDates(string $startDate, string $endDate): array
+    {
+        $unavailableDates = $this->getUnavailableDates($startDate, $endDate);
+        $definedPricesDates = $this->getDatesWithoutDefinedPrices($startDate, $endDate);
+
+        $allDates = $unavailableDates->merge($definedPricesDates);
+
+        return $allDates->unique()->values()->all();
     }
 }
