@@ -55,7 +55,7 @@ onBeforeMount(() => {
         <Banner />
 
         <div id="page"
-            class="relative antialiased bg-gradient-to-br from-white to-gray-100 dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-950 w-screen overflow-hidden">
+            class="relative antialiased bg-gradient-to-br z-0 from-white to-gray-100 dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-950 w-screen overflow-hidden">
             <div v-show="showSidebar" class="fixed inset-0 z-10 w-screen h-screen" @click="showSidebar = false" />
 
             <TopNavigation @toggle-sidebar="showSidebar = !showSidebar" />
