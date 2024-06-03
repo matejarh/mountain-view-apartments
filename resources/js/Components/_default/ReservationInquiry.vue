@@ -63,7 +63,6 @@ const recaptcha = async () => {
     store();
 }
 
-
 const propertyProxy = ref(null)
 
 const handleSelected = (accomodation) => {
@@ -200,8 +199,6 @@ const store = () => {
                 <icons.InfoIcon class=" text-gray-400 dark:text-gray-500 w-11 h-11 mb-3.5 mx-auto" />
             </template>
             <template #content>
-
-
                     <p class="mb-4 text-gray-500 dark:text-gray-300 text-lg">
                         {{ __('Please review your inquiry and make sure that you include all needed information.')}}</p>
                     <ul class="mb-4 text-gray-500 dark:text-gray-300 text-sm bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
