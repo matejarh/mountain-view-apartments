@@ -82,11 +82,17 @@ const showBled = () => {
     bounds.value = [[parseFloat(page.props?.properties.find(property => property.name === 'Apartment Two Angels')[0].coordinates.lat), parseFloat(page.props?.properties.find(property => property.name === 'Apartment Two Angels')[0].coordinates.lng)]]
 }
 
+const options = ref({
+    dragging: true,
+    zoomControl: true,
+    boxZoom: false,
+    scrollWheelZoom: false
+})
 </script>
 
 <template>
     <div class="w-full  ">
-        <l-map ref="map" :useGlobalLeaflet="false" v-model:zoom="zoom" :min-zoom="5" :max-zoom="20"
+        <l-map ref="map" :options="options" :useGlobalLeaflet="false" v-model:zoom="zoom" :min-zoom="5" :max-zoom="20"
             v-model:bounds="bounds" @ready="ready = true" v-model:center="center">
             <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" layer-type="base"
                 name="OpenStreetMap"></l-tile-layer>
