@@ -63,6 +63,7 @@ import InfoIcon from '@/Icons/InfoIcon.vue'
 import InnerCourtyardViewIcon from '@/Icons/InnerCourtyardViewIcon.vue'
 import InstagramIcon from '@/Icons/InstagramIcon.vue'
 import LandmarkIcon from '@/Icons/LandmarkIcon.vue'
+import LifeSaverIcon from '@/Icons/LifeSaverIcon.vue'
 import LightbulbIcon from '@/Icons/LightbulbIcon.vue'
 import LogoIcon from '@/Icons/LogoIcon.vue'
 import MapLocationIcon from '@/Icons/MapLocationIcon.vue'
@@ -189,6 +190,7 @@ export const icons = {
     InstagramIcon,
     ItalicIcon,
     LandmarkIcon,
+    LifeSaverIcon,
     LightbulbIcon,
     LogoIcon,
     MapLocationIcon,
