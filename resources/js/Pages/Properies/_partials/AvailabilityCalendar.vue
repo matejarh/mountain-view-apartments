@@ -6,6 +6,7 @@ import { useForm, usePage } from '@inertiajs/vue3';
 import { useHelperStore } from '@/stores/helpers';
 import InfoIcon from '@/Icons/InfoIcon.vue';
 import ShapedSection from '@/Components/_default/ShapedSection.vue';
+import TransparentButton from '@/Components/_default/TransparentButton.vue';
 
 const page = usePage()
 
@@ -44,7 +45,7 @@ const notAvailableMarkers = computed(() => {
         markers.push({
             date: new Date(date),
             type: 'line',
-            tooltip: [{ text: __('Booked') + '...', color: '#e52f1d' }],
+            tooltip: [{ text: __('Not Available') + '...', color: '#e52f1d' }],
             color: 'bg-blue-900 dark:bg-blue-600',
         })
     });
@@ -116,7 +117,7 @@ const book = () => {
                             :min-date="tomorrow" :max-date="yearFromNow" prevent-min-max-navigation
                             :markers="notAvailableMarkers" :disabled-dates="disabledDates" :highlight="highlightedDates"
                             :enable-time-picker="false" :locale="$page.props?.locale"
-                            :format="$page.props?.date_format_pattern" :dark="helpers.isDark" :six-weeks="false" inline
+                            :format="$page.props?.date_format_pattern" :dark="helpers.isDark" :six-weeks="true" inline
                             auto-apply :placeholder="__('Select arrival & departure dates...')">
 
                             <template #marker="{ marker, day, date }">
@@ -140,9 +141,8 @@ const book = () => {
 
                     </span>
                 </p>
-                <a @click="book" href="#"
-                    class="text-white bg-transparent hover:bg-primaty-700 border border-white focus:ring-4 focus:ring-white font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-transparent dark:hover:bg-primary-600 focus:outline-none dark:focus:ring-white">
-                    {{ __('Check availability') }}</a>
+                <TransparentButton @click="book">
+                    {{ __('Book selected dates') }}</TransparentButton>
             </div>
         </div>
     </ShapedSection>
@@ -151,11 +151,11 @@ const book = () => {
 <style scoped>
 .not-available-marker {
     position: absolute;
-    top: 0;
+    bottom: 0;
     right: 0;
-    height: 8px;
-    width: 8px;
-    border-radius: 100%;
+    height: 4px;
+    width: 100%;
+    /* border-radius: 100%; */
     background-color: #e52f1d;
 }
 
