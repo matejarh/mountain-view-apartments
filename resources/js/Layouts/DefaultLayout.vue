@@ -87,7 +87,7 @@ const fetchPropertiesListForDropdowns = async () => {
 
 const init = () => {
     client.getLocation()
-    //fetchPropertiesListForDropdowns()
+    fetchPropertiesListForDropdowns()
     /* document.addEventListener('visibilitychange', handleVisibilityChange); */
     if (!helpers.pageLoaded) {
         helpers.delay(600)
