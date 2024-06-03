@@ -21,7 +21,7 @@ watchEffect(async () => {
         <Transition enter-active-class="ease-out duration-300" enter-from-class="opacity-0 -translate-y-6  "
             enter-to-class="opacity-100 translate-y-0 " leave-active-class="ease-in duration-200"
             leave-from-class="opacity-100 translate-y-0 " leave-to-class="opacity-0 -translate-y-6  ">
-            <div v-if="show && message" class="fixed top-0 left-0 right-0  z-[10000]"
+            <div v-if="show && message" class="fixed top-0 left-0 right-0  z-[100000]"
                 :class="{ 'bg-amazon-500': style == 'success', 'bg-bittersweet-700': style == 'danger' }">
                 <div class="max-w-screen-xl mx-auto py-2 px-3 sm:px-6 lg:px-8">
                     <div class="flex items-center justify-between flex-wrap">

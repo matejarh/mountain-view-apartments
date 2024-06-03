@@ -37,7 +37,7 @@ Route::group(['middleware' => config('jetstream.middleware')], function () {
 
         Route::name('translations.')->prefix('translations')->namespace('translations')->group(function() {
             Route::get('/', [TranslationsController::class, 'index'])->name('index');
-            Route::post('/', [TranslationsController::class, 'update'])->name('update');
+            Route::put('/', [TranslationsController::class, 'update'])->name('update');
         });
 
         Route::name('properties.')->prefix('properties')->namespace('properties')->group(function() {
