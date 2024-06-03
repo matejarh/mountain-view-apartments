@@ -18,6 +18,8 @@ class DeletePrice implements DeletesPrices
     {
         $price->delete();
 
+        cache()->forget('unavailable_dates_' . $price->property_id);
+
         session()->flash('flash.banner', __('Price has been deleted.'));
     }
 }

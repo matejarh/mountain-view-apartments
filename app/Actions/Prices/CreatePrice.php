@@ -50,6 +50,8 @@ class CreatePrice implements CreatesPrices
             'prices' => $input['prices'],
         ]);
 
+        cache()->forget('unavailable_dates_' . $property->id);
+
         session()->flash('flash.banner', __('Price has been created.'));
     }
 }

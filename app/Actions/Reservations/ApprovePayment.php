@@ -17,6 +17,8 @@ class ApprovePayment implements ApprovesReservationsPayments
     {
         $reservation->approvePayment();
 
+        cache()->forget('unavailable_dates_' . $reservation->property_id);
+
         session()->flash('flash.banner', __('Payment for reservation has been approved.'));
     }
 }

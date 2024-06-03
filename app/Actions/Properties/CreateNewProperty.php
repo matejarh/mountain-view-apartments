@@ -110,6 +110,8 @@ class CreateNewProperty implements CreatesNewProperties
             'rules' => isset($input['rules']) ? $input['rules'] : null,
         ]);
 
+        cache()->forget('properties_list_for_dropdown');
+
         session()->flash('flash.banner', __('Property has been created.'));
     }
 }

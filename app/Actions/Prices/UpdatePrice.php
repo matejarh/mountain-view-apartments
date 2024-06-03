@@ -52,6 +52,8 @@ class UpdatePrice implements UpdatesPrices
             'prices' => $input['prices'],
         ])->save();
 
+        cache()->forget('unavailable_dates_' . $price->property_id);
+
         session()->flash('flash.banner', __('Price has been updated.'));
     }
 }

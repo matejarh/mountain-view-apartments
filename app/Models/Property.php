@@ -255,8 +255,10 @@ class Property extends Model
 
     public function getUnavailableDatesAttribute(): array
     {
+        return cache()->remember('unavailable_dates_' . $this->id, 60 * 60 * 24, function () {
+            return $this->getUnavailableAndUndefinedDates(now(), now()->addYears(7));
+        });
         // return $this->getUnavailableDates(now(), now()->addYears(7));
-        return $this->getUnavailableAndUndefinedDates(now(), now()->addYears(7));
     }
 
     /**
@@ -335,14 +337,15 @@ class Property extends Model
      * @param string $endDate The end date of the range (Y-m-d format).
      * @return array An array of dates with defined prices.
      */
-    public function getDatesWithDefinedPrices(string $startDate, string $endDate): Collection
+    public function getDatesWithDefinedPrices(string $startDate, string $endDate, $withPrices = true): Collection
     {
         // Parse start and end dates using Carbon
         $start = Carbon::parse($startDate);
         $end = Carbon::parse($endDate);
 
-        // Retrieve prices within the specified date range
+        // Retrieve prices where prices exist within the specified date range
         $prices = $this->prices()
+            ->whereJsonLength('prices', '>', 0)
             ->where(function (Builder $query) use ($start, $end) {
                 $query->whereBetween('from', [$start, $end])
                     ->orWhereBetween('to', [$start, $end])
@@ -369,7 +372,7 @@ class Property extends Model
         }
 
         // Return the unique dates with defined prices
-        return $definedDates->unique()/* ->values()->all() */;
+        return $definedDates->unique()/* ->values()->all() */ ;
     }
 
     /**
@@ -379,7 +382,7 @@ class Property extends Model
      * @param string $endDate The end date of the range (Y-m-d format).
      * @return array An array of dates without defined prices.
      */
-    public function getDatesWithoutDefinedPrices(string $startDate, string $endDate): Collection
+    public function getDatesWithoutDefinedPrices(string $startDate, string $endDate, $withPrices = true): Collection
     {
         // Parse start and end dates using Carbon
         $start = Carbon::parse($startDate);
@@ -413,7 +416,7 @@ class Property extends Model
     public function getUnavailableAndUndefinedDates(string $startDate, string $endDate): array
     {
         $unavailableDates = $this->getUnavailableDates($startDate, $endDate);
-        $definedPricesDates = $this->getDatesWithoutDefinedPrices($startDate, $endDate);
+        $definedPricesDates = $this->getDatesWithoutDefinedPrices($startDate, $endDate, false);
 
         $allDates = $unavailableDates->merge($definedPricesDates);
 
