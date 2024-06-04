@@ -31,7 +31,7 @@ class TranslationsController extends Controller
 
         return Inertia::render('Admin/Translations/Index', [
             'filters' => $request->only(['search']),
-            'keys_with_translation' => $filtered->paginate(20)->onEachSide(2)->withQueryString(),
+            'keys_with_translation' => $filtered->paginate(20, null, null, __('page'))->onEachSide(2)->withQueryString(),
             'status' => session('status'),
         ]);
     }
