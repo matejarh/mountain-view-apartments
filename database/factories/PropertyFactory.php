@@ -84,9 +84,6 @@ class PropertyFactory extends Factory
             'recomended' => [
                 ['title' => 'test title'],
             ],
-            'prices' => [
-
-            ],
             'rules' => $rules,
         ];
     }

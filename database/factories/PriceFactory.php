@@ -21,6 +21,9 @@ class PriceFactory extends Factory
             'property_id' => Property::factory()->create(),
             'from' => fake()->date(),
             'to' => fake()->date(),
+            'discounts' => [
+                ['days' => 6, 'discount' => '10%'],
+            ],
             'prices' => [
                 ['guests' => 1, 'price' => '65'],
                 ['guests' => 2, 'price' => '75'],

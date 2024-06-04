@@ -51,10 +51,6 @@ class UpdateProperty implements UpdatesProperties
             'recomended' => ['required', 'array', 'min:1'],
             'recomended.*' => ['required', 'array', 'distinct', 'min:1'],
             'recomended.*.title' => ['required', 'string', 'distinct', new SpamFree],
-            // 'prices' => ['required', 'array', 'min:1'],
-            // 'prices.*' => ['required', 'array', 'distinct', 'min:2', 'max:2'],
-            // 'prices.*.guests' => ['required', 'integer', 'min:1', 'max:30'],
-            // 'prices.*.price' => ['required', 'string', new SpamFree],
             'rules' => ['required', 'array', 'min:1'],
         ];
 
@@ -91,7 +87,6 @@ class UpdateProperty implements UpdatesProperties
             'coordinates' => isset($input['coordinates']) ? $input['coordinates'] : $property->coordinates,
             'bed_types' => isset($input['bed_types']) ? $input['bed_types'] : $property->bed_types,
             'recomended' => isset($input['recomended']) ? $input['recomended'] : $property->recomended,
-            // 'prices' => isset($input['prices']) ? $input['prices'] : $property->prices,
             'rules' => isset($input['rules']) ? $input['rules'] : $property->rules,
         ])->save();
 

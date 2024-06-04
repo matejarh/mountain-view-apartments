@@ -14,6 +14,7 @@ class Price extends Model
         'from' => 'datetime',
         'to' => 'datetime',
         'prices' => 'array',
+        'discounts' => 'array',
     ];
 
     /**

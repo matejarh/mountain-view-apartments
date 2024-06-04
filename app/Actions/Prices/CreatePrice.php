@@ -46,6 +46,7 @@ class CreatePrice implements CreatesPrices
         $property->prices()->forceCreate([
             'from' => $input['from'],
             'to' => $input['to'],
+            'discounts' => [],
             // 'guests' => $input['guests'],
             'prices' => $input['prices'],
         ]);

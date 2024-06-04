@@ -27,7 +27,6 @@ class CreateNewProperty implements CreatesNewProperties
             'is_entire_apartment' => __('Iis Entire Apartment'),
             'bed_types' => __('Bed Types'),
             'recomended' => __('Recomended'),
-            'prices' => __('Prices'),
             'rules' => __('Rules'),
         );
 
@@ -47,10 +46,6 @@ class CreateNewProperty implements CreatesNewProperties
             'recomended' => ['required', 'array', 'min:1'],
             'recomended.*' => ['required', 'array', 'distinct', 'min:1'],
             'recomended.*.title' => ['required', 'string', 'distinct', new SpamFree],
-            'prices' => ['required', 'array', 'min:1'],
-            'prices.*' => ['required', 'array', 'distinct', 'min:2', 'max:2'],
-            'prices.*.guests' => ['required', 'integer', 'min:1', 'max:30'],
-            'prices.*.price' => ['required', 'string', new SpamFree],
             'rules' => ['required', 'array', 'min:1'],
         ];
 
@@ -106,7 +101,6 @@ class CreateNewProperty implements CreatesNewProperties
             'coordinates' => isset($input['coordinates']) ? $input['coordinates'] : null,
             'bed_types' => isset($input['bed_types']) ? $input['bed_types'] : null,
             'recomended' => isset($input['recomended']) ? $input['recomended'] : null,
-            'prices' => isset($input['prices']) ? $input['prices'] : null,
             'rules' => isset($input['rules']) ? $input['rules'] : null,
         ]);
 
