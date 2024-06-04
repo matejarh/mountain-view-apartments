@@ -14,12 +14,21 @@ import ShapeTop from '@/Components/_default/ShapeTop.vue';
         <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
             <div class="mx-auto max-w-screen-md text-center mb-8 lg:mb-12">
                 <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-white">{{ __('Pricing') }}</h2>
-                <p class="mb-5 font-light  sm:text-xl text-white">Here at Flowbite we focus on markets where technology,
-                    innovation, and capital can unlock long-term value and drive economic growth.</p>
+                <p class="mb-1 font-light  sm:text-xl text-white">
+                    {{ __('Enjoy competitive rates and flexible pricing options tailored to your stay.') }}
+                </p>
+                <p class="mb-1 font-light  sm:text-xl text-white">
+                    <span class="font-semibold">{{ $page.props.property.title[$page.props.locale] }}</span>
+                    {{ __('offers affordable luxury for any duration.') }}
+                </p>
+                <p class="mb-5 font-light  sm:text-xl text-white">
+                    {{ __('Book now and experience comfort without compromise.') }}
+                </p>
             </div>
-            <div class="space-y-8 grid sm:grid-cols-2 lg:grid-cols-4 sm:gap-4 xl:gap-10 sm:space-y-0">
+            <div class="flex justify-center items-center">
 
-                <PricingCard v-for="price, key in $page.props?.property.prices " :rules="$page.props?.property.rules" :price="price" :key="key" />
+                <PricingCard v-for="price, key in $page.props?.current_prices.prices "  :current-prices="$page.props?.current_prices" :price="price" :key="key" />
+
 
             </div>
         </div>

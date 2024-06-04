@@ -63,6 +63,7 @@ class PropertiesController extends Controller
                 return $review->approved()->get();
             })->find($property->id),
             'latest_reviews' => $property->latestReviews(),
+            'current_prices' => $property->currentPrices(),
             // Determine the user's permissions for this property
             'can' => [
                 'view_property' => auth()->check() ? auth()->user()->can('view', $property) : false,
