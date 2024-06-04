@@ -8,11 +8,19 @@ use App\Notifications\Admin\ReservationReceived;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Notification;
+use Mockery;
+use Stripe\Stripe;
 use Tests\TestCase;
 
 class ReservationsTest extends TestCase
 {
     use RefreshDatabase;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        Stripe::setApiKey(env('STRIPE_SECRET'));
+    }
 
     public function test_authenticated_user_may_post_reservation_for_given_property(): void
     {
@@ -181,5 +189,12 @@ class ReservationsTest extends TestCase
             ->assertStatus(302)->assertSessionHasNoErrors()->assertSessionHas('status', 'reservation-payment-rejected');
 
         $this->assertNull($reservation->fresh()->payment_received_at);
+    }
+
+
+    protected function tearDown(): void
+    {
+        Mockery::close();
+        parent::tearDown();
     }
 }
