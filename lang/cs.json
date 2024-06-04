@@ -911,5 +911,15 @@
     "offers affordable luxury for any duration.": "nabízí cenově dostupný luxus pro jakoukoli dobu.",
     "Book now and experience comfort without compromise.": "Rezervujte nyní a zažijte komfort bez kompromisů.",
     "night": "0: noci| 1: noc | 2,*: noci",
-    "Min": "Min"
+    "Min": "Min",
+    "discount": "sleva",
+    "or more": "nebo více",
+    "Discounts": "Slevy",
+    "Number of days": "Počet dní",
+    "Enter number of days": "Zadejte počet dní",
+    "Discount": "Sleva",
+    "Enter discount in %": "Zadejte slevu v %",
+    "Add Discount": "Přidat slevu",
+    "Remove Discount": "Odstranit slevu"
+
 }

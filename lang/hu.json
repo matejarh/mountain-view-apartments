@@ -899,5 +899,14 @@
     "offers affordable luxury for any duration.": "megfizethető luxust kínál bármilyen időtartamra.",
     "Book now and experience comfort without compromise.": "Foglaljon most, és élvezze a kompromisszumok nélküli kényelmet.",
     "night": "0: éjszaka| 1: éjszaka | 2,*: éjszakák",
-    "Min": "Min"
+    "Min": "Min",
+    "discount": "kedvezmény",
+    "or more": "vagy több",
+    "Discounts": "Kedvezmények",
+    "Number of days": "Napok száma",
+    "Enter number of days": "Adja meg a napok számát",
+    "Discount": "Kedvezmény",
+    "Enter discount in %": "Adja meg a kedvezményt %-ban",
+    "Add Discount": "Kedvezmény hozzáadása",
+    "Remove Discount": "Kedvezmény eltávolítása"
 }

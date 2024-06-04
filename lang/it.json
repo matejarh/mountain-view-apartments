@@ -911,5 +911,14 @@
     "offers affordable luxury for any duration.": "offre lusso accessibile per qualsiasi durata.",
     "Book now and experience comfort without compromise.": "Prenota ora e vivi il comfort senza compromessi.",
     "night": "0: notti| 1: notte | 2,*: notti",
-    "Min": "Min"
+    "Min": "Min",
+    "discount": "sconto",
+    "or more": "o più",
+    "Discounts": "Sconti",
+    "Number of days": "Numero di giorni",
+    "Enter number of days": "Inserisci il numero di giorni",
+    "Discount": "Sconto",
+    "Enter discount in %": "Inserisci lo sconto in %",
+    "Add Discount": "Aggiungi sconto",
+    "Remove Discount": "Rimuovi sconto"
 }

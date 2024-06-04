@@ -908,7 +908,14 @@
     "offers affordable luxury for any duration.": "offers affordable luxury for any duration.",
     "Book now and experience comfort without compromise.": "Book now and experience comfort without compromise.",
     "night": "0: nights| 1: night | 2,*: nights",
-    "Min": "Min"
-
-
+    "Min": "Min",
+    "discount": "discount",
+    "or more": "or more",
+    "Discounts": "Discounts",
+    "Number of days": "Number of days",
+    "Enter number of days": "Enter number of days",
+    "Discount": "Discount",
+    "Enter discount in %": "Enter discount in %",
+    "Add Discount": "Add Discount",
+    "Remove Discount": "Remove Discount"
 }
