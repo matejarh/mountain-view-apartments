@@ -27,6 +27,8 @@ const pinia = createPinia()
 
 import.meta.glob([
     '../images/errors/**',
+    '../images/logolight.png',
+    '../images/logodark.png',
 ]);
 
 createInertiaApp({
