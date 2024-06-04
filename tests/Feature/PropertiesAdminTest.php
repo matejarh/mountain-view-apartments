@@ -88,12 +88,6 @@ class PropertiesAdminTest extends TestCase
             'recomended' => [
                 ['title' =>'for 4 adults'],
             ],
-            'prices' => [
-                ['guests' => 4, 'price' => "945"],
-                ['guests' => 3, 'price' => "883"],
-                ['guests' => 2, 'price' => "846"],
-                ['guests' => 1, 'price' => "810"],
-            ],
             'rules' => [
                 'en' => [
                     ['name' => 'Check In', 'title' => 'From 4:00 PM to 12:00 AM', 'description' => 'You need to let the property know what time you\'ll be arriving in advance.', 'icon' => 'CheckInIcon'],

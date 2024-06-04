@@ -24,6 +24,9 @@ class PricesTest extends TestCase
             'range' => [\Carbon\Carbon::parseFromLocale('11.07.2024', 'sl'), \Carbon\Carbon::parseFromLocale('25.08.2024', 'sl')],
             'min_days' => 4,
             'max_days' => 10,
+            'discounts' => [
+                ['days' => 6, 'discount' => '10%'],
+            ],
             'prices' => [
                 ['guests' => 1, 'price' => '65'],
                 ['guests' => 2, 'price' => '75'],
@@ -65,6 +68,9 @@ class PricesTest extends TestCase
             'range' => [\Carbon\Carbon::parseFromLocale('11.07.2024', 'sl'), \Carbon\Carbon::parseFromLocale('25.08.2024', 'sl')],
             'min_days' => 3,
             'max_days' => 7,
+            'discounts' => [
+                ['days' => 7, 'discount' => '20%'],
+            ],
             'prices' => [
                 ['guests' => 1, 'price' => '65'],
                 ['guests' => 2, 'price' => '75.123'],
@@ -82,6 +88,8 @@ class PricesTest extends TestCase
         $this->assertEquals($price->fresh()->prices[1]['price'], '75.123');
         $this->assertEquals($price->fresh()->min_days, 3);
         $this->assertEquals($price->fresh()->max_days, 7);
+        $this->assertEquals($price->fresh()->discounts[0]['days'], 7);
+        $this->assertEquals($price->fresh()->discounts[0]['discount'], '20%');
     }
 
     public function test_price_date_ranges_may_not_overlap(): void
