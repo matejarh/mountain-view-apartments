@@ -49,6 +49,7 @@ import FacebookIcon from '@/Icons/FacebookIcon.vue'
 import FamilyRoomsIcon from '@/Icons/FamilyRoomsIcon.vue'
 import FbMessengerIcon from '@/Icons/FbMessengerIcon.vue'
 import FlatScreenTvIcon from '@/Icons/FlatScreenTvIcon.vue'
+import FloppyDiscIcon from '@/Icons/FloppyDiscIcon.vue'
 import FreeParkingIcon from '@/Icons/FreeParkingIcon.vue'
 import FreeWiFiIcon from '@/Icons/FreeWiFiIcon.vue'
 import FullScreenIcon from '@/Icons/FullScreenIcon.vue'
@@ -112,6 +113,7 @@ import TerraceIcon from '@/Icons/TerraceIcon.vue'
 import TrashBinIcon from '@/Icons/TrashBinIcon.vue'
 import TumblrIcon from '@/Icons/TumblrIcon.vue'
 import TwitterIcon from '@/Icons/TwitterIcon.vue'
+import UndoIcon from '@/Icons/UndoIcon.vue'
 import UploadIcon from '@/Icons/UploadIcon.vue'
 import UserEditIcon from '@/Icons/UserEditIcon.vue'
 import UserIcon from '@/Icons/UserIcon.vue'
@@ -173,6 +175,7 @@ export const icons = {
     FamilyRoomsIcon,
     FbMessengerIcon,
     FlatScreenTvIcon,
+    FloppyDiscIcon,
     FreeParkingIcon,
     FreeWiFiIcon,
     FullScreenIcon,
@@ -240,6 +243,7 @@ export const icons = {
     TrashBinIcon,
     TumblrIcon,
     TwitterIcon,
+    UndoIcon,
     UploadIcon,
     UserEditIcon,
     UserIcon,
