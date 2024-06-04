@@ -58,7 +58,7 @@ Route::group(['prefix' => '{lang}', 'middleware' => 'web'], function () {
 
 
 /**
- * Authentucated user routes
+ * Authenticated user routes
  */
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])->group(function () {
     Route::name('dashboard.')->prefix('dashboard')->namespace('dashboard')->group(function () {
