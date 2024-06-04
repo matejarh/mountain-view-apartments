@@ -5,7 +5,7 @@ import { ref } from 'vue'
 
 export const useTranslationsStore = defineStore('translations', () => {
     const translations = ref([])
-
+    const missingKeys = ref({})
     const languages = ref([
         { name: 'English', code: 'en', flag_url: new URL('/resources/images/flags/1x1/gb.svg', import.meta.url) },
         { name: 'Slovensko', code: 'sl', flag_url: new URL('/resources/images/flags/1x1/si.svg', import.meta.url) },
@@ -14,12 +14,16 @@ export const useTranslationsStore = defineStore('translations', () => {
         { name: 'Italiano', code: 'it', flag_url: new URL('/resources/images/flags/1x1/it.svg', import.meta.url) },
         { name: 'Magyar', code: 'hu', flag_url: new URL('/resources/images/flags/1x1/hu.svg', import.meta.url) },
         { name: 'Français', code: 'fr', flag_url: new URL('/resources/images/flags/1x1/fr.svg', import.meta.url) },
+        { name: 'Español', code: 'es', flag_url: new URL('/resources/images/flags/1x1/es.svg', import.meta.url) },
     ])
 
     const updateTranslations = (newTranslations) => {
         translations.value = newTranslations
     }
+    const addMissingKey = (newKey) => {
+        missingKeys.value[newKey] = newKey
+    }
 
 
-    return { translations, updateTranslations, languages }
+    return { translations, updateTranslations, languages, missingKeys, addMissingKey }
 })
