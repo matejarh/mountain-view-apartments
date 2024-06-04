@@ -242,8 +242,16 @@ class Property extends Model
     public function seoDescription(): array
     {
         $striped = [];
+        $defaultLocale = config('app.fallback_locale');
         foreach (config('app.supported_locales') as $key => $locale) {
-            $striped[$locale] = strip_tags($this->description->$locale);
+            // Check if the description for the current locale exists
+            if (isset($this->description->$locale)) {
+                // If it exists, use it
+                $striped[$locale] = strip_tags($this->description->$locale);
+            } else {
+                // If it doesn't exist, use the English description as fallback
+                $striped[$locale] = strip_tags($this->description->$defaultLocale);
+            }
         }
         return $striped;
     }
