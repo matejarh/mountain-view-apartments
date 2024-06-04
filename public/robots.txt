@@ -1,2 +1,7 @@
 User-agent: *
+Disallow: /*admin
+Disallow: /*login
+Disallow: /*register
+
+User-agent: OpenAI-User-Agent
 Disallow:
