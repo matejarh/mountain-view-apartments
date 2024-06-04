@@ -28,6 +28,7 @@ class Reservation extends Model
         'localized_arrival',
         'localized_departure',
         'excerpt',
+        'status',
     ];
 
     protected static function getActivitiesToRecord(): array
@@ -72,7 +73,6 @@ class Reservation extends Model
         return \Carbon\Carbon::parse($this->departure)->locale(app()->currentLocale())->isoFormat('LLLL');
     }
 
-
     public function excerpt(): string
     {
         return str(strip_tags($this->message))->limit(15);
@@ -81,6 +81,16 @@ class Reservation extends Model
     public function getExcerptAttribute(): string
     {
         return $this->excerpt();
+    }
+
+    public function status() :string
+    {
+        return (!!$this->confirmed_at && !!$this->payment_received_at) ? 'success' : 'pending';
+    }
+
+    public function getStatusAttribute() :string
+    {
+        return $this->status();
     }
 
 
@@ -120,7 +130,6 @@ class Reservation extends Model
     {
         $this->confirmed_at = now();
         $this->save();
-
     }
 
     /**
@@ -130,8 +139,6 @@ class Reservation extends Model
     {
         $this->confirmed_at = null;
         $this->save();
-
-
     }
 
     /**

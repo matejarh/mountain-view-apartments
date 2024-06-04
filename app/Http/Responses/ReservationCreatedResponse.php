@@ -2,11 +2,19 @@
 
 namespace App\Http\Responses;
 
+use App\Models\Property;
 use Illuminate\Http\JsonResponse;
 use App\Contracts\ReservationCreateResponse as ReservationCreateResponseContract;
 
 class ReservationCreatedResponse implements ReservationCreateResponseContract
 {
+    public $input;
+    public $property;
+
+    public function __construct(array $input, Property $property) {
+        $this->input = $input;
+        $this->property = $property;
+    }
     /**
      * Create an HTTP response that represents the object.
      *
@@ -17,6 +25,6 @@ class ReservationCreatedResponse implements ReservationCreateResponseContract
     {
         return $request->wantsJson()
             ? new JsonResponse('', 201)
-            : back()->with('status', 'reservation-created');
+            : back()->with('status', 'reservation-created')->with('input', $this->input);
     }
 }

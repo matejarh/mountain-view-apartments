@@ -7,6 +7,7 @@ use App\Models\Reservation;
 use App\Notifications\Admin\ReservationReceived;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Notification;
 use Mockery;
 use Stripe\Stripe;
@@ -19,6 +20,7 @@ class ReservationsTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+        //Event::fake();
         Stripe::setApiKey(env('STRIPE_SECRET'));
     }
 
@@ -37,9 +39,10 @@ class ReservationsTest extends TestCase
             ],
             'message' => 'A message with reservation'
         ];
-        $response = $this->actingAs($this->user)->post(route('properties.reservations.store', $property), $reservation);
-
-        $response->assertStatus(302)->assertSessionHas('status','reservation-created');
+        $response = $this->actingAs($this->user)->post(route('properties.reservations.store', $property), $reservation)
+            ->assertStatus(302)
+            ->assertSessionHas('status', 'reservation-created')
+            ->assertSessionHas('input', $reservation);
 
         Notification::assertSentTo([$this->admin], ReservationReceived::class);
     }
@@ -61,7 +64,7 @@ class ReservationsTest extends TestCase
         ];
         $response = $this->actingAs($this->user)->post(route('properties.reservations.store', $property), $reservation1);
 
-        $response->assertStatus(302)->assertSessionHas('status','reservation-created');
+        $response->assertStatus(302)->assertSessionHas('status', 'reservation-created');
 
         Notification::assertSentTo([$this->admin], ReservationReceived::class);
 
@@ -82,7 +85,7 @@ class ReservationsTest extends TestCase
 
         $response = $this->actingAs($this->user)->post(route('properties.reservations.store', $property), $reservation2);
 
-        $response->assertStatus(302)->assertSessionHasErrors('date_range','The selected date range is not available.');
+        $response->assertStatus(302)->assertSessionHasErrors('date_range', 'The selected date range is not available.');
 
         $reservation3 = [
             'arrival' => now()->addWeek()->addDays(3)->format('Y-m-d'),
@@ -97,7 +100,7 @@ class ReservationsTest extends TestCase
 
         $response = $this->actingAs($this->user)->post(route('properties.reservations.store', $property), $reservation3);
 
-        $response->assertStatus(302)->assertSessionDoesntHaveErrors()->assertSessionHas('status','reservation-created');
+        $response->assertStatus(302)->assertSessionDoesntHaveErrors()->assertSessionHas('status', 'reservation-created');
 
         Notification::assertSentTo([$this->admin], ReservationReceived::class);
 
@@ -105,7 +108,7 @@ class ReservationsTest extends TestCase
     }
 
 
-    public function test_admin_may_update_given_reservation() :void
+    public function test_admin_may_update_given_reservation(): void
     {
         $reservation = Reservation::factory()->create();
 
@@ -115,23 +118,23 @@ class ReservationsTest extends TestCase
 
         $response = $this->actingAs($this->admin)->put(route('admin.reservations.update', $reservation), $updatedReservation);
 
-        $response->assertStatus(302)->assertSessionDoesntHaveErrors()->assertSessionHas('status','reservation-updated');
+        $response->assertStatus(302)->assertSessionDoesntHaveErrors()->assertSessionHas('status', 'reservation-updated');
 
     }
 
-    public function test_admin_may_delete_given_reservation() :void
+    public function test_admin_may_delete_given_reservation(): void
     {
         $reservation = Reservation::factory()->create();
 
         $response = $this->actingAs($this->admin)->delete(route('admin.reservations.destroy', $reservation));
 
-        $response->assertStatus(302)->assertSessionDoesntHaveErrors()->assertSessionHas('status','reservation-deleted');
+        $response->assertStatus(302)->assertSessionDoesntHaveErrors()->assertSessionHas('status', 'reservation-deleted');
 
         $this->assertDatabaseEmpty(Reservation::class);
 
     }
 
-    public function test_user_or_guest_may_not_update_given_reservation() :void
+    public function test_user_or_guest_may_not_update_given_reservation(): void
     {
         $reservation = Reservation::factory()->create();
 
@@ -147,7 +150,7 @@ class ReservationsTest extends TestCase
         $response->assertStatus(403);
     }
 
-    public function test_admin_may_confirm_given_reservation() :void
+    public function test_admin_may_confirm_given_reservation(): void
     {
         $reservation = Reservation::factory()->create();
 
@@ -156,7 +159,7 @@ class ReservationsTest extends TestCase
         $this->assertNotNull($reservation->fresh()->confirmed_at);
     }
 
-    public function test_admin_may_reject_given_reservation() :void
+    public function test_admin_may_reject_given_reservation(): void
     {
         $reservation = Reservation::factory()->create();
         $reservation->confirm();
@@ -167,7 +170,7 @@ class ReservationsTest extends TestCase
         $this->assertNull($reservation->fresh()->confirmed_at);
     }
 
-    public function test_admin_may_approve_payment_for_given_reservation() :void
+    public function test_admin_may_approve_payment_for_given_reservation(): void
     {
         $reservation = Reservation::factory()->create();
 
@@ -177,7 +180,7 @@ class ReservationsTest extends TestCase
         $this->assertNotNull($reservation->fresh()->payment_received_at);
     }
 
-    public function test_admin_may_reject_payment_for_given_reservation() :void
+    public function test_admin_may_reject_payment_for_given_reservation(): void
     {
         $reservation = Reservation::factory()->create();
 

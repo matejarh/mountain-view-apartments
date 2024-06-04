@@ -76,6 +76,7 @@ class HandleInertiaRequests extends Middleware
             "hu" => "yyyy. MM. dd.",
             "it" => "dd/MM/yyyy",
             "sl" => "d.M.yyyy",
+            "es" => "dd/MM/yyyy"
         ];
         return $formats[session('language') ?: app()->currentLocale()];
     }

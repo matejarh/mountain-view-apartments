@@ -60,13 +60,8 @@ class CreateReservation implements CreatesReservations
             'departure.after' => __('Departure date must be after the arrival date.'),
         ]);
 
-        //dd($validator);
 
         $validator->setAttributeNames($attributeNames)->validate();
-
-
-            // $input['arrival'] = \Carbon\Carbon::parse($input['arrival'])->format('Y-m-d');
-
 
         $reservation = $property->reservations()->forceCreate([
             'user_id' => auth()->id(),
@@ -75,8 +70,6 @@ class CreateReservation implements CreatesReservations
             'guests' => $input['guests'],
             'message' => $input['message'],
         ]);
-
-        //dd($inquiry);
 
         Notification::send(User::adminsMailingList(), new ReservationReceived($reservation->fresh()));
 

@@ -31,7 +31,7 @@ class PropertiesController extends Controller
         // Gate::authorize('viewAny', Property::class);
 
         return Inertia::render('Properies/Index', [
-            'properties' => Property::with('galleries')->with('reviews', function($review) {
+            'properties' => Property::with('galleries')->with('reviews', function ($review) {
                 return $review->approved()->get();
             })->latest()->filter($filters)->paginate(10, ['*'], __('page'))->onEachSide(2)->withQueryString(),
             'filters' => $request->only(['search']),
@@ -59,7 +59,7 @@ class PropertiesController extends Controller
         // Render the property details page using Inertia.js
         return Inertia::render('Properies/Show', [
             // Pass the property details along with its galleries and facilities
-            'property' => $property->with('galleries', 'facilities')->with('reviews', function($review) {
+            'property' => $property->with('galleries', 'facilities')->with('reviews', function ($review) {
                 return $review->approved()->get();
             })->find($property->id),
             'latest_reviews' => $property->latestReviews(),
@@ -73,7 +73,7 @@ class PropertiesController extends Controller
         ]);
     }
 
-    public function like(Request $request, Property $property, LikesProperties $liker ) : PropertyLikeResponse
+    public function like(Request $request, Property $property, LikesProperties $liker): PropertyLikeResponse
     {
         Gate::authorize('create', Like::class);
 
@@ -82,7 +82,7 @@ class PropertiesController extends Controller
         return app(PropertyLikeResponse::class);
     }
 
-    public function review(Request $request, Property $property, ReviewsProperties $reviewer ) : PropertyReviewResponse
+    public function review(Request $request, Property $property, ReviewsProperties $reviewer): PropertyReviewResponse
     {
         Gate::authorize('create', Review::class);
 
@@ -91,7 +91,7 @@ class PropertiesController extends Controller
         return app(PropertyReviewResponse::class, ['property' => $property]);
     }
 
-    public function fetch(Request $request, Property $property ) :JsonResponse
+    public function fetch(Request $request, Property $property): JsonResponse
     {
         return response()->json($property->fetchListForDropdowns());
     }

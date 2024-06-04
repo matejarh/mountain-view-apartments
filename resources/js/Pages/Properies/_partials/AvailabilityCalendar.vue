@@ -71,8 +71,8 @@ const yearFromNow = computed(() => {
 
 const options = ref({
     range: {
-        minRange: datepickerRange.attributes?.min,
-        maxRange: datepickerRange.attributes?.max,
+        minRange: page.props.current_prices.min_days,
+        maxRange: page.props.current_prices.max_days,
         partialRange: false,
         noDisabledRange: true,
     },

@@ -43,6 +43,9 @@ class ReservationsController extends Controller
 
         $creator->create($property, $request->all());
 
-        return app(ReservationCreateResponse::class);
+        return app(ReservationCreateResponse::class, [
+            'input' => $request->all(),
+            'property' => $property,
+        ]);
     }
 }
