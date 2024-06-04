@@ -4,7 +4,8 @@ import { icons } from '@/icons'
 
 <template>
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div v-for="item, key in $page.props.property.prices.sort((a, b) => new Date(b.from) - new Date(a.from))" :key="key"
+        <div v-for="item, key in $page.props.property.prices.sort((a, b) => new Date(b.from) - new Date(a.from))"
+            :key="key"
             class="max-w-full p-4 bg-white border border-gray-200 overflow-hidden rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700  transition duration-150 ease-out">
             <div class="flex justify-between items-center">
                 <h5 class="text-md font-semibold">
@@ -15,7 +16,27 @@ import { icons } from '@/icons'
 
             </div>
 
-            <ul >
+            <div class="flex items-center justify-between mt-1">
+                <p>{{ __('Min Nights') }} {{ item.min_days }}</p>
+                <p>{{ __('Max Nights') }} {{ item.max_days }}</p>
+
+            </div>
+
+            <TransitionGroup name="list" tag="ul" class="relative mt-2" key="discountsGroup"
+                v-if="item.discounts && item.discounts.length > 0">
+                <li v-for="discount, key in item.discounts" :key="discount" class="flex justify-between items-center">
+                    <span class="flex items-center text-sm">
+                            {{ discount.discount }}
+                            {{ __('discount') }}
+                            {{ __('for') }}
+                            {{ discount.days }}
+                            {{ __('night', discount.days) }}
+                            {{ __('or more') }}
+                    </span>
+                </li>
+            </TransitionGroup>
+
+            <ul class="mt-2">
                 <li v-for="price, key in item.prices" :key="key" class="flex justify-between items-center">
                     <span class="flex items-center">
                         <div class="flex">

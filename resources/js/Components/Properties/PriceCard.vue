@@ -59,6 +59,19 @@ const destroy = () => {
 
         </div>
 
+        <TransitionGroup name="list" tag="ul" class="relative mt-2" key="discountsGroup"
+            v-if="itemProxy.discounts && itemProxy.discounts.length > 0">
+            <li v-for="discount, key in itemProxy.discounts" :key="discount" class="flex justify-between items-center">
+                <span class="flex items-center text-sm">
+                        {{ discount.discount }}
+                        {{ __('discount') }}
+                        {{ __('for') }}
+                        {{ discount.days }}
+                        {{ __('night', discount.days) }}
+                        {{ __('or more') }}
+                </span>
+            </li>
+        </TransitionGroup>
         <TransitionGroup name="list" tag="ul" class="relative mt-2" key="pricesGroup">
             <li v-for="price, key in itemProxy.prices" :key="price" class="flex justify-between items-center">
                 <span class="flex items-center">

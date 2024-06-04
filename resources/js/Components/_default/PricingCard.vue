@@ -25,7 +25,16 @@ defineProps({
         </div>
 
         <p class="text-sm text-gray-500">{{__('Min')}} {{ currentPrices.min_days }} {{__('night', currentPrices.min_days)}}</p>
-        <p class="text-sm mt-2 text-gray-500" v-if="currentPrices.discount && currentPrices.discount.length > 0">{{ ('10% discount for 6 nights or more') }}</p>
+        <div class="text-sm mt-2 text-gray-500" v-if="currentPrices.discounts && currentPrices.discounts.length > 0">
+            <p v-for="discount,key in currentPrices.discounts" :key="key">
+                {{ discount.discount }}
+                {{ __('discount') }}
+                {{ __('for') }}
+                {{ discount.days }}
+                {{ __('night', discount.days) }}
+                {{ __('or more') }}
+            </p>
+        </div>
 
         <a href="#"
         class="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:ring-primary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:text-white  dark:focus:ring-primary-900">{{

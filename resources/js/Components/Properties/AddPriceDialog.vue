@@ -23,7 +23,8 @@ const form = useForm({
     // range: props.price?.range,
     min_days: props.price?.min_days,
     max_days: props.price?.max_days,
-    prices: props.price?.prices
+    prices: props.price?.prices,
+    discounts: props.price?.discounts ? props.price?.discounts : [],
 })
 
 const initialized = ref(false)
@@ -40,12 +41,17 @@ const updateForm = () => {
     form.min_days = props.price?.min_days
     form.max_days = props.price?.max_days
     form.prices = props.price?.prices
+    form.discounts = props.price?.discounts ? props.price?.discounts : []
 }
 
 
 const newPrice = ref({
     guests: 1,
-    price: '0.00'
+    price: '0.00',
+})
+const newDiscount = ref({
+    days: 6,
+    discount: '10%',
 })
 
 
@@ -103,7 +109,7 @@ onMounted(() => {
             </div>
 
             <div class="p-4 bg-gray-50 dark:bg-gray-900 rounded-lg mt-4">
-
+                <h5 class="text-lg font-bold ">{{ __('Prices') }}</h5>
                 <div class="min-h-12">
                     <TransitionGroup name="list" tag="ul" class="relative" key="pricesGroup">
                         <li v-for="price, key in form.prices" :key="key" class="flex justify-between items-center">
@@ -128,17 +134,65 @@ onMounted(() => {
                         <InputLabel for="new_guests" :value="__('Number of guests')" />
                         <TextInput :id="`new_guests`" v-model="newPrice.guests" type="number" min="1" max="10" step="1"
                             class="mt-1 block w-full" required :placeholder="__('Enter number of guests') + '...'" />
-                        <InputError :message="form.errors.guests" />
+                        <InputError :message="form.errors.prices" />
                     </div>
                     <div class="w-full">
                         <InputLabel for="new_price" :value="__('Price')" />
                         <TextInput :id="`new_price`" v-model="newPrice.price" type="text" class="mt-1 block w-full" required
                             :placeholder="__('Enter price') + '...'" />
-                        <InputError :message="form.errors.price" />
+                        <InputError :message="form.errors.prices" />
                     </div>
                     <div>
                         <Tooltip :text="__('Add Price')">
                             <button class="w-full text-center mt-8" @click="handleAddItem(form.prices, newPrice)">
+                                <icons.CirclePlusIcon class="text-amazon-600 dark:text-amazon-700 mx-auto" />
+                            </button>
+                        </Tooltip>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-4 bg-gray-50 dark:bg-gray-900 rounded-lg mt-4">
+                <h5 class="text-lg font-bold ">{{ __('Discounts') }}</h5>
+                <div class="min-h-6">
+                    <TransitionGroup name="list" tag="ul" class="relative" key="discountsGroup">
+                        <li v-for="discount, key in form.discounts" :key="key" class="flex justify-between items-center">
+                            <span>
+                                {{ discount.discount }}
+                                {{ __('discount') }}
+                                {{ __('for') }}
+                                {{ discount.days }}
+                                {{ __('night', discount.days) }}
+                                {{ __('or more') }}
+                            </span>
+                            <div class="">
+                                <Tooltip :text="__('Remove Discount')">
+                                    <button @click="removeItem(form.discounts, discount)">
+                                        <icons.TrashBinIcon class="text-bittersweet-700 dark:text-bittersweet-500" />
+                                    </button>
+                                </Tooltip>
+                            </div>
+
+                        </li>
+                    </TransitionGroup>
+                </div>
+                <div class="flex items-center space-x-2">
+
+                    <div class="w-full">
+                        <InputLabel for="new_discount_days" :value="__('Number of days')" />
+                        <TextInput :id="`new_discount_days`" v-model="newDiscount.days" type="number" min="1" max="30" step="1"
+                            class="mt-1 block w-full" required :placeholder="__('Enter number of days') + '...'" />
+                        <InputError :message="form.errors.discounts" />
+                    </div>
+                    <div class="w-full">
+                        <InputLabel for="new_discount_discount" :value="__('Discount')" />
+                        <TextInput :id="`new_discount_discount`" v-model="newDiscount.discount" type="text" class="mt-1 block w-full" required
+                            :placeholder="__('Enter discount in %') + '...'" />
+                        <InputError :message="form.errors.discounts" />
+                    </div>
+                    <div>
+                        <Tooltip :text="__('Add Discount')">
+                            <button class="w-full text-center mt-8" @click="handleAddItem(form.discounts, newDiscount)">
                                 <icons.CirclePlusIcon class="text-amazon-600 dark:text-amazon-700 mx-auto" />
                             </button>
                         </Tooltip>
