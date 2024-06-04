@@ -886,5 +886,13 @@
     "Your name": "A te neved",
     "Your password has been changed.": "A jelszó megváltozott.",
     "Youtube Play Button Icon": "Youtube lejátszási gomb ikon",
-    "Not Available": "Nem elérhető"
+    "Not Available": "Nem elérhető",
+    "Ensure that these requirements are met": "Győződjön meg róla, hogy ezek a követelmények teljesülnek",
+    "Undo Changes": "Változások visszavonása",
+    "Min Nights": "Min éjszakák",
+    "Max Nights": "Max éjszakák",
+    "Enter minimum number of nights": "Adja meg a minimum éjszakák számát",
+    "Enter maximum number of nights": "Adja meg a maximum éjszakák számát",
+    "Add Price": "Ár hozzáadása",
+    "Remove Price": "Ár eltávolítása"
 }

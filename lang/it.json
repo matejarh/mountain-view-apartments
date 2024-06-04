@@ -898,5 +898,13 @@
     "Your name": "Il tuo nome",
     "Your password has been changed.": "La tua password è stata cambiata.",
     "Youtube Play Button Icon": "Icona pulsante play YouTube",
-    "Not Available": "Non disponibile"
+    "Not Available": "Non disponibile",
+    "Ensure that these requirements are met": "Assicurati che questi requisiti siano soddisfatti",
+    "Undo Changes": "Annulla modifiche",
+    "Min Nights": "Min notti",
+    "Max Nights": "Max notti",
+    "Enter minimum number of nights": "Inserisci il numero minimo di notti",
+    "Enter maximum number of nights": "Inserisci il numero massimo di notti",
+    "Add Price": "Aggiungi prezzo",
+    "Remove Price": "Rimuovi prezzo"
 }

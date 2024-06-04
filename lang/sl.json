@@ -898,5 +898,13 @@
     "Your name": "Tvoje ime",
     "Your password has been changed.": "Vaše geslo je bilo spremenjeno.",
     "Youtube Play Button Icon": "Ikona predvajalnega gumba Youtube",
-    "Not Available": "Ni na voljo"
+    "Not Available": "Ni na voljo",
+    "Ensure that these requirements are met": "Zagotovite, da so te zahteve izpolnjene",
+    "Undo Changes": "Razveljavi spremembe",
+    "Min Nights": "Min nočitev",
+    "Max Nights": "Max nočitev",
+    "Enter minimum number of nights": "Vnesite najmanjše število nočitev",
+    "Enter maximum number of nights": "Vnesite največje število nočitev",
+    "Add Price": "Dodaj ceno",
+    "Remove Price": "Odstrani ceno"
 }

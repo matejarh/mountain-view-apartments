@@ -898,5 +898,13 @@
     "Your name": "Vaše jméno",
     "Your password has been changed.": "Vaše heslo bylo změněno.",
     "Youtube Play Button Icon": "Ikona přehrávání na YouTube",
-    "Not Available": "Není k dispozici"
+    "Not Available": "Není k dispozici",
+    "Ensure that these requirements are met": "Ujistěte se, že jsou tyto požadavky splněny",
+    "Undo Changes": "Vrátit změny",
+    "Min Nights": "Min nocí",
+    "Max Nights": "Max nocí",
+    "Enter minimum number of nights": "Zadejte minimální počet nocí",
+    "Enter maximum number of nights": "Zadejte maximální počet nocí",
+    "Add Price": "Přidat cenu",
+    "Remove Price": "Odstranit cenu"
 }
