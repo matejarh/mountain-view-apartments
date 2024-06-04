@@ -36,6 +36,9 @@ class UpdateTranslations implements UpdatesTranslations
                 // Update or add the translation
                 $existingTranslations[$key] = $translation;
 
+                // Sort translations by key
+                ksort($existingTranslations);
+
                 // Save the updated translations
                 File::put($path, json_encode($existingTranslations, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
             }
