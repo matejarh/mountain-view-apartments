@@ -18,6 +18,7 @@ class InvalidKeywords
             }
         }
     }
+
     protected $keywords = [
         'yahoo customer support',
         'spam content',
@@ -128,7 +129,6 @@ class InvalidKeywords
         'Dig up dirt on friends',
         'Direct email',
         'Direct marketing',
-        'Discount',
         'Do it today',
         'Don\'t delete',
         'Don\'t hesitate',

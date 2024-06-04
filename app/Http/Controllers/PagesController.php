@@ -81,4 +81,14 @@ class PagesController extends Controller
             'canRegister' => Route::has('register'),
         ]);
     }
+
+    public function offers(Request $request) :Response
+    {
+        return Inertia::render('Page', [
+            'page' => Page::with('galleries')->where('name', 'Offers')->first(),
+            // 'properties' => Property::with('galleries')->where('address', 'LIKE', '%hermagor%')->get(),
+            'canLogin' => Route::has('login'),
+            'canRegister' => Route::has('register'),
+        ]);
+    }
 }
