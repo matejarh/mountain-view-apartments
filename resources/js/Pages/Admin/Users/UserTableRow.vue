@@ -1,6 +1,6 @@
 <script setup>
 import TableRow from '@/Components/TableRow.vue';
-import Tooltip from '@/Components/Tooltip.vue';
+import Tooltip from '@/Components/_default/Tooltip.vue';
 import UserEditIcon from '@/Icons/UserEditIcon.vue';
 import { hasFlag } from 'country-flag-icons';
 import { getCode, getName } from 'country-list';

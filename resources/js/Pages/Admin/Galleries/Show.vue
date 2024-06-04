@@ -4,7 +4,7 @@ import { router, useForm } from '@inertiajs/vue3';
 import ActionSection from '@/Components/ActionSection.vue';
 import FullLayout from '@/Layouts/FullLayout.vue';
 import ImageCard from '@/Components/Galleries/ImageCard.vue';
-import Tooltip from '@/Components/Tooltip.vue';
+import Tooltip from '@/Components/_default/Tooltip.vue';
 import AttachImagesDialog from './_partials/AttachImagesDialog.vue';
 import UploadPhotoDialog from './_partials/UploadPhotoDialog.vue';
 import TextInput from '@/Components/TextInput.vue';

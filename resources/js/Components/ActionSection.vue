@@ -1,6 +1,6 @@
 <script setup>
 import { icons } from '@/icons';
-import Tooltip from './Tooltip.vue';
+import Tooltip from '@/Components/_default/Tooltip.vue';
 
 defineProps({
     fullwidth: {

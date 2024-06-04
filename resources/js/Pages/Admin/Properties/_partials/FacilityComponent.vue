@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import { useForm, usePage } from '@inertiajs/vue3';
 import { icons } from '@/icons';
-import Tooltip from '@/Components/Tooltip.vue';
+import Tooltip from '@/Components/_default/Tooltip.vue';
 import ConfirmationModal from '@/Components/ConfirmationModal.vue';
 
 const props = defineProps({

@@ -1,7 +1,7 @@
 <script setup>
 import { computed } from 'vue';
 import NavItems from '@/Components/SideNavigation/NavItems.vue';
-import Tooltip from '@/Components/Tooltip.vue';
+import Tooltip from '@/Components/_default/Tooltip.vue';
 import BottomItem from '@/Components/SideNavigation/BottomItem.vue';
 import LangSwitch from '@/Components/SideNavigation/LangSwitch.vue';
 import { icons } from '@/icons';

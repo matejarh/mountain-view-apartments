@@ -1,7 +1,7 @@
 <script setup>
 import Checkbox from '@/Components/Checkbox.vue';
 import TableRow from '@/Components/TableRow.vue';
-import Tooltip from '@/Components/Tooltip.vue';
+import Tooltip from '@/Components/_default/Tooltip.vue';
 import { icons } from '@/icons';
 import { ref } from 'vue';
 

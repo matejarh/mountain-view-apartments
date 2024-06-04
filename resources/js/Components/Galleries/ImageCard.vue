@@ -98,7 +98,7 @@ const destroy = () => {
 
             <figcaption id="moveup" v-if="image.pivot && image.pivot.order < imagesCount && itemKey + 1 < imagesCount"
                 class="order top-0 bottom-0 right-0 text-gray-50 font-bold text-3xl absolute h-full flex flex-col justify-center items-end ">
-                <Tooltip :text="__('Move Back')">
+                <Tooltip placement="bottom" :text="__('Move Back')">
                     <button id="moveupbutton" :disabled="isBusy" @click="$emit('moveDown', itemKey)"
                         :class="{ 'opacity-75': isBusy }" class="hover:translate-x-1 transition">
                         <icons.CarretLeftIcon class="w-8 h-8 -rotate-180" />
@@ -108,7 +108,7 @@ const destroy = () => {
 
             <figcaption id="movedown" v-if="image.pivot && image.pivot.order > 1 && itemKey !== 0"
                 class="order top-0 bottom-0 left-0 text-gray-50 font-bold text-3xl absolute h-full flex flex-col justify-center items-start ">
-                <Tooltip :text="__('Move Forward')">
+                <Tooltip placement="bottom" :text="__('Move Forward')">
                     <button id="movedownbutton" :disabled="isBusy" @click="$emit('moveUp', itemKey)" c
                         :class="{ 'opacity-75': isBusy }" class="hover:-translate-x-1 transition">
                         <icons.CarretLeftIcon class="w-8 h-8 " />
@@ -121,7 +121,7 @@ const destroy = () => {
                 <div class="left flex justify-start items-center">
                     <button @click="showEditDialog = true"
                         class="hover:text-primary-700 transition-colors ease-out duration-150">
-                        <Tooltip :text="__('Edit image info')">
+                        <Tooltip placement="bottom" :text="__('Edit image info')">
                             <icons.EditIcon class="w-6 h-6" />
                         </Tooltip>
                     </button>
@@ -131,21 +131,21 @@ const destroy = () => {
 
                     <button v-if="hasGallery && !isIndex" @click="showDetachConfirm = true"
                         class="hover:text-primary-700 transition-colors ease-out duration-150">
-                        <Tooltip :text="__('Remove image from gallery')">
+                        <Tooltip placement="bottom" :text="__('Remove image from gallery')">
                             <icons.ArrowUpRightIcon class="w-6 h-6" />
                         </Tooltip>
                     </button>
 
                     <button v-if="!hasGallery && !isIndex" @click="showAttachConfirm = true"
                         class="hover:text-primary-700 transition-colors ease-out duration-150">
-                        <Tooltip :text="__('Attach to gallery')">
+                        <Tooltip placement="bottom" :text="__('Attach to gallery')">
                             <icons.ArrowUpRightIcon class="w-6 h-6 rotate-180" />
                         </Tooltip>
                     </button>
 
                     <button v-if="image.can['delete-image']" @click="showDestroyConfirm = true"
                         class="hover:text-bittersweet-700 transition-colors ease-out duration-150">
-                        <Tooltip :text="__('Delete from server')">
+                        <Tooltip placement="bottom" :text="__('Delete from server')">
                             <icons.TrashBinIcon class="w-6 h-6" />
                         </Tooltip>
                     </button>

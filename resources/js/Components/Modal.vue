@@ -1,6 +1,6 @@
 <script setup>
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
-import Tooltip from './Tooltip.vue';
+import Tooltip from '@/Components/_default/Tooltip.vue';
 
 const props = defineProps({
     show: {

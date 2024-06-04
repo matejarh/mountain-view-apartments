@@ -1,5 +1,5 @@
 <script setup>
-import Tooltip from './Tooltip.vue';
+import Tooltip from '@/Components/_default/Tooltip.vue';
 import { reactive, ref } from 'vue';
 import DinamicIcon from '../DinamicIcon.vue';
 import { useShareLink } from "vue3-social-sharing";

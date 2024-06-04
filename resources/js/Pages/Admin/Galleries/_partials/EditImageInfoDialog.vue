@@ -6,7 +6,7 @@ import { useForm, router } from '@inertiajs/vue3';
 import TextInput from '@/Components/TextInput.vue';
 import TextArea from '@/Components/TextArea.vue';
 import InputError from '@/Components/InputError.vue';
-import Tooltip from '@/Components/Tooltip.vue';
+import Tooltip from '@/Components/_default/Tooltip.vue';
 import ProgressBar from '@/Components/ProgressBar.vue';
 import { icons } from '@/icons';
 

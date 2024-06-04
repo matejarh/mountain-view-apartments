@@ -4,7 +4,7 @@ import { icons } from '@/icons';
 import ActionSection from '@/Components/ActionSection.vue';
 import FullLayout from '@/Layouts/FullLayout.vue';
 import ImageCard from '@/Components/Galleries/ImageCard.vue';
-import Tooltip from '@/Components/Tooltip.vue';
+import Tooltip from '@/Components/_default/Tooltip.vue';
 import UploadPhotoDialog from '@/Pages/Admin/Galleries/_partials/UploadPhotoDialog.vue';
 import Paginator from '@/Components/Paginator.vue';
 import FullScreenImagesModal from './_partials/FullScreenImagesModal.vue';

@@ -1,7 +1,7 @@
 <script setup>
 import { useScrollStore } from '@/stores/scroll';
 import { icons } from '@/icons';
-import Tooltip from './Tooltip.vue';
+import Tooltip from '@/Components/_default/Tooltip.vue';
 
 const scroll = useScrollStore()
 

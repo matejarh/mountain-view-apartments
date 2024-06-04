@@ -9,7 +9,7 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
-import Tooltip from '@/Components/Tooltip.vue';
+import Tooltip from '@/Components/_default/Tooltip.vue';
 import GALogo from '/resources/images/branding/google_authenticator-logo.png'
 import TwoFactorCodeInput from '@/Components/Authentication/TwoFactorCodeInput.vue';
 import SegmentedInput from '@/Components/SegmentedInput.vue';
