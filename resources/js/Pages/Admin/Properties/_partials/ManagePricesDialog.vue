@@ -104,20 +104,32 @@ const store = () => {
 
             <TransitionGroup name="list" tag="ul" key="daterangeGroup"
                 class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-8">
-                <PriceCard v-for="price, key in $page.props.property.prices.sort((a, b) => new Date(b.from) - new Date(a.from))" :key="`${price.from}-${price.to}`" :item="price" />
+                <PriceCard
+                    v-for="price, key in $page.props.property.prices.sort((a, b) => new Date(b.from) - new Date(a.from))"
+                    :key="`${price.from}-${price.to}`" :item="price" />
             </TransitionGroup>
 
-            <h4 class="text-base font-bold dark:text-white mt-2 cursor-pointer" @click="showAddRangeCalendar = !showAddRangeCalendar">{{ showAddRangeCalendar ? __('Hide Range Calendar') : __('Add New Range') }}</h4>
-            <Transition class="relative" enter-active-class="animate__animated animate__zoomIn" leave-active-class="animate__animated animate__zoomOut">
+            <h4 class="text-base font-bold text-center dark:text-white mt-2 cursor-pointer flex items-center justify-center"
+                @click="showAddRangeCalendar = !showAddRangeCalendar">
+                {{ showAddRangeCalendar ? __('Hide Range Calendar') : __('Add New Range') }}
+                <icons.ArrowDownIcon class="w-5 h-5 transition-transform ease-out duration-150"
+                    :class="{ 'rotate-180': showAddRangeCalendar }" />
+            </h4>
+            <Transition enter-active-class="transition ease-out duration-200"
+                enter-from-class="transform opacity-0 scale-y-0 origin-top"
+                enter-to-class="transform opacity-100 scale-y-100 origin-top"
+                leave-active-class="transition ease-in duration-75"
+                leave-from-class="transform opacity-100 scale-y-100 origin-top"
+                leave-to-class="transform opacity-0 scale-y-0  origin-top">
                 <div class="" v-show="showAddRangeCalendar">
                     <div class="flex justify-center w-full mb-2">
                         <div id="rangepicker" ref="rangePickerRef">
-                            <VueDatePicker v-model="form.range" :range="options.range" :min-date="new Date('2024-01-01')"
-                                :multi-calendars="options.multi" :markers="notAvailableMarkers" :start-time="startTime"
-                                :disabled-dates="disabledDates" :highlight="highlightedDates" :enable-time-picker="false"
-                                :locale="$page.props?.locale" :format="$page.props?.date_format_pattern" :dark="helpers.isDark"
-                                :six-weeks="true" :placeholder="__('Select date range...')" auto-apply inline
-                                prevent-min-max-navigation>
+                            <VueDatePicker v-model="form.range" :range="options.range"
+                                :min-date="new Date('2024-01-01')" :multi-calendars="options.multi"
+                                :markers="notAvailableMarkers" :start-time="startTime" :disabled-dates="disabledDates"
+                                :highlight="highlightedDates" :enable-time-picker="false" :locale="$page.props?.locale"
+                                :format="$page.props?.date_format_pattern" :dark="helpers.isDark" :six-weeks="true"
+                                :placeholder="__('Select date range...')" auto-apply inline prevent-min-max-navigation>
 
                                 <template #marker="{ marker, day, date }">
                                     <span class="not-available-marker"></span>
@@ -142,7 +154,8 @@ const store = () => {
                             <div class="flex items-center">
                                 <icons.SpinnerIcon v-show="form.processing"
                                     class="animate-spin -ml-1 mr-3 h-5 w-5 text-white dark:text-white" />
-                                {{ form.processing ? __('Adding') + '...' : form.recentlySuccessful ? __('Added') : __('Add') }}
+                                {{ form.processing ? __('Adding') + '...' : form.recentlySuccessful ? __('Added') :
+                                __('Add') }}
                             </div>
                         </PrimaryButton>
                     </div>

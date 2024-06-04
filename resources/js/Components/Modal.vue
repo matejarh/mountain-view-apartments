@@ -79,7 +79,7 @@ const maxWidthClass = computed(() => {
 });
 
 const fullScreenClasses = computed(() => {
-    return props.isFullScreen ? 'bg-transparent w-full' : 'bg-white dark:bg-gray-800 overflow-x-visible overflow-y-auto lg:mb-6 w-full sm:w-full sm:mx-4'
+    return props.isFullScreen ? 'bg-transparent w-full' : 'bg-white dark:bg-gray-800 overflow-x-hidden overflow-y-auto lg:mb-6 w-full sm:w-full sm:mx-4'
 })
 </script>
 

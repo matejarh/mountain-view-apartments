@@ -23,6 +23,8 @@ class UpdatePrice implements UpdatesPrices
             'from' => __('From'),
             'to' => __('To'),
             'guests' => __('Guests'),
+            'min_days' => __('Minimum Days'),
+            'max_days' => __('Daximum Days'),
             'price' => __('Price'),
         );
 
@@ -35,6 +37,8 @@ class UpdatePrice implements UpdatesPrices
             //'from' => ['date', 'before:to'],
             //'to' => ['date', 'after:from'],
             //'range' => ['array', 'min:2', new AllowedPriceRange($price->property_id, $price->id)],
+            'min_days' => ['required', 'min:1', 'integer', 'max:30', 'lt:max_days'],
+            'max_days' => ['required', 'min:2', 'integer', 'max:30', 'gt:min_days'],
             'prices' => ['required', 'array', 'min:1'],
             'prices.*' => ['required', 'array', 'min:1', 'distinct'],
             'prices.*.guests' => ['required', 'integer', 'min:1', 'max:10'],
@@ -49,6 +53,8 @@ class UpdatePrice implements UpdatesPrices
             // 'from' => $input['from'],
             // 'to' => $input['to'],
             // 'guests' => $input['guests'],
+            'min_days' => $input['min_days'],
+            'max_days' => $input['max_days'],
             'prices' => $input['prices'],
         ])->save();
 

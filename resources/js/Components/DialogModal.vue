@@ -26,11 +26,11 @@ const close = () => {
 <template>
     <Modal :show="show" :max-width="maxWidth" :closeable="closeable" @close="close">
 
-        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+        <div class="relative bg-white rounded-t-lg shadow dark:bg-gray-700">
 
             <!-- Modal header -->
             <div
-                class="sticky top-0 flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                class="sticky top-0 flex items-center justify-between p-4 md:p-5 border-b  dark:border-gray-700">
                 <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
                     <slot name="title" />
                 </h3>

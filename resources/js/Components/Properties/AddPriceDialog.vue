@@ -7,6 +7,7 @@ import { icons } from '@/icons';
 import { useForm } from '@inertiajs/vue3';
 import { onMounted, ref, watchEffect } from 'vue';
 import InputLabel from '../InputLabel.vue';
+import Tooltip from '../_default/Tooltip.vue';
 
 
 const props = defineProps({
@@ -20,6 +21,8 @@ const form = useForm({
     // from: props.price?.from,
     // to: props.price?.to,
     // range: props.price?.range,
+    min_days: props.price?.min_days,
+    max_days: props.price?.max_days,
     prices: props.price?.prices
 })
 
@@ -34,6 +37,8 @@ watchEffect(() => {
 const updateForm = () => {
     //form.from = props.price?.from
     //form.to = props.price?.to
+    form.min_days = props.price?.min_days
+    form.max_days = props.price?.max_days
     form.prices = props.price?.prices
 }
 
@@ -82,43 +87,65 @@ onMounted(() => {
         </template>
 
         <template #content>
-
-            <div class="">
-                <TransitionGroup name="list" tag="ul" class="relative" key="pricesGroup">
-                    <li v-for="price, key in form.prices" :key="key" class="flex justify-between items-center">
-                        <span>
-                            {{ price.guests }} {{ __('Guest', price.guests) }} = {{
-                                parseFloat(price.price).toFixed(2).toLocaleString($page.props.locale) }} €
-                        </span>
-                        <div class="">
-                            <button @click="removeItem(form.prices, price)">
-                                <icons.TrashBinIcon class="text-bittersweet-700 dark:text-bittersweet-500" />
-                            </button>
-                        </div>
-
-                    </li>
-                </TransitionGroup>
-            </div>
             <div class="flex items-center space-x-2">
-
                 <div class="w-full">
-                    <InputLabel for="new_guests" :value="__('Number of guests')" />
-                    <TextInput :id="`new_guests`" v-model="newPrice.guests" type="number" min="1" max="10" step="1"
-                        class="mt-1 block w-full" required :placeholder="__('Enter number of guests') + '...'" />
-                    <InputError :message="form.errors.guests" />
+                    <InputLabel for="min_days" :value="__('Min Nights')" />
+                    <TextInput :id="`min_days`" v-model="form.min_days" type="number" min="1" max="10" step="1"
+                        class="mt-1 block w-full" required :placeholder="__('Enter minimum number of nights') + '...'" />
+                    <InputError :message="form.errors.min_days" />
                 </div>
                 <div class="w-full">
-                    <InputLabel for="new_price" :value="__('Price')" />
-                    <TextInput :id="`new_price`" v-model="newPrice.price" type="text" class="mt-1 block w-full" required
-                        :placeholder="__('Enter price') + '...'" />
-                    <InputError :message="form.errors.price" />
-                </div>
-                <div>
-                    <button class="w-full text-center mt-8" @click="handleAddItem(form.prices, newPrice)">
-                        <icons.CirclePlusIcon class="text-amazon-600 dark:text-amazon-700 mx-auto" />
-                    </button>
+                    <InputLabel for="max_days" :value="__('Max Nights')" />
+                    <TextInput :id="`max_days`" v-model="form.max_days" type="number" min="1" max="30" step="1"
+                        class="mt-1 block w-full" required :placeholder="__('Enter maximum number of nights') + '...'" />
+                    <InputError :message="form.errors.max_days" />
                 </div>
             </div>
+
+            <div class="p-4 bg-gray-50 dark:bg-gray-900 rounded-lg mt-4">
+
+                <div class="min-h-12">
+                    <TransitionGroup name="list" tag="ul" class="relative" key="pricesGroup">
+                        <li v-for="price, key in form.prices" :key="key" class="flex justify-between items-center">
+                            <span>
+                                {{ price.guests }} {{ __('Guest', price.guests) }} = {{
+                                    parseFloat(price.price).toFixed(2).toLocaleString($page.props.locale) }} €
+                            </span>
+                            <div class="">
+                                <Tooltip :text="__('Remove Price')">
+                                    <button @click="removeItem(form.prices, price)">
+                                        <icons.TrashBinIcon class="text-bittersweet-700 dark:text-bittersweet-500" />
+                                    </button>
+                                </Tooltip>
+                            </div>
+
+                        </li>
+                    </TransitionGroup>
+                </div>
+                <div class="flex items-center space-x-2">
+
+                    <div class="w-full">
+                        <InputLabel for="new_guests" :value="__('Number of guests')" />
+                        <TextInput :id="`new_guests`" v-model="newPrice.guests" type="number" min="1" max="10" step="1"
+                            class="mt-1 block w-full" required :placeholder="__('Enter number of guests') + '...'" />
+                        <InputError :message="form.errors.guests" />
+                    </div>
+                    <div class="w-full">
+                        <InputLabel for="new_price" :value="__('Price')" />
+                        <TextInput :id="`new_price`" v-model="newPrice.price" type="text" class="mt-1 block w-full" required
+                            :placeholder="__('Enter price') + '...'" />
+                        <InputError :message="form.errors.price" />
+                    </div>
+                    <div>
+                        <Tooltip :text="__('Add Price')">
+                            <button class="w-full text-center mt-8" @click="handleAddItem(form.prices, newPrice)">
+                                <icons.CirclePlusIcon class="text-amazon-600 dark:text-amazon-700 mx-auto" />
+                            </button>
+                        </Tooltip>
+                    </div>
+                </div>
+            </div>
+
 
         </template>
 

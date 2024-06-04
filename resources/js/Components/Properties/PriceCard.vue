@@ -4,6 +4,7 @@ import { ref, watch, watchEffect } from 'vue';
 import AddPriceDialog from './AddPriceDialog.vue'
 import { useForm } from '@inertiajs/vue3';
 import ConfirmationModal from '../ConfirmationModal.vue';
+import Tooltip from '@/Components/_default/Tooltip.vue';
 
 const props = defineProps({
     item: Object
@@ -30,25 +31,35 @@ const destroy = () => {
 
 <template>
     <li
-        class="max-w-full p-4 bg-white border border-gray-200 overflow-hidden rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700  transition duration-150 ease-out">
+        class="max-w-full p-4 bg-white border border-gray-200 overflow-hidden rounded-lg shadow-lg dark:bg-gray-900 dark:border-gray-900  transition duration-150 ease-out">
         <div class="flex justify-between items-center">
             <h5 class="text-md font-semibold">
                 {{ new Date(itemProxy.from).toLocaleDateString($page.props.locale) }}
                 -
                 {{ new Date(itemProxy.to).toLocaleDateString($page.props.locale) }}
             </h5>
-            <div class="flex">
-                <button class="w-full text-center" @click="showNewPriceDialog = true">
-                    <icons.PenIcon class="text-amazon-600 dark:text-amazon-700 mx-auto w-4 h-4" />
-                </button>
-                <button @click="showDestroyConfirm = true">
-                    <icons.TrashBinIcon class="w-4 h-4 text-bittersweet-600 dark:text-bittersweet-700" />
-                </button>
+            <div class="flex space-x-1 z-0">
+                <Tooltip :text="__('Edit')" location="left">
+                    <button class="w-full text-center" @click="showNewPriceDialog = true">
+                        <icons.PenIcon class="text-amazon-600 dark:text-amazon-500 mx-auto w-4 h-4" />
+                    </button>
+                </Tooltip>
+                <Tooltip :text="__('Delete')" location="left">
+                    <button @click="showDestroyConfirm = true">
+                        <icons.TrashBinIcon class="w-4 h-4 text-bittersweet-600 dark:text-bittersweet-700" />
+                    </button>
+                </Tooltip>
 
             </div>
         </div>
 
-        <TransitionGroup name="list" tag="ul" class="relative" key="pricesGroup">
+        <div class="flex items-center justify-between mt-1">
+            <p>{{ __('Min Nights') }} {{ itemProxy.min_days }}</p>
+            <p>{{ __('Max Nights') }} {{ itemProxy.max_days }}</p>
+
+        </div>
+
+        <TransitionGroup name="list" tag="ul" class="relative mt-2" key="pricesGroup">
             <li v-for="price, key in itemProxy.prices" :key="price" class="flex justify-between items-center">
                 <span class="flex items-center">
                     <div class="flex">
@@ -60,6 +71,7 @@ const destroy = () => {
                 </span>
             </li>
         </TransitionGroup>
+
         <AddPriceDialog :show="showNewPriceDialog" @close="showNewPriceDialog = false" :price="item" />
 
         <ConfirmationModal :is-danger="true" :show="showDestroyConfirm" @close="showDestroyConfirm = false"

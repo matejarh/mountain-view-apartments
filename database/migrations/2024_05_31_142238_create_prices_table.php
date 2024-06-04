@@ -17,6 +17,8 @@ return new class extends Migration
             $table->foreignIdFor(Property::class, 'property_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->datetime('from')->nullable();
             $table->datetime('to')->nullable();
+            $table->integer('min_days')->default(1);
+            $table->integer('max_days')->default(10);
             $table->json('prices');
             //$table->integer('guests')->default(1);
             //$table->string('price')->nullable();
