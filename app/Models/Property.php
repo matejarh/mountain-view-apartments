@@ -132,7 +132,7 @@ class Property extends Model
      */
     public function facilities(): BelongsToMany
     {
-        return $this->belongsToMany(Facility::class, 'properties_facilities', 'property_id', 'facility_id')->latest();
+        return $this->belongsToMany(Facility::class, 'properties_facilities', 'property_id', 'facility_id')->orderBy('name');
     }
 
     /**
