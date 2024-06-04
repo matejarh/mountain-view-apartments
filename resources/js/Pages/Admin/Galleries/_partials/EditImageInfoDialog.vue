@@ -108,14 +108,14 @@ const clearPhotoFileInput = () => {
             <div class="grid gap-4 grid-cols-2">
                 <input id="photo" ref="photoInput" type="file" class="hidden" @change="updatePhotoPreview">
                 <div class="col-span-2">
-                    <TextInput id="name" v-model="form.name" type="text" class="mt-1 block w-full" required
-                        autocomplete="name" :has-error="!!form.errors.name" :placeholder="__('Enter name') + '...'" />
+                    <TextInput id="image_name" v-model="form.name" type="text" class="mt-1 block w-full" required
+                        autocomplete="image_name" :has-error="!!form.errors.name" :placeholder="__('Enter name') + '...'" />
                     <InputError :message="form.errors.name" class="mt-2" />
 
                 </div>
                 <div class="col-span-2">
-                    <TextArea id="description" v-model="form.description" type="text" class="mt-1 block w-full" required
-                        autocomplete="description" :has-error="!!form.errors.description"
+                    <TextArea id="image_description" v-model="form.description" type="text" class="mt-1 block w-full" required
+                        autocomplete="image_description" :has-error="!!form.errors.description"
                         :placeholder="__('Enter description') + '...'" />
                     <InputError :message="form.errors.description" class="mt-2" />
                 </div>

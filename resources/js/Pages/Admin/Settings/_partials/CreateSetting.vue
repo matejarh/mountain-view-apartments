@@ -26,7 +26,7 @@ const create = () => {
 <template>
     <div class="">
         <Alert v-if="form.hasErrors">
-            <span class="font-medium">Ensure that these requirements are met:</span>
+            <span class="font-medium">{{__('Ensure that these requirements are met')}}:</span>
             <ul class="mt-1.5 list-disc list-inside">
                 <li v-for="error, key in form.errors" :key="key">{{ error }}</li>
             </ul>

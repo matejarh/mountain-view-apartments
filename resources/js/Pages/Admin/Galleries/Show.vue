@@ -139,15 +139,15 @@ onUnmounted(() => {
                     <div class="w-full space-y-4">
 
                         <div class="w-full">
-                            <TextInput id="name" v-model="form.name" type="text" class="mt-1 block w-full" required
-                                autocomplete="name" :has-error="!!form.errors.name"
+                            <TextInput id="gallery_name" v-model="form.name" type="text" class="mt-1 block w-full" required
+                                autocomplete="gallery_name" :has-error="!!form.errors.name"
                                 :placeholder="__('Enter name') + '...'" />
                             <InputError :message="form.errors.name" class="mt-2" />
 
                         </div>
                         <div class="w-full">
-                            <TextArea id="description" v-model="form.description" type="text" class="mt-1 block w-full"
-                                required autocomplete="description" :has-error="!!form.errors.description"
+                            <TextArea id="gallery_description" v-model="form.description" type="text" class="mt-1 block w-full"
+                                required autocomplete="gallery_description" :has-error="!!form.errors.description"
                                 :placeholder="__('Enter description') + '...'" />
                             <InputError :message="form.errors.description" class="mt-2" />
 

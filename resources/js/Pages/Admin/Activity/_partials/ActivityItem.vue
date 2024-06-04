@@ -9,6 +9,7 @@ import UpdatedGallery from '@/Components/Activities/UpdatedGallery.vue';
 import CreatedGallery from '@/Components/Activities/CreatedGallery.vue';
 import CreatedImage from '@/Components/Activities/CreatedImage.vue';
 import UpdatedPage from '@/Components/Activities/UpdatedPage.vue';
+import CreatedPage from '@/Components/Activities/CreatedPage.vue';
 import CreatedLike from '@/Components/Activities/CreatedLike.vue';
 import CreatedReview from '@/Components/Activities/CreatedReview.vue';
 import UpdatedReview from '@/Components/Activities/UpdatedReview.vue';
@@ -33,6 +34,7 @@ const componentMap = {
     created_like: CreatedLike,
     updated_property: UpdatedProperty,
     updated_page: UpdatedPage,
+    created_page: CreatedPage,
     created_gallery: CreatedGallery,
     updated_gallery: UpdatedGallery,
     created_image: CreatedImage,

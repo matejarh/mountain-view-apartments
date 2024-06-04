@@ -49,9 +49,9 @@ const emit = defineEmits(['close', 'create'])
 
         <template #content>
             <div class="col-span-full mt-4">
-                <InputLabel :for="`extra_key`" :value="__('Extra key')" />
+                <InputLabel :for="`new_extra_key`" :value="__('Extra key')" />
                 <TextInput :id="`new_extra_key`" v-model="form.name" type="text" class="mt-1 block w-full" required
-                    autocomplete="new_extra_key" :has-error="!!form.errors.name"
+                    autocomplete="off" :has-error="!!form.errors.name"
                     :placeholder="__('Enter title') + '...'" />
                 <InputError :message="form.errors.name" class="mt-2" />
             </div>

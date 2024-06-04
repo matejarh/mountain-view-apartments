@@ -68,10 +68,10 @@ const store = () => {
                     <hr class="my-4 md:my-4 border-gray-200 dark:border-gray-800 col-span-full" />
 
                     <div class="">
-                        <InputLabel for="name" :value="`${__('Create New Facility')}`" />
+                        <InputLabel for="facility_name" :value="`${__('Create New Facility')}`" />
                         <div class="flex">
-                            <TextInput id="name" v-model="form.name" type="text" class="mt-1 block w-full" required
-                                autocomplete="name" :has-error="!!form.errors.name"
+                            <TextInput id="facility_name" v-model="form.name" type="text" class="mt-1 block w-full" required
+                                autocomplete="facility_name" :has-error="!!form.errors.name"
                                 :placeholder="__('Enter new facility name') + '...'" />
 
                             <PrimaryButton type="button"

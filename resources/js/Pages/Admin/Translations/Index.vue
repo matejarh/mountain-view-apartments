@@ -18,20 +18,35 @@
                             :keys-with-translations="keys_with_translation.data" />
 
                         <Paginator :paginator="keys_with_translation" />
+                        <div class="space-x-2 mt-4 sticky bottom-0 pb-4 pt-4 z-10 bg-white dark:bg-gray-900">
 
-                        <PrimaryButton class="sticky bottom-4 mt-4"
-                            :disabled="form.processing || form.recentlySuccessful"
-                            :class="{ 'opacity-25': form.processing || form.recentlySuccessful }">
+                            <PrimaryButton :disabled="form.processing || form.recentlySuccessful"
+                                :class="{ 'opacity-25': form.processing || form.recentlySuccessful }">
 
-                            <div class="flex items-center">
-                                <icons.SpinnerIcon v-show="form.processing"
-                                    class="animate-spin -ml-1 mr-3 h-5 w-5 text-white dark:text-white" />
-                                {{ form.processing ? __('Saving') + '...' : form.recentlySuccessful ? __('Translations Saved')
-                                    : __('Save Translations')
-                                }}
+                                <div class="flex items-center">
+                                    <icons.SpinnerIcon v-if="form.processing"
+                                        class="animate-spin -ml-1 mr-3 h-5 w-5 text-white dark:text-white" />
+                                    <icons.FloppyDiscIcon v-else class="-ml-1 mr-3 h-5 w-5 text-white dark:text-white" />
+                                    {{ form.processing ? __('Saving') + '...' : form.recentlySuccessful ?
+                                        __('Translations Saved')
+                                        : __('Save Translations')
+                                    }}
 
-                            </div>
-                        </PrimaryButton>
+                                </div>
+                            </PrimaryButton>
+
+
+                            <!-- <PrimaryButton type="button"
+                                :class="{ 'opacity-25': form.processing || form.recentlySuccessful || !form.isDirty }"
+                                :disabled="form.processing || form.recentlySuccessful || !form.isDirty"
+                                @click="form.reset()">
+                                <div class="flex items-center">
+                                    <icons.UndoIcon class="-ml-1 mr-3 h-5 w-5 text-white dark:text-white" />
+                                    {{ __('Undo Changes') }}
+
+                                </div>
+                            </PrimaryButton> -->
+                        </div>
                     </form>
                 </div>
 
@@ -51,18 +66,18 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TranslationItem from '@/Components/Translations/TranslationItem.vue';
 import FullLayout from '@/Layouts/FullLayout.vue';
 import { icons } from '@/icons';
-import { router, useForm, usePage } from '@inertiajs/vue3';
+import { useForm, usePage } from '@inertiajs/vue3';
 import { ref } from 'vue';
-
-
 
 const { keys_with_translation, supported_locales, status } = usePage().props;
 const formTranslations = ref(keys_with_translation.data);
-const form = useForm({translations: keys_with_translation.data})
+
+const form = useForm({ translations: keys_with_translation.data })
+
 const updateTranslations = () => {
     form.translations = formTranslations.value
 
-    form.put(route('admin.translations.update'),{
+    form.put(route('admin.translations.update'), {
         preserveState: true,
         preserveScroll: true,
     })

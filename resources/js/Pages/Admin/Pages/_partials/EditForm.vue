@@ -80,9 +80,9 @@ onBeforeUnmount(() => {
     <div class="">
         <GridSection>
             <div class="col-span-full">
-                <InputLabel for="title" :value="__('Name')" />
-                <TextInput id="name" v-model="form.name" type="text" class="mt-1 block w-full" required
-                    autocomplete="name" :has-error="!!form.errors.name" :placeholder="__('Enter name') + '...'" />
+                <InputLabel for="pageName" :value="__('Name')" />
+                <TextInput id="pageName" v-model="form.name" type="text" class="mt-1 block w-full" required
+                    autocomplete="off" :has-error="!!form.errors.name" :placeholder="__('Enter name') + '...'" />
                 <InputError :message="form.errors.name" class="mt-2" />
                 <TextInputHelper>
                     {{ __('Used for identification. No need for translations.') }}
@@ -105,17 +105,17 @@ onBeforeUnmount(() => {
 
         <GridSection>
             <div class="col-span-full mt-4">
-                <InputLabel :for="`title-${selectedTab}`" :value="__('Title')" />
-                <TextInput :id="`title-${selectedTab}`" v-model="form.title[selectedTab]" type="text"
+                <InputLabel :for="`page-title-${selectedTab}`" :value="__('Title')" />
+                <TextInput :id="`page-title-${selectedTab}`" v-model="form.title[selectedTab]" type="text"
                     class="mt-1 block w-full" required autocomplete="title"
                     :has-error="!!form.errors[`title.${selectedTab}`]" :placeholder="__('Enter title') + '...'" />
                 <InputError :message="form.errors[`title.${selectedTab}`]" class="mt-2" />
             </div>
 
             <div class="col-span-full">
-                <InputLabel :for="`description-${selectedTab}`" :value="__('Description')" />
-                <TextArea :id="`description-${selectedTab}`" v-model="form.description[selectedTab]"
-                    class="mt-1 block w-full" autocomplete="description"
+                <InputLabel :for="`page-description-${selectedTab}`" :value="__('Description')" />
+                <TextArea :id="`page-description-${selectedTab}`" v-model="form.description[selectedTab]"
+                    class="mt-1 block w-full" :autocomplete="`page-description-${selectedTab}`"
                     :has-error="!!form.errors[`description.${selectedTab}`]"
                     :placeholder="__('Enter description') + '...'"></TextArea>
                 <InputError :message="form.errors[`description.${selectedTab}`]" class="mt-2" />
@@ -166,14 +166,25 @@ onBeforeUnmount(() => {
             </div>
         </GridSection>
 
-        <div class="col-span-full mt-4">
+        <div class="col-span-full space-x-2 mt-4 sticky bottom-0 pb-4 pt-4 z-10 bg-white dark:bg-gray-900">
             <PrimaryButton type="button"
                 :class="{ 'opacity-25': form.processing || form.recentlySuccessful || !form.isDirty }"
                 :disabled="form.processing || form.recentlySuccessful || !form.isDirty" @click="handleSubmit">
                 <div class="flex items-center">
-                    <icons.SpinnerIcon v-show="form.processing"
+                    <icons.SpinnerIcon v-if="form.processing"
                         class="animate-spin -ml-1 mr-3 h-5 w-5 text-white dark:text-white" />
+                    <icons.FloppyDiscIcon v-else class="-ml-1 mr-3 h-5 w-5 text-white dark:text-white" />
                     {{ form.processing ? __('Saving') + '...' : form.recentlySuccessful ? __('Saved') : __('Save') }}
+
+                </div>
+            </PrimaryButton>
+
+            <PrimaryButton type="button"
+                :class="{ 'opacity-25': form.processing || form.recentlySuccessful || !form.isDirty }"
+                :disabled="form.processing || form.recentlySuccessful || !form.isDirty" @click="form.reset()">
+                <div class="flex items-center">
+                    <icons.UndoIcon class="-ml-1 mr-3 h-5 w-5 text-white dark:text-white" />
+                    {{ __('Undo Changes') }}
 
                 </div>
             </PrimaryButton>

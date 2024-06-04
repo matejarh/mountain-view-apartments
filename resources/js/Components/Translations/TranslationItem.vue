@@ -3,6 +3,7 @@ import { getCurrentInstance, ref } from 'vue';
 import TextInput from '../TextInput.vue';
 import { useTranslationsStore } from '@/stores/translations';
 import { icons } from '@/icons';
+import slugify from 'slugify';
 
 defineProps({
     keysWithTranslations: Object,
@@ -37,7 +38,7 @@ const store = useTranslationsStore()
                     <div class="flex mt-1">
                         <img :src="locale.flag_url" :alt="locale.name + ' flag'" class="w-auto h-10 rounded-l-lg" />
 
-                        <TextInput v-model="keysWithTranslations[instance.vnode.key][locale.code]"
+                        <TextInput :id="slugify(`${instance.vnode.key} ${locale.code}`)" :autocomplete="slugify(`${instance.vnode.key} ${locale.code}`)" v-model="keysWithTranslations[instance.vnode.key][locale.code]"
                             rounded="rounded-r-lg" class="w-full" />
                     </div>
                 </div>

@@ -486,15 +486,26 @@ onBeforeUnmount(() => document.removeEventListener('keydown', saveOnCtrlS));
             </GridSection>
 
         </div>
-        <div class="mt-4 sticky bottom-4 z-10">
+        <div class="col-span-full space-x-2 mt-4 sticky bottom-0 pb-4 pt-4 z-10 bg-white dark:bg-gray-900">
 
             <PrimaryButton type="button"
                 :class="{ 'opacity-25': form.processing || form.recentlySuccessful || !form.isDirty }"
                 :disabled="form.processing || form.recentlySuccessful || !form.isDirty" @click="update">
                 <div class="flex items-center">
-                    <icons.SpinnerIcon v-show="form.processing"
+                    <icons.SpinnerIcon v-if="form.processing"
                         class="animate-spin -ml-1 mr-3 h-5 w-5 text-white dark:text-white" />
+                    <icons.FloppyDiscIcon v-else class="-ml-1 mr-3 h-5 w-5 text-white dark:text-white" />
                     {{ form.processing ? __('Saving') + '...' : form.recentlySuccessful ? __('Saved') : __('Save') }}
+                </div>
+            </PrimaryButton>
+
+            <PrimaryButton type="button"
+                :class="{ 'opacity-25': form.processing || form.recentlySuccessful || !form.isDirty }"
+                :disabled="form.processing || form.recentlySuccessful || !form.isDirty" @click="form.reset()">
+                <div class="flex items-center">
+                    <icons.UndoIcon class="-ml-1 mr-3 h-5 w-5 text-white dark:text-white" />
+                    {{ __('Undo Changes') }}
+
                 </div>
             </PrimaryButton>
         </div>

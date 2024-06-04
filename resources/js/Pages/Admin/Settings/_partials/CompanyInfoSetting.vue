@@ -79,8 +79,8 @@ const update = () => {
                                 class="mt-1 block w-full" required :autocomplete="key"
                                 :has-error="!!form.errors[`attributes.${key}`]"
                                 :placeholder="__('Enter ') + key + '...'" />
-                            <TextArea v-else id="key" v-model="form.attributes[key]" type="text"
-                                class="mt-1 block w-full" required :autocomplete="key"
+                            <TextArea v-else id="key" v-model="form.attributes[key]"
+                                class="mt-1 block w-full" required
                                 :has-error="!!form.errors[`attributes.${key}`]"
                                 :placeholder="__('Enter ') + key + '...'" />
                             <InputError :message="form.errors[`attributes.${key}`]" class="mt-2" />

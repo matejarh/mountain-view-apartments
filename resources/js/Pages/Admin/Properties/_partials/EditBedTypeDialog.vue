@@ -37,18 +37,18 @@ const form = reactive({
 
         <template #content>
             <div class="">
-                <InputLabel for="title" :value="`${__('Title')}`" />
-                <TextInput id="title" v-model="form.title" type="text" class="mt-1 block w-full" required
-                    autocomplete="title" :placeholder="__('Enter title') + '...'" />
+                <InputLabel for="bed_type_title" :value="`${__('Title')}`" />
+                <TextInput id="bed_type_title" v-model="form.title" type="text" class="mt-1 block w-full" required
+                    autocomplete="bed_type_title" :placeholder="__('Enter title') + '...'" />
             </div>
             <div class="mt-2">
-                <InputLabel for="name" :value="`${__('Name')}`" />
-                <TextInput id="name" v-model="form.name" type="text" class="mt-1 block w-full" required
-                    autocomplete="name" :placeholder="__('Enter name') + '...'" />
+                <InputLabel for="bed_type_name" :value="`${__('Name')}`" />
+                <TextInput id="bed_type_name" v-model="form.name" type="text" class="mt-1 block w-full" required
+                    autocomplete="bed_type_name" :placeholder="__('Enter name') + '...'" />
             </div>
             <div class="mt-2">
-                <InputLabel for="icon" :value="`${__('Icon')}`" />
-                <SelectInput v-model="form.icon" id="icon">
+                <InputLabel for="bed_type_icon" :value="`${__('Icon')}`" />
+                <SelectInput v-model="form.icon" id="bed_type_icon">
                     <option disabled>- {{ __('select icon') }} -</option>
                     <option value="QueenBedIcon">{{ __('Queen Bed') }}</option>
                     <option value="SofaBedIcon">{{ __('Sofa Bed') }}</option>
