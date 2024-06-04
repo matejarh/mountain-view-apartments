@@ -38,7 +38,6 @@ class Property extends Model
         'coordinates' => 'object',
         'bed_types' => 'array',
         'recomended' => 'array',
-        'prices' => 'array',
         'rules' => 'object',
         'is_entire_apartment' => 'boolean',
         'title' => 'object',
@@ -162,7 +161,7 @@ class Property extends Model
      */
     public function prices(): HasMany
     {
-        return $this->hasMany(Price::class)->latest();
+        return $this->hasMany(Price::class);
     }
 
     public function langArray(): array
@@ -258,7 +257,30 @@ class Property extends Model
         return cache()->remember('unavailable_dates_' . $this->id, 60 * 60 * 24, function () {
             return $this->getUnavailableAndUndefinedDates(now(), now()->addYears(7));
         });
-        // return $this->getUnavailableDates(now(), now()->addYears(7));
+    }
+
+    /**
+     * Get the current active price for the property.
+     *
+     * This method filters the prices to find the one that is currently active based on the current date.
+     * It returns the first price that is valid for the current date.
+     *
+     * @return Price|null The currently active price or null if no active price is found.
+     */
+    public function currentPrices(): ?Price
+    {
+        // Get the current date and time
+        $currentDate = Carbon::now();
+
+        // Filter the prices collection to find prices that are valid for the current date
+        $filteredPrices = $this->prices->filter(function ($price) use ($currentDate) {
+            $fromDate = Carbon::parse($price->from);
+            $toDate = Carbon::parse($price->to);
+            return $fromDate->lte($currentDate) && $toDate->gte($currentDate);
+        });
+
+        // Return the first valid price or null if none is found
+        return $filteredPrices->first();
     }
 
     /**
