@@ -90,7 +90,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
 
     Route::group(['prefix' => '{lang}', 'middleware' => 'web'], function () {
         Route::name('reviews.')->prefix('my-reviews')->namespace('reviews')->group(function () {
-            Route::get('/', [ReviewsController::class, 'index'])->name('index');
+            Route::get('/', [ReviewsController::class, 'myIndex'])->name('index');
             Route::get('/{review}', [ReviewsController::class, 'show'])->name('show');
             Route::get('/for/{property}/create', [ReviewsController::class, 'create'])->name('create');
         });

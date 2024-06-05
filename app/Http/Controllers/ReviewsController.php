@@ -27,7 +27,7 @@ class ReviewsController extends Controller
         // Gate::authorize('viewAny', Review::class);
 
         return Inertia::render('Reviews/Index', [
-            'reviews' => $property->reviews()->with('owner')->approved()->filter($filters)->latest()->paginate(10, ['*'], __('page'))->onEachSide(2)->withQueryString(),
+            'reviews' => $property->reviews()->with('owner')->approved()->filter($filters)->paginate(10, ['*'], __('page'))->onEachSide(2)->withQueryString(),
             'property' => $property,
             'filters' => $request->only(['search']),
             'can' => [
@@ -36,6 +36,22 @@ class ReviewsController extends Controller
             ],
             'seo' => [
                 'title' => __('Reviews'),
+                'description' => '',
+                'keywords' => ''
+            ]
+        ]);
+    }
+
+    public function myIndex(Request $request, string $lang) :Response
+    {
+        return Inertia::render('MyReviews/Index', [
+            'reviews' => auth()->user()->reviews->paginate(10, null,null, __('page'))->onEachSide(2)->withQueryString(),
+            'can' => [
+                'view_reviews' => auth()->check() ? auth()->user()->can('view', Review::class) : false,
+                'create_review' => auth()->check() ? auth()->user()->can('create', Review::class) : false,
+            ],
+            'seo' => [
+                'title' => __('My Reviews'),
                 'description' => '',
                 'keywords' => ''
             ]
