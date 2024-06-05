@@ -14,7 +14,7 @@ import ShapeTop from '@/Components/_default/ShapeTop.vue';
         <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6"
             v-if="$page.props?.current_prices && $page.props?.current_prices.prices.length > 0">
             <div class="mx-auto max-w-screen-md text-center mb-8 lg:mb-12">
-                <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-white">{{ __('Pricing') }}</h2>
+                <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-white">{{ __('Pricing') }} <span class="lowercase"> {{ __('for') }} {{ __('Current Season') }}</span></h2>
                 <p class="mb-1 font-light  sm:text-xl text-white">
                     {{ __('Enjoy competitive rates and flexible pricing options tailored to your stay.') }}
                 </p>

@@ -31,6 +31,7 @@ onMounted(() => {
         <div
             class="bg-gray-50 dark:bg-gray-900 rounded-lg overflow-hidden p-0 mx-auto max-w-screen-xl grid xl:grid-cols-2 gap-8 xl:gap-16">
             <div class="flex flex-col justify-center p-8">
+
                 <h1
                     class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
                     <inertia-link :href="route('properties.show', { property: property, lang: $page.props?.locale })">
@@ -59,11 +60,20 @@ onMounted(() => {
                     <!-- {{ $page.props?.property.bed_types }} -->
                 </div>
 
+                <div class="flex font-semibold mt-2">
+                    <span  v-for="recomend, key in property?.recomended" class="flex">
+                        <icons.UserIcon class="w-6 h-6" v-for="n in parseInt(recomend.title.match(/\d+/)[0])"  />
+                        {{ __('Recommended') }}
+                        {{ __(recomend.title) }}
+                    </span>
+                </div>
+
                 <div class="mb-8 mt-4 text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400"
                     v-html="property.description[$page.props?.locale]"></div>
 
                 <div class="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-2">
-                    <PrimaryButton @click="$inertia.get(route('properties.show', { property: property, lang: $page.props?.locale }))">
+                    <PrimaryButton
+                        @click="$inertia.get(route('properties.show', { property: property, lang: $page.props?.locale }))">
 
                         {{ __('Learn more') }}
                         <icons.InfoIcon class="w-3.5 h-3.5 ms-2" />
@@ -75,7 +85,7 @@ onMounted(() => {
                         <icons.CalendarIcon class="w-3.5 h-3.5 ms-2" />
 
                     </PrimaryButton>
-<!--                     <inertia-link :href="route('properties.show', { property: property, lang: $page.props?.locale })"
+                    <!--                     <inertia-link :href="route('properties.show', { property: property, lang: $page.props?.locale })"
                         class="inline-flex hover:scale-105 active:scale-95 items-center justify-center px-4 py-2 bg-primary-700 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-primary-500 active:bg-primary-700 focus:outline-none focus:ring-0 active:shadow hover:shadow-xl shadow-lg   transition ease-in-out duration-150">
                         {{ __('Learn more') }}
                         <icons.ArrowRightIcon class="w-3.5 h-3.5 ms-2" />
@@ -87,7 +97,7 @@ onMounted(() => {
             <div v-if="property.galleries.length > 0">
                 <!-- <Carousel rounded="" :items="property.galleries[0].images"
                     height="h-64 sm:h-[34rem] md:h-[33rem] lg:h-[20rem] xl:h-[27rem]" width="" class="shadow-lg" /> -->
-                    <CarouselGallery class=""  :items="property.galleries[0].images" />
+                <CarouselGallery class="" :items="property.galleries[0].images" />
 
             </div>
         </div>

@@ -47,7 +47,7 @@ const handleFullScreenImage = (image) => {
 
                     </h1>
                     <div class="mt-4 sm:items-center sm:gap-4 sm:flex">
-                        <p class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">
+                        <p class="text-base font-semibold text-gray-900 sm:text-xl dark:text-white">
                             {{ __($page.props?.property?.type) }}
                         </p>
 
@@ -67,6 +67,14 @@ const handleFullScreenImage = (image) => {
                         <!-- {{ $page.props?.property.bed_types }} -->
                     </div>
 
+                    <div class="flex lowercase">
+                        <span v-for="recomend, key in $page.props?.property?.recomended" class="flex">
+                            <icons.UserIcon class="w-6 h-6" v-for="n in parseInt(recomend.title.match(/\d+/)[0])" />
+                            {{ __('Recommended') }}
+                            {{ __(recomend.title) }}
+                        </span>
+                    </div>
+
                     <div class="mt-4 ">
                         <a :href="$page.props?.property?.google_maps_link" target="_blank"
                             class="text-md font-semibold text-gray-900 sm:text-md dark:text-gray-300 hover:font-bold transition">
@@ -83,9 +91,9 @@ const handleFullScreenImage = (image) => {
 
 
                     <div class="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
-                        <Tooltip :text="$page.props?.property.is_liked ? __('Don\'t like') : __('Like')">
+                        <!-- <Tooltip :text="$page.props?.property.is_liked ? __('Don\'t like') : __('Like')"> -->
                             <LikeButton :item="$page.props?.property" />
-                        </Tooltip>
+                       <!--  </Tooltip> -->
 
                         <Tooltip :text="__('Check Availability')">
                             <a href="#availability" title=""
@@ -93,7 +101,7 @@ const handleFullScreenImage = (image) => {
                                 role="button">
                                 <icons.CalendarIcon class="w-5 h-5 -ms-2 me-2 sm:ms-0 sm:me-0" />
                                 <span class="sm:hidden">
-                                {{ __('Check availability') }}
+                                    {{ __('Check availability') }}
                                 </span>
                             </a>
                         </Tooltip>

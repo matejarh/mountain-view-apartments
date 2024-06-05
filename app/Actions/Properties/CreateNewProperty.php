@@ -105,11 +105,11 @@ class CreateNewProperty implements CreatesNewProperties
     private function fillMissingLocales(array &$input): void
     {
         foreach (config('app.supported_locales') as $locale) {
-            $input['title'][$locale] = $input['title'][$locale] ?? '';
-            $input['quote'][$locale] = $input['quote'][$locale] ?? '';
-            $input['description'][$locale] = $input['description'][$locale] ?? '';
-            $input['long_description'][$locale] = $input['long_description'][$locale] ?? '';
-            $input['keywords'][$locale] = $input['keywords'][$locale] ?? '';
+            $input['title'][$locale] = $input['title'][$locale] ?? $input['title'][config('app.fallback_locale')] ?? '';
+            $input['quote'][$locale] = $input['quote'][$locale] ?? $input['quote'][config('app.fallback_locale')] ?? '';
+            $input['description'][$locale] = $input['description'][$locale] ?? $input['description'][config('app.fallback_locale')] ?? '';
+            $input['long_description'][$locale] = $input['long_description'][$locale] ?? $input['long_description'][config('app.fallback_locale')] ?? '';
+            $input['keywords'][$locale] = $input['keywords'][$locale] ?? $input['keywords'][config('app.fallback_locale')] ?? '';
             $input['rules'][$locale] = $input['rules'][$locale] ?? $input['rules'][config('app.fallback_locale')] ?? [];
         }
     }

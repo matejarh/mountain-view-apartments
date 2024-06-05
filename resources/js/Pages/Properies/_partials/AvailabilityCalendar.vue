@@ -82,13 +82,15 @@ const options = ref({
         count: 3,
     },
 })
-watch(disabledDates, () => {
-    dateRangePicker.update({
+const dateRangePickerRef = ref(null)
+
+/* watch(disabledDates, () => {
+    dateRangePickerRef.value.update({
         disabledDates: disabledDates,
         markers: notAvailableMarkers,
         highlight: highlightedDates.value,
     });
-});
+}); */
 const rangePickerRef = ref(null)
 
 const book = () => {
@@ -113,10 +115,10 @@ const book = () => {
                     {{ __('Availability Calendar') }}</h2>
                 <div class="flex justify-center w-full mb-2">
                     <div id="rangepicker" ref="rangePickerRef">
-                        <VueDatePicker v-model="date" :range="options.range" :multi-calendars="options.multi"
-                            :min-date="tomorrow" :max-date="yearFromNow" prevent-min-max-navigation
-                            :markers="notAvailableMarkers" :disabled-dates="disabledDates" :highlight="highlightedDates"
-                            :enable-time-picker="false" :locale="$page.props?.locale"
+                        <VueDatePicker ref="dateRangePickerRef" v-model="date" :range="options.range"
+                            :multi-calendars="options.multi" :min-date="tomorrow" :max-date="yearFromNow"
+                            prevent-min-max-navigation :markers="notAvailableMarkers" :disabled-dates="disabledDates"
+                            :highlight="highlightedDates" :enable-time-picker="false" :locale="$page.props?.locale"
                             :format="$page.props?.date_format_pattern" :dark="helpers.isDark" :six-weeks="true" inline
                             auto-apply :placeholder="__('Select arrival & departure dates...')">
 
@@ -133,7 +135,7 @@ const book = () => {
 
                 </div>
 
-                <p class="flex mb-6 font-light text-gray-100 dark:text-gray-300 md:text-lg rounded-lg">
+                <p class="flex  font-light text-gray-100 dark:text-gray-300 md:text-lg rounded-lg">
                     <span class="mx-auto flex items-center">
                         <InfoIcon class="w-6 h-6 me-2" />
                         {{ __('Availability calendar') }} {{ __('for') }} {{
@@ -141,6 +143,10 @@ const book = () => {
 
                     </span>
                 </p>
+                <div class="mb-6 items-center justify-center mt-1 font-light text-gray-100 dark:text-gray-300 md:text-lg rounded-lg">
+                    <p>{{ __('Min') }} <span class="lowercase">{{ $page.props?.current_prices.min_days }} {{ __('night', $page.props?.current_prices.min_days) }} {{ __('for') }} {{ __('Current Season') }}</span></p>
+                    <p class="text-sm text-gray-200 dark:text-gray-400">{{__('The minimum number of nights depends on the season and is subject to change')}}</p>
+                </div>
                 <TransparentButton @click="book">
                     {{ __('Book selected dates') }}</TransparentButton>
             </div>

@@ -11,6 +11,7 @@ use App\Rules\AllowedBookingRange;
 use App\Rules\DateRangeOverlap;
 use App\Rules\Recaptcha;
 use App\Rules\SpamFree;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
 
@@ -25,16 +26,16 @@ class CreateReservation implements CreatesReservations
      */
     public function create(Property $property, array $input)
     {
-        $attributeNames = array(
+        $attributeNames = [
+
             'guests' => __('Guests'),
             'message' => __('Message'),
             'arrival' => __('Arrival'),
             'departure' => __('Departure'),
-        );
+        ];
 
-        $arrival = \Carbon\Carbon::parseFromLocale($input['arrival'], app()->currentLocale())->format('Y-m-d') . ' 16:00:00';
-        $departure = \Carbon\Carbon::parseFromLocale($input['departure'], app()->currentLocale())->format('Y-m-d') . ' 12:00:00';
-        $propertyId = $property->id;
+        $arrival = Carbon::parseFromLocale($input['arrival'], app()->currentLocale())->format('Y-m-d') . ' 16:00:00';
+        $departure = Carbon::parseFromLocale($input['departure'], app()->currentLocale())->format('Y-m-d') . ' 12:00:00';
 
         $input['date_range'] = [$arrival,$departure];
 
@@ -48,7 +49,7 @@ class CreateReservation implements CreatesReservations
             'guests.pets' => ['boolean'],
             'arrival' => ['required', 'date', 'before:departure', new AllowedBookingRange],
             'departure' => ['required', 'date', 'after:arrival', new AllowedBookingRange],
-            'date_range' => [new DateRangeOverlap($propertyId)],
+            'date_range' => [new DateRangeOverlap($property->id)],
             'captcha_token' => [new Recaptcha],
 
         ], [

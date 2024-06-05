@@ -40,7 +40,6 @@ const likedClasses = computed(() => {
 <template>
     <div class="">
         <Tooltip :text="__(likeButtonText)">
-            {{ }}
             <button @click="recaptcha" title="" :class="likedClasses"
                 class="flex w-full relative items-center justify-center py-2.5 px-5 text-sm font-medium focus:outline-none border focus:z-10 focus:ring-4 rounded-lg "
                 role="button">
