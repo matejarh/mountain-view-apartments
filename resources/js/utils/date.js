@@ -1,8 +1,8 @@
 import { formatDistanceToNow, formatDate } from 'date-fns';
-import { fr, enUS, de, sl, it, hu, cs } from 'date-fns/locale';
+import { fr, enUS, de, sl, it, hu, cs, es } from 'date-fns/locale';
 
 // Map of available locales
-const locales = { en: enUS, fr: fr, de: de, sl: sl, it: it, hu: hu, cs: cs };
+const locales = { en: enUS, fr: fr, de: de, sl: sl, it: it, hu: hu, cs: cs, es: es };
 
 export const getFormattedDate = (date, localeKey) => {
     if (date === null || date === 'undefined') {
