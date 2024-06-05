@@ -920,6 +920,21 @@
     "Discount": "Remise",
     "Enter discount in %": "Entrez la remise en %",
     "Add Discount": "Ajouter une remise",
-    "Remove Discount": "Supprimer la remise"
+    "Remove Discount": "Supprimer la remise",
+    "on": "sur",
+    "with": "avec",
+    "Desktop computer": "Ordinateur de bureau",
+    "Updated property information": "Informations sur la propriété mises à jour",
+    "Created new page": "Nouvelle page créée",
+    "with title": "avec le titre",
+    "for 1 adult": "pour 1 adulte",
+    "for 2 adults": "pour 2 adultes",
+    "for 3 adults": "pour 3 adultes",
+    "for 4 adults": "pour 4 adultes",
+    "for 5 adults": "pour 5 adultes",
+    "Book selected dates": "Réserver les dates sélectionnées",
+    "You don't like": "Tu n'aimes pas",
+    "Current Season": "Saison actuelle",
+    "The minimum number of nights depends on the season and is subject to change": "Le nombre minimum de nuits dépend de la saison et est susceptible de changer"
 
 }

@@ -917,5 +917,21 @@
     "Discount": "Discount",
     "Enter discount in %": "Enter discount in %",
     "Add Discount": "Add Discount",
-    "Remove Discount": "Remove Discount"
+    "Remove Discount": "Remove Discount",
+    "on": "on",
+    "with": "with",
+    "Desktop computer": "Desktop computer",
+    "Updated property information": "Updated property information",
+    "Created new page": "Created new page",
+    "with title": "with title",
+    "for 1 adult": "for 1 adult",
+    "for 2 adults": "for 2 adults",
+    "for 3 adults": "for 3 adults",
+    "for 4 adults": "for 4 adults",
+    "for 5 adults": "for 5 adults",
+
+    "Book selected dates": "Book selected dates",
+    "You don't like": "You don't like",
+    "Current Season": "Current Season",
+    "The minimum number of nights depends on the season and is subject to change": "The minimum number of nights depends on the season and is subject to change"
 }

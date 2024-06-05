@@ -920,5 +920,20 @@
     "Discount": "Popust",
     "Enter discount in %": "Vnesite popust v %",
     "Add Discount": "Dodaj popust",
-    "Remove Discount": "Odstrani popust"
+    "Remove Discount": "Odstrani popust",
+    "on": "na",
+    "with": "z",
+    "Desktop computer": "Namizni računalnik",
+    "Updated property information": "Posodobljene informacije o lastnini",
+    "Created new page": "Ustvarjena nova stran",
+    "with title": "z naslovom",
+    "for 1 adult": "za 1 odraslo osebo",
+    "for 2 adults": "za 2 odrasli osebi",
+    "for 3 adults": "za 3 odrasle osebe",
+    "for 4 adults": "za 4 odrasle osebe",
+    "for 5 adults": "za 5 odraslih oseb",
+    "Book selected dates": "Rezervirajte izbrane datume",
+    "You don't like": "Ne marate",
+    "Current Season": "Trenutna sezona",
+    "The minimum number of nights depends on the season and is subject to change": "Minimalno število noči je odvisno od sezone in je lahko predmet sprememb"
 }

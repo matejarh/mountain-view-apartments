@@ -908,5 +908,20 @@
     "Discount": "Kedvezmény",
     "Enter discount in %": "Adja meg a kedvezményt %-ban",
     "Add Discount": "Kedvezmény hozzáadása",
-    "Remove Discount": "Kedvezmény eltávolítása"
+    "Remove Discount": "Kedvezmény eltávolítása",
+    "on": "on",
+    "with": "val",
+    "Desktop computer": "Asztali számítógép",
+    "Updated property information": "Frissített ingatlaninformációk",
+    "Created new page": "Új oldal létrehozva",
+    "with title": "címmel",
+    "for 1 adult": "1 felnőttnek",
+    "for 2 adults": "2 felnőttnek",
+    "for 3 adults": "3 felnőttnek",
+    "for 4 adults": "4 felnőttnek",
+    "for 5 adults": "5 felnőttnek",
+    "Book selected dates": "Foglalja le a kiválasztott dátumokat",
+    "You don't like": "Nem szereted",
+    "Current Season": "Jelenlegi szezon",
+    "The minimum number of nights depends on the season and is subject to change": "Az éjszakák minimális száma az évszaktól függ, és változhat"
 }

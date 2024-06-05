@@ -920,6 +920,21 @@
     "Discount": "Sleva",
     "Enter discount in %": "Zadejte slevu v %",
     "Add Discount": "Přidat slevu",
-    "Remove Discount": "Odstranit slevu"
+    "Remove Discount": "Odstranit slevu",
+    "on": "na",
+    "with": "s",
+    "Desktop computer": "Stolní počítač",
+    "Updated property information": "Aktualizované informace o nemovitosti",
+    "Created new page": "Vytvořena nová stránka",
+    "with title": "s názvem",
+    "for 1 adult": "pro 1 dospělého",
+    "for 2 adults": "pro 2 dospělé",
+    "for 3 adults": "pro 3 dospělé",
+    "for 4 adults": "pro 4 dospělé",
+    "for 5 adults": "pro 5 dospělých",
+    "Book selected dates": "Rezervujte vybrané termíny",
+    "You don't like": "Nemáš rád",
+    "Current Season": "Aktuální sezóna",
+    "The minimum number of nights depends on the season and is subject to change": "Minimální počet nocí závisí na sezóně a může se změnit"
 
 }
