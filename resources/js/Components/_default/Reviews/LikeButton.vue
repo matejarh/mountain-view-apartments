@@ -3,7 +3,7 @@ import { computed } from 'vue';
 import { useForm, usePage } from '@inertiajs/vue3';
 import { useReCaptcha } from 'vue-recaptcha-v3';
 import { icons } from '@/icons';
-import Tooltip from '../Tooltip.vue';
+import Tooltip from '@/Components/_default/Tooltip.vue';
 
 const props = defineProps({
     item: Object,

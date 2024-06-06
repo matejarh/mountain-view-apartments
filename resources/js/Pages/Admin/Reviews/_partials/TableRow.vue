@@ -101,7 +101,7 @@ const destroy = () => {
             {{ item.created_at_human_readable }}
 
         </td>
-        <td class="px-6 py-4">
+        <td class="sticky right-0 px-6 py-4 bg-white dark:bg-gray-800">
             <div class="flex space-x-2 items-center">
                 <Tooltip :key="`showReviewTooltip${item.id}`" :text="__('Show')">
                     <button class="text-primary-700 dark:text-primary-800" @click="$inertia.get(route('admin.reviews.show', item))">

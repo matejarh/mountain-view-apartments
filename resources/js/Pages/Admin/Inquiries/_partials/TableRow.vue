@@ -113,7 +113,7 @@ const destroy = () => {
                 {{ getFormattedDate(item.updated_at, $page.props.locale) }}
             </time>
         </td> -->
-        <td class="px-6 py-4">
+        <td class="px-6 py-4 sticky right-0 bg-white dark:bg-gray-700">
             <div class="flex space-x-2 items-center">
 
                 <Tooltip :key="`showInquiryTooltip${item.id}`" :text="__('Show')">

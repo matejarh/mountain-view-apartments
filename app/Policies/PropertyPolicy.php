@@ -10,10 +10,11 @@ class PropertyPolicy
 {
     public function before(User $user, string $ability): bool|null
     {
-        if ($user->is_admin) {
+        return !!$user->is_admin;
+        /* if ($user->is_admin) {
             return true;
         }
-        return null;
+        return null; */
     }
     /**
      * Determine whether the user can view any models.
@@ -36,7 +37,7 @@ class PropertyPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return !!$user->is_admin;
     }
 
     /**
@@ -44,7 +45,7 @@ class PropertyPolicy
      */
     public function update(User $user, Property $property): bool
     {
-        return $user->id === $property->owner_id;
+        return !!$user->is_admin;
     }
 
     /**
@@ -52,7 +53,7 @@ class PropertyPolicy
      */
     public function delete(User $user, Property $property): bool
     {
-        return $user->id === $property->user_id;
+        return !!$user->is_admin;
     }
 
     /**
@@ -60,7 +61,7 @@ class PropertyPolicy
      */
     public function restore(User $user, Property $property): bool
     {
-        //
+        return !!$user->is_admin;
     }
 
     /**
@@ -68,6 +69,6 @@ class PropertyPolicy
      */
     public function forceDelete(User $user, Property $property): bool
     {
-        //
+        return !!$user->is_admin;
     }
 }

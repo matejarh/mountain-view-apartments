@@ -36,3 +36,10 @@ onBeforeMount(() => {
 
     </section>
 </template>
+
+
+<style>
+.grecaptcha-badge {
+    display: none;
+}
+</style>

@@ -53,10 +53,10 @@ class Property extends Model
         'google_maps_link',
         'avatar_url',
         'seo_description',
-        'is_liked',
-        'is_reviewed',
+        'is_liked', // by auth()->user()
+        'is_reviewed', // by auth()->user()
         'average_review_score',
-        'unavailable_dates',
+        // 'unavailable_dates',
     ];
 
     /**
@@ -183,7 +183,8 @@ class Property extends Model
         if (auth()->check()) {
             return [
                 'delete-property' => auth()->user()->can('delete', $this),
-                'update-property' => auth()->user()->can('update', $this)
+                'update-property' => auth()->user()->can('update', $this),
+                'create-property' => auth()->user()->can('create', $this),
             ];
         }
         return [];
@@ -301,7 +302,6 @@ class Property extends Model
     public function scopeFilter(Builder $query, PropertyFilters $filters): Builder
     {
         return $filters->apply($query);
-
     }
 
     public function fetchListForDropdowns(): \Illuminate\Database\Eloquent\Collection|Collection

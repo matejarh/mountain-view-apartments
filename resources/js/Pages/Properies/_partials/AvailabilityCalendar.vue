@@ -24,7 +24,7 @@ const __ = appContext.config.globalProperties.__;
 const date = ref([]);
 
 const disabledDates = computed(() => {
-    return page.props.property.unavailable_dates
+    return page.props.unavailable_dates
 });
 
 const addDays = (date, days) => {
@@ -71,8 +71,8 @@ const yearFromNow = computed(() => {
 
 const options = ref({
     range: {
-        minRange: page.props.current_prices.min_days,
-        maxRange: page.props.current_prices.max_days,
+        minRange: page.props.current_prices?.min_days ?? datepickerRange.min_days,
+        maxRange: page.props.current_prices?.max_days ?? datepickerRange.max_days,
         partialRange: false,
         noDisabledRange: true,
     },
@@ -110,7 +110,7 @@ const book = () => {
 <template>
     <ShapedSection class="pt-8 sm:pt-4 md:pt-0" :color="{ light: 'primary-700', dark: 'primary-900' }">
         <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
-            <div class="mx-auto max-w-screen-xl text-center">
+            <div class="mx-auto max-w-screen-xl text-center" v-if="$page.props?.current_prices">
                 <h2 class="mb-4 text-4xl tracking-tight font-extrabold leading-tight text-white dark:text-white">
                     {{ __('Availability Calendar') }}</h2>
                 <div class="flex justify-center w-full mb-2">
@@ -149,6 +149,10 @@ const book = () => {
                 </div>
                 <TransparentButton @click="book">
                     {{ __('Book selected dates') }}</TransparentButton>
+            </div>
+            <div class="mx-auto max-w-screen-xl text-center" v-else>
+                <p class="mb-4 text-4xl tracking-tight font-extrabold leading-tight text-white dark:text-white">
+                    {{ __('Availability Calendar') }} {{ __('Not Available') }}</p>
             </div>
         </div>
     </ShapedSection>

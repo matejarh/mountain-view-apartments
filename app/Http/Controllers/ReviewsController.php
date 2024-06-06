@@ -35,7 +35,7 @@ class ReviewsController extends Controller
                 'create_properties' => auth()->check() ? auth()->user()->can('create', Review::class) : false,
             ],
             'seo' => [
-                'title' => __('Reviews'),
+                'title' => __('Reviews') . ' ' . __('for') . ' ' . $property->title->$lang,
                 'description' => '',
                 'keywords' => ''
             ]
