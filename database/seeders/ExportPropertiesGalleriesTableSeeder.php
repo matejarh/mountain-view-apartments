@@ -43,6 +43,14 @@ class ExportPropertiesGalleriesTableSeeder extends Seeder
                 'created_at' => NULL,
                 'updated_at' => NULL,
             ),
+            3 => 
+            array (
+                'id' => 4,
+                'property_id' => 4,
+                'gallery_id' => 11,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+            ),
         ));
         
         

@@ -23,16 +23,16 @@ class ExportImagesTableSeeder extends Seeder
             array (
                 'id' => 1,
                 'user_id' => 1,
-                'slug' => 'nassfeld-9iCW3',
+                'slug' => 'nassfeld-sh4bA',
                 'name' => 'Nassfeld',
-                'description' => '',
+                'description' => 'Mal opisa',
                 'image_path' => 'galleries-photos/test-admin/4af1fb1a278b345e26ceb06aaff8f3008559bf9f9d110fbc1241e54bcfce6c06.jpg',
                 'thumb_path' => 'galleries-photos/test-admin/thumbs/4af1fb1a278b345e26ceb06aaff8f3008559bf9f9d110fbc1241e54bcfce6c06.jpg',
                 'tile_path' => 'galleries-photos/test-admin/tiles/4af1fb1a278b345e26ceb06aaff8f3008559bf9f9d110fbc1241e54bcfce6c06.jpg',
                 'likes_count' => 0,
                 'comments_count' => 0,
                 'created_at' => '2024-05-06 05:49:12',
-                'updated_at' => '2024-05-14 17:57:29',
+                'updated_at' => '2024-06-03 20:36:19',
             ),
             1 => 
             array (
@@ -738,6 +738,21 @@ class ExportImagesTableSeeder extends Seeder
                 'comments_count' => 0,
                 'created_at' => '2024-05-18 17:42:17',
                 'updated_at' => '2024-05-18 17:42:17',
+            ),
+            48 => 
+            array (
+                'id' => 50,
+                'user_id' => 1,
+                'slug' => 'bled-cream-cake-OlPEJ',
+                'name' => 'Bled Cream Cake',
+                'description' => NULL,
+                'image_path' => 'galleries-photos/administrator/4e085aaa4ef4fd35d4665e7668c25c4a8e2f46be82c045788f452674e54ec96c.jpg',
+                'thumb_path' => 'galleries-photos/administrator/thumbs/4e085aaa4ef4fd35d4665e7668c25c4a8e2f46be82c045788f452674e54ec96c.jpg',
+                'tile_path' => 'galleries-photos/administrator/tiles/4e085aaa4ef4fd35d4665e7668c25c4a8e2f46be82c045788f452674e54ec96c.jpg',
+                'likes_count' => 0,
+                'comments_count' => 0,
+                'created_at' => '2024-05-20 23:27:08',
+                'updated_at' => '2024-05-20 23:27:10',
             ),
         ));
         

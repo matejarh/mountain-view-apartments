@@ -44,5 +44,12 @@ class DatabaseSeeder extends Seeder
         $this->call(ExportLatestPropertiesFacilitiesTableSeeder::class);
         $this->call(ExportLatestPropertiesGalleriesTableSeeder::class);
         $this->call(ExportLatestPagesGalleriesTableSeeder::class);
+        $this->call(ExportImagesTableSeeder::class);
+        $this->call(ExportGalleriesTableSeeder::class);
+        $this->call(ExportGalleriesImagesTableSeeder::class);
+        $this->call(ExportPropertiesTableSeeder::class);
+        $this->call(ExportPropertiesGalleriesTableSeeder::class);
+        $this->call(ExportPagesTableSeeder::class);
+        $this->call(ExportPagesGalleriesTableSeeder::class);
     }
 }

@@ -24,18 +24,18 @@ class ExportGalleriesImagesTableSeeder extends Seeder
                 'id' => 13,
                 'gallery_id' => 4,
                 'image_id' => 2,
-                'order' => 1,
+                'order' => 2,
                 'created_at' => NULL,
-                'updated_at' => NULL,
+                'updated_at' => '2024-05-25 16:48:58',
             ),
             1 => 
             array (
                 'id' => 14,
                 'gallery_id' => 4,
                 'image_id' => 1,
-                'order' => 2,
+                'order' => 3,
                 'created_at' => NULL,
-                'updated_at' => NULL,
+                'updated_at' => '2024-05-25 16:48:56',
             ),
             2 => 
             array (
@@ -51,9 +51,9 @@ class ExportGalleriesImagesTableSeeder extends Seeder
                 'id' => 17,
                 'gallery_id' => 5,
                 'image_id' => 11,
-                'order' => 7,
+                'order' => 6,
                 'created_at' => NULL,
-                'updated_at' => '2024-05-15 07:24:42',
+                'updated_at' => '2024-05-19 11:56:13',
             ),
             4 => 
             array (
@@ -141,9 +141,9 @@ class ExportGalleriesImagesTableSeeder extends Seeder
                 'id' => 27,
                 'gallery_id' => 5,
                 'image_id' => 17,
-                'order' => 6,
+                'order' => 7,
                 'created_at' => '2024-05-15 04:41:51',
-                'updated_at' => '2024-05-15 07:24:46',
+                'updated_at' => '2024-05-19 11:56:13',
             ),
             14 => 
             array (
@@ -495,6 +495,150 @@ class ExportGalleriesImagesTableSeeder extends Seeder
                 'order' => 16,
                 'created_at' => '2024-05-18 18:02:01',
                 'updated_at' => '2024-05-18 18:02:01',
+            ),
+            53 => 
+            array (
+                'id' => 67,
+                'gallery_id' => 8,
+                'image_id' => 2,
+                'order' => 1,
+                'created_at' => '2024-05-20 11:06:25',
+                'updated_at' => '2024-05-20 11:06:25',
+            ),
+            54 => 
+            array (
+                'id' => 68,
+                'gallery_id' => 8,
+                'image_id' => 43,
+                'order' => 2,
+                'created_at' => '2024-05-20 11:06:41',
+                'updated_at' => '2024-05-20 11:06:41',
+            ),
+            55 => 
+            array (
+                'id' => 69,
+                'gallery_id' => 8,
+                'image_id' => 38,
+                'order' => 3,
+                'created_at' => '2024-05-20 11:06:45',
+                'updated_at' => '2024-05-20 11:06:45',
+            ),
+            56 => 
+            array (
+                'id' => 70,
+                'gallery_id' => 8,
+                'image_id' => 37,
+                'order' => 5,
+                'created_at' => '2024-05-20 11:06:48',
+                'updated_at' => '2024-05-20 23:28:00',
+            ),
+            57 => 
+            array (
+                'id' => 71,
+                'gallery_id' => 8,
+                'image_id' => 26,
+                'order' => 6,
+                'created_at' => '2024-05-20 11:06:52',
+                'updated_at' => '2024-05-20 23:27:58',
+            ),
+            58 => 
+            array (
+                'id' => 72,
+                'gallery_id' => 9,
+                'image_id' => 1,
+                'order' => 1,
+                'created_at' => '2024-05-20 16:31:17',
+                'updated_at' => '2024-05-20 16:31:17',
+            ),
+            59 => 
+            array (
+                'id' => 73,
+                'gallery_id' => 9,
+                'image_id' => 12,
+                'order' => 2,
+                'created_at' => '2024-05-20 16:31:27',
+                'updated_at' => '2024-05-20 16:31:27',
+            ),
+            60 => 
+            array (
+                'id' => 74,
+                'gallery_id' => 9,
+                'image_id' => 14,
+                'order' => 3,
+                'created_at' => '2024-05-20 16:31:33',
+                'updated_at' => '2024-05-20 16:31:33',
+            ),
+            61 => 
+            array (
+                'id' => 75,
+                'gallery_id' => 9,
+                'image_id' => 16,
+                'order' => 5,
+                'created_at' => '2024-05-20 16:31:38',
+                'updated_at' => '2024-06-03 20:35:46',
+            ),
+            62 => 
+            array (
+                'id' => 76,
+                'gallery_id' => 9,
+                'image_id' => 17,
+                'order' => 6,
+                'created_at' => '2024-05-20 16:31:42',
+                'updated_at' => '2024-06-03 20:35:39',
+            ),
+            63 => 
+            array (
+                'id' => 77,
+                'gallery_id' => 9,
+                'image_id' => 18,
+                'order' => 4,
+                'created_at' => '2024-05-20 16:31:46',
+                'updated_at' => '2024-06-03 20:35:46',
+            ),
+            64 => 
+            array (
+                'id' => 78,
+                'gallery_id' => 9,
+                'image_id' => 15,
+                'order' => 7,
+                'created_at' => '2024-05-20 16:31:53',
+                'updated_at' => '2024-05-20 16:31:53',
+            ),
+            65 => 
+            array (
+                'id' => 79,
+                'gallery_id' => 8,
+                'image_id' => 50,
+                'order' => 4,
+                'created_at' => '2024-05-20 23:27:17',
+                'updated_at' => '2024-05-20 23:28:00',
+            ),
+            66 => 
+            array (
+                'id' => 80,
+                'gallery_id' => 4,
+                'image_id' => 3,
+                'order' => 1,
+                'created_at' => '2024-05-25 16:48:49',
+                'updated_at' => '2024-05-25 16:48:58',
+            ),
+            67 => 
+            array (
+                'id' => 81,
+                'gallery_id' => 10,
+                'image_id' => 3,
+                'order' => 1,
+                'created_at' => '2024-05-26 00:14:44',
+                'updated_at' => '2024-05-26 00:14:44',
+            ),
+            68 => 
+            array (
+                'id' => 82,
+                'gallery_id' => 11,
+                'image_id' => 29,
+                'order' => 1,
+                'created_at' => '2024-05-27 03:01:42',
+                'updated_at' => '2024-05-27 03:01:42',
             ),
         ));
         
