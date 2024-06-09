@@ -3,6 +3,7 @@ import DefaultLayout from '@/Layouts/DefaultLayout.vue';
 import ShapedSection from '@/Components/_default/ShapedSection.vue';
 import Heading2White from '@/Components/_default/Heading2White.vue';
 import Wrapper from '@/Components/_default/Wrapper.vue';
+import ReviewsTable from './_partials/ReviewsTable.vue';
 </script>
 
 <template>
@@ -26,8 +27,10 @@ import Wrapper from '@/Components/_default/Wrapper.vue';
                 </div>
 
             </ShapedSection>
+            <Wrapper>
 
-            {{ $page.props?.reviews.data }}
+                <ReviewsTable />
+            </Wrapper>
 
         </div>
     </DefaultLayout>

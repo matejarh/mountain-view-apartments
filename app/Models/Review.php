@@ -86,6 +86,16 @@ class Review extends Model
         return $this->reviewedTrimed();
     }
 
+    public function createdAtHumanReadable(): string
+    {
+        return $this->created_at->diffForHumans();
+    }
+
+    public function getCreatedAtHumanReadableAttribute(): string
+    {
+        return $this->createdAtHumanReadable();
+    }
+
     public function approve(): void
     {
         $this->approved_at = now();
@@ -121,15 +131,5 @@ class Review extends Model
     public function scopeApproved(Builder $query,) :Builder
     {
         return $query->whereNotNull('approved_at');
-    }
-
-    public function createdAtHumanReadable(): string
-    {
-        return $this->created_at->diffForHumans();
-    }
-
-    public function getCreatedAtHumanReadableAttribute(): string
-    {
-        return $this->createdAtHumanReadable();
     }
 }

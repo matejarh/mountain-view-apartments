@@ -63,18 +63,15 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="">
+    <div class="relative">
         <span ref="tooltipButton" type="button" class="font-semibold hover:font-bold relative block">
             <slot />
         </span>
 
         <div ref="tooltipContent" role="tooltip"
-            class="absolute z-50 invisible inline-block px-3 py-2 whitespace-nowrap text-sm font-medium text-white transition-opacity duration-300 bg-gray-950 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-950">
+            class="absolute z-[100000] invisible inline-block px-3 py-2 whitespace-nowrap text-sm font-medium text-white transition-opacity duration-300 bg-gray-950 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-950">
             {{ text }}
             <div class="tooltip-arrow" data-popper-arrow></div>
         </div>
-
-
-
     </div>
 </template>

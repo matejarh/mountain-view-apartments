@@ -304,7 +304,7 @@ class Property extends Model
         return $filters->apply($query);
     }
 
-    public function fetchListForDropdowns(): \Illuminate\Database\Eloquent\Collection|Collection
+    public static function fetchListForDropdowns(): \Illuminate\Database\Eloquent\Collection|Collection
     {
         return cache()->rememberForever('properties_list_for_dropdown', function () {
             return Property::latest()->get()->map(function (Property $property) {

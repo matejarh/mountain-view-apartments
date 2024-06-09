@@ -83,7 +83,7 @@ const showBled = () => {
 }
 
 const options = ref({
-    dragging: true,
+    dragging: false,
     zoomControl: true,
     boxZoom: false,
     scrollWheelZoom: false

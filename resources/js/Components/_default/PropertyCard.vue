@@ -79,7 +79,7 @@ onMounted(() => {
                         <icons.InfoIcon class="w-3.5 h-3.5 ms-2" />
 
                     </PrimaryButton>
-                    <PrimaryButton @click="$inertia.get(route('reservations.create', $page.props.locale))">
+                    <PrimaryButton @click="$inertia.get(route('reservations.create', {lang: $page.props.locale, property: property.slug}))">
 
                         {{ __('Book Now') }}
                         <icons.CalendarIcon class="w-3.5 h-3.5 ms-2" />

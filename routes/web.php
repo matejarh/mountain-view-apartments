@@ -8,10 +8,8 @@ use App\Http\Controllers\PropertiesController;
 use App\Http\Controllers\ReservationsController;
 use App\Http\Controllers\ReviewsController;
 use App\Http\Controllers\StoriesController;
-use App\Http\Controllers\UserProfileController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
+
 
 Route::get('/', function() {
     return redirect(app()->currentLocale()."/home");
@@ -88,6 +86,10 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
 
     });
 
+
+    /**
+     * Routes with $lang prefix
+     */
     Route::group(['prefix' => '{lang}', 'middleware' => 'web'], function () {
         Route::name('reviews.')->prefix('my-reviews')->namespace('reviews')->group(function () {
             Route::get('/', [ReviewsController::class, 'myIndex'])->name('index');
@@ -102,8 +104,8 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
 
         Route::name('reservations.')->prefix('my-reservations')->namespace('reservations')->group(function () {
             Route::get('/', [ReservationsController::class, 'index'])->name('index');
-            Route::get('/{reservation}', [ReservationsController::class, 'show'])->name('show');
             Route::get('/create', [ReservationsController::class, 'create'])->name('create');
+            Route::get('/{reservation}', [ReservationsController::class, 'show'])->name('show');
         });
     });
 });

@@ -21,6 +21,18 @@ class PropertiesTest extends TestCase
             ->assertSee('properties');
     }
 
+    public function test_specific_property_screen_may_be_rendered_for_guest(): void
+    {
+        $property = Property::factory()->create();
+
+        $response = $this->get(route('properties.show', [app()->currentLocale(), $property]))
+            ->assertStatus(200)
+            ->assertSee('latest_reviews')
+            ->assertSee('current_prices')
+            ->assertSee('unavailable_dates')
+            ->assertSee('property');
+    }
+
     public function test_properties_screen_may_be_rendered_for_user(): void
     {
 

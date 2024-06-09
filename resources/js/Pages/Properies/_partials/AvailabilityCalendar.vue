@@ -2,7 +2,7 @@
 import { ref, watch, computed, getCurrentInstance } from 'vue';
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css'
-import { useForm, usePage } from '@inertiajs/vue3';
+import { router, useForm, usePage } from '@inertiajs/vue3';
 import { useHelperStore } from '@/stores/helpers';
 import InfoIcon from '@/Icons/InfoIcon.vue';
 import ShapedSection from '@/Components/_default/ShapedSection.vue';
@@ -96,7 +96,8 @@ const rangePickerRef = ref(null)
 const book = () => {
     if (date.value.length > 0) {
         rangePickerRef.value.classList.remove('animate-shake', 'border', 'border-bittersweet-700')
-        alert('You selected from ' + date.value[0].toLocaleDateString(page.props?.locale) + ' to ' + date.value[1].toLocaleDateString(page.props?.locale));
+        router.get(route('reservations.create', page.props.locale), {property: page.props?.property.id, date: date.value})
+        //alert('You selected from ' + date.value[0].toLocaleDateString(page.props?.locale) + ' to ' + date.value[1].toLocaleDateString(page.props?.locale));
     } else {
         rangePickerRef.value.classList.add('animate-shake', 'border', 'border-bittersweet-700')
 
@@ -152,7 +153,7 @@ const book = () => {
             </div>
             <div class="mx-auto max-w-screen-xl text-center" v-else>
                 <p class="mb-4 text-4xl tracking-tight font-extrabold leading-tight text-white dark:text-white">
-                    {{ __('Availability Calendar') }} {{ __('Not Available') }}</p>
+                    {{ __('Availability Calendar') }} <span class="lowercase">{{ __('Not Available') }}</span></p>
             </div>
         </div>
     </ShapedSection>

@@ -94,6 +94,6 @@ class PropertiesController extends Controller
 
     public function fetch(Request $request, Property $property): JsonResponse
     {
-        return response()->json($property->fetchListForDropdowns());
+        return response()->json(Property::fetchListForDropdowns());
     }
 }

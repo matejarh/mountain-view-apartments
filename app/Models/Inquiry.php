@@ -23,6 +23,7 @@ class Inquiry extends Model
     protected $appends = [
         'avatar_url',
         'property_basic_info',
+        'created_at_human_readable',
     ];
 
     protected static function getActivitiesToRecord(): array
@@ -53,6 +54,16 @@ class Inquiry extends Model
             'title' => $this->property->title,
             'avatar_url' => $this->property->avatar_url,
         ];
+    }
+
+    public function createdAtHumanReadable(): string
+    {
+        return $this->created_at->diffForHumans();
+    }
+
+    public function getCreatedAtHumanReadableAttribute(): string
+    {
+        return $this->createdAtHumanReadable();
     }
 
     /**

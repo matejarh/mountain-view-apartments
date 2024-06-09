@@ -56,7 +56,7 @@ const scrollTo = (view) => {
                         <icons.InfoIcon class="w-3.5 h-3.5 ms-2 rtl:rotate-180" />
                     </TransparentButton>
 
-                    <TransparentButton type="button" @click="$inertia.get(route('reservations.create', $page.props.locale))">
+                    <TransparentButton type="button" @click="$inertia.get(route('reservations.create', {lang: $page.props.locale, property: $page.props?.property.id}))">
                         {{ __('Book Now') }}
                         <icons.CalendarIcon class="w-3.5 h-3.5 ms-2 rtl:rotate-180" />
                     </TransparentButton>
