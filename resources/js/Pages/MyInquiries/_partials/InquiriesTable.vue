@@ -2,9 +2,7 @@
 import ActionSection from '@/Components/ActionSection.vue'
 import TableSection from '@/Components/TableSection.vue'
 import TableRow from './TableRow.vue'
-import { ref, watch } from 'vue';
-import FiltersSection from '@/Components/FiltersSection.vue';
-import Checkbox from '@/Components/Checkbox.vue';
+import { ref } from 'vue';
 import TableHeader from '@/Components/TableHeader.vue';
 
 const showInquiryEditDialog = ref(false)
@@ -15,13 +13,8 @@ const handleEditInquiry = (user) => {
     showInquiryEditDialog.value = true
 }
 
-const filters = ref({
-
-})
-
-
 const headers = ref([
-    'Date',
+    'Reservation Date',
     'Apartment',
     'Message',
     'Text',

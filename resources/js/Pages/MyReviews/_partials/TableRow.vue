@@ -1,13 +1,9 @@
 <script setup>
 import TableRow from '@/Components/TableRow.vue';
-import Tooltip from '@/Components/_default/Tooltip.vue';
 import Popover from '@/Components/_default/Popover.vue';
 import RatingStars from '@/Components/_default/Properties/RatingStars.vue';
-import { ref } from 'vue';
-import { useForm } from '@inertiajs/vue3';
 import Badge from '@/Components/_default/Badge.vue';
-import ConfirmationModal from '@/Components/ConfirmationModal.vue';
-import { icons } from '@/icons';
+
 
 const props = defineProps({
     item: Object,
@@ -27,7 +23,7 @@ const props = defineProps({
         </td>
 
         <td class="px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-            <div class="flex items-center">
+            <div class="flex items-center cursor-pointer"  @click="$inertia.get(route('properties.show', { lang: $page.props.locale, property: item?.reviewed_trimed[0] }))">
                 <img class="w-10 h-10 rounded-sm" :src="item?.reviewed_trimed[0].avatar_url"
                     :alt="item?.reviewed_trimed[0]?.title[$page.props?.locale] + 's image'">
                 <div class="ps-3">

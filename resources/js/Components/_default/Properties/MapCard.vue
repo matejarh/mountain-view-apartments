@@ -43,16 +43,16 @@ const propertiesCoordinates = () => {
 
     bounds.push([parseFloat(page.props?.property.coordinates.lat), parseFloat(page.props?.property.coordinates.lng)])
 
-    if (clientCoordinates) {
+    /* if (clientCoordinates) {
         bounds.push([client.location.coords?.latitude, client.location.coords?.longitude])
-    }
+    } */
 
     return bounds
 }
 
-const clientCoordinates = computed(() => {
+/* const clientCoordinates = computed(() => {
     return [client.location.coords?.latitude, client.location.coords?.longitude]
-})
+}) */
 
 const resetBounds = () => {
     bounds.value = propertiesCoordinates()
@@ -61,7 +61,7 @@ const resetBounds = () => {
 }
 
 const options = ref({
-    dragging: true,
+    dragging: false,
     zoomControl: true,
     boxZoom: false,
     scrollWheelZoom: false
@@ -92,7 +92,7 @@ const options = ref({
                 </l-popup>
             </l-marker>
 
-            <l-marker v-if="client.location" :lat-lng="clientCoordinates" class="">
+            <!-- <l-marker v-if="client.location" :lat-lng="clientCoordinates" class="">
                 <l-icon :popup-anchor="[0, -30]"
                     :icon-url="$page.props?.auth.user ? $page.props?.auth.user.profile_photo_url : clientIcon.url"
                     :icon-size="clientIcon.size" />
@@ -103,7 +103,7 @@ const options = ref({
                         </div>
                     </div>
                 </l-popup>
-            </l-marker>
+            </l-marker> -->
 
             <l-control
                 class="leaflet-control top-5 bg-white dark:bg-gray-700 border-primary-600 rounded-lg p-[1em] text-lg flex"

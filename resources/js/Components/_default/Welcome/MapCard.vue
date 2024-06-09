@@ -13,7 +13,7 @@ const props = defineProps({
     properties: Array
 })
 
-const client = useClientStore()
+// const client = useClientStore()
 const page = usePage()
 const helpers = useHelperStore()
 
@@ -22,10 +22,10 @@ const center = ref([0, 0])
 const bounds = ref([])
 const ready = ref(false)
 
-const clientIcon = ref({
+/* const clientIcon = ref({
     size: [40, 40],
     url: new URL('/resources/images/map-markers/marker-red.svg', import.meta.url).href
-})
+}) */
 const propertyIcon = ref({
     size: [40, 40],
     url: new URL('/resources/images/map-markers/marker-blue.svg', import.meta.url).href
@@ -63,24 +63,24 @@ const propertiesCoordinates = () => {
         bounds.push([lat, lng]);
     });
 
-    if (client.location) {
+    /* if (client.location) {
         bounds.push(clientCoordinates)
-    }
+    } */
 
     return bounds
 }
 
-const clientCoordinates = computed(() => {
+/* const clientCoordinates = computed(() => {
     return [client.location?.coords.latitude, client.location?.coords.longitude]
-})
+}) */
 
 const resetBounds = () => {
     bounds.value = propertiesCoordinates()
     helpers.delay(500).then(() => zoom.value -= 1)
 }
-const showBled = () => {
+/* const showBled = () => {
     bounds.value = [[parseFloat(page.props?.properties.find(property => property.name === 'Apartment Two Angels')[0].coordinates.lat), parseFloat(page.props?.properties.find(property => property.name === 'Apartment Two Angels')[0].coordinates.lng)]]
-}
+} */
 
 const options = ref({
     dragging: false,
@@ -100,10 +100,9 @@ const options = ref({
             <l-marker :lat-lng="[key.split(',').map(parseFloat)[0], key.split(',').map(parseFloat)[1]]" class=""
                 v-for="properties, key in groupedByCoordinates" :key="key">
                 <l-icon :popup-anchor="[0, -30]" :icon-url="propertyIcon.url" :icon-size="propertyIcon.size" />
+
                 <l-popup>
                     <div class="content">
-
-
                         <div :class="{ 'border-t': key !== 0 }" class="property-card py-2"
                             v-for="property, key in properties" :key="property.id">
                             <inertia-link
@@ -124,7 +123,7 @@ const options = ref({
                 </l-popup>
             </l-marker>
 
-            <l-marker v-if="client.location" :lat-lng="clientCoordinates" class="">
+            <!-- <l-marker v-if="client.location" :lat-lng="clientCoordinates" class="">
                 <l-icon :popup-anchor="[0, -30]" class="drop-shadow-lg"
                     :icon-url="$page.props?.auth.user ? $page.props?.auth.user.profile_photo_url : clientIcon.url"
                     :icon-size="clientIcon.size" />
@@ -136,7 +135,7 @@ const options = ref({
                     </div>
                 </l-popup>
 
-            </l-marker>
+            </l-marker> -->
 
             <l-control
                 class="leaflet-control top-5 bg-white dark:bg-gray-700 border-primary-700 rounded-lg p-[1em] text-lg flex"

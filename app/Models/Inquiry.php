@@ -74,6 +74,5 @@ class Inquiry extends Model
     public function scopeFilter(Builder $query, InquiryFilters $filters): Builder
     {
         return $filters->apply($query);
-
     }
 }

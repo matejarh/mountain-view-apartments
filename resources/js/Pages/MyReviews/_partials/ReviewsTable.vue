@@ -33,8 +33,7 @@ const headers = ref([
                 <template #tablehead>
                     <TableHeader :headers="headers" />
                 </template>
-                <TableRow v-for="review in $page.props?.reviews.data" :key="review.id" :item="review"
-                    @edit-review="handleEditReview" />
+                <TableRow v-for="review in $page.props?.reviews.data" :key="review.id" :item="review" />
             </TableSection>
         </template>
     </ActionSection>

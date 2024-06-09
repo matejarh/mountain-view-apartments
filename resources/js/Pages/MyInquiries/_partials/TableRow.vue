@@ -7,11 +7,14 @@ import { useForm } from '@inertiajs/vue3';
 import Badge from '@/Components/_default/Badge.vue';
 import ConfirmationModal from '@/Components/ConfirmationModal.vue';
 import { icons } from '@/icons';
+import { getLocalizedDate } from '@/utils/date';
 
 const props = defineProps({
     item: Object,
 })
-
+const formatDate = (date, locale) => {
+    return new Date(date).toLocaleDateString(locale)
+}
 
 </script>
 
@@ -25,11 +28,12 @@ const props = defineProps({
             </div>
         </td>
         <td class="px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-            {{ item.date }}
+            {{ formatDate(item?.date[0], $page.props.locale) }} -
+            {{ formatDate(item?.date[1], $page.props.locale) }}
         </td>
 
         <td class="px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-            <div class="flex items-center">
+            <div class="flex items-center cursor-pointer" @click="$inertia.get(route('properties.show', { lang: $page.props.locale, property: item?.property }))">
                 <img class="w-10 h-10 rounded-sm" :src="item?.property.avatar_url"
                     :alt="item?.property?.title[$page.props?.locale] + 's image'">
                 <div class="ps-3">
@@ -49,7 +53,7 @@ const props = defineProps({
                     {{ item.adults }} {{ __('Adult', item.adults) }}
                 </p>
                 <p>
-                    {{ item.children }} {{ __('Child', item.children) }} & {{ item.pets ? 'Pets' : 'No pets' }}
+                    {{ item.children }} {{ __('Child', item.children) }} {{ item.pets ? '& ' + __('Pets') : '' }}
                 </p>
         </td>
         <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
