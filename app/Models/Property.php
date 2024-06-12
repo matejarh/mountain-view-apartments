@@ -232,7 +232,7 @@ class Property extends Model
 
     public function avatarUrl(): string
     {
-        return $this->galleries->count() > 0 ? $this->galleries[0]->images[0]->thumb_url : $this->defaultPhotoUrl();
+        return $this->galleries->count() > 0 ? $this->galleries[0]->images->count() > 0 ? $this->galleries[0]->images[0]->thumb_url : $this->defaultPhotoUrl() : $this->defaultPhotoUrl();
     }
 
     public function getAvatarUrlAttribute(): string
