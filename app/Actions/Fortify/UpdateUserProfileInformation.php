@@ -35,7 +35,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             'phone' => ['nullable', 'string', 'max:255'],
             'address' => ['nullable', 'string', 'max:255'],
             'country' => ['nullable', 'string', 'max:2', 'min:2'],
-            'photo' => ['nullable', 'mimes:jpg,jpeg,png,svg', 'max:1024'],
+            'photo' => ['nullable', 'mimes:jpg,jpeg,png,svg', 'max:2048'],
         ]);
 
         $validator->setAttributeNames($attributeNames)->validateWithBag('updateProfileInformation');
