@@ -72,7 +72,11 @@ class CreateReservation implements CreatesReservations
             'message' => $input['message'],
         ]);
 
-        Notification::send(User::adminsMailingList(), new ReservationReceived($reservation->fresh()));
+        try {
+            Notification::send(User::adminsMailingList(), new ReservationReceived($reservation->fresh()));
+        } catch (\Exception $e) {
+            \Log::error($e->getMessage());
+        }
 
         session()->flash('flash.banner', __('Reservation has been submitted for approval.'));
     }
