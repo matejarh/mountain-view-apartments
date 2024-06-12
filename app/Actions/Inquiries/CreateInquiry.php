@@ -83,7 +83,12 @@ class CreateInquiry implements StoresGuestInquiry
 
         //dd($inquiry);
 
-        Notification::send(User::adminsMailingList(), new InquiryReceivedNotification($inquiry->fresh()));
+        try {
+            //code...
+            Notification::send(User::adminsMailingList(), new InquiryReceivedNotification($inquiry->fresh()));
+        } catch (\Exception $e) {
+            \Log::error($e->getMessage());
+        }
 
         session()->flash('flash.banner', __('Inquiry has been submited.'));
     }

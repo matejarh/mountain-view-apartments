@@ -34,12 +34,16 @@ class ReplyToInquiry implements RepliesToInquiries
 
         $validator->validate();
 
-        if ($inquiry->owner) {
-            Notification::send($inquiry->owner, new ReplyToInquiryNotification($input, $inquiry));
-        } else {
-            Notification::route('mail', [
-                $input['email'] => $input['email'],
-            ])->notify(new ReplyToInquiryNotification($input, $inquiry));
+        try {
+            if ($inquiry->owner) {
+                Notification::send($inquiry->owner, new ReplyToInquiryNotification($input, $inquiry));
+            } else {
+                Notification::route('mail', [
+                    $input['email'] => $input['email'],
+                ])->notify(new ReplyToInquiryNotification($input, $inquiry));
+            }
+        } catch (\Exception $e) {
+            \Log::error($e->getMessage());
         }
 
         $inquiry->forceFill([

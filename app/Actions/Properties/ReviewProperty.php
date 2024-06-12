@@ -18,7 +18,7 @@ class ReviewProperty implements ReviewsProperties
      * Reviews given property
      *
      * @param  \App\Models\Property  $property
-     * @param  \array  $input
+     * @param  array  $input
      */
     public function review(Property $property, array $input): void
     {
@@ -46,9 +46,11 @@ class ReviewProperty implements ReviewsProperties
 
         if (!$property->isReviewed()) {
             $review = $property->review($input['score'], $input['text']);
-
-            Notification::send(User::adminsMailingList(), new ReviewReceived($review));
-
+            try {
+                Notification::send(User::adminsMailingList(), new ReviewReceived($review));
+            } catch (\Exception $e) {
+                \Log::error($e->getMessage());
+            }
             session()->flash('flash.banner', __('You have reviewed') . ' ' . $property->title->$locale . '.');
             session()->flash('flash.bannerStyle', 'success');
         }
