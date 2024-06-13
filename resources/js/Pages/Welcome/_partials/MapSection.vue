@@ -8,7 +8,7 @@ import MapCard from '@/Components/_default/Welcome/MapCard.vue';
 
 <template>
     <section :class="`relative antialiased`">
-        <MapCard :property="$page.props?.property" class="h-[90vh] xl:h-[50vh] z-0 block"/>
+        <MapCard :property="$page.props?.property" class="h-[90vh] lg:h-[50vh] z-0 block"/>
         <ShapeTop
             :class="`absolute inset-y-full z-10 left-0 right-0 w-full block bottom-1/2 text-white dark:text-gray-900`" />
 
