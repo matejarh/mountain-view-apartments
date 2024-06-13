@@ -100,13 +100,13 @@ class Activity extends Model
      *
      * @return array<string, mixed>
      */
-    public function broadcastWith(string $event): array
+/*     public function broadcastWith(string $event): array
     {
         return match ($event) {
             // 'created' => ['title' => $this->title],
             default => ['model' => $this],
         };
-    }
+    } */
 
 
     public function subject(): MorphTo
