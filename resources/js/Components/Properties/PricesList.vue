@@ -1,10 +1,11 @@
 <script setup>
-import { icons } from '@/icons'
+import PriceItem from './PriceItem.vue';
+import DiscountItem from './DiscountItem.vue';
 </script>
 
 <template>
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div v-for="item, key in $page.props.property.prices.sort((a, b) => new Date(b.from) - new Date(a.from))"
+        <div :class="{'border-amazon-500 dark:border-amazon-400 bg-amazon-200 bg-opacity-20 dark:bg-amazon-400 dark:bg-opacity-25' : item.is_active}" v-for="item, key in $page.props.property.prices.sort((a, b) => new Date(b.from) - new Date(a.from))"
             :key="key"
             class="max-w-full p-4 bg-white border border-gray-200 overflow-hidden rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700  transition duration-150 ease-out">
             <div class="flex justify-between items-center">
@@ -24,29 +25,11 @@ import { icons } from '@/icons'
 
             <TransitionGroup name="list" tag="ul" class="relative mt-2" key="discountsGroup"
                 v-if="item.discounts && item.discounts.length > 0">
-                <li v-for="discount, key in item.discounts" :key="discount" class="flex justify-between items-center">
-                    <span class="flex items-center text-sm">
-                            {{ discount.discount }}
-                            {{ __('discount') }}
-                            {{ __('for') }}
-                            {{ discount.days }}
-                            {{ __('night', discount.days) }}
-                            {{ __('or more') }}
-                    </span>
-                </li>
+                <DiscountItem v-for="discount, key in item.discounts" :key="discount" :discount="discount" />
             </TransitionGroup>
 
             <ul class="mt-2">
-                <li v-for="price, key in item.prices" :key="key" class="flex justify-between items-center">
-                    <span class="flex items-center">
-                        <div class="flex">
-                            <icons.UserIcon class="w-5 h-5" v-for="n in parseInt(price.guests)" :key="key" />
-
-                        </div>
-                        =
-                        {{ parseFloat(price.price).toFixed(2).toLocaleString($page.props.locale) }} €
-                    </span>
-                </li>
+                <PriceItem v-for="price, key in item.prices" :key="key" :price="price" />
             </ul>
 
         </div>

@@ -4,7 +4,9 @@ import { ref, watch, watchEffect } from 'vue';
 import AddPriceDialog from './AddPriceDialog.vue'
 import { useForm } from '@inertiajs/vue3';
 import ConfirmationModal from '../ConfirmationModal.vue';
+import PriceItem from './PriceItem.vue';
 import Tooltip from '@/Components/_default/Tooltip.vue';
+import DiscountItem from './DiscountItem.vue';
 
 const props = defineProps({
     item: Object
@@ -30,7 +32,7 @@ const destroy = () => {
 </script>
 
 <template>
-    <li
+    <li :class="{'border-amazon-500 dark:border-amazon-400 bg-amazon-200 bg-opacity-20 dark:bg-amazon-400 dark:bg-opacity-25' : itemProxy.is_active}"
         class="max-w-full p-4 bg-white border border-gray-200 overflow-hidden rounded-lg shadow-lg dark:bg-gray-900 dark:border-gray-900  transition duration-150 ease-out">
         <div class="flex justify-between items-center">
             <h5 class="text-md font-semibold">
@@ -61,28 +63,11 @@ const destroy = () => {
 
         <TransitionGroup name="list" tag="ul" class="relative mt-2" key="discountsGroup"
             v-if="itemProxy.discounts && itemProxy.discounts.length > 0">
-            <li v-for="discount, key in itemProxy.discounts" :key="discount" class="flex justify-between items-center">
-                <span class="flex items-center text-sm">
-                        {{ discount.discount }}
-                        {{ __('discount') }}
-                        {{ __('for') }}
-                        {{ discount.days }}
-                        {{ __('night', discount.days) }}
-                        {{ __('or more') }}
-                </span>
-            </li>
+            <DiscountItem v-for="discount, key in itemProxy.discounts" :key="discount" :discount="discount" />
         </TransitionGroup>
-        <TransitionGroup name="list" tag="ul" class="relative mt-2" key="pricesGroup">
-            <li v-for="price, key in itemProxy.prices" :key="price" class="flex justify-between items-center">
-                <span class="flex items-center">
-                    <div class="flex">
-                        <icons.UserIcon class="w-5 h-5" v-for="n in parseInt(price.guests)" :key="key" />
 
-                    </div>
-                    =
-                    {{ parseFloat(price.price).toFixed(2).toLocaleString($page.props.locale) }} €
-                </span>
-            </li>
+        <TransitionGroup name="list" tag="ul" class="relative mt-2" key="pricesGroup">
+            <PriceItem v-for="price, key in itemProxy.prices" :key="price" :price="price" />
         </TransitionGroup>
 
         <AddPriceDialog :show="showNewPriceDialog" @close="showNewPriceDialog = false" :price="item" />
