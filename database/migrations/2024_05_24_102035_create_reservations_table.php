@@ -25,7 +25,6 @@ return new class extends Migration
             $table->datetime('payment_received_at')->nullable();
             $table->timestamps();
         });
-
     }
 
     /**

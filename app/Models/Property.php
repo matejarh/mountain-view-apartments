@@ -50,7 +50,7 @@ class Property extends Model
     protected $appends = [
         'can',
         'address_for_map',
-        'google_maps_link',
+        // 'google_maps_link',
         'avatar_url',
         'seo_description',
         'is_liked', // by auth()->user()
@@ -210,16 +210,6 @@ class Property extends Model
         return $this->addressForMap();
     }
 
-    public function googleMapsLink(): string
-    {
-        return "https://www.google.com/maps/dir//$this->addressForMap/@" . $this->coordinates->lat . "," . $this->coordinates->lng . ",14z/data=!4m9!4m8!1m0!1m5!1m1!1s0x477a09798b922fb5:0xf7d971fcde3bcafe!2m2!1d13.3809776!2d46.618689!3e0?entry=ttu";
-    }
-
-    public function getGoogleMapsLinkAttribute(): string
-    {
-        return $this->googleMapsLink();
-    }
-
     /**
      * Get the default image avatar URL if no galleries are attached.
      *
@@ -290,6 +280,167 @@ class Property extends Model
 
         // Return the first valid price or null if none is found
         return $filteredPrices->first();
+    }
+
+    /**
+     * Calculate the total price for a given date range and number of guests.
+     *
+     * @param string $startDate The start date of the range.
+     * @param string $endDate The end date of the range.
+     * @param int $guests The number of guests to filter by.
+     * @return float The calculated total price.
+     * @throws \Exception If no prices are available for the given criteria.
+     */
+    public function calculateTotalPriceForRangeAndGuests(string $startDate, string $endDate, int $guests): float
+    {
+        $startDate = Carbon::parse($startDate);
+        $endDate = Carbon::parse($endDate);
+
+        // Ensure the start date is before or equal to the end date
+        if ($startDate->gt($endDate)) {
+            throw new \Exception("Start date must be before or equal to end date.");
+        }
+
+        // Fetch relevant prices
+        $prices = $this->getPricesForRangeAndGuests($startDate->toDateString(), $endDate->toDateString(), $guests);
+
+        // Check if we found any applicable prices
+        if ($prices->isEmpty()) {
+            throw new \Exception("No prices available for the given date range and number of guests.");
+        }
+
+        $totalPrice = 0.0;
+        $currentDate = $startDate->copy();
+
+        // Iterate over each day in the date range
+        while ($currentDate->lte($endDate)) {
+            foreach ($prices as $price) {
+                $priceFrom = Carbon::parse($price->from);
+                $priceTo = Carbon::parse($price->to);
+
+                // Check if the current date is within the price's date range
+                if ($currentDate->between($priceFrom, $priceTo)) {
+                    $priceDetails = $price->prices;
+
+                    // Find the price for the specific number of guests
+                    $dailyPrice = $this->findDailyPriceForGuests($priceDetails, $guests);
+
+                    if ($dailyPrice !== null) {
+                        $totalPrice += $dailyPrice;
+                        break;
+                    }
+                }
+            }
+
+            $currentDate->addDay();
+        }
+
+        // Apply discounts if any
+        $totalDays = $startDate->diffInDays($endDate) + 1;
+        foreach ($prices as $price) {
+            $totalPrice = $this->applyDiscounts($totalPrice, $price, $totalDays);
+        }
+
+        return $totalPrice;
+    }
+
+    /**
+     * Find the daily price for a specific number of guests in the price details.
+     *
+     * @param array $priceDetails The decoded prices array.
+     * @param int $guests The number of guests.
+     * @return float|null The daily price or null if not found.
+     */
+    private function findDailyPriceForGuests(array $priceDetails, int $guests): ?float
+    {
+        foreach ($priceDetails as $detail) {
+            if (isset($detail['guests']) && $detail['guests'] == $guests) {
+                return (float) $detail['price'];
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Apply any applicable discounts to the total price.
+     *
+     * @param float $totalPrice The current total price.
+     * @param object $price The price object containing discounts.
+     * @param int $totalDays The total number of days in the range.
+     * @return float The total price after applying discounts.
+     */
+    private function applyDiscounts(float $totalPrice, $price, int $totalDays): float
+    {
+        $discounts = $price->discounts;
+
+        foreach ($discounts as $discount) {
+            if (isset($discount['days']) && $totalDays >= $discount['days']) {
+                if (isset($discount['discount'])) {
+                    $discountValue = rtrim($discount['discount'], '%');
+                    $discountPercentage = (float) $discountValue / 100;
+                    $totalPrice -= $totalPrice * $discountPercentage;
+                }
+            }
+        }
+
+        return $totalPrice;
+    }
+
+    /**
+     * Decode the JSON-encoded prices field and handle errors.
+     *
+     * @param string $prices The JSON-encoded prices field.
+     * @return array|null Decoded prices array or null on error.
+     */
+    private function decodePrices(string $prices): ?array
+    {
+        $decoded = json_decode($prices, true);
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            // Log the error or handle it as needed
+            return null;
+        }
+
+        return $decoded;
+    }
+
+    /**
+     * Fetch prices for a given date range and number of guests.
+     *
+     * @param string $startDate The start date of the range.
+     * @param string $endDate The end date of the range.
+     * @param int $guests The number of guests.
+     * @return Collection The collection of prices.
+     */
+    private function getPricesForRangeAndGuests(string $startDate, string $endDate, int $guests): Collection
+    {
+        $startDate = Carbon::parse($startDate);
+        $endDate = Carbon::parse($endDate);
+
+        // Fetch prices within the date range
+        $prices = Price::query()
+            ->where(function ($query) use ($startDate, $endDate) {
+                $query->whereBetween('from', [$startDate, $endDate])
+                    ->orWhereBetween('to', [$startDate, $endDate])
+                    ->orWhere(function ($query) use ($startDate, $endDate) {
+                        $query->where('from', '<=', $startDate)
+                            ->where('to', '>=', $endDate);
+                    });
+            })
+            ->get();
+
+        // Filter prices based on the number of guests
+        $filteredPrices = $prices->filter(function ($price) use ($guests) {
+            $pricesArray = $price->prices;
+            foreach ($pricesArray as $priceEntry) {
+                if (isset($priceEntry['guests']) && $priceEntry['guests'] == $guests) {
+                    return true;
+                }
+            }
+            return false;
+        });
+
+        return $filteredPrices->values(); // Reset keys
     }
 
     /**

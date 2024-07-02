@@ -34,15 +34,17 @@ class CreateReservation implements CreatesReservations
             'departure' => __('Departure'),
         ];
 
-        $arrival = Carbon::parseFromLocale($input['arrival'], app()->currentLocale())->format('Y-m-d') . ' 16:00:00';
-        $departure = Carbon::parseFromLocale($input['departure'], app()->currentLocale())->format('Y-m-d') . ' 12:00:00';
 
-        $input['date_range'] = [$arrival,$departure];
+
+        $input['date_range'] = $this->parseDates($input['date']);
+
+        $input['arrival'] = $input['date_range'][0];
+        $input['departure'] = $input['date_range'][1];
 
         //dd($input['date_range']);
         $validator = Validator::make($input, [
 
-            'message' => ['required', 'string', 'min:10', 'max:1000', new SpamFree],
+            'message' => ['nullable', 'string', 'min:10', 'max:1000', new SpamFree],
             'guests' => ['required', 'array', 'min:1'],
             'guests.adults' => ['required', 'min:1', 'integer', 'max:10'],
             'guests.kids' => ['nullable', 'min:1', 'integer', 'max:10'],
@@ -70,7 +72,11 @@ class CreateReservation implements CreatesReservations
             'departure' => $input['departure'],
             'guests' => $input['guests'],
             'message' => $input['message'],
+            'price' => session()->get('price'),
+            'nights' => session()->get('nights'),
         ]);
+
+        session()->forget(['price', 'nights']);
 
         try {
             Notification::send(User::adminsMailingList(), new ReservationReceived($reservation->fresh()));
@@ -79,5 +85,21 @@ class CreateReservation implements CreatesReservations
         }
 
         session()->flash('flash.banner', __('Reservation has been submitted for approval.'));
+    }
+
+    /**
+     * Parse the date strings into Carbon instances.
+     *
+     * @param array $date Array containing arrival and departure dates
+     * @return array Array containing Carbon instances for arrival and departure
+     */
+    private function parseDates(array $date): array
+    {
+        $locale = app()->getLocale();
+
+        $arrival = Carbon::parseFromLocale($date[0], $locale)->setTime(16, 0);
+        $departure = Carbon::parseFromLocale($date[1], $locale)->setTime(12, 0);
+
+        return [$arrival, $departure];
     }
 }

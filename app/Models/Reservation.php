@@ -9,6 +9,7 @@ use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Number;
 use Stevebauman\Location\Facades\Location;
 
 class Reservation extends Model
@@ -29,6 +30,7 @@ class Reservation extends Model
         'localized_departure',
         'excerpt',
         'status',
+        'formatted_price'
     ];
 
     protected static function getActivitiesToRecord(): array
@@ -81,6 +83,11 @@ class Reservation extends Model
     public function getExcerptAttribute(): string
     {
         return $this->excerpt();
+    }
+
+    public function getFormattedPriceAttribute() :string
+    {
+        return Number::currency($this->price, in: 'EUR', locale: app()->currentLocale());
     }
 
     public function status() :string

@@ -138,6 +138,8 @@ class CreateNewProperty implements CreatesNewProperties
             'bed_types' => $input['bed_types'] ?? null,
             'recomended' => $input['recomended'] ?? null,
             'rules' => $input['rules'] ?? null,
+            'google_maps_link' => $input['google_maps_link'] ?? null,
+
         ];
     }
 }

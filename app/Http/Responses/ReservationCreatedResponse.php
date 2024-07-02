@@ -25,6 +25,6 @@ class ReservationCreatedResponse implements ReservationCreateResponseContract
     {
         return $request->wantsJson()
             ? new JsonResponse('', 201)
-            : back()->with('status', 'reservation-created')->with('input', $this->input);
+            : redirect(route('reservations.index', app()->currentLocale()))->with('status', 'reservation-created')->with('input', $this->input);
     }
 }

@@ -25,6 +25,7 @@ class CreateInquiry implements StoresGuestInquiry
      */
     public function create(Property $property, array $input)
     {
+        // dd('test');
         $attributeNames = array(
             'name' => __('Name'),
             'email' => __('Email'),
@@ -37,8 +38,8 @@ class CreateInquiry implements StoresGuestInquiry
             'date' => __('Date'),
         );
 
-        $arrival = \Carbon\Carbon::parseFromLocale($input['date'][0], app()->currentLocale())->format('Y-m-d') . ' 16:00:00';
-        $departure = \Carbon\Carbon::parseFromLocale($input['date'][1], app()->currentLocale())->format('Y-m-d') . ' 12:00:00';
+        $arrival = $input['date'] ? \Carbon\Carbon::parseFromLocale($input['date'][0], app()->currentLocale())->format('Y-m-d') . ' 16:00:00' : null;
+        $departure = $input['date'] ? \Carbon\Carbon::parseFromLocale($input['date'][1], app()->currentLocale())->format('Y-m-d') . ' 12:00:00' : null;
         $propertyId = $property->id;
 
         $input['date_range'] = [$arrival,$departure];
@@ -46,15 +47,15 @@ class CreateInquiry implements StoresGuestInquiry
         $validator = Validator::make($input, [
             'name' => ['required', 'string', 'max:255', new SpamFree],
             'email' => ['required', 'email', 'max:255', new SpamFree],
-            'phone' => ['required', 'string', 'max:10', 'regex:/^([0-9\s\-\+\(\)]*)$/'],
+            'phone' => ['required', 'string', 'max:14', 'regex:/^([0-9\s\-\+\(\)]*)$/'],
             'adults' => ['required', 'integer', 'min:1', 'max:4'],
             'children' => ['required', 'integer', 'min:0', 'max:4'],
             'pets' => ['required', 'boolean'],
             'subject' => ['required', 'string', 'min:4', 'max:64', new SpamFree],
             'message' => ['required', 'string', 'min:10', 'max:1000', new SpamFree],
-            'date' => ['required', 'array', 'min:2'],
-            'date.*' => ['required', 'date', new AllowedBookingRange],
-            'date_range' => [new DateRangeOverlap($propertyId)],
+            'date' => ['nullable', 'array', 'min:2'],
+            'date.*' => ['nullable', 'date', new AllowedBookingRange],
+            'date_range' => ['nullable'],
             'captcha_token' => [new Recaptcha],
 
         ]);
@@ -63,8 +64,10 @@ class CreateInquiry implements StoresGuestInquiry
 
         $validator->setAttributeNames($attributeNames)->validateWithBag('creatingInquiry');
 
-        foreach ($input['date'] as $key => $value) {
-            $input['date'][$key] = \Carbon\Carbon::parse($value)->format('Y-m-d');
+        if ($input['date']) {
+            foreach ($input['date'] as $key => $value) {
+                $input['date'][$key] = \Carbon\Carbon::parse($value)->format('Y-m-d');
+            }
         }
 
         $inquiry = $property->inquiries()->forceCreate([
@@ -77,7 +80,7 @@ class CreateInquiry implements StoresGuestInquiry
             'adults' => $input['adults'],
             'pets' => $input['pets'],
             'children' => $input['children'],
-            'date' => $input['date'],
+            'date' => $input['date'] ?? [],
             'message' => $input['message'],
         ]);
 

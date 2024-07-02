@@ -135,6 +135,7 @@ class UpdateProperty implements UpdatesProperties
             'bed_types' => $input['bed_types'],
             'recomended' => $input['recomended'],
             'rules' => $input['rules'],
+            'google_maps_link' => $input['google_maps_link'],
         ])->save();
     }
 }

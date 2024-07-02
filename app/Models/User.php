@@ -17,6 +17,7 @@ use Laravel\Jetstream\Agent;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use Stevebauman\Location\Facades\Location;
+use function Illuminate\Events\queueable;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -94,12 +95,31 @@ class User extends Authenticatable implements MustVerifyEmail
                 $user->$i->each->delete();
             });
         }
+    }
 
+    /**
+     * The "booted" method of the model.
+     */
+    protected static function booted(): void
+    {
+        static::updated(queueable(function (User $customer) {
+            if ($customer->hasStripeId()) {
+                $customer->syncStripeCustomerDetails();
+            }
+        }));
     }
 
     protected static function deleteItems(): array
     {
         return ['activities', 'logins', 'galleries', 'images', 'properties'];
+    }
+
+    /**
+     * Get the customer name that should be synced to Stripe.
+     */
+    public function stripeName(): string|null
+    {
+        return $this->name;
     }
 
     protected function defaultProfilePhotoUrl(): string
@@ -198,22 +218,6 @@ class User extends Authenticatable implements MustVerifyEmail
     public function scopeFilter(Builder $query, UserFilters $filters): Builder
     {
         return $filters->apply($query);
-        /* $query->when($filters['search'] ?? null, function ($query, $search) {
-            $query->where(function ($query) use ($search) {
-                $query->where('first_name', 'like', '%' . $search . '%')
-                    ->orWhere('name', 'like', '%' . $search . '%')
-                    ->orWhere('last_name', 'like', '%' . $search . '%')
-                    ->orWhere('phone', 'like', '%' . $search . '%')
-                    ->orWhere('country', 'like', '%' . $search . '%')
-                    ->orWhere('email', 'like', '%' . $search . '%');
-            });
-        }) *//* ->when($filters['role'] ?? null, function ($query, $role) {
-        $query->whereHas('roles', function ($q) use ($role) {
-            $q->where('roles.name', 'like', '%' . $role . '%' ?: '*');
-        });
-    })->when($filters['status'] ?? null, function ($query, $status) {
-        $query->where('status', $status);
-    })  ;*/
     }
 
     /**

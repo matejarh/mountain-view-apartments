@@ -16,7 +16,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class Activity extends Model
 {
-    use BroadcastsEvents;
+    // use BroadcastsEvents;
 
     /**
      * The attributes that aren't mass assignable.
@@ -152,18 +152,6 @@ class Activity extends Model
     public function scopeFilter(Builder $query, ActivityFilters $filters): Builder
     {
         return $filters->apply($query);
-        /* $query->when($filters['search'] ?? null, function ($query, $search) {
-            //$query->where(function ($query) use ($search) {
-            $query->whereHas('owner', function ($q) use ($search) {
-                $q->where('first_name', 'like', '%' . $search . '%')
-                    ->orWhere('name', 'like', '%' . $search . '%')
-                    ->orWhere('last_name', 'like', '%' . $search . '%')
-                    ->orWhere('phone', 'like', '%' . $search . '%')
-                    ->orWhere('country', 'like', '%' . $search . '%')
-                    ->orWhere('email', 'like', '%' . $search . '%');
-            });
-            //});
-        }); */
     }
 
     /**

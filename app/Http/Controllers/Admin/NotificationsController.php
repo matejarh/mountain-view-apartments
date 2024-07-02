@@ -14,6 +14,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Inquiry;
 use App\Models\Notification;
 use App\Models\Property;
+use App\Models\Reservation;
 use App\Models\User;
 use App\Notifications\Admin\ReservationReceived;
 use Illuminate\Http\Request;
@@ -109,6 +110,17 @@ class NotificationsController extends Controller
             ];
             return (new $notificationClass($reply, $inquiry))
             ->toMail(User::adminsMailingList());
+        }
+        if ($notification === 'ReservationConfirmed') {
+            $notificationClass = "\\App\\Notifications\\" . ucfirst($notification);
+
+            if (!class_exists($notificationClass)) {
+                abort(404, 'Notification class not found.');
+            }
+            $reservation = Reservation::first();
+
+            return (new $notificationClass($reservation))
+            ->toMail($reservation->owner);
         }
         $notificationClass = "\\App\\Notifications\\Admin\\" . ucfirst($notification);
         //$itemsClass = "\\App\\Model\\" . ucfirst($items);
