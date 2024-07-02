@@ -20,7 +20,7 @@ const colorsClasses = computed(() => {
             break;
 
         default:
-            return 'text-red-800 bg-red-50 dark:bg-gray-800 dark:text-red-400'
+            return 'text-primary-800 bg-primary-50 dark:bg-gray-800 dark:text-primary-400'
             break;
     }
 })

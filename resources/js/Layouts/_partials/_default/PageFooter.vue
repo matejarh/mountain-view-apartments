@@ -25,10 +25,10 @@ const helpers = useHelperStore()
                         <h2 class="mb-6 text-sm font-semibold  uppercase text-gray-700  dark:text-white drop-shadow">{{__('Accomodations')}}</h2>
                         <ul class="text-gray-500 dark:text-gray-400 font-medium">
                             <li class="mb-4">
-                                <inertia-link :href="`${$page.props?.locale}/discover/bled`" class="hover:underline ">{{__('Explore Bled')}}</inertia-link>
+                                <inertia-link :href="`/${$page.props?.locale}/explore/bled`" class="hover:underline ">{{__('Explore Bled')}}</inertia-link>
                             </li>
                             <li>
-                                <inertia-link :href="`${$page.props?.locale}/explore/nassfeld`" class="hover:underline  ">{{__('Discover Nassfeld')}}</inertia-link>
+                                <inertia-link :href="`/${$page.props?.locale}/discover/nassfeld`" class="hover:underline  ">{{__('Discover Nassfeld')}}</inertia-link>
                             </li>
                         </ul>
                     </div>
@@ -36,11 +36,20 @@ const helpers = useHelperStore()
                         <h2 class="mb-6 text-sm font-semibold text-gray-700 uppercase dark:text-white">{{__('Follow us')}}</h2>
                         <ul class="text-gray-500 dark:text-gray-400 font-medium">
                             <li class="mb-4">
-                                <a href="https://facebook.com" class="hover:underline ">{{__('Facebook')}}</a>
+                                <a href="https://www.facebook.com/share/v/ycMS3xix7SQTT111" target="_blank" class="hover:underline ">{{__('Facebook')}}</a>
                             </li>
-                            <li>
+                            <li class="mb-4">
+                                <a href="https://www.facebook.com/groups/874385910720954" target="_blank" class="hover:underline ">{{__('Facebook')}}</a>
+                            </li>
+                            <li class="mb-4">
+                                <a href="https://www.facebook.com/groups/499649131165323" target="_blank" class="hover:underline ">{{__('Facebook')}}</a>
+                            </li>
+                            <li class="mb-4">
+                                <a href="https://www.facebook.com/groups/1081038263320660" target="_blank" class="hover:underline ">{{__('Facebook')}}</a>
+                            </li>
+                            <!-- <li>
                                 <a href="https://twitter.com" class="hover:underline">{{__('Twitter')}}</a>
-                            </li>
+                            </li> -->
                         </ul>
                     </div>
                     <div>

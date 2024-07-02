@@ -51,7 +51,7 @@ const destroy = () => {
                     <div class="text-base font-semibold flex space-x-2">
                         <p>
 
-                            {{ item.owner ? item.owner.name : item.name }}
+                            {{ item.name }}
                         </p>
                         <span class="flex items-center">
                             <icons.MobileIcon class="w-4 h-4" />

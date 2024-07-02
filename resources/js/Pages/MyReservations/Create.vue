@@ -3,6 +3,7 @@ import DefaultLayout from '@/Layouts/DefaultLayout.vue';
 import ShapedSection from '@/Components/_default/ShapedSection.vue';
 import Heading2White from '@/Components/_default/Heading2White.vue';
 import Wrapper from '@/Components/_default/Wrapper.vue';
+import ReservationForm from './_partials/ReservationForm.vue';
 </script>
 
 <template>
@@ -16,12 +17,17 @@ import Wrapper from '@/Components/_default/Wrapper.vue';
                 <div class="pt-8 xl:pt-48 mx-auto max-w-screen-md px-4">
 
                     <Heading2White class="text-center">
-                        {{ __('Create Reservation')  }}
+                        {{ __('My Reservations')  }}
 
                     </Heading2White>
                 </div>
 
             </ShapedSection>
+
+            <Wrapper size="lg" >
+
+                <ReservationForm />
+            </Wrapper>
 
         </div>
     </DefaultLayout>

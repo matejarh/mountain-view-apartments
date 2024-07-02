@@ -9,7 +9,7 @@ import ShapedSection from '@/Components/_default/ShapedSection.vue';
    <section :class="`relative antialiased`">
 
         <div class="">
-            <MapCard :property="$page.props?.property" class="h-[100vh] lg:h-[50vh]" />
+            <MapCard :property="$page.props?.property" class="h-[100vh] xl:h-[50vh]" />
         </div>
 
     </section>

@@ -17,8 +17,8 @@ const props = defineProps({
 const emit = defineEmits(['close'])
 
 const form = useForm({
-    name: props.item?.owner ? props.item.owner.name : props.item.name,
-    email: props.item?.owner ? props.item.owner.email : props.item.email,
+    name: props.item.name,
+    email: props.item.email,
     subject: '',
     text: '',
 })
@@ -30,8 +30,8 @@ watchEffect(() => {
 })
 
 const populateForm = () => {
-    form.name = props.item?.owner ? props.item.owner.name : props.item.name
-    form.email = props.item?.owner ? props.item.owner.email : props.item.email
+    form.name = props.item.name
+    form.email = props.item.email
     form.subject = ''
 }
 

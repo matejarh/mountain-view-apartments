@@ -27,9 +27,9 @@ $buttons=[
 <x-mail::panel>
 {{ $reservation->message }}
 
-- {{__('Adults')}}: {{$reservation->guests->adults}}
-- {{__('Children')}}: {{$reservation->guests->children}}
-- {{__('Pets')}}: {{$reservation->guests->pets ? __('Yes') : __('No')}}
+- {{__('Guests')}}: {{$reservation->guests->adults}}
+{{-- - {{__('Children')}}: {{$reservation->guests->children}}
+- {{__('Pets')}}: {{$reservation->guests->pets ? __('Yes') : __('No')}} --}}
 </x-mail::panel>
 
 <x-mail::table>

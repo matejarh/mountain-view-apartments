@@ -122,6 +122,24 @@ const navItems = [
                                         <template #icon><icons.UserIcon /></template>
                                         {{ __("My Profile") }}
                                     </MobileNavigationItem>
+
+                                    <ul class="py-1 text-gray-700 dark:text-gray-300 border-t border-gray-200 dark:border-gray-700">
+                                        <MobileNavigationItem as="li" @clicked="helpers.hideMobileDrawer" :href="route('reviews.index', $page.props.locale)">
+                                                <template #icon><icons.BookOpenIcon class="mr-2 w-5 h-5 " /></template>
+                                                {{ __('My Reviews') }}
+                                        </MobileNavigationItem>
+
+                                        <MobileNavigationItem as="li" @clicked="helpers.hideMobileDrawer" :href="route('inquiries.index', $page.props.locale)">
+                                                <template #icon><icons.InfoIcon class="mr-2 w-5 h-5 " /></template>
+                                                {{ __('My Inquiries') }}
+                                        </MobileNavigationItem>
+
+                                        <MobileNavigationItem as="li" @clicked="helpers.hideMobileDrawer" :href="route('reservations.index', $page.props.locale)">
+                                                <template #icon><icons.CalendarIcon class="mr-2 w-5 h-5 " /></template>
+                                                {{ __('My Reservations') }}
+                                        </MobileNavigationItem>
+                                    </ul>
+
                                     <MobileNavigationItem as="div" :href="null" @clicked="logout">
                                         <template #icon><icons.SignOutIcon /></template>
                                         {{ __("Sign out") }}

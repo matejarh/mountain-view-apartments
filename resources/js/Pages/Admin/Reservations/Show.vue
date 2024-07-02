@@ -11,6 +11,7 @@ import { ref } from 'vue';
 import ConfirmationModal from '@/Components/ConfirmationModal.vue';
 import { getFormattedDate } from '@/utils/date';
 import InputLabel from '@/Components/InputLabel.vue';
+import Alert from '@/Components/Alert.vue';
 
 const page = usePage()
 const form = useForm({})
@@ -67,6 +68,9 @@ const destroy = () => {
                 {{ $page.props?.reservation.property.title[$page.props?.locale] }}
             </template>
             <template #content>
+                <Alert status="info" v-show="$page.props.reservation.confirmed_at === null || $page.props.reservation.payment_received_at === null">
+                    <p>Da je rezervacija uspešna in datumi niso več na voljo, mora biti potrjena in plačilo odobreno</p>
+                </Alert>
                 <div class="grid grid-cols-1 md:grid-cols-3">
                     <UserCard :user="$page.props.reservation.owner" />
                     <div
@@ -85,7 +89,7 @@ const destroy = () => {
                             </div>
 
                             <div class="commands space-x-2">
-                                <DangerButton @click="reject" v-if="$page.props.reservation.approved_at"
+                                <DangerButton @click="reject" v-if="$page.props.reservation.confirmed_at"
                                     :class="{ 'opacity-25': form.processing || form.recentlySuccessful }"
                                     :disabled="form.processing || form.recentlySuccessful">
                                     <icons.SpinnerIcon v-if="form.processing"

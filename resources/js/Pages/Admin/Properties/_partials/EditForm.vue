@@ -208,6 +208,14 @@ onBeforeUnmount(() => document.removeEventListener('keydown', saveOnCtrlS));
             </div>
 
             <div class="col-span-3 xl:col-span-3">
+                <InputLabel for="google_maps_link" :value="`${__('Google Maps LInk')}`" />
+                <TextInput id="google_maps_link" v-model="form.google_maps_link" type="text" class="mt-1 block w-full"
+                    required autocomplete="google_maps_link" :has-error="!!form.errors.google_maps_link"
+                    :placeholder="__('Enter Google Maps Link') + '...'" />
+                <InputError :message="form.errors.google_maps_link" class="mt-2" />
+            </div>
+
+            <div class="col-span-3 xl:col-span-3">
                 <InputLabel for="coordinates_lat" :value="`${__('Latitude')}`" />
                 <TextInput id="coordinates_lat" v-model="form.coordinates['lat']" type="text" class="mt-1 block w-full"
                     required autocomplete="coordinates_lat" :has-error="!!form.errors['coordinates.lat']"
@@ -332,55 +340,6 @@ onBeforeUnmount(() => document.removeEventListener('keydown', saveOnCtrlS));
             </button>
 
         </div>
-
-<!--         <div class="col-span-full">
-            <div class="flex items-center">
-                <p class="w-full">{{ __('Number of guests') }}</p>
-                <p class="w-full">{{ __('Price in €') }}</p>
-            </div>
-            <div class="flex items-center space-x-2" v-for="price, key in form.prices">
-                <div class="w-full">
-                    <TextInput :id="`price_${key}_guests`" v-model="form.prices[key].guests" type="text"
-                        class="mt-1 block w-full" required :has-error="!!form.errors['prices.' + key + '.guests']"
-                        :placeholder="__('Enter number of guests') + '...'" />
-                    <InputError :message="form.errors['prices.' + key + '.guests']" class="mt-2" />
-                </div>
-
-                <div class="w-full">
-                    <TextInput :id="`price_${key}_price`" v-model="form.prices[key].price" type="text"
-                        class="mt-1 block w-full" required :has-error="!!form.errors['prices.' + key + '.price']"
-                        :placeholder="__('Enter price') + '...'" />
-                    <InputError :message="form.errors['prices.' + key + '.price']" class="mt-2" />
-                </div>
-
-                <div class="">
-                    <button @click="removeItem(form.prices, price)">
-                        <icons.TrashBinIcon class="text-bittersweet-700 dark:text-bittersweet-500" />
-                    </button>
-                </div>
-
-            </div>
-            <h4 class="text-base font-bold dark:text-white mt-2">{{ __('Add New') }}</h4>
-
-            <div class="flex items-center space-x-2">
-                <div class="w-full">
-
-                    <TextInput :id="`new_guests`" v-model="newPrice.guests" type="text" class="mt-1 block w-full"
-                        required :placeholder="__('Enter number of guests') + '...'" />
-                </div>
-                <div class="w-full">
-
-                    <TextInput :id="`new_price`" v-model="newPrice.price" type="text" class="mt-1 block w-full" required
-                        :placeholder="__('Enter price') + '...'" />
-                </div>
-
-                <div class="">
-                    <button @click="handleAddItem(form.prices, newPrice)">
-                        <icons.CirclePlusIcon class="text-amazon-600 dark:text-amazon-400" />
-                    </button>
-                </div>
-            </div>
-        </div> -->
 
         <HorizontalTabs class="mt-4">
             <template #header>

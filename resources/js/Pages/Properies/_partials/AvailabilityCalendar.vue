@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch, computed, getCurrentInstance } from 'vue';
+import { ref, computed, getCurrentInstance } from 'vue';
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css'
 import { router, useForm, usePage } from '@inertiajs/vue3';
@@ -17,6 +17,7 @@ const form = useForm({
     arrival: new Date(),
     departure: '',
 })
+
 const { appContext } = getCurrentInstance();
 
 const __ = appContext.config.globalProperties.__;
@@ -96,7 +97,7 @@ const rangePickerRef = ref(null)
 const book = () => {
     if (date.value.length > 0) {
         rangePickerRef.value.classList.remove('animate-shake', 'border', 'border-bittersweet-700')
-        router.get(route('reservations.create', page.props.locale), {property: page.props?.property.id, date: date.value})
+        router.get(route('reservations.create', page.props.locale), { property: page.props?.property.slug, date: date.value })
         //alert('You selected from ' + date.value[0].toLocaleDateString(page.props?.locale) + ' to ' + date.value[1].toLocaleDateString(page.props?.locale));
     } else {
         rangePickerRef.value.classList.add('animate-shake', 'border', 'border-bittersweet-700')

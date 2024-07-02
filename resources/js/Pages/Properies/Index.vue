@@ -38,7 +38,6 @@ const navItems = ref([
 
                     <Heading2White class="text-center" v-if="page.props?.properties.data.length > 0">
                         {{ __('Our Apartments')  }}
-
                     </Heading2White>
 
                     <p class="mb-4 text-2xl text-center font-extrabold tracking-tight leading-none text-white md:text-3xl lg:text-2xl" v-else>
@@ -49,9 +48,10 @@ const navItems = ref([
                 </div>
 
             </ShapedSection>
+
             <Wrapper>
                 <ul
-                    class="flex flex-wrap text-sm font-medium text-center bg-gray-50 dark:bg-gray-900 rounded-lg p-2  text-gray-500 dark:text-gray-400 mb-4">
+                    class="flex flex-wrap justify-center text-sm font-medium text-center bg-gray-50 dark:bg-gray-900 rounded-lg p-2 text-gray-500 dark:text-gray-400 mb-4">
                     <PillItem v-for="item, key in navItems" :key="key" :item="item" :filter="filter"
                         @clicked="item => filter = item.value" />
                 </ul>

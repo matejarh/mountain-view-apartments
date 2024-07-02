@@ -8,6 +8,7 @@ use App\Http\Controllers\PropertiesController;
 use App\Http\Controllers\ReservationsController;
 use App\Http\Controllers\ReviewsController;
 use App\Http\Controllers\StoriesController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
@@ -81,6 +82,18 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
 
     Route::get('/user/activities', [ActivitiesController::class, 'index'])->name('activities');
 
+    Route::get('/user/billing-portal', function (Request $request) {
+        return auth()->user()->redirectToBillingPortal(route('home', app()->currentLocale()));
+    });
+
+    Route::post('/pay', function (Request $request) {
+        $payment = $request->user()->pay(
+            $request->get('amount')
+        );
+
+        return $payment->client_secret;
+    })->name('pay');
+
     Route::name('reviews.')->prefix('reviews')->namespace('reviews')->group(function () {
         Route::post('/for/{property}/store', [ReviewsController::class, 'store'])->name('store');
 
@@ -106,6 +119,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
             Route::get('/', [ReservationsController::class, 'index'])->name('index');
             Route::get('/create', [ReservationsController::class, 'create'])->name('create');
             Route::get('/{reservation}', [ReservationsController::class, 'show'])->name('show');
+            Route::post('/calculate', [ReservationsController::class, 'calculate'])->name('calculate');
         });
     });
 });

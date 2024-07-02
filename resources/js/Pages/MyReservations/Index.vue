@@ -3,6 +3,7 @@ import DefaultLayout from '@/Layouts/DefaultLayout.vue';
 import ShapedSection from '@/Components/_default/ShapedSection.vue';
 import Heading2White from '@/Components/_default/Heading2White.vue';
 import Wrapper from '@/Components/_default/Wrapper.vue';
+import ReservationsTable from './_partials/ReservationsTable.vue';
 </script>
 
 <template>
@@ -27,6 +28,10 @@ import Wrapper from '@/Components/_default/Wrapper.vue';
                 </div>
 
             </ShapedSection>
+
+            <Wrapper v-if="$page.props?.reservations.data.length > 0">
+                <ReservationsTable />
+            </Wrapper>
 
         </div>
     </DefaultLayout>
