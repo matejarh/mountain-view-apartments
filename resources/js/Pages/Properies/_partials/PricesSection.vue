@@ -1,5 +1,6 @@
 <script setup>
 import PricingCard from '@/Components/_default/PricingCard.vue';
+import PricesList from '@/Components/_default/Properties/PricesList.vue';
 import ShapeBottom from '@/Components/_default/ShapeBottom.vue';
 import ShapeTop from '@/Components/_default/ShapeTop.vue';
 
@@ -26,13 +27,22 @@ import ShapeTop from '@/Components/_default/ShapeTop.vue';
                     {{ __('Book now and experience comfort without compromise.') }}
                 </p>
             </div>
-            <div class="flex justify-center items-center">
+            <div class="flex flex-wrap justify-center items-center ">
 
                 <PricingCard v-for="price, key in $page.props?.current_prices.prices "
-                    :current-prices="$page.props?.current_prices" :price="price" :key="key" />
+                :current-prices="$page.props?.current_prices" :price="price" :key="key" />
 
 
             </div>
+
+            <div class="mx-auto max-w-screen-md text-center mb-8 lg:mb-12 mt-8">
+                <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-white">{{ __('Pricing') }} <span class="lowercase"> {{ __('for') }} {{ __('Following Seasons') }}</span></h2>
+
+                <div class="">
+                    <PricesList />
+                </div>
+            </div>
+
         </div>
         <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6" v-else>
             <div class="mx-auto max-w-screen-md text-center mb-8 lg:mb-12">

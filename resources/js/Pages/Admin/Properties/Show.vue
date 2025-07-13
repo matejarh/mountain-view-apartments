@@ -11,6 +11,7 @@ import FacilityIcon from '@/Components/Properties/FacilityIcon.vue';
 import EditForm from './_partials/EditForm.vue';
 import ManageFacilitiesDialog from './_partials/ManageFacilitiesDialog.vue';
 import ManagePricesDialog from './_partials/ManagePricesDialog.vue';
+import ManageUnavailableDatesDialog from './_partials/ManageUnavailableDatesDialog.vue';
 import ManageGalleriesDialog from './_partials/ManageGalleriesDialog.vue';
 
 const props = defineProps({
@@ -20,6 +21,7 @@ const props = defineProps({
 const showFacilitiesDialog = ref(false)
 const showAttachGalleryDialog = ref(false)
 const showPricesDialog = ref(false)
+const showUnavailableDatesDialog = ref(false)
 
 const facilitiesWithIcons = computed(() => {
     return props.property.facilities.filter(facility => facility.has_icon_file);
@@ -120,6 +122,7 @@ const detach = (gallery) => {
                         <MapCard :property="$page.props?.property" />
                         <PrimaryButton type="button" @click="showPricesDialog = true">{{__('Manage Prices')}}</PrimaryButton>
                         <PricesList  />
+                        <PrimaryButton type="button" @click="showUnavailableDatesDialog = true">{{__('Manage Unavailable Dates')}}</PrimaryButton>
                         <!-- <AvailabilityCalendar /> -->
 
                     </div>
@@ -138,6 +141,8 @@ const detach = (gallery) => {
         <ManageGalleriesDialog :show="showAttachGalleryDialog" @close="showAttachGalleryDialog = false"
             :property="property" />
         <ManagePricesDialog :show="showPricesDialog" @close="showPricesDialog = false"
+            :property="property" />
+        <ManageUnavailableDatesDialog :show="showUnavailableDatesDialog" @close="showUnavailableDatesDialog = false"
             :property="property" />
     </FullLayout>
 </template>

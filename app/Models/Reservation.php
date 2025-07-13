@@ -3,12 +3,14 @@
 namespace App\Models;
 
 use App\Filters\ReservationFilters;
+use App\Notifications\ReservationConfirmed;
 use App\Traits\HasUUidAsPrimary;
 use App\Traits\RecordsActivity;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Number;
 use Stevebauman\Location\Facades\Location;
 
@@ -137,6 +139,13 @@ class Reservation extends Model
     {
         $this->confirmed_at = now();
         $this->save();
+        if ($this->payment_received_at != null) {
+            try {
+                Notification::send($this->owner, new ReservationConfirmed($this));
+            } catch (\Exception $e) {
+                \Log::error($e->getMessage());
+            }
+        }
     }
 
     /**
@@ -155,6 +164,13 @@ class Reservation extends Model
     {
         $this->payment_received_at = now();
         $this->save();
+        if ($this->confirmed_at != null) {
+            try {
+                Notification::send($this->owner, new ReservationConfirmed($this));
+            } catch (\Exception $e) {
+                \Log::error($e->getMessage());
+            }
+        }
     }
 
     /**

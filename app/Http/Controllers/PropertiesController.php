@@ -64,6 +64,7 @@ class PropertiesController extends Controller
             })->find($property->id),
             'latest_reviews' => $property->latestReviews(),
             'current_prices' => $property->currentPrices(),
+            'next_prices' => $property->nextPrices(),
             'unavailable_dates' => $property->getUnavailableDatesAttribute(),
             // Determine the user's permissions for this property
             'can' => [
@@ -95,5 +96,11 @@ class PropertiesController extends Controller
     public function fetch(Request $request, Property $property): JsonResponse
     {
         return response()->json(Property::fetchListForDropdowns());
+    }
+
+    public function fetchUnavailableDates(Request $request, Property $property): JsonResponse
+    {
+
+        return response()->json($property->unavailable_dates);
     }
 }

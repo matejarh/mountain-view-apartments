@@ -57,23 +57,18 @@ const highlightedDates = ref([/* "2024-05-11", "2024-05-12", "2024-05-13", "2024
 
 const datepickerRange = page.props?.settings?.find(setting => setting.slug === 'datepicker-range')
 
-const tomorrow = computed(() => {
-    const today = new Date()
-    const tomorrow = new Date(today)
-    tomorrow.setDate(today.getDate() + 1)
-    return tomorrow
-})
-const yearFromNow = computed(() => {
-    const today = new Date()
-    const yearfromnow = new Date(today)
-    yearfromnow.setDate(today.getDate() + 356)
-    return yearfromnow
-})
+// Provide fallback values in case datepickerRange is null
+const defaultMinDays = 3
+const defaultMaxDays = 3
 
 const options = ref({
     range: {
-        minRange: page.props.current_prices?.min_days ?? datepickerRange.min_days,
-        maxRange: page.props.current_prices?.max_days ?? datepickerRange.max_days,
+        minRange: page.props.current_prices?.min_days
+            ?? datepickerRange?.min_days
+            ?? defaultMinDays,
+        maxRange: page.props.current_prices?.max_days
+            ?? datepickerRange?.max_days
+            ?? defaultMaxDays,
         partialRange: false,
         noDisabledRange: true,
     },
@@ -112,7 +107,7 @@ const book = () => {
 <template>
     <ShapedSection class="pt-8 sm:pt-4 md:pt-0" :color="{ light: 'primary-700', dark: 'primary-900' }">
         <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
-            <div class="mx-auto max-w-screen-xl text-center" v-if="$page.props?.current_prices">
+            <div class="mx-auto max-w-screen-xl text-center" >
                 <h2 class="mb-4 text-4xl tracking-tight font-extrabold leading-tight text-white dark:text-white">
                     {{ __('Availability Calendar') }}</h2>
                 <div class="flex justify-center w-full mb-2">
@@ -152,10 +147,10 @@ const book = () => {
                 <TransparentButton @click="book">
                     {{ __('Book selected dates') }}</TransparentButton>
             </div>
-            <div class="mx-auto max-w-screen-xl text-center" v-else>
+            <!-- <div class="mx-auto max-w-screen-xl text-center" v-else>
                 <p class="mb-4 text-4xl tracking-tight font-extrabold leading-tight text-white dark:text-white">
                     {{ __('Availability Calendar') }} <span class="lowercase">{{ __('Not Available') }}</span></p>
-            </div>
+            </div> -->
         </div>
     </ShapedSection>
 </template>
@@ -236,3 +231,4 @@ const book = () => {
     --dp-range-between-border-color: var(--dp-hover-color, #e7e7e7);
 }
 </style>
+

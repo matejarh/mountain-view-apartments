@@ -15,12 +15,14 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(!auth()->check()) return abort(401, __('You are not authorized to access this page'));
+        if(!auth()->check()) {
+            abort(401, __('You are not authorized to access this page'));
+        }
 
         if (auth()->user() && auth()->user()->is_admin) {
             return $next($request);
         }
 
-        return abort(403, __('You are not authorized to access this page'));
+        abort(403, __('You are not authorized to access this page'));
     }
 }

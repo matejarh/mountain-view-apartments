@@ -1,9 +1,9 @@
 <script setup>
 import { computed, ref } from 'vue';
 import NavDropdown from './NavDropdown.vue';
-import { useForm, usePage } from '@inertiajs/vue3';
+import NotificationsDropdownItem from './NotificationsDropdownItem.vue';
+import { router, useForm, usePage } from '@inertiajs/vue3';
 import formatNumber from '@/mixins/numberToKilo';
-import { getFormattedDate } from '@/utils/date';
 import { icons } from '@/icons';
 
 const show = ref(false)
@@ -18,9 +18,13 @@ const readForm = useForm({
     id:null,
 })
 
-const read = (id) => {
-    readForm.id = id
-    readForm.put(route('admin.notifications.read'))
+const read = (notification) => {
+    readForm.id = notification.id
+    readForm.put(route('admin.notifications.read'), {
+        onSuccess: () => {
+            router.get(notification.data.link)
+        }
+    })
 }
 
 const readAll = () => {
@@ -39,7 +43,7 @@ const readAll = () => {
 
                 <div v-if="$page.props?.notifications.length > 0"
                     class="absolute inline-flex items-center justify-center w-4 h-4 text-xs font-bold text-white bg-bittersweet-500 border-1 border-white rounded-full -top-2 -end-2 dark:border-gray-50">
-                    {{ formatNumber($page.props.notifications.length) }}
+                    {{ formatNumber($page.props?.notifications.length) }}
                 </div>
 
                 <div class="relative w-6 h-6" v-if="active">
@@ -51,7 +55,7 @@ const readAll = () => {
         </template>
 
         <!-- Dropdown menu -->
-        <div class="" v-show="true">
+        <div class="" v-show="true && $page.props?.notifications.length > 0">
 
             <div
                 class="block py-2 px-4 text-base font-medium text-center text-gray-700 bg-gray-50 dark:bg-gray-600 dark:text-gray-300">
@@ -59,7 +63,8 @@ const readAll = () => {
             </div>
 
             <div>
-                <inertia-link @click="read(notification.id)" :href="notification.data.link" v-for="notification, key in $page.props?.notifications"
+                <NotificationsDropdownItem v-for="notification, key in $page.props?.notifications" :key="notification.id" :notification="notification" @click="read(notification)" />
+                <!-- <div @click="read(notification.id)" :href="notification.data.link" v-for="notification, key in $page.props?.notifications"
                     :key="notification.id"
                     class="flex py-3 px-4 border-b hover:bg-gray-100 dark:hover:bg-gray-600 dark:border-gray-600">
                     <div class="flex-shrink-0">
@@ -76,7 +81,7 @@ const readAll = () => {
                             {{ getFormattedDate(notification.created_at, $page.props.locale) }}
                         </div>
                     </div>
-                </inertia-link>
+                </div> -->
                 <!--             <a href="#" class="flex py-3 px-4 border-b hover:bg-gray-100 dark:hover:bg-gray-600 dark:border-gray-600">
                     <div class="flex-shrink-0">
                         <img class="w-11 h-11 rounded-full"

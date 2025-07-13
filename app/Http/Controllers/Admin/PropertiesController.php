@@ -71,6 +71,9 @@ class PropertiesController extends Controller
             'icon_list' => $this->fetchIconsList(),
 
             'defined_dates' => $property->getDatesWithDefinedPrices(now(), now()->addYears(5)),
+            'booked_days' => $property->getUnavailableDates(now(), now()->addYears(5)),
+            'unavailable_dates' => $property->unavailable_dates,
+            'disabled_days' => $property->disabled_days,
 
             // Retrieve facilities not currently associated with the property
             'facilities_not_in_property' => fn() => Facility::all()->intersect(
@@ -161,11 +164,11 @@ class PropertiesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Contracts\CreatesNewProperties  $creator
      * @return \App\Contracts\PropertyCreateResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function store(Request $request, CreatesNewProperties $creator): PropertyCreateResponse
     {
-        if ($request->user()->cannot('create', Property::class))
-            abort(403);
+        Gate::authorize('create', Property::class);
 
         $creator->create($request->all());
 
@@ -180,13 +183,69 @@ class PropertiesController extends Controller
      * @param  \App\Models\Property  $property
      * @param  \App\Contracts\UpdatesProperties  $updater
      * @return \App\Contracts\PropertyUpdateResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(Request $request, Property $property, UpdatesProperties $updater): PropertyUpdateResponse
     {
-        if ($request->user()->cannot('update', $property))
-            abort(403);
+        Gate::authorize('update', $property);
 
         $updater->update($property, $request->all());
+
+        return app(PropertyUpdateResponse::class);
+    }
+
+    /**
+     * Updates given propertys unavailable days.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Property  $property
+     * @return \App\Contracts\PropertyUpdateResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function enable(Request $request, Property $property) :PropertyUpdateResponse
+    {
+        Gate::authorize('update', $property);
+
+        $validated = $request->validateWithBag('enabelingDates', [
+            'range' => ['nullable', 'array', 'min:2'],
+            'range.*' => ['nullable', 'date'],
+        ]);
+
+        foreach ($validated['range'] as $key => $date) {
+            $disabled = $property->unavailable_dates()->where('date', $date)->first();
+            if ($disabled) {
+                $disabled->delete();
+            }
+        }
+
+
+        return app(PropertyUpdateResponse::class);
+    }
+
+    /**
+     * Updates given propertys unavailable days.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Property  $property
+     * @return \App\Contracts\PropertyUpdateResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function disable(Request $request, Property $property) :PropertyUpdateResponse
+    {
+        Gate::authorize('update', $property);
+
+        $validated = $request->validateWithBag('enabelingDates', [
+            'range' => ['nullable', 'array', 'min:2'],
+            'range.*' => ['nullable', 'date'],
+        ]);
+
+        foreach ($validated['range'] as $key => $date) {
+            $property->unavailable_dates()->forceCreate([
+                'date' => $date,
+            ]);
+        }
+
+        //dd($validated);
 
         return app(PropertyUpdateResponse::class);
     }
@@ -199,11 +258,11 @@ class PropertiesController extends Controller
      * @param  \App\Models\Facility $facility
      * @param  \App\Contracts\AttachesFacilitiesToProperties $attacher
      * @return \App\Contracts\FacilityAttacheResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function attachFacility(Request $request, Property $property, Facility $facility, AttachesFacilitiesToProperties $attacher): FacilityAttacheResponse
     {
-        if ($request->user()->cannot('update', $property))
-            abort(403);
+        Gate::authorize('update', $property);
 
         $attacher->attach($facility, $property);
 
@@ -218,11 +277,11 @@ class PropertiesController extends Controller
      * @param  \App\Models\Facility $facility
      * @param  \App\Contracts\DetachesFacilitiesFromProperties $attacher
      * @return \App\Contracts\FacilityDetacheResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function detachFacility(Request $request, Property $property, Facility $facility, DetachesFacilitiesFromProperties $attacher): FacilityDetacheResponse
     {
-        if ($request->user()->cannot('update', $property))
-            abort(403);
+        Gate::authorize('update', $property);
 
         $attacher->detach($facility, $property);
 
@@ -237,11 +296,11 @@ class PropertiesController extends Controller
      * @param  \App\Models\Gallery $gallery
      * @param  \App\Contracts\AttachesGalleriesToProperties $attacher
      * @return \App\Contracts\GalleryAttacheResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function attachGallery(Request $request, Property $property, Gallery $gallery, AttachesGalleriesToProperties $attacher): GalleryAttacheResponse
     {
-        if ($request->user()->cannot('update', $property))
-            abort(403);
+        Gate::authorize('update', $property);
 
         $attacher->attach($gallery, $property);
 
@@ -256,11 +315,11 @@ class PropertiesController extends Controller
      * @param  \App\Models\Gallery $gallery
      * @param  \App\Contracts\DetachesGalleriesFromProperties $attacher
      * @return \App\Contracts\GalleryDetacheResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function detachGallery(Request $request, Property $property, Gallery $gallery, DetachesGalleriesFromProperties $attacher): GalleryDetacheResponse
     {
-        if ($request->user()->cannot('update', $property))
-            abort(403);
+        Gate::authorize('update', $property);
 
         $attacher->detach($gallery, $property);
 

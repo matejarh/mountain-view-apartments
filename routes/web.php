@@ -22,6 +22,7 @@ Route::get('/', function() {
 Route::post('/language-switch', [LanguageController::class, 'switch'])->name('switch.language')->middleware('throttle:10');
 Route::post('/send-inquiry/{property}', [InquiriesController::class, 'store'])->name('inquiry.store')->middleware(app()->environment() === 'production' ? 'throttle:10' : 'throttle:global');
 Route::get('/fetch-properties-for-dropdown', [PropertiesController::class, 'fetch'])->name('properties.fetch')->middleware('throttle:10');
+Route::get('/properties/{property}/unavailable_dates', [PropertiesController::class, 'fetchUnavailableDates'])->name('properties.unavailable_dates');
 
 
 /**

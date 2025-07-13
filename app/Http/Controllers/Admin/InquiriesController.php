@@ -14,6 +14,7 @@ use App\Filters\InquiryFilters;
 use App\Http\Controllers\Controller;
 use App\Models\Inquiry;
 use App\Models\Property;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
@@ -87,20 +88,22 @@ class InquiriesController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Inquiry  $inquiry
-     * @return \Inertia\Response
+     * @return \Illuminate\Http\RedirectResponse
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function show(Request $request, Inquiry $inquiry): Response
+    public function show(Request $request, Inquiry $inquiry): RedirectResponse
     {
         Gate::authorize('view', $inquiry);
 
-        return Inertia::render('Admin/Inquiries/Show', [
+        return redirect(route('admin.inquiries.index'));
+
+        /* return Inertia::render('Admin/Inquiries/Show', [
             'inquiry' => Inquiry::with('property')->find($inquiry->id),
             'can' => [
                 'view_inquiry' => auth()->user()->can('view', $inquiry),
                 'delete_inquiry' => auth()->user()->can('delete', $inquiry),
             ],
-        ]);
+        ]); */
     }
 
     /**

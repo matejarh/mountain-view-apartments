@@ -73,22 +73,15 @@ class Property extends Model
         parent::boot(); // Call the boot method of the parent class (Model)
 
         static::deleting(function ($property) { // Register a deleting event listener for the Property model
-            foreach ($property->galleries as $gallery) { // Loop through the galleries associated with the property
-                $property->galleries()->detach($gallery); // Detach the gallery from the property
-            }
-            foreach ($property->facilities as $facility) { // Loop through the facilities associated with the property
-                $property->facilities()->detach($facility); // Detach the facility from the property
-            }
+            $property->galleries()->detach();
+            $property->facilities()->detach();
         });
 
         foreach (static::deleteItems() as $item) {
             static::deleting(function ($user) use ($item) {
-                $i = $item;
-                $user->$i->each->delete();
+                $user->$item->each->delete();
             });
         }
-
-
     }
 
     protected static function deleteItems(): array
@@ -164,6 +157,16 @@ class Property extends Model
         return $this->hasMany(Price::class);
     }
 
+    /**
+     * Get the disabled days associated with the property.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function disabled_days(): HasMany
+    {
+        return $this->hasMany(DisabledDay::class);
+    }
+
     public function langArray(): array
     {
         $langarray = [];
@@ -222,7 +225,10 @@ class Property extends Model
 
     public function avatarUrl(): string
     {
-        return $this->galleries->count() > 0 ? $this->galleries[0]->images->count() > 0 ? $this->galleries[0]->images[0]->thumb_url : $this->defaultPhotoUrl() : $this->defaultPhotoUrl();
+        if ($this->galleries->count() > 0 && $this->galleries[0]->images->count() > 0) {
+            return $this->galleries[0]->images[0]->thumb_url;
+        }
+        return $this->defaultPhotoUrl();
     }
 
     public function getAvatarUrlAttribute(): string
@@ -268,18 +274,23 @@ class Property extends Model
      */
     public function currentPrices(): ?Price
     {
-        // Get the current date and time
+        $currentDate = Carbon::now();
+        // Find the price where current date is between from and to
+        return $this->prices()
+            ->where('from', '<=', $currentDate)
+            ->where('to', '>=', $currentDate)
+            ->first();
+    }
+
+    public function nextPrices() :Collection
+    {
         $currentDate = Carbon::now();
 
-        // Filter the prices collection to find prices that are valid for the current date
-        $filteredPrices = $this->prices->filter(function ($price) use ($currentDate) {
-            $fromDate = Carbon::parse($price->from);
-            $toDate = Carbon::parse($price->to);
-            return $fromDate->lte($currentDate) && $toDate->gte($currentDate);
-        });
+        // Query the database for prices with a 'from' date greater than the current date
+        $prices = $this->prices()->where('from', '>', $currentDate)->get();
 
-        // Return the first valid price or null if none is found
-        return $filteredPrices->first();
+        return $prices;
+
     }
 
     /**
@@ -516,6 +527,7 @@ class Property extends Model
      *
      * @param string $startDate The start date of the range (Y-m-d format).
      * @param string $endDate The end date of the range (Y-m-d format).
+     * @param bool $withPrices
      * @return array An array of dates with defined prices.
      */
     public function getDatesWithDefinedPrices(string $startDate, string $endDate, $withPrices = true): Collection
@@ -553,7 +565,7 @@ class Property extends Model
         }
 
         // Return the unique dates with defined prices
-        return $definedDates->unique()/* ->values()->all() */ ;
+        return $definedDates->unique();
     }
 
     /**
@@ -561,6 +573,7 @@ class Property extends Model
      *
      * @param string $startDate The start date of the range (Y-m-d format).
      * @param string $endDate The end date of the range (Y-m-d format).
+     * @param bool $withPrices
      * @return array An array of dates without defined prices.
      */
     public function getDatesWithoutDefinedPrices(string $startDate, string $endDate, $withPrices = true): Collection
@@ -597,9 +610,12 @@ class Property extends Model
     public function getUnavailableAndUndefinedDates(string $startDate, string $endDate): array
     {
         $unavailableDates = $this->getUnavailableDates($startDate, $endDate);
-        $definedPricesDates = $this->getDatesWithoutDefinedPrices($startDate, $endDate, false);
+        $undefinedPriceDates = $this->getDatesWithoutDefinedPrices($startDate, $endDate, false);
 
-        $allDates = $unavailableDates->merge($definedPricesDates);
+        // Get disabled days as date strings
+        $disabledDays = $this->disabled_days->pluck('date');
+
+        $allDates = $unavailableDates->merge($undefinedPriceDates)->merge($disabledDays);
 
         return $allDates->unique()->values()->all();
     }

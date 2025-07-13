@@ -11,7 +11,7 @@ defineProps({
 <template>
     <!-- Pricing Card -->
     <div
-        class="flex flex-col p-6 mx-auto max-w-sm text-center text-gray-900 bg-white rounded-lg border border-gray-100 shadow dark:border-gray-600 xl:p-8 dark:bg-gray-800 dark:text-white">
+        class="flex flex-col p-6 mb-4 mx-auto max-w-sm text-center text-gray-900 bg-white rounded-lg border border-gray-100 shadow dark:border-gray-600 xl:p-8 dark:bg-gray-800 dark:text-white">
 
 
 
@@ -36,9 +36,9 @@ defineProps({
             </p>
         </div>
 
-        <a href="#"
+        <inertia-link :href="route('reservations.create', {lang: $page.props.locale, property: $page.props.property.slug})"
         class="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:ring-primary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:text-white  dark:focus:ring-primary-900">{{
-            __('Book Now') }}</a>
+            __('Book Now') }}</inertia-link>
 
 </div>
 </template>

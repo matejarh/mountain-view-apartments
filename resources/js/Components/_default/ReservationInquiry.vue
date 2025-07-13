@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref, watch } from 'vue';
+import { computed, getCurrentInstance, ref, watch } from 'vue';
 import { useForm, usePage } from '@inertiajs/vue3';
 import { useHelperStore } from '@/stores/helpers';
 import { useReCaptcha } from 'vue-recaptcha-v3';
@@ -19,6 +19,9 @@ const emit = defineEmits(['close']);
 const { executeRecaptcha, recaptchaLoaded } = useReCaptcha();
 const page = usePage();
 const helpers = useHelperStore();
+const { appContext } = getCurrentInstance();
+
+const __ = appContext.config.globalProperties.__;
 
 const form = useForm({
     name: '',
@@ -42,6 +45,19 @@ const options = ref({
     noDisabledRange: true,
 });
 
+const notAvailableMarkers = computed(() => {
+    let markers = [];
+    disabledDates.value.forEach(date => {
+        markers.push({
+            date: new Date(date),
+            type: 'line',
+            tooltip: [{ text: __('Not Available') + '...', color: '#e52f1d' }],
+            color: 'bg-blue-900 dark:bg-blue-600',
+        })
+    });
+    return markers
+})
+
 const tomorrow = computed(() => {
     const today = new Date();
     today.setDate(today.getDate() + 1);
@@ -63,8 +79,19 @@ const recaptcha = async () => {
     store();
 };
 
+const fetchUnavailabelDates = (property) => {
+    axios.get(route('properties.unavailable_dates', property.slug))
+        .then(response => {
+            disabledDates.value = response.data
+            propertyProxy.value = property;
+        })
+        .catch(error => {
+            console.error(error)
+        })
+}
+
 const handleSelected = (accomodation) => {
-    propertyProxy.value = accomodation;
+    fetchUnavailabelDates(accomodation)
 };
 
 const store = () => {
@@ -121,8 +148,8 @@ const store = () => {
 
         <div class="grid grid-cols-3 gap-4">
             <div class="mt-4">
-                <InputLabel :value="__('Adults')" for="adults" />
-                <TextInput id="adults" v-model="form.adults" type="number" min="1" max="4" step="1" class="mt-1 block w-full"
+                <InputLabel :value="__('Guests')" for="guests" />
+                <TextInput id="guests" v-model="form.adults" type="number" min="1" max="4" step="1" class="mt-1 block w-full"
                     :has-error="!!form.errors.adults"  />
                 <InputError :message="form.errors.adults" class="mt-2" />
             </div>
@@ -133,14 +160,14 @@ const store = () => {
                     :has-error="!!form.errors.children" />
                 <InputError :message="form.errors.children" class="mt-2" />
             </div>
-
+            <!--
             <div class="mt-4">
                 <InputLabel class="inline-flex items-center justify-center cursor-pointer w-full">
                     {{ __('Pets') }}
                     <input type="checkbox" value="" class="sr-only peer" v-model.checked="form.pets" />
                     <div class="mx-auto mt-3 relative w-14 h-7 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-amazon-600 dark:peer-focus:ring-amazon-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all dark:border-gray-600 peer-checked:bg-amazon-600"></div>
                 </InputLabel>
-            </div>
+            </div> -->
         </div>
 
         <div class="mt-4">
@@ -148,7 +175,7 @@ const store = () => {
             <AccomodationsDropdown id="apartmant" class="w-full" direction="down" :selected-property="propertyProxy" @selected="handleSelected" />
         </div>
 
-        <div class="relative mt-4">
+        <div class="relative mt-4" v-show="propertyProxy">
             <InputLabel :value="__('Date (from-to)')" as="div" />
             <VueDatePicker
                 id="daterangepicker"
@@ -158,6 +185,7 @@ const store = () => {
                 :max-date="yearFromNow"
                 prevent-min-max-navigation
                 :disabled-dates="disabledDates"
+                :markers="notAvailableMarkers"
                 :enable-time-picker="false"
                 :locale="$page.props?.locale"
                 :format="$page.props?.date_format_pattern"
@@ -218,6 +246,16 @@ const store = () => {
 
 
 <style scoped>
+.not-available-marker {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 4px;
+    width: 100%;
+    /* border-radius: 100%; */
+    background-color: #e52f1d;
+}
+
 :root {
     --dp-font-family: font-family: Figtree, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --dp-font-size: 0.875rem;

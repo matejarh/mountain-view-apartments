@@ -46,6 +46,8 @@ Route::group(['middleware' => config('jetstream.middleware')], function () {
             Route::get('/{property}', [PropertiesController::class, 'show'])->name('show');
             Route::put('/{property}', [PropertiesController::class, 'update'])->name('update');
             Route::delete('/{property}', [PropertiesController::class, 'destroy'])->name('destroy');
+            Route::put('/unavailable-dates/{property}/enable', [PropertiesController::class, 'enable'])->name('unavailable_dates.enable');
+            Route::put('/unavailable-dates/{property}/disable', [PropertiesController::class, 'disable'])->name('unavailable_dates.disable');
             Route::put('attach-facility/{property}/{facility}', [PropertiesController::class, 'attachFacility'])->name('attach.facility');
             Route::put('detach-facility/{property}/{facility}', [PropertiesController::class, 'detachFacility'])->name('detach.facility');
             Route::put('attach-gallery/{property}/{gallery}', [PropertiesController::class, 'attachGallery'])->name('attach.gallery');

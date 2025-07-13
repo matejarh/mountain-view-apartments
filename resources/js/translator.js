@@ -5,7 +5,20 @@ export const Translator = {
         const store = useTranslationsStore()
 
         v.config.globalProperties.__ = function (key, count = 1, replace = {}) {
-            let translation = store.translations[key] || key;
+
+            let translation = store.translations[key];
+
+            // If the translation key does not exist, push it to store.missingKeys
+            if (!translation) {
+                // Use the key itself as the fallback translation
+                translation = key;
+                if (!store.missingKeys[key]) {
+
+                    // const missingKey = { [key]: key };
+                    store.addMissingKey(key)
+                    // store.missingKeys.push(key);
+                }
+            }
 
             // Check if translation is a string
             if (typeof translation !== 'string') {

@@ -4,8 +4,8 @@ import DiscountItem from './DiscountItem.vue';
 </script>
 
 <template>
-    <div class="grid grid-cols-1 2xl:grid-cols-2 gap-4">
-        <div :class="{'border-amazon-500 dark:border-amazon-400 bg-amazon-200 bg-opacity-20 dark:bg-amazon-400 dark:bg-opacity-25' : item.is_active}" v-for="item, key in $page.props.property.prices.sort((a, b) => new Date(b.from) - new Date(a.from))"
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div :class="{'border-amazon-500 dark:border-amazon-400 bg-amazon-200 bg-opacity-20 dark:bg-amazon-400 dark:bg-opacity-25' : item.is_active}" v-for="item, key in $page.props.next_prices"
             :key="key"
             class="max-w-full p-4 bg-white border border-gray-200 overflow-hidden rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700  transition duration-150 ease-out">
             <div class="flex justify-between items-center">

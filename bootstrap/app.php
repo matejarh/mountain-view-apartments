@@ -18,6 +18,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->web(append: [
+            // \App\Http\Middleware\ContentSecurityPolicyMiddleware::class,
             // \App\Http\Middleware\LanguageMiddleware::class,
             \App\Http\Middleware\setLanguageMiddleware::class,
             \App\Http\Middleware\HandleInertiaRequests::class,

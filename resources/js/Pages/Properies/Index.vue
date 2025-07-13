@@ -19,9 +19,9 @@ const filtered = computed(() => {
 })
 
 const navItems = ref([
-    { name: 'All', value: '.' },
-    { name: 'Bled', value: 'bled' },
-    { name: 'Nassfeld', value: 'hermagor' },
+    { name: 'Show', line2: 'All', value: '.' },
+    { name: 'Bled', line2: 'Slovenija', value: 'bled' },
+    { name: 'Nassfeld', line2: 'Austria', value: 'hermagor' },
 ])
 
 
